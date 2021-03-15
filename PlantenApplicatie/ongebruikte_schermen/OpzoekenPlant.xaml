@@ -34,7 +34,7 @@
             </GroupBox>
             <GroupBox Header="Resultaten" Height="265">
                 <Canvas>
-                    <ListView x:Name="lvPlanten" Canvas.Left="10" Height="220" Width="968">
+                    <ListView x:Name="lvPlanten" Canvas.Left="10" Height="220" Width="968"  >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Plantnaam" Width="Auto" DisplayMemberBinding="{Binding Fgsv}" />
@@ -53,7 +53,7 @@
             <!-- knop details plant -->
             <Grid Height="50">
                 <Canvas>
-                    <Button x:Name="btnDetailsPlant" Canvas.Top="15" Canvas.Left="20" Width="150" Content="Details plant bekijken" Click="btnDetailsPlant_Click"/>
+                    <Button x:Name="btnDetailsPlant" Canvas.Top="15" Canvas.Left="20" Width="150" Content="Details plant bekijken"/>
 
                 </Canvas>
             </Grid>

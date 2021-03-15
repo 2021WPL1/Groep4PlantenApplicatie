@@ -12,7 +12,6 @@ namespace PlantenApplicatie.Domain
 
         public long Planttypeid { get; set; }
         public string Planttypenaam { get; set; }
-
         public virtual ICollection<TfgsvFamilie> TfgsvFamilie { get; set; }
 
 

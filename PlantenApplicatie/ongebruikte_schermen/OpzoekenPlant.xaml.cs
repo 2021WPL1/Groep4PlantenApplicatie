@@ -20,6 +20,7 @@ namespace PlantenApplicatie
     public partial class OpzoekenPlant : Window
     {
         private PlantenDao plantenDAO;
+        public static Plant _selectedPlant { get; set; }
 
         public OpzoekenPlant()
         {
@@ -59,8 +60,7 @@ namespace PlantenApplicatie
 
         private void btnDetailsPlant_Click(object sender, RoutedEventArgs e)
         {
-            PlantDetails plantDetails = new PlantDetails();
-            plantDetails.Show();
+          
         }
 
         private void txtNLnaam_KeyDown(object sender, KeyEventArgs e)
@@ -95,5 +95,9 @@ namespace PlantenApplicatie
             
            
         }
+
+       
+
+
     }
 }

@@ -129,5 +129,10 @@ namespace PlantenApplicatie.Data
         {
             return _context.TfgsvType.ToList();
         }
+
+        public string GetAbiotiek()
+        {
+            return _context.AbioBezonning.Select(s => s.Naam).ToString();
+        }
     }
 }
