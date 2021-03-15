@@ -83,13 +83,14 @@ namespace PlantenApplicatie
 
         private void btnZoeken_Click(object sender, RoutedEventArgs e)
         {
+            var type = cmbType.SelectedValue is null ? null : cmbType.SelectedValue.ToString();
             var family = cmbFamilie.SelectedValue is null ? null : cmbFamilie.SelectedValue.ToString();
             var genus = cmbGeslacht.SelectedValue is null ? null : cmbGeslacht.SelectedValue.ToString();
             var species = cmbSoort.SelectedValue is null ? null : cmbSoort.SelectedValue.ToString();
 
-            var list = plantenDAO.SearchByProperties(txtPlantnaam.Text,
+            var list = plantenDAO.SearchPlants(type,
                 family, genus,
-                species, txtVariant.Text);
+                species, txtVariant.Text, txtPlantnaam.Text);
 
             lvPlanten.ItemsSource = list;
             

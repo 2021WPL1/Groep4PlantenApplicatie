@@ -13,6 +13,8 @@ namespace PlantenApplicatie.CLI
         {
             _plantenDao = PlantenDao.Instance;
 
+            
+            PrintPlanten(_plantenDao.SearchPlants("vivassen", "FABACEAE", "Baptisia", "australis", "", "faba"));
             //PrintPlanten(_plantenDao.SearchPlantenByName("   vero"));
         }
 

@@ -9,29 +9,16 @@
     <Grid>
         <Canvas>
             <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
-            <Label x:Name="lblPlantnaamGroot" Content="Plantnaam" Canvas.Top="12" Canvas.Left="169" FontSize="22" Width="437" />
+            <Label x:Name="lblPlantnaamGroot" 
+                   Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="22" Width="437" />
 
-            <Image x:Name="imgFoto" Height="200" Width="200" Canvas.Top="108" Canvas.Left="691" />
-            <Button x:Name="btnSluiten" Content="Sluiten" Canvas.Left="766" Canvas.Top="517" Width="124" Click="btnSluiten_Click" Height="34"/>
-            <Label x:Name="lblSoort" Content="Bezonning :" Canvas.Left="50" Canvas.Top="260" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblType" Content="bladgrootte :" Canvas.Left="50" Canvas.Top="130" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblFamilie" Content="bladvorm :" Canvas.Left="50" Canvas.Top="174" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblGeslacht" Content="habitus :" Canvas.Left="50" Canvas.Top="219" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblVariant" Content="bloeiwijze :" Canvas.Left="50" Canvas.Top="299" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblPlantdichtheidMax" Content="levensvorm :" Canvas.Left="50" Canvas.Top="338" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblSoortResult" Content="(Bezonning)" Canvas.Left="246" Canvas.Top="260" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblTypeResult" Content="(Bladgrootte)" Canvas.Left="246" Canvas.Top="130" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblFamilieResult" Content="(Bladvorm)" Canvas.Left="246" Canvas.Top="174" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblGeslachtResult" Content="(Habitus)" Canvas.Left="246" Canvas.Top="219" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblVariantResult" Content="(Bloeiwijze)" Canvas.Left="246" Canvas.Top="299" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblPlantdichtheidMaxResult" Content="(Levensvorm)" Canvas.Left="246" Canvas.Top="338" Height="34" Width="161" FontSize="16"/>
-            <ComboBox x:Name="cmbEigenschappen" Canvas.Left="671" Canvas.Top="25" Width="219" Height="20" SelectionChanged="cmbEigenschappen_SelectionChanged"/>
-            <ListBox x:Name="lstLijst" Height="246" Canvas.Left="559" Canvas.Top="87" Width="119"/>
-            <Label x:Name="lblPlantdichtheidMin" Content="levensvorm :" Canvas.Left="50" Canvas.Top="377" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblLaatste" Content="levensvorm :" Canvas.Left="50" Canvas.Top="417" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblPlantdichtheidMinResult" Content="(Levensvorm)" Canvas.Left="246" Canvas.Top="377" Height="34" Width="161" FontSize="16"/>
-            <Label x:Name="lblLaatsteResult" Content="(Levensvorm)" Canvas.Left="246" Canvas.Top="417" Height="34" Width="161" FontSize="16"/>
-
+            <ComboBox x:Name="cmbEigenschappen" 
+                      ItemsSource="{Binding PrefixKeys}" 
+                      SelectedItem="{Binding SelectedPrefixKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="671" Canvas.Top="25" Width="219" Height="20"/>
+            <Label 
+                Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label 
+                Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}"/>
         </Canvas>
     </Grid>
 </Window>

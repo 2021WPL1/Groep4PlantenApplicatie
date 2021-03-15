@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PlantenApplicatie.Domain;
 
 namespace PlantenApplicatie.Data
@@ -23,116 +23,127 @@ namespace PlantenApplicatie.Data
 
         public List<Plant> GetPlanten()
         {
-            return _context.Plant.ToList();
+            return _context.Plant
+                .ToList();
         }
 
-        public List<Plant> SearchByProperties(string name, string family, 
-            string genus, string species, string variant)
+        public List<Plant> SearchPlants(string type, string family, string genus,
+            string species, string? variant, string name)
         {
-            var planten = GetPlanten();
+            var typeIds = GetTypeIds(type);
+            var familyIds = GetFamilyIds(family);
+            var genusIds = GetGenusIds(genus);
+            var speciesIds = GetSpeciesIds(species);
+            var variantIds = GetVariantIds(variant);
 
-            planten = SearchPlantenByName(planten, name);
-            planten = SearchPlantenByFamily(planten, family);
-            planten = SearchPlantenByGenus(planten, genus);
-            planten = SearchPlantenBySpecies(planten, species);
-            planten = SearchPlantenByVariant(planten, variant);
-
-            return planten.OrderBy(p => p.Fgsv).ToList();
+            return SearchPlantsWithTgsvAndName(typeIds, familyIds, genusIds, speciesIds, variantIds, name);
         }
-        
-        public List<Plant> SearchPlantenByName(List<Plant> planten, string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return planten;
-            }
 
-            return planten.Where(p =>
-                    p.Fgsv is not null 
+        private List<Plant> SearchPlantsWithTgsvAndName(List<long> typeIds, List<long> familyIds, List<long> genusIds, List<long> speciesIds, 
+            List<long?> variantIds, string name)
+        {
+            return _context.Plant
+                .Include(p => p.Abiotiek)
+                .Include(p => p.AbiotiekMulti)
+                .Include(p => p.BeheerMaand)
+                .Include(p => p.Commensalisme)
+                .Include(p => p.CommensalismeMulti)
+                .Include(p => p.ExtraEigenschap)
+                .Include(p => p.Fenotype)
+                .Include(p => p.Foto)
+                .ToList()
+                .Where(p =>
+                    variantIds.Contains(p.VariantId)
+                    && speciesIds.Contains((long)p.SoortId!)
+                    && genusIds.Contains((long)p.GeslachtId!)
+                    && familyIds.Contains((long)p.FamilieId!)
+                    && typeIds.Contains((long)p.TypeId!)
                     && PlantenParser.ParseSearchText(p.Fgsv)
                         .Contains(PlantenParser.ParseSearchText(name)))
+                .OrderBy(p => p.Fgsv)
+                .ToList();
+        }
+            
+        private List<long> GetTypeIds(string type)
+        {
+            return _context.TfgsvType.ToList().Where(t => 
+                PlantenParser.ParseSearchText(t.Planttypenaam)
+                    .Contains(PlantenParser.ParseSearchText(type)))
+                .Select(t => t.Planttypeid)
                 .ToList();
         }
 
-        public List<Plant> SearchPlantenByFamily(List<Plant> planten, string family)
+        private List<long> GetFamilyIds(string family)
         {
-            if (string.IsNullOrEmpty(family))
+            return _context.TfgsvFamilie.ToList().Where(f =>
+                PlantenParser.ParseSearchText(f.Familienaam)
+                    .Contains(PlantenParser.ParseSearchText(family)))
+                .Select(f => f.FamileId)
+                .ToList();
+        }
+
+        private List<long> GetGenusIds(string genus)
+        {
+            return _context.TfgsvGeslacht.ToList().Where(g =>
+                PlantenParser.ParseSearchText(g.Geslachtnaam)
+                    .Contains(PlantenParser.ParseSearchText(genus)))
+                .Select(g => g.GeslachtId)
+                .ToList();
+        }
+
+        private List<long> GetSpeciesIds(string species)
+        {
+            return _context.TfgsvSoort.ToList().Where(s =>
+                PlantenParser.ParseSearchText(s.Soortnaam)
+                    .Contains(PlantenParser.ParseSearchText(species)))
+                .Select(s => s.Soortid)
+                .ToList();
+        }
+
+        private List<long?> GetVariantIds(string? variant)
+        {
+            if (variant is null)
             {
-                return planten;
+                return new List<long?>() { null };
             }
 
-            return planten.Where(p =>
-                    p.Familie is not null 
-                    && PlantenParser.ParseSearchText(p.Familie)
-                        .Contains(PlantenParser.ParseSearchText(family)))
+            return _context.TfgsvVariant.ToList().Where(v =>
+                PlantenParser.ParseSearchText(v.Variantnaam)
+                    .Contains(PlantenParser.ParseSearchText(variant)))
+                .Select(v => v.VariantId)
+                .Cast<long?>()
                 .ToList();
         }
 
-        public List<Plant> SearchPlantenByGenus(List<Plant> planten, string genus)
-        {
-            if (string.IsNullOrEmpty(genus))
-            {
-                return planten;
-            }
-
-            return planten.Where(p =>
-                    p.Geslacht is not null 
-                    && PlantenParser.ParseSearchText(p.Geslacht)
-                        .Contains(PlantenParser.ParseSearchText(genus)))
-                .ToList();
-        }
-
-        public List<Plant> SearchPlantenBySpecies(List<Plant> planten, string species)
-        {
-            if (string.IsNullOrEmpty(species))
-            {
-                return planten;
-            }
-
-            return planten.Where(p =>
-                    p.Soort is not null 
-                    && PlantenParser.ParseSearchText(p.Soort)
-                        .Contains(PlantenParser.ParseSearchText(species)))
-                .ToList();
-        }
-
-        public List<Plant> SearchPlantenByVariant(List<Plant> planten, string variant)
-        {
-            if (string.IsNullOrEmpty(variant))
-            {
-                return planten;
-            }
-
-            return planten.Where(p =>
-                    p.Variant is not null 
-                    && PlantenParser.ParseSearchText(p.Variant)
-                        .Contains(PlantenParser.ParseSearchText(variant)))
-                .ToList();
-        }
 
         public List<string> GetUniqueFamilyNames()
         {
-            return _context.TfgsvFamilie.Select(f => f.Familienaam).Distinct().ToList();
+            return _context.TfgsvFamilie
+                .Select(f => f.Familienaam)
+                .Distinct()
+                .ToList();
         }
 
         public List<string> GetUniqueGenusNames()
         {
-            return _context.TfgsvGeslacht.Select(g => g.Geslachtnaam).Distinct().ToList();
+            return _context.TfgsvGeslacht
+                .Select(g => g.Geslachtnaam)
+                .Distinct()
+                .ToList();
         }
 
         public List<string> GetUniqueSpeciesNames()
         {
-            return _context.TfgsvSoort.Select(s => s.Soortnaam).Distinct().ToList();
+            return _context.TfgsvSoort
+                .Select(s => s.Soortnaam)
+                .Distinct()
+                .ToList();
         }
 
         public List<TfgsvType> GetTypes()
         {
-            return _context.TfgsvType.ToList();
-        }
-
-        public string GetAbiotiek()
-        {
-            return _context.AbioBezonning.Select(s => s.Naam).ToString();
+            return _context.TfgsvType
+                .ToList();
         }
     }
 }

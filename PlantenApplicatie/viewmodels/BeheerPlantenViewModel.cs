@@ -14,21 +14,15 @@ namespace PlantenApplicatie.viewmodels
     {
         public ICommand showPlantDetailsCommand { get; set; }
         public ICommand showPlantByNameCommand { get; set; }
-
         public ObservableCollection<Plant> Plants { get; set; }
-
         public ObservableCollection<TfgsvType> Types { get; set; }
-
         public ObservableCollection<string> Soorten { get; set; }
         public ObservableCollection<string> Families { get; set; }
         public ObservableCollection<string> Genus { get; set; }
-
         // hiermee kunnen we de data opvragen aan de databank.
         public PlantenDao _plantenDao;
-
         // dit stelt de huidige geselecteerde plant voor
         private Plant _selectedPlant;
-
         private string textInput;
 
         public BeheerPlantenViewModel(PlantenDao plantenDao)
@@ -42,7 +36,7 @@ namespace PlantenApplicatie.viewmodels
             Families = new ObservableCollection<string>();
             Genus = new ObservableCollection<string>();
 
-            this._plantenDao = plantenDao;
+            _plantenDao = plantenDao;
         }
 
         public void LoadPlants()
@@ -57,7 +51,7 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadPlantsByName(string name)
         {
-            var plants = _plantenDao.SearchByProperties(name, null, null, null, null);
+            var plants = _plantenDao.SearchPlants(null, null, null, null, null, name);
             Plants.Clear();
             foreach(var plant in plants)
             {
@@ -118,25 +112,14 @@ namespace PlantenApplicatie.viewmodels
 
         private void showPlantDetails()
         {
-            // nieuw venster initialiseren
-            PlantDetails plantDetails = new PlantDetails();
-
-            // initialiseer labels en waarden
-            plantDetails.lblPlantnaam.Content = _selectedPlant.Fgsv;
-            plantDetails.lblFamilie.Content = _selectedPlant.Familie;
-            plantDetails.lblType.Content = _selectedPlant.Type;
-            plantDetails.lblGeslacht.Content = _selectedPlant.Geslacht;
-            plantDetails.lblSoort.Content = _selectedPlant.Soort;
-            plantDetails.lblVariant.Content = _selectedPlant.Variant;
-
             // toon plantdetails venster
-            plantDetails.Show();
+            new PlantDetails(SelectedPlant).Show();
         }
 
         private void showPlantByName()
         {
             string str = TextInput;
-            _plantenDao.SearchPlantenByName(_plantenDao.GetPlanten(), TextInput);
+            //_plantenDao.SearchPlants(_plantenDao.GetPlanten(), TextInput);
 
             LoadPlantsByName(TextInput);
         }

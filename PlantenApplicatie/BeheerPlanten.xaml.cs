@@ -92,17 +92,16 @@ namespace PlantenApplicatie
 
         private void SearchPlanten()
         {
+            var type = cmbType.SelectedValue is null ? null : cmbType.SelectedValue.ToString();
             var family = cmbFamilie.SelectedValue is null ? null : cmbFamilie.SelectedValue.ToString();
             var genus = cmbGeslacht.SelectedValue is null ? null : cmbGeslacht.SelectedValue.ToString();
             var species = cmbSoort.SelectedValue is null ? null : cmbSoort.SelectedValue.ToString();
 
-            var list = plantenDao.SearchByProperties(txtPlantnaam.Text,
-                null, null,
-                null, null);
+            var list = plantenDao.SearchPlants(type,
+                family, genus,
+                species, txtVariant.Text, txtPlantnaam.Text);
 
             lvPlanten.ItemsSource = list;
-
-           
         }
     }
         
