@@ -17,28 +17,31 @@
                                 <Label Canvas.Top="0" Content="Plantnaam :"/>
                                 <TextBox x:Name="txtPlantnaam" Width="200" Canvas.Top="5" Canvas.Left="80"
                                          
-                                        Text="{Binding Path=TextInput, UpdateSourceTrigger=PropertyChanged}">
-                                        <TextBox.InputBindings>
+                                        Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox.InputBindings>
                                         <KeyBinding Command="{Binding Path=showPlantByNameCommand}" Key="Enter" />
-                                        </TextBox.InputBindings>
+                                    </TextBox.InputBindings>
                                 </TextBox>
                                 <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
-                                <ComboBox x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
+                                <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
                                 <!-- tweede rij -->
                                 <Label Content="Type :" Canvas.Top="30" />
-                                <ComboBox x:Name="cmbType" Width="200" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }" DisplayMemberPath="Planttypenaam" />
+                                <ComboBox SelectedValue="{Binding SelectedType}" x:Name="cmbType" Width="200" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }"  />
                                 <Label Content="Geslacht :" Canvas.Top="30" Canvas.Left="350" />
-                                <ComboBox x:Name="cmbGeslacht" Width="200" Canvas.Top="35" Canvas.Left="450"  ItemsSource="{Binding Genus }" />
+                                <ComboBox SelectedValue="{Binding SelectedGeslacht}" x:Name="cmbGeslacht" Width="200" Canvas.Top="35" Canvas.Left="450"  ItemsSource="{Binding Genus }" />
                                 <!-- derde rij -->
 
                                 <Label Content="Soort :" Canvas.Top="60" />
-                                <ComboBox x:Name="cmbSoort" Width="200" Canvas.Top="65" Canvas.Left="80" ItemsSource="{Binding Soorten }" />
+                                <ComboBox SelectedValue="{Binding SelectedSoort}" x:Name="cmbSoort" Width="200" Canvas.Top="65" Canvas.Left="80" ItemsSource="{Binding Soorten }" />
                                 <Label Content="Variant :" Canvas.Top="60" Canvas.Left="350" />
                                 <!-- vierde rij-->
-                                <Button x:Name="btnZoeken" Content="Zoeken" Canvas.Top="97" Width="80" Canvas.Left="878" Click="btnZoeken_Click" />
-                                <TextBox x:Name="txtVariant" Height="19" Canvas.Left="450" Canvas.Top="68" Text="Typ een variantnaam" TextWrapping="Wrap" Width="123" />
+                                <Button x:Name="btnZoeken" Content="Zoeken" Canvas.Top="97" Width="80" Canvas.Left="878"
+                                        Command="{Binding Path=searchPlantsCommand}"/>
                                 <Label Canvas.Top="95" Content="Naam:"/>
                                 <TextBox x:Name="txtNLNaam" Width="200" Canvas.Top="99" Canvas.Left="80" Text="Typ de nederlandse naam"   />
+                                <ComboBox SelectedValue="{Binding SelectedVariant}" x:Name="cmbVariant" Width="200" Canvas.Top="65" Canvas.Left="450"  ItemsSource="{Binding Variants}" />
+                                <Button x:Name="btnReset" Content="Reset" Canvas.Top="71" Width="80" Canvas.Left="878"
+                                    Command="{Binding Path=resetCommand}"/>
                             </Canvas>
                         </GroupBox>
                         <GroupBox Header="Resultaten" Height="265">

@@ -35,6 +35,7 @@ namespace PlantenApplicatie
             beheerPlantenViewModel.LoadSoorten();
             beheerPlantenViewModel.LoadFamilies();
             beheerPlantenViewModel.LoadGenus();
+            beheerPlantenViewModel.LoadVariants();
 
 
         }
@@ -84,7 +85,7 @@ namespace PlantenApplicatie
             
             plantDetails.Show();
         }
-        */
+        
         private void btnZoeken_Click(object sender, RoutedEventArgs e)
         {
             SearchPlanten();
@@ -103,6 +104,8 @@ namespace PlantenApplicatie
 
             lvPlanten.ItemsSource = list;
         }
+        
+         */
     }
         
 }

@@ -20,7 +20,6 @@ namespace PlantenApplicatie
     public partial class OpzoekenPlant : Window
     {
         private PlantenDao plantenDAO;
-        public static Plant _selectedPlant { get; set; }
 
         public OpzoekenPlant()
         {
@@ -60,7 +59,8 @@ namespace PlantenApplicatie
 
         private void btnDetailsPlant_Click(object sender, RoutedEventArgs e)
         {
-          
+            PlantDetails plantDetails = new PlantDetails();
+            plantDetails.Show();
         }
 
         private void txtNLnaam_KeyDown(object sender, KeyEventArgs e)
@@ -83,22 +83,19 @@ namespace PlantenApplicatie
 
         private void btnZoeken_Click(object sender, RoutedEventArgs e)
         {
-            var type = cmbType.SelectedValue is null ? null : cmbType.SelectedValue.ToString();
+            /*
             var family = cmbFamilie.SelectedValue is null ? null : cmbFamilie.SelectedValue.ToString();
             var genus = cmbGeslacht.SelectedValue is null ? null : cmbGeslacht.SelectedValue.ToString();
             var species = cmbSoort.SelectedValue is null ? null : cmbSoort.SelectedValue.ToString();
 
-            var list = plantenDAO.SearchPlants(type,
+            var list = plantenDAO.SearchByProperties(txtPlantnaam.Text,
                 family, genus,
-                species, txtVariant.Text, txtPlantnaam.Text);
+                species, txtVariant.Text);
 
             lvPlanten.ItemsSource = list;
             
+            */
            
         }
-
-       
-
-
     }
 }
