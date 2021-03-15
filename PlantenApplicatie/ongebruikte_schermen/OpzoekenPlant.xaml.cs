@@ -40,7 +40,7 @@ namespace PlantenApplicatie
 
         private void ResetInputFields()
         {
-            txtPlantnaam.Text = string.Empty;
+          
             txtNLNaam.Text = string.Empty;
             cmbFamilie.SelectedValue = null;
             cmbGeslacht.SelectedValue = null;
@@ -83,6 +83,7 @@ namespace PlantenApplicatie
 
         private void btnZoeken_Click(object sender, RoutedEventArgs e)
         {
+            /*
             var family = cmbFamilie.SelectedValue is null ? null : cmbFamilie.SelectedValue.ToString();
             var genus = cmbGeslacht.SelectedValue is null ? null : cmbGeslacht.SelectedValue.ToString();
             var species = cmbSoort.SelectedValue is null ? null : cmbSoort.SelectedValue.ToString();
@@ -93,7 +94,8 @@ namespace PlantenApplicatie
 
             lvPlanten.ItemsSource = list;
             
-            ResetInputFields();
+            */
+           
         }
     }
 }

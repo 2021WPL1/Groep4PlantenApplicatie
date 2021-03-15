@@ -1,0 +1,155 @@
+﻿<Window x:Class="PlantenApplicatie.BeheerPlanten"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlantenApplicatie"
+        mc:Ignorable="d"
+        Title="BeheerPlanten" Height="550" Width="1200">
+    <Grid>
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="Opzoeken">
+                <Grid>
+                    <StackPanel Orientation="Vertical">
+                        <GroupBox Header="Kenmerken" Height="170">
+                            <Canvas Margin="10">
+                                <!-- eerste rij -->
+                                <Label Canvas.Top="0" Content="Plantnaam :"/>
+                                <TextBox x:Name="txtPlantnaam" Width="200" Canvas.Top="5" Canvas.Left="80"
+                                         
+                                        Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Command="{Binding Path=showPlantByNameCommand}" Key="Enter" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
+                                <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
+                                <!-- tweede rij -->
+                                <Label Content="Type :" Canvas.Top="30" />
+                                <ComboBox SelectedValue="{Binding SelectedType}" x:Name="cmbType" Width="200" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }"  />
+                                <Label Content="Geslacht :" Canvas.Top="30" Canvas.Left="350" />
+                                <ComboBox SelectedValue="{Binding SelectedGeslacht}" x:Name="cmbGeslacht" Width="200" Canvas.Top="35" Canvas.Left="450"  ItemsSource="{Binding Genus }" />
+                                <!-- derde rij -->
+
+                                <Label Content="Soort :" Canvas.Top="60" />
+                                <ComboBox SelectedValue="{Binding SelectedSoort}" x:Name="cmbSoort" Width="200" Canvas.Top="65" Canvas.Left="80" ItemsSource="{Binding Soorten }" />
+                                <Label Content="Variant :" Canvas.Top="60" Canvas.Left="350" />
+                                <!-- vierde rij-->
+                                <Button x:Name="btnZoeken" Content="Zoeken" Canvas.Top="97" Width="80" Canvas.Left="878"
+                                        Command="{Binding Path=searchPlantsCommand}"/>
+                                <Label Canvas.Top="95" Content="Naam:"/>
+                                <TextBox x:Name="txtNLNaam" Width="200" Canvas.Top="99" Canvas.Left="80" Text="Typ de nederlandse naam"   />
+                                <ComboBox SelectedValue="{Binding SelectedVariant}" x:Name="cmbVariant" Width="200" Canvas.Top="65" Canvas.Left="450"  ItemsSource="{Binding Variants}" />
+                                <Button x:Name="btnReset" Content="Reset" Canvas.Top="71" Width="80" Canvas.Left="878"
+                                    Command="{Binding Path=resetCommand}"/>
+                            </Canvas>
+                        </GroupBox>
+                        <GroupBox Header="Resultaten" Height="265">
+                            <Canvas>
+                                <ListView x:Name="lvPlanten" Canvas.Left="10" Height="218" Width="1036"
+                                          ItemsSource="{Binding Plants}" 
+                                          SelectedItem="{Binding SelectedPlant}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Plantnaam" Width="Auto" DisplayMemberBinding="{Binding Fgsv}" />
+                                            <GridViewColumn Header="Type" Width="Auto" DisplayMemberBinding="{Binding Type}" />
+                                            <GridViewColumn Header="Familie" Width="Auto" DisplayMemberBinding="{Binding Familie}" />
+                                            <GridViewColumn Header="Geslacht" Width="Auto" DisplayMemberBinding="{Binding Geslacht}" />
+                                            <GridViewColumn Header="Soort" Width="Auto" DisplayMemberBinding="{Binding Soort}" />
+                                            <GridViewColumn Header="Variant" Width="Auto" DisplayMemberBinding="{Binding Variant}" />
+                                            <GridViewColumn Header="Nederlandse naam" Width="Auto" DisplayMemberBinding="{Binding NederlandsNaam}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Canvas>
+                        </GroupBox>
+
+                        <!-- knop details plant -->
+                        <Grid Height="50">
+                            <Canvas>
+                                <Button x:Name="btnDetailsPlant" Canvas.Top="15" Canvas.Left="21" Width="150"
+                                        Content="Details plant bekijken" Command="{Binding Path=showPlantDetailsCommand}" />
+
+                            </Canvas>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Toevoegen">
+                <Grid>
+                    <GroupBox Header="Naam en toebehoren" Margin="0,0,0,284">
+                        <Canvas Margin="10,0,10,0" Height="112">
+                            <!-- eerste rij -->
+                            <Label Canvas.Top="-2" Canvas.Left="-1" Content="Familie:"/>
+                            <ComboBox x:Name="cmbFamilie_toevoegen"  Canvas.Top="-2" Canvas.Left="80" Width="125"  ItemsSource="{Binding Families }" />
+                            <!-- tweede rij -->
+                            <Label Content="Type :" Canvas.Top="30" />
+                            <ComboBox x:Name="cmbType_toevoegen" Width="125" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }"  DisplayMemberPath="Planttypenaam" />
+                            <Label Content="Geslacht :" Canvas.Top="-4" Canvas.Left="246" />
+                            <ComboBox x:Name="cmbGeslacht_toevoegen" Width="124" Canvas.Left="312" Canvas.Top="-2"  ItemsSource="{Binding Genus }"  />
+                            <!-- derde rij -->
+
+                            <Label Content="Soort :" Canvas.Top="60" />
+                            <ComboBox x:Name="cmbSoort_toevoegen" Width="125" Canvas.Top="65" Canvas.Left="80"  ItemsSource="{Binding Soorten }" />
+                            <Label Content="Variant :" Canvas.Top="31" Canvas.Left="246" />
+                            <Label Content="NL naam:" Canvas.Top="63" Canvas.Left="247" />
+                            <TextBox x:Name="txtVariant_toevoegen" Height="25" Canvas.Left="312" Canvas.Top="30" Text="TextBox" TextWrapping="Wrap" Width="125"/>
+                            <Button x:Name="btnVoegPlantToe_toevoegen" Content="Voeg Plant toe aan database" Height="28" Canvas.Left="598" Canvas.Top="10" Width="160"/>
+                            <TextBox x:Name="txtNederlandseNaam_toevoegen" Height="25" Canvas.Left="312" Canvas.Top="63" Text="TextBox" TextWrapping="Wrap" Width="125"/>
+                            <Label Content="Resultaat: " Canvas.Left="534" Canvas.Top="55"/>
+                            <Label x:Name="lblResultaatNaam_toevoegen" Content="Berguntia white chocolate " Canvas.Left="598" Canvas.Top="55"/>
+                        </Canvas>
+                    </GroupBox>
+
+                    <GroupBox Header="Geselecteerde eigenschappen" HorizontalAlignment="Left" Height="263" Margin="534,230,0,0" VerticalAlignment="Top" Width="279">
+                        <Canvas HorizontalAlignment="Left" Height="241" Margin="10,0,0,0" VerticalAlignment="Center" Width="259">
+                            <ListBox x:Name="lbEigenschappen" Height="191" Width="242" Canvas.Top="10"/>
+                            <Button x:Name="btnVerwijderEigenschap" Content="Verwijder eigenschap" Height="25" Canvas.Top="206" Width="120"/>
+                        </Canvas>
+                    </GroupBox>
+
+                    <GroupBox Header="Eigenschappen" HorizontalAlignment="Left" Height="263" Margin="0,230,0,0" VerticalAlignment="Top" Width="494">
+                        <Canvas HorizontalAlignment="Left" Height="209" VerticalAlignment="Center" Width="484">
+                            <Label Content="Onderwerp: " Height="26" Canvas.Left="10" Width="84"/>
+                            <ComboBox x:Name="cmbAbiotiek" Height="24" Canvas.Left="94" Canvas.Top="2" Width="143" SelectedIndex="0">
+                                <ComboBoxItem Content="Abiotiek"/>
+                            </ComboBox>
+                            <Label Content="Bezonning:" Height="33" Canvas.Left="16" Canvas.Top="71" Width="78"/>
+                            <ComboBox x:Name="cmbBezonning" Height="24" Canvas.Left="99" Canvas.Top="73" Width="48"/>
+                            <Label Content="GrondSoort: " Height="27" Canvas.Left="16" Canvas.Top="121" Width="88"/>
+                            <Button x:Name="btnVoegHuidigeKenmerkenToe" Content="Voeg Huidige kenmerken toe" Height="24" Canvas.Left="310" Canvas.Top="175" Width="164"/>
+                            <Label Content="VochtBehoefte: " Height="27" Canvas.Left="208" Canvas.Top="70" Width="98"/>
+                            <Label Content="VoedingsBehoefte: " Height="27" Canvas.Left="208" Canvas.Top="121" Width="111"/>
+                            <ComboBox x:Name="cmbGrondSoort" Height="24" Canvas.Left="104" Canvas.Top="124" Width="48"/>
+                        </Canvas>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Wijzigen-verwijderen">
+                <Grid>
+                    <ListView x:Name="lvPlanten_wijzigen_verwijderen" Margin="10,64,40,253">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Plantnaam" Width="70" DisplayMemberBinding="{Binding Plantnaam}" />
+                                <GridViewColumn Header="Type" Width="70" DisplayMemberBinding="{Binding Type}" />
+                                <GridViewColumn Header="Familie" Width="70" DisplayMemberBinding="{Binding Familie}" />
+                                <GridViewColumn Header="Geslacht" Width="100" DisplayMemberBinding="{Binding Geslacht}" />
+                                <GridViewColumn Header="Soort" Width="100" DisplayMemberBinding="{Binding Soort}" />
+                                <GridViewColumn Header="Variant" Width="50" DisplayMemberBinding="{Binding Variant}" />
+                                <GridViewColumn Header="Nederlandse naam" Width="150" DisplayMemberBinding="{Binding NLnaam}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Label Content="Plantnaam:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Height="25" Width="74"/>
+                    <TextBox HorizontalAlignment="Left" Margin="89,27,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <ListBox HorizontalAlignment="Left" Height="178" Margin="10,316,0,0" VerticalAlignment="Top" Width="146"/>
+                    <Label Content="Huidige eigenschappen" HorizontalAlignment="Left" Height="28" Margin="10,283,0,0" VerticalAlignment="Top" Width="139"/>
+                    <ListBox HorizontalAlignment="Left" Height="179" Margin="518,316,0,0" VerticalAlignment="Top" Width="146"/>
+                    <Label Content="Nieuwe eigenschappen" HorizontalAlignment="Left" Height="28" Margin="518,282,0,0" VerticalAlignment="Top" Width="139"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="316,285,0,0" VerticalAlignment="Top" Width="83"/>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

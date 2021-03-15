@@ -5,15 +5,17 @@ namespace PlantenApplicatie.Domain
 {
     public partial class TfgsvGeslacht
     {
+        public TfgsvGeslacht()
+        {
+            TfgsvSoort = new HashSet<TfgsvSoort>();
+        }
+
         public long GeslachtId { get; set; }
         public long FamilieFamileId { get; set; }
         public string Geslachtnaam { get; set; }
         public string NlNaam { get; set; }
 
-        // override ToString, toon de property waarde in de combobox
-        public override string ToString()
-        {
-            return Geslachtnaam;
-        }
+        public virtual TfgsvFamilie FamilieFamile { get; set; }
+        public virtual ICollection<TfgsvSoort> TfgsvSoort { get; set; }
     }
 }

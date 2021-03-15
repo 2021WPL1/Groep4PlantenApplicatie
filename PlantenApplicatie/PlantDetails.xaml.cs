@@ -1,4 +1,7 @@
-﻿using System;
+﻿using PlantenApplicatie.Data;
+using PlantenApplicatie.Domain;
+using PlantenApplicatie.viewmodels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,14 +20,13 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class PlantDetails : Window
     {
-        public PlantDetails()
+        public PlantDetails(Plant selectedPlant)
         {
             InitializeComponent();
+            DataContext = new PlantDetailsViewModel(selectedPlant);
         }
-
-        private void btnSluiten_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        
+        
     }
 }
+

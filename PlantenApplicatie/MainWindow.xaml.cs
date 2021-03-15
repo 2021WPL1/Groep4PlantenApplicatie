@@ -36,24 +36,10 @@ namespace PlantenApplicatie
             Close();
         }
 
-        //davy
-        private void menu_item_Opzoeken_plant_Click(object sender, RoutedEventArgs e)
+        private void menu_item_beheer_plant_Click(object sender, RoutedEventArgs e)
         {
-            OpzoekenPlant opzoekenPlant = new OpzoekenPlant();
-            opzoekenPlant.Show();
-        }
-
-        //Jim
-        private void menu_Item_Toevoegen_Plant_Click(object sender, RoutedEventArgs e)
-        {
-            ToevoegenPlant toevoegenPlant = new ToevoegenPlant();
-            toevoegenPlant.Show();
-        }
-
-        private void menu_Item_Wijzigen_Plant_Click(object sender, RoutedEventArgs e)
-        {
-            WijzigenPlant wijzigenPlant = new WijzigenPlant();
-            wijzigenPlant.Show();
+            BeheerPlanten beheerPlanten = new BeheerPlanten();
+            beheerPlanten.Show();
         }
     }
 }

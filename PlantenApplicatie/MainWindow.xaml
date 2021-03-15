@@ -6,14 +6,12 @@
         xmlns:local="clr-namespace:PlantenApplicatie"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="grid1">
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="Plant">
-                    <MenuItem x:Name="menu_item_Opzoeken_plant" Header="Opzoeken plant" Click="menu_item_Opzoeken_plant_Click"/>
-                    <MenuItem x:Name="menu_Item_Toevoegen_Plant" Header="Toevoegen plant" Click="menu_Item_Toevoegen_Plant_Click"/>
-                    <MenuItem x:Name="menu_Item_Wijzigen_Plant" Header="Wijzigen plant" Click="menu_Item_Wijzigen_Plant_Click"/>
-                    <Separator />
+                    <MenuItem x:Name="menu_item_beheer_plant" Header="Beheer planten" Click="menu_item_beheer_plant_Click"/>
+                   <Separator />
                     <MenuItem Header="Exporteren">
                         <MenuItem Header="Naar Excel"/>
                         <MenuItem Header="Naar PDF"/>
@@ -37,5 +35,6 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
+        
     </Grid>
 </Window>
