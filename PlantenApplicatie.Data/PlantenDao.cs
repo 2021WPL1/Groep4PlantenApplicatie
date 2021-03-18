@@ -157,22 +157,28 @@ namespace PlantenApplicatie.Data
 
         public List<string> GetUniqueSpeciesNames()
         {
-            return _context.TfgsvSoort
-                .Select(s => s.Soortnaam)
-                .Distinct()
-                .ToList();
+            var list = _context.TfgsvSoort.Select(s => s.Soortnaam).Distinct().OrderBy(soortnaam => soortnaam).ToList();
+            var trimmedList = new List<string>();
+
+            foreach(var item in list)
+            {
+                trimmedList.Add(PlantenParser.ParseSearchText(item));
+            }
+
+            return trimmedList.OrderBy(s => s).ToList();
         }
 
         public List<string> GetUniqueVariantNames()
         {
-            var variants = _context.TfgsvVariant
-                .Select(v => v.Variantnaam)
-                .Distinct()
-                .ToList();
+            var list = _context.TfgsvVariant.Select(v => v.Variantnaam).Distinct().OrderBy(variantnaam => variantnaam).ToList();
+            var trimmedList = new List<string>();
 
-            variants.Insert(0, NoVariant);
+            foreach(var item in list)
+            {
+                trimmedList.Add(PlantenParser.ParseSearchText(item));
+            }
 
-            return variants;
+            return trimmedList.OrderBy(v => v).ToList();
         }
 
         public List<AbioHabitat> GetHabitatsByValues(List<string> habitatKeys)
