@@ -9,6 +9,8 @@ namespace PlantenApplicatie.viewmodels
 {
     public class PlantDetailsViewModel : ViewModelBase
     {
+        private const string TextSeparator = ",\n";
+        
         private readonly PlantenDao _dao;
         private Plant _selectedPlant;
         private Dictionary<string, List<string>> _prefixes;
@@ -70,7 +72,7 @@ namespace PlantenApplicatie.viewmodels
             };
             _prefixes["Commensalisme"] = new List<string>()
             {
-                "Sociabiliteit", "Ontwikkelsnelheid", "Strategie"
+                "Ontwikkelsnelheid", "Strategie", "Sociabiliteit"
             };
             _prefixes["Extra eigenschappen"] = new List<string>()
             {
@@ -123,44 +125,43 @@ namespace PlantenApplicatie.viewmodels
         
         private List<object> CreateFenotypeDetailsList()
         {
-            // fenotype_multi?????
-            var fenotype = SelectedPlant.Fenotype.First();
+            var fenotype = SelectedPlant.Fenotype.FirstOrDefault();
             
             return new List<object>
             {
-                fenotype.Bladgrootte, fenotype.Bladvorm, fenotype.RatioBloeiBlad,
-                fenotype.Bloeiwijze, fenotype.Habitus, fenotype.Levensvorm
+                fenotype?.Bladgrootte, fenotype?.Bladvorm, fenotype?.RatioBloeiBlad,
+                fenotype?.Bloeiwijze, fenotype?.Habitus, fenotype?.Levensvorm
             };
         }
         
         private List<object> CreateAbiotiekDetailsList()
         {   
-            var abiotiek = SelectedPlant.Abiotiek.First();
+            var abiotiek = SelectedPlant.Abiotiek.FirstOrDefault();
             var abiotiekMultiValues = SelectedPlant.AbiotiekMulti
                 .Select(am => am.Waarde)
                 .ToList();
             
             return new List<object>
             {
-                abiotiek.Bezonning, abiotiek.Grondsoort, abiotiek.Vochtbehoefte, 
-                abiotiek.Voedingsbehoefte, abiotiek.AntagonischeOmgeving, 
-                string.Join(", ", _dao.GetHabitatsByValues(abiotiekMultiValues)
+                abiotiek?.Bezonning, abiotiek?.Grondsoort, abiotiek?.Vochtbehoefte, 
+                abiotiek?.Voedingsbehoefte, abiotiek?.AntagonischeOmgeving, 
+                string.Join(TextSeparator, _dao.GetHabitatsByValues(abiotiekMultiValues)
                     .Select(ah => ah.Waarde))
             };
         }
         
         private List<object> CreateCommensalismeDetailsList()
         {
-            var commensalisme = SelectedPlant.Commensalisme.First();
+            var commensalisme = SelectedPlant.Commensalisme.FirstOrDefault();
             var commensalismeMultiValues = SelectedPlant.CommensalismeMulti
                 .Select(cm => cm.Waarde)
                 .ToList();
 
             return new List<object>
             {
-                string.Join(", ", _dao.GetCommSociabiliteitByValues(commensalismeMultiValues)
+                commensalisme?.Ontwikkelsnelheid, commensalisme?.Strategie, 
+                string.Join(TextSeparator, _dao.GetCommSociabiliteitByValues(commensalismeMultiValues)
                     .Select(cs => cs.Waarde)), 
-                commensalisme.Ontwikkelsnelheid, commensalisme.Strategie 
             };
         }
         
@@ -178,28 +179,18 @@ namespace PlantenApplicatie.viewmodels
         
         private List<object> CreateBeheerDetailsList()
         {
-            return new List<object> { _selectedPlant.BeheerMaand
-                    .SelectMany(b => new[] {
-                        string.Join(", ", b.Beheerdaad),
-                        string.Join(", ", b.Omschrijving)//,
-                        // create method to generate month ranges
-                    }) };
+            return null;
         }
         
         private List<object> CreateFotoDetailsList()
         {
-            return new List<object> { _selectedPlant.Foto
+            return _selectedPlant.Foto
                     .SelectMany(f => new[] {
-                        string.Join(", ", f.Eigenschap),
-                        string.Join(", ", f.UrlLocatie) // only url to image given
-                    }) };
-        }
-
-        private List<string> GenerateMonthRanges(BeheerMaand beheerMaand)
-        {
-            var monthRanges = new Dictionary<int, int>();
-
-            return null;
+                        string.Join(TextSeparator, f.Eigenschap),
+                        string.Join(TextSeparator, f.UrlLocatie) // only url to image given
+                    })
+                    .Cast<object>()
+                    .ToList();
         }
     }
 }
