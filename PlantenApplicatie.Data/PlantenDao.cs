@@ -5,7 +5,7 @@ using PlantenApplicatie.Domain;
 
 namespace PlantenApplicatie.Data
 {
-    //De PlantenDao Klasse (Jim&Davy&Liam&Zakaria&Lily)
+    // De PlantenDao Klasse (Jim&Davy&Liam&Zakaria&Lily)
     public class PlantenDao
     {
         private readonly PlantenContext _context;
@@ -23,7 +23,7 @@ namespace PlantenApplicatie.Data
 
         public static PlantenDao Instance { get; }
 
-        //Geef alle planten terug met al hun properties van de andere tabellen (Lily & davy)
+        // Geef alle planten terug met al hun properties van de andere tabellen (Lily & davy)
         public List<Plant> GetPlanten()
         {
             return _context.Plant
@@ -37,7 +37,9 @@ namespace PlantenApplicatie.Data
                 .Include(p => p.Foto)
                 .ToList();
         }
-        // haalt de ID's van TFGSV op en roept een methode op om te zoeken op ID's en Naam, houd rekening met null (Lily)
+
+        // Haalt de ID's van TFGSV op en roept een methode op om te zoeken op ID's en Naam, 
+        // houd rekening met null (Lily)
         public List<Plant> SearchPlants(string? type, string? family, string? genus,
             string? species, string? variant, string? name)
         {
@@ -47,11 +49,13 @@ namespace PlantenApplicatie.Data
             var speciesIds = GetSpeciesIds(species is null ? string.Empty : species);
             var variantIds = GetVariantIds(variant is null ? string.Empty : variant);
 
-            return SearchPlantsWithTgsvAndName(typeIds, familyIds, genusIds, speciesIds, variantIds, name is null ? string.Empty : name);
+            return SearchPlantsWithTgsvAndName(
+                typeIds, familyIds, genusIds, speciesIds, variantIds, name is null ? string.Empty : name);
         }
-        //zoekt op ID's en naam (Lily)
-        private List<Plant> SearchPlantsWithTgsvAndName(List<long> typeIds, List<long> familyIds, List<long> genusIds, List<long> speciesIds, 
-            List<long?> variantIds, string name)
+
+        // Zoekt op ID's en naam (Lily)
+        private List<Plant> SearchPlantsWithTgsvAndName(List<long> typeIds, List<long> familyIds, 
+            List<long> genusIds, List<long> speciesIds, List<long?> variantIds, string name)
         {
             return _context.Plant
                 .Include(p => p.Abiotiek)
@@ -74,7 +78,8 @@ namespace PlantenApplicatie.Data
                 .OrderBy(p => p.Fgsv)
                 .ToList();
         }
-        //geef de type ID's terug (Lily)
+
+        // Geef de type ID's terug (Lily)
         private List<long> GetTypeIds(string type)
         {
             return _context.TfgsvType.ToList().Where(t => 
@@ -83,7 +88,8 @@ namespace PlantenApplicatie.Data
                 .Select(t => t.Planttypeid)
                 .ToList();
         }
-        //geef de familie ID's terug (Lily)
+
+        // Geef de familie ID's terug (Lily)
         private List<long> GetFamilyIds(string family)
         {
             return _context.TfgsvFamilie.ToList().Where(f =>
@@ -92,7 +98,8 @@ namespace PlantenApplicatie.Data
                 .Select(f => f.FamileId)
                 .ToList();
         }
-        //Geef de geslacht ID's terug (Lily)
+
+        // Geef de geslacht ID's terug (Lily)
         private List<long> GetGenusIds(string genus)
         {
             return _context.TfgsvGeslacht.ToList().Where(g =>
@@ -101,7 +108,8 @@ namespace PlantenApplicatie.Data
                 .Select(g => g.GeslachtId)
                 .ToList();
         }
-        //Geef de soort Id's terug (Lily)
+
+        // Geef de soort Id's terug (Lily)
         private List<long> GetSpeciesIds(string species)
         {
             return _context.TfgsvSoort.ToList().Where(s =>
@@ -110,10 +118,11 @@ namespace PlantenApplicatie.Data
                 .Select(s => s.Soortid)
                 .ToList();
         }
-        //Geef de variant ID's terug (Lily)
+
+        // Geef de variant ID's terug (Lily)
         private List<long?> GetVariantIds(string variant)
         {
-            //mogelijkheid om N/A variant te kiezen 
+            // Mogelijkheid om N/A variant te kiezen 
             if (variant == NoVariant)
             {
                 return new List<long?> { null };
@@ -125,7 +134,8 @@ namespace PlantenApplicatie.Data
                 .Select(v => v.VariantId)
                 .Cast<long?>()
                 .ToList();
-           //voeg null toe aan de lijst om planten met geen variant terug te kunnen krijgen
+
+           // Voeg null toe aan de lijst om planten met geen variant terug te kunnen krijgen
             if (variant == string.Empty)
             {
                 variants.Add(null);
@@ -133,7 +143,8 @@ namespace PlantenApplicatie.Data
 
             return variants;
         }
-        //Haalt alle unieke typenamen op (Davy&Lily&Jim)
+
+        // Haalt alle unieke typenamen op (Davy&Lily&Jim)
         public List<string> GetTypes()
         {
             return _context.TfgsvType
@@ -141,8 +152,8 @@ namespace PlantenApplicatie.Data
                 .Distinct()
                 .ToList();
         }
-        //Haalt alle unieke familienamen op (Davy&Lily&Jim)
 
+        // Haalt alle unieke familienamen op (Davy&Lily&Jim)
         public List<string> GetUniqueFamilyNames()
         {
             return _context.TfgsvFamilie
@@ -150,8 +161,8 @@ namespace PlantenApplicatie.Data
                 .Distinct()
                 .ToList();
         }
-        //Haalt alle unieke geslachtnamen op (Davy&Lily&Jim)
 
+        // Haalt alle unieke geslachtnamen op (Davy&Lily&Jim)
         public List<string> GetUniqueGenusNames()
         {
             return _context.TfgsvGeslacht
@@ -159,8 +170,8 @@ namespace PlantenApplicatie.Data
                 .Distinct()
                 .ToList();
         }
-        //Haalt alle unieke soortnamen op (Davy&Lily&Jim)
 
+        // Haalt alle unieke soortnamen op (Davy&Lily&Jim)
         public List<string> GetUniqueSpeciesNames()
         {
             return _context.TfgsvSoort
@@ -170,8 +181,8 @@ namespace PlantenApplicatie.Data
                 .OrderBy(soortnaam => soortnaam)
                 .ToList();
         }
-        //Haalt alle unieke varianten op (Davy&Lily&Jim)
 
+        // Haalt alle unieke varianten op (Davy&Lily&Jim)
         public List<string> GetUniqueVariantNames()
         {
             var list = _context.TfgsvVariant
@@ -185,16 +196,16 @@ namespace PlantenApplicatie.Data
 
             return list;
         }
-        //Haal alle Habitats op via hun waarde (Lily)
 
+        // Haal alle Habitats op via hun waarde (Lily)
         public List<AbioHabitat> GetHabitatsByValues(List<string> habitatKeys)
         {
             return _context.AbioHabitat
                 .Where(ah => habitatKeys.Contains(ah.Afkorting))
                 .ToList();
         }
-        //Haal alle sociabiliteiten op via hun waarde (Lily)
 
+        // Haal alle sociabiliteiten op via hun waarde (Lily)
         public List<CommSocialbiliteit> GetCommSociabiliteitByValues(List<string> commensalismeKeys)
         {
             return _context.CommSocialbiliteit

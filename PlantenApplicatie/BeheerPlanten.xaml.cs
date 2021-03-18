@@ -19,7 +19,7 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class BeheerPlanten : Window
     {
-        //initialize de scherm (Davy)
+        // initialize de scherm (Davy)
         public BeheerPlanten()
         {
             InitializeComponent();

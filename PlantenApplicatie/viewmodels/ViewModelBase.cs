@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PlantenApplicatie.viewmodels
 {
-    //Viewmodelbase (Davy)
+    // Viewmodelbase (Davy)
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

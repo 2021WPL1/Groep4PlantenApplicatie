@@ -7,7 +7,7 @@ namespace PlantenApplicatie.CLI
 {
     class Program
     {
-        //testomgeving om een plant te vinden
+        // Testomgeving om een plant te vinden
         private static PlantenDao _plantenDao;
 
         static void Main(string[] args)
@@ -16,7 +16,6 @@ namespace PlantenApplicatie.CLI
 
             
             PrintPlanten(_plantenDao.SearchPlants("vivassen", "FABACEAE", "Baptisia", "australis", "", "faba"));
-            //PrintPlanten(_plantenDao.SearchPlantenByName("   vero"));
         }
 
         private static void PrintPlanten(List<Plant> planten)
