@@ -16,9 +16,9 @@
                       ItemsSource="{Binding PrefixKeys}" 
                       SelectedItem="{Binding SelectedPrefixKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="671" Canvas.Top="25" Width="219" Height="20"/>
             <Label 
-                Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}"/>
+                Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="169" Canvas.Top="153"/>
             <Label 
-                Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}"/>
+                Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="396" Canvas.Top="153"/>
         </Canvas>
     </Grid>
 </Window>

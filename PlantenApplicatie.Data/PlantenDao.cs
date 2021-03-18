@@ -8,6 +8,7 @@ namespace PlantenApplicatie.Data
     public class PlantenDao
     {
         private readonly PlantenContext _context;
+        private const string NoVariant = "N/A";
 
         static PlantenDao()
         {
@@ -24,19 +25,27 @@ namespace PlantenApplicatie.Data
         public List<Plant> GetPlanten()
         {
             return _context.Plant
+                .Include(p => p.Abiotiek)
+                .Include(p => p.AbiotiekMulti)
+                .Include(p => p.BeheerMaand)
+                .Include(p => p.Commensalisme)
+                .Include(p => p.CommensalismeMulti)
+                .Include(p => p.ExtraEigenschap)
+                .Include(p => p.Fenotype)
+                .Include(p => p.Foto)
                 .ToList();
         }
 
-        public List<Plant> SearchPlants(string type, string family, string genus,
-            string species, string? variant, string name)
+        public List<Plant> SearchPlants(string? type, string? family, string? genus,
+            string? species, string? variant, string? name)
         {
-            var typeIds = GetTypeIds(type);
-            var familyIds = GetFamilyIds(family);
-            var genusIds = GetGenusIds(genus);
-            var speciesIds = GetSpeciesIds(species);
-            var variantIds = GetVariantIds(variant);
+            var typeIds = GetTypeIds(type is null ? string.Empty : type);
+            var familyIds = GetFamilyIds(family is null ? string.Empty : family);
+            var genusIds = GetGenusIds(genus is null ? string.Empty : genus);
+            var speciesIds = GetSpeciesIds(species is null ? string.Empty : species);
+            var variantIds = GetVariantIds(variant is null ? string.Empty : variant);
 
-            return SearchPlantsWithTgsvAndName(typeIds, familyIds, genusIds, speciesIds, variantIds, name);
+            return SearchPlantsWithTgsvAndName(typeIds, familyIds, genusIds, speciesIds, variantIds, name is null ? string.Empty : name);
         }
 
         private List<Plant> SearchPlantsWithTgsvAndName(List<long> typeIds, List<long> familyIds, List<long> genusIds, List<long> speciesIds, 
@@ -100,21 +109,35 @@ namespace PlantenApplicatie.Data
                 .ToList();
         }
 
-        private List<long?> GetVariantIds(string? variant)
+        private List<long?> GetVariantIds(string variant)
         {
-            if (variant is null)
+            if (variant == NoVariant)
             {
-                return new List<long?>() { null };
+                return new List<long?> { null };
             }
 
-            return _context.TfgsvVariant.ToList().Where(v =>
+            var variants = _context.TfgsvVariant.ToList().Where(v =>
                 PlantenParser.ParseSearchText(v.Variantnaam)
                     .Contains(PlantenParser.ParseSearchText(variant)))
                 .Select(v => v.VariantId)
                 .Cast<long?>()
                 .ToList();
+
+            if (variant == string.Empty)
+            {
+                variants.Add(null);
+            }
+
+            return variants;
         }
 
+        public List<string> GetTypes()
+        {
+            return _context.TfgsvType
+                .Select(t => t.Planttypenaam)
+                .Distinct()
+                .ToList();
+        }
 
         public List<string> GetUniqueFamilyNames()
         {
@@ -140,9 +163,29 @@ namespace PlantenApplicatie.Data
                 .ToList();
         }
 
-        public List<TfgsvType> GetTypes()
+        public List<string> GetUniqueVariantNames()
         {
-            return _context.TfgsvType
+            var variants = _context.TfgsvVariant
+                .Select(v => v.Variantnaam)
+                .Distinct()
+                .ToList();
+
+            variants.Insert(0, NoVariant);
+
+            return variants;
+        }
+
+        public List<AbioHabitat> GetHabitatsByValues(List<string> habitatKeys)
+        {
+            return _context.AbioHabitat
+                .Where(ah => habitatKeys.Contains(ah.Afkorting))
+                .ToList();
+        }
+        
+        public List<CommSocialbiliteit> GetCommSociabiliteitByValues(List<string> commensalismeKeys)
+        {
+            return _context.CommSocialbiliteit
+                .Where(cm => commensalismeKeys.Contains(cm.Sociabiliteit))
                 .ToList();
         }
     }

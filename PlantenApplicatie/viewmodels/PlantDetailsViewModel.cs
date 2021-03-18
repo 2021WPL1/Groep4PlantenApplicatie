@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
 
 namespace PlantenApplicatie.viewmodels
 {
     public class PlantDetailsViewModel : ViewModelBase
     {
+        private readonly PlantenDao _dao;
         private Plant _selectedPlant;
         private Dictionary<string, List<string>> _prefixes;
         private ObservableCollection<string> _prefixKeys;
@@ -15,7 +18,9 @@ namespace PlantenApplicatie.viewmodels
         public PlantDetailsViewModel(Plant selectedPlant)
         {
             SelectedPlant = selectedPlant;
+            _dao = PlantenDao.Instance;
             CreatePrefixesAndProperties();
+            SelectedPrefixKey = _prefixKeys[0];
         }
 
         public Plant SelectedPlant
@@ -30,7 +35,7 @@ namespace PlantenApplicatie.viewmodels
 
         public ObservableCollection<string> PrefixKeys => _prefixKeys;
 
-        public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]);
+        public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
 
         public string Details => string.Join("\n", CreateDetailsList());
 
@@ -78,7 +83,7 @@ namespace PlantenApplicatie.viewmodels
             };
             _prefixes["Foto"] = new List<string>()
             {
-                "Eigenschap", "Locatie (URL)", "Thumbnail"
+                "Eigenschap", "Locatie (URL)" //, "Thumbnail"
             };
 
             _prefixKeys = new ObservableCollection<string>(_prefixes.Keys);
@@ -109,39 +114,92 @@ namespace PlantenApplicatie.viewmodels
 
         private List<object> CreatePlantDetailsList()
         {
-            return new() { _selectedPlant.Type, _selectedPlant.Familie, _selectedPlant.Geslacht, 
+            return new List<object> { 
+                _selectedPlant.Type, _selectedPlant.Familie, _selectedPlant.Geslacht, 
                 _selectedPlant.Soort, _selectedPlant.Variant, _selectedPlant.PlantdichtheidMin, 
-                _selectedPlant.PlantdichtheidMax };
+                _selectedPlant.PlantdichtheidMax 
+            };
         }
         
         private List<object> CreateFenotypeDetailsList()
         {
-            return new List<object>();
+            // fenotype_multi?????
+            var fenotype = SelectedPlant.Fenotype.First();
+            
+            return new List<object>
+            {
+                fenotype.Bladgrootte, fenotype.Bladvorm, fenotype.RatioBloeiBlad,
+                fenotype.Bloeiwijze, fenotype.Habitus, fenotype.Levensvorm
+            };
         }
         
         private List<object> CreateAbiotiekDetailsList()
-        {
-            return new List<object>();
+        {   
+            var abiotiek = SelectedPlant.Abiotiek.First();
+            var abiotiekMultiValues = SelectedPlant.AbiotiekMulti
+                .Select(am => am.Waarde)
+                .ToList();
+            
+            return new List<object>
+            {
+                abiotiek.Bezonning, abiotiek.Grondsoort, abiotiek.Vochtbehoefte, 
+                abiotiek.Voedingsbehoefte, abiotiek.AntagonischeOmgeving, 
+                string.Join(", ", _dao.GetHabitatsByValues(abiotiekMultiValues)
+                    .Select(ah => ah.Waarde))
+            };
         }
         
         private List<object> CreateCommensalismeDetailsList()
         {
-            return new List<object>();
+            var commensalisme = SelectedPlant.Commensalisme.First();
+            var commensalismeMultiValues = SelectedPlant.CommensalismeMulti
+                .Select(cm => cm.Waarde)
+                .ToList();
+
+            return new List<object>
+            {
+                string.Join(", ", _dao.GetCommSociabiliteitByValues(commensalismeMultiValues)
+                    .Select(cs => cs.Waarde)), 
+                commensalisme.Ontwikkelsnelheid, commensalisme.Strategie 
+            };
         }
         
         private List<object> CreateExtraEigenschappenDetailsList()
         {
-            return new List<object>();
+            var extraEigenschappen = SelectedPlant.ExtraEigenschap.First();
+
+            return new List<object> 
+            { 
+                extraEigenschappen.Nectarwaarde, extraEigenschappen.Pollenwaarde, extraEigenschappen.Bijvriendelijke, 
+                extraEigenschappen.Vlindervriendelijk, extraEigenschappen.Eetbaar, extraEigenschappen.Kruidgebruik, 
+                extraEigenschappen.Geurend, extraEigenschappen.Vorstgevoelig
+            };
         }
         
         private List<object> CreateBeheerDetailsList()
         {
-            return new List<object>();
+            return new List<object> { _selectedPlant.BeheerMaand
+                    .SelectMany(b => new[] {
+                        string.Join(", ", b.Beheerdaad),
+                        string.Join(", ", b.Omschrijving)//,
+                        // create method to generate month ranges
+                    }) };
         }
         
         private List<object> CreateFotoDetailsList()
         {
-            return new List<object>();
+            return new List<object> { _selectedPlant.Foto
+                    .SelectMany(f => new[] {
+                        string.Join(", ", f.Eigenschap),
+                        string.Join(", ", f.UrlLocatie) // only url to image given
+                    }) };
+        }
+
+        private List<string> GenerateMonthRanges(BeheerMaand beheerMaand)
+        {
+            var monthRanges = new Dictionary<int, int>();
+
+            return null;
         }
     }
 }
