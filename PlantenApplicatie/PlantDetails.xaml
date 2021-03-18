@@ -10,15 +10,15 @@
         <Canvas>
             <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
             <Label x:Name="lblPlantnaamGroot" 
-                   Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="22" Width="437" />
+                   Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="25"/>
 
-            <ComboBox x:Name="cmbEigenschappen" 
+            <ComboBox x:Name="cmbEigenschappen"
                       ItemsSource="{Binding PrefixKeys}" 
-                      SelectedItem="{Binding SelectedPrefixKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="671" Canvas.Top="25" Width="219" Height="20"/>
+                      SelectedItem="{Binding SelectedPrefixKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="10" Canvas.Top="57" Width="219" Height="20"/>
             <Label 
-                Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="169" Canvas.Top="153"/>
+                Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="10" Canvas.Top="153"/>
             <Label 
-                Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="396" Canvas.Top="153"/>
+                Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="219" Canvas.Top="153"/>
         </Canvas>
     </Grid>
 </Window>
