@@ -19,9 +19,6 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class BeheerPlanten : Window
     {
-        private PlantenDao plantenDao;
-        private BeheerPlantenViewModel beheerPlantenViewModel;
-        
         //initialize de scherm (Davy)
         public BeheerPlanten()
         {
