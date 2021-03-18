@@ -48,7 +48,7 @@ namespace PlantenApplicatie.viewmodels
         private string textInputPlantName;
 
         //Constructor (Davy & Jim)
-        public BeheerPlantenViewModel(PlantenDao plantenDao)
+        public BeheerPlantenViewModel()
         {
             showPlantDetailsCommand = new DelegateCommand(showPlantDetails);
             showPlantByNameCommand = new DelegateCommand(showPlantByName);
@@ -63,7 +63,14 @@ namespace PlantenApplicatie.viewmodels
             Genus = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
 
-            this._plantenDao = plantenDao;
+            this._plantenDao = PlantenDao.Instance;
+
+            LoadPlants();
+            LoadTypes();
+            LoadSoorten();
+            LoadFamilies();
+            LoadGenus();
+            LoadVariants();
         }
 
         //wanneer er op de reset knop geklikt word reset de CMB en TextBox (Davy)
