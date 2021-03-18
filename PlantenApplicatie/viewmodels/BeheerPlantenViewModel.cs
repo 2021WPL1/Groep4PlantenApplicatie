@@ -278,8 +278,8 @@ namespace PlantenApplicatie.viewmodels
             var variant = SelectedVariant;
 
 
-                var list = _plantenDao.SearchPlants(type,
-                familie, geslacht, soort, variant, TextInputPlantName);
+            var list = _plantenDao.SearchPlants(type,
+            familie, geslacht, soort, variant, TextInputPlantName);
                 
             Plants.Clear();
             

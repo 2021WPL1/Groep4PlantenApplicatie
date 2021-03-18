@@ -178,7 +178,7 @@ namespace PlantenApplicatie.viewmodels
         //zodat het gejoined kan worden in de string
         private List<object> CreateExtraEigenschappenDetailsList()
         {
-            var extraEigenschappen = SelectedPlant.ExtraEigenschap.First();
+            var extraEigenschappen = SelectedPlant.ExtraEigenschap.FirstOrDefault();
 
             return new List<object> 
             { 
