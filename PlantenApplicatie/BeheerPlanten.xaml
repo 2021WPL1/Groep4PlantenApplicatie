@@ -150,6 +150,53 @@
 
                 </Grid>
             </TabItem>
+            <TabItem Header="Importeren">
+                <Grid>
+                    <Label Content="Kies bestand :" HorizontalAlignment="Left" Margin="35,31,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Bestand ..." HorizontalAlignment="Left" Margin="141,34,0,0" VerticalAlignment="Top" Width="109"/>
+                    <Button Content="Importeren" HorizontalAlignment="Left" Margin="929,473,0,0" VerticalAlignment="Top" Width="99"/>
+                    <GroupBox Header="Data preview" Margin="35,84,40,86">
+                        <ListView Height="258" Margin="43,0,68,0">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Exporteren">
+                <Grid>
+                    <Canvas>
+                        <Label Content="Kies planten om te exporteren :" Canvas.Left="348" FontSize="24" />
+
+                        <Image x:Name="imgFoto" Height="200" Width="200" Canvas.Top="80" Canvas.Left="498" />
+                        <Button x:Name="btnExporteren" Content="Exporteren naar Excel" Canvas.Left="873" Canvas.Top="471" Width="145" />
+                        <ListView Height="186" Width="998" Canvas.Left="20" Canvas.Top="47">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ListView Height="186" Width="998" Canvas.Left="20" Canvas.Top="269">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Label Content="Overzicht geselecteerde planten" Canvas.Left="20" Canvas.Top="238"/>
+                        <Button Content="Plant uit overzicht verwijderen" Canvas.Left="20" Canvas.Top="471" Width="180"/>
+
+                    </Canvas>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Afdrukken">
+                <Grid>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
