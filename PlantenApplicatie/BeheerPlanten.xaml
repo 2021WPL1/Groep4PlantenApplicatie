@@ -19,7 +19,7 @@
                                          
                                         Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.InputBindings>
-                                        <KeyBinding Command="{Binding Path=showPlantByNameCommand}" Key="Enter" />
+                                        <KeyBinding Command="{Binding Path=ShowPlantByNameCommand}" Key="Enter" />
                                     </TextBox.InputBindings>
                                 </TextBox>
                                 <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
@@ -36,12 +36,12 @@
                                 <Label Content="Variant :" Canvas.Top="60" Canvas.Left="350" />
                                 <!-- vierde rij-->
                                 <Button x:Name="btnZoeken" Content="Zoeken" Canvas.Top="97" Width="80" Canvas.Left="878"
-                                        Command="{Binding Path=searchPlantsCommand}"/>
+                                        Command="{Binding Path=SearchPlantsCommand}"/>
                                 <Label Canvas.Top="95" Content="Naam:"/>
                                 <TextBox x:Name="txtNLNaam" Width="200" Canvas.Top="99" Canvas.Left="80" Text="Typ de nederlandse naam"   />
                                 <ComboBox SelectedValue="{Binding SelectedVariant}" x:Name="cmbVariant" Width="200" Canvas.Top="65" Canvas.Left="450"  ItemsSource="{Binding Variants}" />
                                 <Button x:Name="btnReset" Content="Reset" Canvas.Top="71" Width="80" Canvas.Left="878"
-                                    Command="{Binding Path=resetCommand}"/>
+                                    Command="{Binding Path=ResetCommand}"/>
                             </Canvas>
                         </GroupBox>
                         <GroupBox Header="Resultaten" Height="265">
@@ -68,7 +68,7 @@
                         <Grid Height="50">
                             <Canvas>
                                 <Button x:Name="btnDetailsPlant" Canvas.Top="15" Canvas.Left="21" Width="150"
-                                        Content="Details plant bekijken" Command="{Binding Path=showPlantDetailsCommand}" />
+                                        Content="Details plant bekijken" Command="{Binding Path=ShowPlantDetailsCommand}" />
 
                             </Canvas>
                         </Grid>

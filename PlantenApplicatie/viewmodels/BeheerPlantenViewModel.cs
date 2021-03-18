@@ -15,28 +15,22 @@ namespace PlantenApplicatie.viewmodels
     class BeheerPlantenViewModel : ViewModelBase
     {
         //button commands
-        public ICommand showPlantDetailsCommand { get; set; }
-        public ICommand showPlantByNameCommand { get; set; }
-
-        public ICommand showVariantByNameCommand { get; set; }
-
-        public ICommand searchPlantsCommand { get; set; }
-
-        public ICommand resetCommand { get; set; }
+        public ICommand ShowPlantDetailsCommand { get; set; }
+        public ICommand ShowPlantByNameCommand { get; set; }
+        public ICommand ShowVariantByNameCommand { get; set; }
+        public ICommand SearchPlantsCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
 
         //observable collections, ipv strings gebruikten we de tfgsv klasses maar distinct/order by kon niet samen gebruikt worden (Davy&Jim)
         public ObservableCollection<Plant> Plants { get; set; }
-
         public ObservableCollection<string> Types { get; set; }
-
         public ObservableCollection<string> Soorten { get; set; }
         public ObservableCollection<string> Families { get; set; }
         public ObservableCollection<string> Genus { get; set; }
-
         public ObservableCollection<string> Variants { get; set; }
 
         // hiermee kunnen we de data opvragen aan de databank.
-        public PlantenDao _plantenDao;
+        private PlantenDao _plantenDao;
 
         private Plant _selectedPlant;
         private string _selectedType;
@@ -45,16 +39,16 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedFamilie;
         private string _selectedVariant;
 
-        private string textInputPlantName;
+        private string _textInputPlantName;
 
         //Constructor (Davy & Jim)
         public BeheerPlantenViewModel()
         {
-            showPlantDetailsCommand = new DelegateCommand(showPlantDetails);
-            showPlantByNameCommand = new DelegateCommand(showPlantByName);
-            showVariantByNameCommand = new DelegateCommand(showVariantByName);
-            searchPlantsCommand = new DelegateCommand(SearchPlanten);
-            resetCommand = new DelegateCommand(Reset);
+            ShowPlantDetailsCommand = new DelegateCommand(ShowPlantDetails);
+            ShowPlantByNameCommand = new DelegateCommand(ShowPlantByName);
+            ShowVariantByNameCommand = new DelegateCommand(ShowVariantByName);
+            SearchPlantsCommand = new DelegateCommand(SearchPlanten);
+            ResetCommand = new DelegateCommand(Reset);
 
             Plants = new ObservableCollection<Plant>();
             Types = new ObservableCollection<string>();
@@ -81,7 +75,6 @@ namespace PlantenApplicatie.viewmodels
             LoadVariants();
         }
 
-
         //getters en setters voor de selected values (Davy&Jim)
         public Plant SelectedPlant
         {
@@ -102,6 +95,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+
         public string SelectedGeslacht
         {
             get { return _selectedGeslacht; }
@@ -111,7 +105,6 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
 
         public string SelectedType
         {
@@ -148,19 +141,19 @@ namespace PlantenApplicatie.viewmodels
         {
             get
             {
-                return textInputPlantName;
+                return _textInputPlantName;
             }
             set
             {
-                textInputPlantName = value;
+                _textInputPlantName = value;
                 OnPropertyChanged();
             }
         }
-
         //geeft alle planten weer (Davy & Lily)
         public void LoadPlants()
         {
             var plants = _plantenDao.GetPlanten();
+
             Plants.Clear();
             
             foreach(var plant in plants)
@@ -172,6 +165,7 @@ namespace PlantenApplicatie.viewmodels
         public void LoadPlantsByName(string name)
         {
             var plants = _plantenDao.SearchPlants(null, null, null, null, null, name);
+
             Plants.Clear();
             
             foreach(var plant in plants)
@@ -183,6 +177,7 @@ namespace PlantenApplicatie.viewmodels
         public void LoadTypes()
         {
             var types = _plantenDao.GetTypes();
+
             Types.Clear();
 
             foreach (var type in types)
@@ -194,6 +189,7 @@ namespace PlantenApplicatie.viewmodels
         public void LoadSoorten()
         {
             var soorten = _plantenDao.GetUniqueSpeciesNames();
+
             Soorten.Clear();
             
             foreach(var soort in soorten)
@@ -217,6 +213,7 @@ namespace PlantenApplicatie.viewmodels
         public void LoadGenus()
         {
             var genus = _plantenDao.GetUniqueGenusNames();
+
             Genus.Clear();
             
             foreach (var gene in genus)
@@ -228,6 +225,7 @@ namespace PlantenApplicatie.viewmodels
         public void LoadVariants()
         {
             var variants = _plantenDao.GetUniqueVariantNames();
+
             Variants.Clear();
             
             foreach (var v in variants)
@@ -239,50 +237,50 @@ namespace PlantenApplicatie.viewmodels
         public void LoadPlantsByVariant(string variant)
         {
             var plants = _plantenDao.SearchPlants(null, null, null, null, variant, null);
+
             Plants.Clear();
+
             foreach (var plant in plants)
             {
                 Plants.Add(plant);
             }
         }
         //geeft de planten op variant weer (Davy & Lily & Jim)
-        public void showVariantByName()
+        public void ShowVariantByName()
         {
             LoadPlantsByVariant(SelectedVariant);
         }
 
 
         //als er geen plant geselecteerd is word er een messagebox geshowed (Lily&Davy)
-        private void showPlantDetails()
+        private void ShowPlantDetails()
         {
             if (_selectedPlant != null)
             {
                 // nieuw venster initialiseren
                 new PlantDetails(SelectedPlant).Show();
             } else { 
-                MessageBox.Show("Gelieve een plant te selecteren uit de listview", "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Gelieve een plant te selecteren uit de listview", "Fout", 
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         //geeft de plant weer op naam in de lijst (Davy & Jim)
-        private void showPlantByName()
+        private void ShowPlantByName()
         {
-            // string str = TextInput;
             LoadPlantsByName(TextInputPlantName);
         }
 
         //Zoek de planten op zijn verschillende eigenschappen (Davy & Jim)
         private void SearchPlanten()
         {
-            
             var type = SelectedType;
             var familie = SelectedFamilie;
             var geslacht = SelectedGeslacht;
             var soort = SelectedSoort;
             var variant = SelectedVariant;
 
-
             var list = _plantenDao.SearchPlants(type,
-            familie, geslacht, soort, variant, TextInputPlantName);
+                familie, geslacht, soort, variant, TextInputPlantName);
                 
             Plants.Clear();
             

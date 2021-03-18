@@ -163,15 +163,12 @@ namespace PlantenApplicatie.Data
 
         public List<string> GetUniqueSpeciesNames()
         {
-            var list = _context.TfgsvSoort.Select(s => s.Soortnaam).Distinct().OrderBy(soortnaam => soortnaam).ToList();
-            var trimmedList = new List<string>();
-
-            foreach(var item in list)
-            {
-                trimmedList.Add(PlantenParser.ParseSearchText(item));
-            }
-
-            return trimmedList.OrderBy(s => s).ToList();
+            return _context.TfgsvSoort
+                .ToList()
+                .Select(s => PlantenParser.ParseSearchText(s.Soortnaam))
+                .Distinct()
+                .OrderBy(soortnaam => soortnaam)
+                .ToList();
         }
         //Haalt alle unieke varianten op (Davy&Lily&Jim)
 
