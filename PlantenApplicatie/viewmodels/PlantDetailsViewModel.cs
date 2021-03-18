@@ -11,6 +11,7 @@ namespace PlantenApplicatie.viewmodels
     public class PlantDetailsViewModel : ViewModelBase
     {
         private const string TextSeparator = ",\n";
+        private const string PrefixSeparator = ":\n";
         
         private readonly PlantenDao _dao;
         private Plant _selectedPlant;
@@ -41,9 +42,9 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> PrefixKeys => _prefixKeys;
 
         //string.join om de labels te veranderen per onderwerp
-        public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
+        public string DetailsPrefixes => string.Join(PrefixSeparator, _prefixes[_selectedPrefixKey]) + ":";
 
-        public string Details => string.Join("\n", CreateDetailsList());
+        public string Details => string.Join(PrefixSeparator, CreateDetailsList());
 
         public string SelectedPrefixKey
         {
