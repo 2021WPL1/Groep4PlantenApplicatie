@@ -192,7 +192,7 @@ namespace PlantenApplicatie.viewmodels
         //maar het geeft een return op omdat we niet weten uit welke relaties het bestaat.
         private List<object> CreateBeheerDetailsList()
         {
-            return null;
+            return new List<object>();
         }
         //maakt de detail lijst op voor onderwerp Foto het returned een nieuwe lijst,
         //zodat het gejoined kan worden in de string
