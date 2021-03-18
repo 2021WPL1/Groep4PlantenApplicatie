@@ -1,0 +1,40 @@
+﻿<Window x:Class="PlantenApplicatie.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlantenApplicatie"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid x:Name="grid1">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Plant">
+                    <MenuItem x:Name="menu_item_beheer_plant" Header="Beheer planten" Click="menu_item_beheer_plant_Click"/>
+                   <Separator />
+                    <MenuItem Header="Exporteren">
+                        <MenuItem Header="Naar Excel"/>
+                        <MenuItem Header="Naar PDF"/>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem x:Name="menu_item_Sluiten" Header="Sluiten" Click="menu_item_Sluiten_Click" />
+                </MenuItem>
+                <MenuItem Header="Abio">
+                    <MenuItem Header="Beheer abio_bezonning"/>
+                    <MenuItem Header="Beheer abio grondsoort"/>
+                    <MenuItem Header="Beheer abio habitat"/>
+                    <MenuItem Header="Beheer abio reactie antagonische omg"/>
+                    <MenuItem Header="Beheer abio vochtbehoefte"/>
+                    <MenuItem Header="Beheer abio voedingsbehoefte"/>
+                    <Separator />
+                    <MenuItem Header="Beheer abiotiek"/>
+                    <MenuItem Header="Beheer abiotiek multi"/>
+                </MenuItem>
+                <MenuItem Header="Over">
+                    <MenuItem Header="Info" x:Name="menu_item_Info" Click="menu_item_Info_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        
+    </Grid>
+</Window>
