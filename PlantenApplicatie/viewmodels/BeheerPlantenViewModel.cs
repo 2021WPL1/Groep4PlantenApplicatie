@@ -74,7 +74,6 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        #region geselecteerde properties getters and setters
         public Plant SelectedPlant
         {
             get { return _selectedPlant; }
@@ -148,12 +147,12 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        #endregion
 
         public void LoadPlants()
         {
             var plants = _plantenDao.GetPlanten();
             Plants.Clear();
+            
             foreach(var plant in plants)
             {
                 Plants.Add(plant);
@@ -162,8 +161,9 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadPlantsByName(string name)
         {
-            var plants = _plantenDao.SearchByProperties(name, null, null, null, null, null);
+            var plants = _plantenDao.SearchPlants(null, null, null, null, null, name);
             Plants.Clear();
+            
             foreach(var plant in plants)
             {
                 Plants.Add(plant);
@@ -174,6 +174,7 @@ namespace PlantenApplicatie.viewmodels
         {
             var types = _plantenDao.GetTypes();
             Types.Clear();
+            
             foreach(var type in types)
             {
                 Types.Add(type);
@@ -184,6 +185,7 @@ namespace PlantenApplicatie.viewmodels
         {
             var soorten = _plantenDao.GetUniqueSpeciesNames();
             Soorten.Clear();
+            
             foreach(var soort in soorten)
             {
                 Soorten.Add(soort);
@@ -206,6 +208,7 @@ namespace PlantenApplicatie.viewmodels
         {
             var genus = _plantenDao.GetUniqueGenusNames();
             Genus.Clear();
+            
             foreach (var gene in genus)
             {
                 Genus.Add(gene);
@@ -216,6 +219,7 @@ namespace PlantenApplicatie.viewmodels
         {
             var variants = _plantenDao.GetUniqueVariantNames();
             Variants.Clear();
+            
             foreach (var v in variants)
             {
                 Variants.Add(v);
@@ -224,7 +228,7 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadPlantsByVariant(string variant)
         {
-            var plants = _plantenDao.SearchByProperties(null, null, null, null, null, variant);
+            var plants = _plantenDao.SearchPlants(null, null, null, null, variant, null);
             Plants.Clear();
             foreach (var plant in plants)
             {
@@ -234,8 +238,6 @@ namespace PlantenApplicatie.viewmodels
 
         public void showVariantByName()
         {
-            _plantenDao.SearchPlantenByVariant(_plantenDao.GetPlanten(), SelectedVariant);
-
             LoadPlantsByVariant(SelectedVariant);
         }
 
@@ -245,18 +247,7 @@ namespace PlantenApplicatie.viewmodels
             if (_selectedPlant != null)
             {
                 // nieuw venster initialiseren
-                PlantDetails plantDetails = new PlantDetails();
-
-                // initialiseer labels en waarden
-                plantDetails.lblPlantnaam.Content = _selectedPlant.Fgsv;
-                plantDetails.lblFamilie.Content = _selectedPlant.Familie;
-                plantDetails.lblType.Content = _selectedPlant.Type;
-                plantDetails.lblGeslacht.Content = _selectedPlant.Geslacht;
-                plantDetails.lblSoort.Content = _selectedPlant.Soort;
-                plantDetails.lblVariant.Content = _selectedPlant.Variant;
-
-                // toon plantdetails venster
-                plantDetails.Show();
+                new PlantDetails(SelectedPlant).Show();
             } else { 
                 MessageBox.Show("Gelieve een plant te selecteren uit de listview", "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -265,30 +256,24 @@ namespace PlantenApplicatie.viewmodels
         private void showPlantByName()
         {
             // string str = TextInput;
-            _plantenDao.SearchPlantenByName(_plantenDao.GetPlanten(), TextInputPlantName);
-
             LoadPlantsByName(TextInputPlantName);
         }
 
         private void SearchPlanten()
         {
             
-            var type = SelectedType ;
+            var type = SelectedType;
             var familie = SelectedFamilie;
-            var geslacht = SelectedGeslacht ;
-            var soort = SelectedSoort ;
-            var variant = SelectedVariant ;
+            var geslacht = SelectedGeslacht;
+            var soort = SelectedSoort;
+            var variant = SelectedVariant;
 
 
-                var list = _plantenDao.SearchByProperties(TextInputPlantName, type,
-                familie, geslacht, soort, variant);
-
-            
-
-            //lvPlanten.ItemsSource = list;
-
-
+                var list = _plantenDao.SearchPlants(type,
+                familie, geslacht, soort, variant, TextInputPlantName);
+                
             Plants.Clear();
+            
             foreach (var plant in list)
             {
                 Plants.Add(plant);

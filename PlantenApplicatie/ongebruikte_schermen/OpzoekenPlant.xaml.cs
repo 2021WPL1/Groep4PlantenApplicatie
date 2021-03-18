@@ -59,8 +59,8 @@ namespace PlantenApplicatie
 
         private void btnDetailsPlant_Click(object sender, RoutedEventArgs e)
         {
-            PlantDetails plantDetails = new PlantDetails();
-            plantDetails.Show();
+            //PlantDetails plantDetails = new PlantDetails();
+            //plantDetails.Show();
         }
 
         private void txtNLnaam_KeyDown(object sender, KeyEventArgs e)

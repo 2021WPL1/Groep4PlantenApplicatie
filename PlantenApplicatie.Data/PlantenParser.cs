@@ -8,7 +8,7 @@ namespace PlantenApplicatie.Data
     {
         public static string ParseSearchText(string text)
         {
-            return text.Trim().ToLower();
+            return text.Trim().ToLower();//.Remove("'");
             //return RemoveDiacriticsFromText(text.Trim().ToLower());
         }
 
