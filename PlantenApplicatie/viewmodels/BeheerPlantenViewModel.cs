@@ -63,7 +63,7 @@ namespace PlantenApplicatie.viewmodels
             Genus = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
 
-            this._plantenDao = PlantenDao.Instance;
+            _plantenDao = PlantenDao.Instance;
 
             LoadPlants();
             LoadTypes();
