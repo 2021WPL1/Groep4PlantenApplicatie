@@ -138,9 +138,9 @@ namespace PlantenApplicatie.Data
             var list = _context.TfgsvSoort.Select(s => s.Soortnaam).Distinct().OrderBy(soortnaam => soortnaam).ToList();
             var trimmedList = new List<string>();
 
-            foreach(var l in list)
+            foreach(var item in list)
             {
-                trimmedList.Add(PlantenParser.ParseSearchText(l));
+                trimmedList.Add(PlantenParser.ParseSearchText(item));
             }
 
             return trimmedList.OrderBy(s => s).ToList();
@@ -151,9 +151,9 @@ namespace PlantenApplicatie.Data
             var list = _context.TfgsvVariant.Select(v => v.Variantnaam).Distinct().OrderBy(variantnaam => variantnaam).ToList();
             var trimmedList = new List<string>();
 
-            foreach(var l in list)
+            foreach(var item in list)
             {
-                trimmedList.Add(PlantenParser.ParseSearchText(l));
+                trimmedList.Add(PlantenParser.ParseSearchText(item));
             }
 
             return trimmedList.OrderBy(v => v).ToList();
