@@ -66,11 +66,7 @@ namespace PlantenApplicatie.viewmodels
             _plantenDao = PlantenDao.Instance;
 
             LoadPlants();
-            LoadTypes();
-            LoadSoorten();
-            LoadFamilies();
-            LoadGenus();
-            LoadVariants();
+            Reset();
         }
 
         //wanneer er op de reset knop geklikt word reset de CMB en TextBox (Davy)

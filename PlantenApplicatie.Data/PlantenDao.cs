@@ -177,15 +177,16 @@ namespace PlantenApplicatie.Data
 
         public List<string> GetUniqueVariantNames()
         {
-            var list = _context.TfgsvVariant.Select(v => v.Variantnaam).Distinct().OrderBy(variantnaam => variantnaam).ToList();
-            var trimmedList = new List<string>();
+            var list = _context.TfgsvVariant
+                .ToList()
+                .Select(v => PlantenParser.ParseSearchText(v.Variantnaam))
+                .Distinct()
+                .OrderBy(variantnaam => variantnaam)
+                .ToList();
+            
+            list.Insert(0, NoVariant);
 
-            foreach(var item in list)
-            {
-                trimmedList.Add(PlantenParser.ParseSearchText(item));
-            }
-
-            return trimmedList.OrderBy(v => v).ToList();
+            return list;
         }
         //Haal alle Habitats op via hun waarde (Lily)
 
