@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlantenApplicatie.Data", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlantenApplicatie.Domain", "PlantenApplicatie.Domain\PlantenApplicatie.Domain.csproj", "{3CCDA885-1688-41E8-9BCA-57FDAC41A793}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantenApplicatie.CLI", "PlantenApplicatie.CLI\PlantenApplicatie.CLI.csproj", "{54587FD5-1C64-4DED-8AAF-FD0BBF517C0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlantenApplicatie.CLI", "PlantenApplicatie.CLI\PlantenApplicatie.CLI.csproj", "{54587FD5-1C64-4DED-8AAF-FD0BBF517C0F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1D538CC2-2F2B-42C4-9C09-B1FAF5B205D8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
