@@ -7,6 +7,7 @@ namespace PlantenApplicatie.CLI
 {
     class Program
     {
+        //testomgeving om een plant te vinden
         private static PlantenDao _plantenDao;
 
         static void Main(string[] args)

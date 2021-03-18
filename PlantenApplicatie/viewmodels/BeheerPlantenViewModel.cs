@@ -11,8 +11,10 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
+    //MVVM Toepassing (Davy) 
     class BeheerPlantenViewModel : ViewModelBase
     {
+        //button commands
         public ICommand showPlantDetailsCommand { get; set; }
         public ICommand showPlantByNameCommand { get; set; }
 
@@ -22,6 +24,7 @@ namespace PlantenApplicatie.viewmodels
 
         public ICommand resetCommand { get; set; }
 
+        //observable collections, ipv strings gebruikten we de tfgsv klasses maar distinct/order by kon niet samen gebruikt worden (Davy&Jim)
         public ObservableCollection<Plant> Plants { get; set; }
 
         public ObservableCollection<string> Types { get; set; }
@@ -44,6 +47,7 @@ namespace PlantenApplicatie.viewmodels
 
         private string textInputPlantName;
 
+        //Constructor (Davy & Jim)
         public BeheerPlantenViewModel(PlantenDao plantenDao)
         {
             showPlantDetailsCommand = new DelegateCommand(showPlantDetails);
@@ -62,6 +66,7 @@ namespace PlantenApplicatie.viewmodels
             this._plantenDao = plantenDao;
         }
 
+        //wanneer er op de reset knop geklikt word reset de CMB en TextBox (Davy)
         public void Reset()
         {
             TextInputPlantName = string.Empty;
@@ -74,6 +79,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
+        //getters en setters voor de selected values (Davy&Jim)
         public Plant SelectedPlant
         {
             get { return _selectedPlant; }
@@ -148,6 +154,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //geeft alle planten weer (Davy & Lily)
         public void LoadPlants()
         {
             var plants = _plantenDao.GetPlanten();
@@ -158,7 +165,7 @@ namespace PlantenApplicatie.viewmodels
                 Plants.Add(plant);
             }
         }
-
+        //geeft alle planten weer op naam (Davy & Lily)
         public void LoadPlantsByName(string name)
         {
             var plants = _plantenDao.SearchPlants(null, null, null, null, null, name);
@@ -169,18 +176,18 @@ namespace PlantenApplicatie.viewmodels
                 Plants.Add(plant);
             }
         }
-
+        //geeft alle verschillende planten weer in de combobox (Davy & Lily)
         public void LoadTypes()
         {
             var types = _plantenDao.GetTypes();
             Types.Clear();
-            
-            foreach(var type in types)
+
+            foreach (var type in types)
             {
                 Types.Add(type);
             }
         }
-
+        //geeft alle soorten weer in de combobox (Davy & Lily)
         public void LoadSoorten()
         {
             var soorten = _plantenDao.GetUniqueSpeciesNames();
@@ -191,7 +198,7 @@ namespace PlantenApplicatie.viewmodels
                 Soorten.Add(soort);
             }
         }
-
+        //geeft alle families weer in de combobox (Davy & Lily)
         public void LoadFamilies()
         {
             var families = _plantenDao.GetUniqueFamilyNames();
@@ -203,7 +210,7 @@ namespace PlantenApplicatie.viewmodels
                 Families.Add(familie);
             }
         }
-
+        //geeft alle geslacht weer in de combobox (Davy & Lily)
         public void LoadGenus()
         {
             var genus = _plantenDao.GetUniqueGenusNames();
@@ -214,7 +221,7 @@ namespace PlantenApplicatie.viewmodels
                 Genus.Add(gene);
             }
         }
-
+        //geeft alle varianten weer in de combobox (Davy & Lily)
         public void LoadVariants()
         {
             var variants = _plantenDao.GetUniqueVariantNames();
@@ -225,7 +232,7 @@ namespace PlantenApplicatie.viewmodels
                 Variants.Add(v);
             }
         }
-
+        //zoek op alle varianten (Davy & Lily)
         public void LoadPlantsByVariant(string variant)
         {
             var plants = _plantenDao.SearchPlants(null, null, null, null, variant, null);
@@ -235,13 +242,14 @@ namespace PlantenApplicatie.viewmodels
                 Plants.Add(plant);
             }
         }
-
+        //geeft de planten op variant weer (Davy & Lily & Jim)
         public void showVariantByName()
         {
             LoadPlantsByVariant(SelectedVariant);
         }
 
 
+        //als er geen plant geselecteerd is word er een messagebox geshowed (Lily&Davy)
         private void showPlantDetails()
         {
             if (_selectedPlant != null)
@@ -252,13 +260,14 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Gelieve een plant te selecteren uit de listview", "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
+        //geeft de plant weer op naam in de lijst (Davy & Jim)
         private void showPlantByName()
         {
             // string str = TextInput;
             LoadPlantsByName(TextInputPlantName);
         }
 
+        //Zoek de planten op zijn verschillende eigenschappen (Davy & Jim)
         private void SearchPlanten()
         {
             

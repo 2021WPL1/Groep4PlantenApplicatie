@@ -7,6 +7,7 @@ using PlantenApplicatie.Domain;
 
 namespace PlantenApplicatie.viewmodels
 {
+    //MVVM Detailscherm Lily  GUI: Jim&Liam
     public class PlantDetailsViewModel : ViewModelBase
     {
         private const string TextSeparator = ",\n";
@@ -17,6 +18,7 @@ namespace PlantenApplicatie.viewmodels
         private ObservableCollection<string> _prefixKeys;
         private string _selectedPrefixKey;
         
+        //Constructor Lily
         public PlantDetailsViewModel(Plant selectedPlant)
         {
             SelectedPlant = selectedPlant;
@@ -24,7 +26,7 @@ namespace PlantenApplicatie.viewmodels
             CreatePrefixesAndProperties();
             SelectedPrefixKey = _prefixKeys[0];
         }
-
+        //getters and setters selected waardes (Lily)
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -35,8 +37,10 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //ObservableCollection + prefixes om de plantdetails te kunnen weergeven
         public ObservableCollection<string> PrefixKeys => _prefixKeys;
 
+        //string.join om de labels te veranderen per onderwerp
         public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
 
         public string Details => string.Join("\n", CreateDetailsList());
@@ -51,7 +55,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged("DetailsPrefixes");
             }
         }
-
+        //maakt een dictionary aan en een lijst van de keys.
         private void CreatePrefixesAndProperties()
         {
             _prefixes = new Dictionary<string, List<string>>();
@@ -90,7 +94,7 @@ namespace PlantenApplicatie.viewmodels
 
             _prefixKeys = new ObservableCollection<string>(_prefixes.Keys);
         }
-
+        //roept de correcte methode op afhangent van de geselecteerde comboboxitem
         private List<object> CreateDetailsList()
         {
             switch (_selectedPrefixKey)
@@ -114,6 +118,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //maakt de detail lijst op voor onderwerp plant
         private List<object> CreatePlantDetailsList()
         {
             return new List<object> { 
@@ -122,7 +127,8 @@ namespace PlantenApplicatie.viewmodels
                 _selectedPlant.PlantdichtheidMax 
             };
         }
-        
+        //maakt de detail lijst op voor onderwerp fenotype
+
         private List<object> CreateFenotypeDetailsList()
         {
             var fenotype = SelectedPlant.Fenotype.FirstOrDefault();
@@ -133,7 +139,10 @@ namespace PlantenApplicatie.viewmodels
                 fenotype?.Bloeiwijze, fenotype?.Habitus, fenotype?.Levensvorm
             };
         }
+        //maakt de detail lijst op voor onderwerp abiotiek het returned een nieuwe lijst,
+        //zodat het gejoined kan worden in de string
         
+
         private List<object> CreateAbiotiekDetailsList()
         {   
             var abiotiek = SelectedPlant.Abiotiek.FirstOrDefault();
@@ -149,7 +158,8 @@ namespace PlantenApplicatie.viewmodels
                     .Select(ah => ah.Waarde))
             };
         }
-        
+        //maakt de detail lijst op voor onderwerp commensalisme het returned een nieuwe lijst,
+        //zodat het gejoined kan worden in de string
         private List<object> CreateCommensalismeDetailsList()
         {
             var commensalisme = SelectedPlant.Commensalisme.FirstOrDefault();
@@ -164,7 +174,8 @@ namespace PlantenApplicatie.viewmodels
                     .Select(cs => cs.Waarde)), 
             };
         }
-        
+        //maakt de detail lijst op voor onderwerp Extra Eigenschappen het returned een nieuwe lijst,
+        //zodat het gejoined kan worden in de string
         private List<object> CreateExtraEigenschappenDetailsList()
         {
             var extraEigenschappen = SelectedPlant.ExtraEigenschap.First();
@@ -176,12 +187,15 @@ namespace PlantenApplicatie.viewmodels
                 extraEigenschappen.Geurend, extraEigenschappen.Vorstgevoelig
             };
         }
-        
+        //maakt de detail lijst op voor onderwerp beheer het returned een nieuwe lijst,
+        //zodat het gejoined kan worden in de string
+        //maar het geeft een return op omdat we niet weten uit welke relaties het bestaat.
         private List<object> CreateBeheerDetailsList()
         {
             return null;
         }
-        
+        //maakt de detail lijst op voor onderwerp Foto het returned een nieuwe lijst,
+        //zodat het gejoined kan worden in de string
         private List<object> CreateFotoDetailsList()
         {
             return _selectedPlant.Foto

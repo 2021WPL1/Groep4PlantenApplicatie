@@ -21,7 +21,8 @@ namespace PlantenApplicatie
     {
         private PlantenDao plantenDao;
         private BeheerPlantenViewModel beheerPlantenViewModel;
-
+        
+        //initialize de scherm (Davy)
         public BeheerPlanten()
         {
             InitializeComponent();

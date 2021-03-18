@@ -25,8 +25,6 @@ namespace PlantenApplicatie
             InitializeComponent();
             DataContext = new PlantDetailsViewModel(selectedPlant);
         }
-        
-        
     }
 }
 
