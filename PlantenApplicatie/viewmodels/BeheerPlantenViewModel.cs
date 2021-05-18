@@ -245,6 +245,9 @@ namespace PlantenApplicatie.viewmodels
 
         private static void UpdateObservableCollection<T>(ObservableCollection<T> collection, List<T> data)
         {
+            /*
+             * TODO: The time complexity of this method is really bad, it is o(2*n*m), fix this
+             */
             foreach (var elem in collection.ToList().Where(elem => !data.Contains(elem)))
             {
                 collection.Remove(elem);
