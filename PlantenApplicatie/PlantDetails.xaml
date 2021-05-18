@@ -6,8 +6,14 @@
         xmlns:local="clr-namespace:PlantenApplicatie"
         mc:Ignorable="d"
         Title="Plant Details" Height="600" Width="900">
+    <Window.Background>
+        <ImageBrush ImageSource="/plantjes.png"/>
+    </Window.Background>
     <Grid>
         <Canvas>
+            <Canvas.Background>
+                <ImageBrush ImageSource="/plantjes.png"/>
+            </Canvas.Background>
             <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
             <Label x:Name="lblPlantnaamGroot" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="25"/>

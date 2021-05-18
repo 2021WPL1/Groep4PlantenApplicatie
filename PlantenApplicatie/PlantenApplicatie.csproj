@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="aquarel-bladeren-met-lege-ruimte_23-2148867775.png" />
+    <None Remove="plantjes.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
@@ -24,6 +29,11 @@
   <ItemGroup>
     <ProjectReference Include="..\PlantenApplicatie.Data\PlantenApplicatie.Data.csproj" />
     <ProjectReference Include="..\PlantenApplicatie.Domain\PlantenApplicatie.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="aquarel-bladeren-met-lege-ruimte_23-2148867775.png" />
+    <Resource Include="plantjes.png" />
   </ItemGroup>
 
 </Project>
