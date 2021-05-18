@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
+using Prism.Commands;
 
 namespace PlantenApplicatie.viewmodels
 {
@@ -17,7 +19,14 @@ namespace PlantenApplicatie.viewmodels
         private Dictionary<string, List<string>> _prefixes;
         private ObservableCollection<string> _prefixKeys;
         private string _selectedPrefixKey;
-        
+
+
+
+        //button commands
+        public ICommand EditDetailsCommand { get; set; }
+
+
+
         // Constructor Lily
         public PlantDetailsViewModel(Plant selectedPlant)
         {
@@ -25,6 +34,7 @@ namespace PlantenApplicatie.viewmodels
             _dao = PlantenDao.Instance;
             CreatePrefixesAndProperties();
             SelectedPrefixKey = _prefixKeys[0];
+            EditDetailsCommand = new DelegateCommand(EditPlantDetails);
         }
 
         // Getters and setters selected waardes (Lily)
@@ -210,6 +220,11 @@ namespace PlantenApplicatie.viewmodels
                     })
                     .Cast<object>()
                     .ToList();
+        }
+
+        private void EditPlantDetails()
+        {
+            new EditPlantDetails(SelectedPlant).Show();
         }
     }
 }
