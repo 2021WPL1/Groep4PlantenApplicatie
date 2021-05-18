@@ -34,11 +34,11 @@ namespace PlantenApplicatie.viewmodels
         public PlantenDao _plantenDao;
 
         private Plant _selectedPlant;
-        private string _selectedType;
-        private string _selectedSoort;
-        private string _selectedGeslacht;
-        private string _selectedFamilie;
-        private string _selectedVariant;
+        private string? _selectedType;
+        private string? _selectedSoort;
+        private string? _selectedGeslacht;
+        private string? _selectedFamilie;
+        private string? _selectedVariant;
 
         private string textInputPlantName;
 
@@ -48,7 +48,7 @@ namespace PlantenApplicatie.viewmodels
             showPlantByNameCommand = new DelegateCommand(showPlantByName);
             showVariantByNameCommand = new DelegateCommand(showVariantByName);
             searchPlantsCommand = new DelegateCommand(SearchPlanten);
-            resetCommand = new DelegateCommand(Reset);
+            resetCommand = new DelegateCommand(ResetInputs);
 
             Plants = new ObservableCollection<Plant>();
             Types = new ObservableCollection<string>();
@@ -58,15 +58,15 @@ namespace PlantenApplicatie.viewmodels
             Variants = new ObservableCollection<string>();
 
             _plantenDao = plantenDao;
-            
+
             LoadPlants();
-            Reset();
+            FilterComboBoxes();
         }
 
-        public void Reset()
+        public void FilterComboBoxes()
         {
-            //TextInputPlantName = string.Empty;
-
+            SearchPlanten();
+            
             LoadTypes();
             LoadSoorten();
             LoadFamilies();
@@ -74,6 +74,13 @@ namespace PlantenApplicatie.viewmodels
             LoadVariants();
         }
 
+        public void ResetInputs()
+        {
+            TextInputPlantName = string.Empty;
+
+            SelectedType = SelectedFamilie =
+                SelectedSoort = SelectedFamilie = SelectedGeslacht = SelectedVariant = null;
+        }
 
         public Plant SelectedPlant
         {
@@ -85,62 +92,57 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string SelectedSoort
+        public string? SelectedSoort
         {
             get { return _selectedSoort; }
             set
             {
                 _selectedSoort = value;
-                SearchPlanten();
-                Reset();
+                FilterComboBoxes();
                 OnPropertyChanged();
             }
         }
-        public string SelectedGeslacht
+        public string? SelectedGeslacht
         {
             get { return _selectedGeslacht; }
             set
             {
                 _selectedGeslacht = value;
-                SearchPlanten();
-                Reset();
+                FilterComboBoxes();
                 OnPropertyChanged();
             }
         }
 
 
-        public string SelectedType
+        public string? SelectedType
         {
             get { return _selectedType; }
             set
             {
                 _selectedType = value;
-                SearchPlanten();
-                Reset();
+                FilterComboBoxes();
                 OnPropertyChanged();
             }
         }
 
-        public string SelectedFamilie
+        public string? SelectedFamilie
         {
             get { return _selectedFamilie; }
             set
             {
                 _selectedFamilie = value;
-                SearchPlanten();
-                Reset();
+                FilterComboBoxes();
                 OnPropertyChanged();
             }
         }
 
-        public string SelectedVariant
+        public string? SelectedVariant
         {
             get { return _selectedVariant; }
             set
             {
                 _selectedVariant = value;
-                SearchPlanten();
-                Reset();
+                FilterComboBoxes();
                 OnPropertyChanged();
             }
 
@@ -155,8 +157,7 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 textInputPlantName = value;
-                SearchPlanten();
-                Reset();
+                FilterComboBoxes();
                 OnPropertyChanged();
             }
         }
@@ -189,12 +190,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            Types.Clear();
-
-            foreach(var type in types)
-            {
-                Types.Add(type);
-            }
+            UpdateObservableCollection(Types, types);
         }
 
         public void LoadSoorten()
@@ -203,12 +199,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            Soorten.Clear();
-            
-            foreach(var soort in soorten)
-            {
-                Soorten.Add(soort);
-            }
+            UpdateObservableCollection(Soorten, soorten);
         }
 
         public void LoadFamilies()
@@ -217,12 +208,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            Families.Clear();
-
-            foreach (var familie in families)
-            {
-                Families.Add(familie);
-            }
+            UpdateObservableCollection(Families, families);
         }
 
         public void LoadGenus()
@@ -231,12 +217,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            Genus.Clear();
-            
-            foreach (var gene in genus)
-            {
-                Genus.Add(gene);
-            }
+            UpdateObservableCollection(Genus, genus);
         }
 
         public void LoadVariants()
@@ -245,22 +226,39 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            Variants.Clear();
-            
-            foreach (var v in variants)
-            {
-                Variants.Add(v);
-            }
+            UpdateObservableCollection(Variants, variants);
         }
 
         // TODO: remove
         public void LoadPlantsByVariant(string variant)
         {
-            var plants = _plantenDao.SearchPlants(null, null, null, null, variant, null);
+            var plants = _plantenDao.SearchPlants(null, null, 
+                null, null, variant, null);
+            
             Plants.Clear();
+            
             foreach (var plant in plants)
             {
                 Plants.Add(plant);
+            }
+        }
+
+        public void UpdateObservableCollection<T>(ObservableCollection<T> collection, List<T> data)
+        {
+            foreach(var elem in collection.ToList())
+            {
+                if (!data.Contains(elem))
+                {
+                    collection.Remove(elem);
+                }
+            }
+
+            foreach (var elem in data)
+            {
+                if (!collection.Contains(elem))
+                {
+                    collection.Add(elem);
+                }
             }
         }
 
