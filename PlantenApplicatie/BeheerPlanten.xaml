@@ -6,27 +6,38 @@
         xmlns:local="clr-namespace:PlantenApplicatie"
         mc:Ignorable="d"
         Title="BeheerPlanten" Height="550" Width="1200">
+    <Window.Background>
+        <ImageBrush ImageSource="/bloemenachtergrond6.png"/>
+    </Window.Background>
     <Grid>
-        <TabControl TabStripPlacement="Left">
-            <TabItem Header="Opzoeken">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="29*"/>
+            <ColumnDefinition Width="1118*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl TabStripPlacement="Left" Grid.ColumnSpan="3" OpacityMask="#FFC71B1B" Foreground="#FFBD2424">
+            <TabControl.Background>
+                <ImageBrush ImageSource="/bloemenachtergrond6.png"/>
+            </TabControl.Background>
+            <TabItem Header="Opzoeken"  BorderBrush="#FFD4D0D0">
                 <Grid>
                     <StackPanel Orientation="Vertical">
                         <GroupBox Header="Kenmerken" Height="170">
-                            <Canvas Margin="10">
+                            <Canvas Margin="10" OpacityMask="#FF663F3F">
                                 <!-- eerste rij -->
                                 <Label Canvas.Top="0" Content="Plantnaam :"/>
                                 <TextBox x:Name="txtPlantnaam" Width="200" Canvas.Top="5" Canvas.Left="80"
                                          
-                                        Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}">
+                                        Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}" Background="White">
                                     <TextBox.InputBindings>
                                         <KeyBinding Command="{Binding Path=showPlantByNameCommand}" Key="Enter" />
                                     </TextBox.InputBindings>
                                 </TextBox>
-                                <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
+                                <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :" Background="{x:Null}" FontWeight="Normal"/>
                                 <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
                                 <!-- tweede rij -->
                                 <Label Content="Type :" Canvas.Top="30" />
-                                <ComboBox SelectedValue="{Binding SelectedType}" x:Name="cmbType" Width="200" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }"  />
+                                <ComboBox SelectedValue="{Binding SelectedType}" x:Name="cmbType" Width="200" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }" Background="{x:Null}"  />
                                 <Label Content="Geslacht :" Canvas.Top="30" Canvas.Left="350" />
                                 <ComboBox SelectedValue="{Binding SelectedGeslacht}" x:Name="cmbGeslacht" Width="200" Canvas.Top="35" Canvas.Left="450"  ItemsSource="{Binding Genus }" />
                                 <!-- derde rij -->
@@ -48,7 +59,10 @@
                             <Canvas>
                                 <ListView x:Name="lvPlanten" Canvas.Left="10" Height="218" Width="1036"
                                           ItemsSource="{Binding Plants}" 
-                                          SelectedItem="{Binding SelectedPlant}">
+                                          SelectedItem="{Binding SelectedPlant}" Background="#FFFBFBFB">
+                                    <ListView.Foreground>
+                                        <ImageBrush ImageSource="/bloemenachtergrond6.png"/>
+                                    </ListView.Foreground>
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="Plantnaam" Width="Auto" DisplayMemberBinding="{Binding Fgsv}" />
