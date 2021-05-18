@@ -7,8 +7,9 @@ namespace PlantenApplicatie.Data
 {
     public class PlantenDao
     {
-        private readonly PlantenContext _context;
         private const string NoVariant = "N/A";
+        
+        private readonly PlantenContext _context;
 
         static PlantenDao()
         {

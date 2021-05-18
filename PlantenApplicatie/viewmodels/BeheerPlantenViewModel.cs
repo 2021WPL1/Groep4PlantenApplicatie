@@ -4,6 +4,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,13 +24,10 @@ namespace PlantenApplicatie.viewmodels
         public ICommand resetCommand { get; set; }
 
         public ObservableCollection<Plant> Plants { get; set; }
-
         public ObservableCollection<string> Types { get; set; }
-
         public ObservableCollection<string> Soorten { get; set; }
         public ObservableCollection<string> Families { get; set; }
         public ObservableCollection<string> Genus { get; set; }
-
         public ObservableCollection<string> Variants { get; set; }
 
         // hiermee kunnen we de data opvragen aan de databank.
@@ -59,12 +57,15 @@ namespace PlantenApplicatie.viewmodels
             Genus = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
 
-            this._plantenDao = plantenDao;
+            _plantenDao = plantenDao;
+            
+            LoadPlants();
+            Reset();
         }
 
         public void Reset()
         {
-            TextInputPlantName = string.Empty;
+            //TextInputPlantName = string.Empty;
 
             LoadTypes();
             LoadSoorten();
@@ -90,6 +91,8 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedSoort = value;
+                SearchPlanten();
+                Reset();
                 OnPropertyChanged();
             }
         }
@@ -99,6 +102,8 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedGeslacht = value;
+                SearchPlanten();
+                Reset();
                 OnPropertyChanged();
             }
         }
@@ -110,6 +115,8 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedType = value;
+                SearchPlanten();
+                Reset();
                 OnPropertyChanged();
             }
         }
@@ -120,6 +127,8 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedFamilie = value;
+                SearchPlanten();
+                Reset();
                 OnPropertyChanged();
             }
         }
@@ -130,6 +139,8 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedVariant = value;
+                SearchPlanten();
+                Reset();
                 OnPropertyChanged();
             }
 
@@ -144,6 +155,8 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 textInputPlantName = value;
+                SearchPlanten();
+                Reset();
                 OnPropertyChanged();
             }
         }
@@ -172,9 +185,12 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadTypes()
         {
-            var types = _plantenDao.GetTypes();
-            Types.Clear();
+            var types = Plants.Select(p => p.Type)
+                .Distinct()
+                .ToList();
             
+            Types.Clear();
+
             foreach(var type in types)
             {
                 Types.Add(type);
@@ -183,7 +199,10 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadSoorten()
         {
-            var soorten = _plantenDao.GetUniqueSpeciesNames();
+            var soorten = Plants.Select(p => p.Soort)
+                .Distinct()
+                .ToList();
+            
             Soorten.Clear();
             
             foreach(var soort in soorten)
@@ -194,7 +213,9 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadFamilies()
         {
-            var families = _plantenDao.GetUniqueFamilyNames();
+            var families = Plants.Select(p => p.Familie)
+                .Distinct()
+                .ToList();
             
             Families.Clear();
 
@@ -206,7 +227,10 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadGenus()
         {
-            var genus = _plantenDao.GetUniqueGenusNames();
+            var genus = Plants.Select(p => p.Geslacht)
+                .Distinct()
+                .ToList();
+            
             Genus.Clear();
             
             foreach (var gene in genus)
@@ -217,7 +241,10 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadVariants()
         {
-            var variants = _plantenDao.GetUniqueVariantNames();
+            var variants = Plants.Select(p => p.Variant)
+                .Distinct()
+                .ToList();
+            
             Variants.Clear();
             
             foreach (var v in variants)
@@ -226,6 +253,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        // TODO: remove
         public void LoadPlantsByVariant(string variant)
         {
             var plants = _plantenDao.SearchPlants(null, null, null, null, variant, null);
@@ -240,7 +268,6 @@ namespace PlantenApplicatie.viewmodels
         {
             LoadPlantsByVariant(SelectedVariant);
         }
-
 
         private void showPlantDetails()
         {
@@ -261,20 +288,18 @@ namespace PlantenApplicatie.viewmodels
 
         private void SearchPlanten()
         {
-            
             var type = SelectedType;
             var familie = SelectedFamilie;
             var geslacht = SelectedGeslacht;
             var soort = SelectedSoort;
             var variant = SelectedVariant;
-
-
-                var list = _plantenDao.SearchPlants(type,
-                familie, geslacht, soort, variant, TextInputPlantName);
+            
+            var plants = _plantenDao.SearchPlants(type, familie, 
+                geslacht, soort, variant, TextInputPlantName);
                 
             Plants.Clear();
             
-            foreach (var plant in list)
+            foreach (var plant in plants)
             {
                 Plants.Add(plant);
             }

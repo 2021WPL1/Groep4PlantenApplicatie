@@ -16,8 +16,7 @@
                                 <!-- eerste rij -->
                                 <Label Canvas.Top="0" Content="Plantnaam :"/>
                                 <TextBox x:Name="txtPlantnaam" Width="200" Canvas.Top="5" Canvas.Left="80"
-                                         
-                                        Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}">
+                                         Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.InputBindings>
                                         <KeyBinding Command="{Binding Path=showPlantByNameCommand}" Key="Enter" />
                                     </TextBox.InputBindings>
