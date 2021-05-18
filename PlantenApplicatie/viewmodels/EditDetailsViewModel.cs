@@ -1,9 +1,12 @@
 ﻿using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
@@ -17,16 +20,25 @@ namespace PlantenApplicatie.viewmodels
         private Dictionary<string, List<string>> _prefixes;
         private ObservableCollection<string> _prefixKeys;
         private string _selectedPrefixKey;
-
-
+        
+        
+        public ICommand SaveCommand { get; set; }
+        private string _selectedType;
+        public ObservableCollection<string> Types { get; set; }
 
 
         public EditDetailsViewModel(Plant selectedPlant)
         {
+
+            SaveCommand = new DelegateCommand(Save);
+
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             CreatePrefixesAndProperties();
-          
+            SelectedPrefixKey = _prefixKeys[0];
+            Types = new ObservableCollection<string>();
+
+            LoadDetails();
         }
 
         public Plant SelectedPlant
@@ -40,6 +52,30 @@ namespace PlantenApplicatie.viewmodels
         }
         public ObservableCollection<string> PrefixKeys => _prefixKeys;
         public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
+
+
+
+        public string SelectedPrefixKey
+        {
+            get => _selectedPrefixKey;
+            set
+            {
+                _selectedPrefixKey = value;
+                OnPropertyChanged("Details");
+                OnPropertyChanged("DetailsPrefixes");
+            }
+
+        }
+
+        public string SelectedType
+        {
+            get => _selectedType;
+            set
+            {
+                _selectedType = value;
+                OnPropertyChanged();
+            }
+        }
         private void CreatePrefixesAndProperties()
         {
             _prefixes = new Dictionary<string, List<string>>();
@@ -78,6 +114,32 @@ namespace PlantenApplicatie.viewmodels
 
             _prefixKeys = new ObservableCollection<string>(_prefixes.Keys);
         }
+
+
+        public void LoadDetails()
+        {
+            switch (SelectedPrefixKey)
+            {
+                case "Plant":
+                    var types = _dao.GetTypes();
+
+                    Types.Clear();
+
+                    foreach (var type in types)
+                    {
+                        Types.Add(type);
+                    }
+                    break;
+
+            }
+
+        }
+
+        public void Save()
+        {
+            _dao.ChangePlant(SelectedType, null,null,null,null);
+        }
+      
     }
 
     

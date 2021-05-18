@@ -144,6 +144,45 @@ namespace PlantenApplicatie.Data
             return variants;
         }
 
+
+        //roep de ID's van aparte planten op ipv de lijst van planten. Jim
+        private long GetTypeId(string type)
+        {
+            return _context.TfgsvType
+                .SingleOrDefault(t => t.Planttypenaam == type)
+                .Planttypeid;
+        }
+        private long GetFamilyId(string family)
+        {
+            return _context.TfgsvFamilie
+                .SingleOrDefault(t => t.Familienaam == family)
+                .FamileId;
+        }
+        private long GetGenusId(string genus)
+        {
+            return _context.TfgsvGeslacht
+                .SingleOrDefault(t => t.Geslachtnaam == genus)
+                .GeslachtId;
+        }
+        private long GetSpeciesId(string species)
+        {
+            return _context.TfgsvSoort
+                .SingleOrDefault(t => t.Soortnaam == species)
+                .Soortid;
+        }
+        private long? GetVariantId(string variant)
+        {
+            if (variant == NoVariant)
+            {
+                return null;
+            }
+
+            return _context.TfgsvVariant
+                .SingleOrDefault(t => t.Variantnaam == variant)
+                .VariantId;
+        }
+
+
         // Haalt alle unieke typenamen op (Davy&Lily&Jim)
         public List<string> GetTypes()
         {
@@ -211,6 +250,37 @@ namespace PlantenApplicatie.Data
             return _context.CommSocialbiliteit
                 .Where(cm => commensalismeKeys.Contains(cm.Sociabiliteit))
                 .ToList();
+        }
+
+        //verander de gegevens van de Plant Onderwerp (jim)
+        public void ChangePlant( string? type,string? family,string? genus, string? species, string? variant)
+        {
+            var plantdetail = SearchPlants(null,null,null,null,null,null).FirstOrDefault();
+
+            var typeId = (int?)GetTypeId(type);
+            var familyId = (int?)GetFamilyId(family);
+            var genusId = (int?)GetGenusId(genus);
+            var speciesId = (int?)GetSpeciesId(species);
+            var variantId = (int?)GetVariantId(variant);
+
+            plantdetail.Type = type;
+            plantdetail.TypeId = typeId;
+            plantdetail.Familie = family;
+            plantdetail.FamilieId = familyId;
+            plantdetail.Geslacht = genus;
+            plantdetail.GeslachtId = genusId;
+            plantdetail.Soort = species;
+            plantdetail.SoortId = speciesId;
+            plantdetail.Variant = variant ?? string.Empty;
+            plantdetail.VariantId = variantId;
+
+
+            _context.SaveChanges();
+        }
+
+        public void GetPlantId()
+        {
+
         }
     }
 }

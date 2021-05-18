@@ -51,6 +51,9 @@ namespace PlantenApplicatie.viewmodels
         // ObservableCollection + prefixes om de plantdetails te kunnen weergeven
         public ObservableCollection<string> PrefixKeys => _prefixKeys;
 
+
+
+
         // string.join om de labels te veranderen per onderwerp
         public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
 

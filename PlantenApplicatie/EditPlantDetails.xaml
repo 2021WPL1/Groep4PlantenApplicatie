@@ -24,7 +24,12 @@
             <Label 
                 Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="10" Canvas.Top="153"/>
 
+            <ComboBox x:Name="cmbType"
+                ItemsSource="{Binding Types}"
+                SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="559" Canvas.Top="158" Width="219" Height="20"/>
 
+            <Button x:Name="btnSave" Content="Save" Canvas.Top="486" Width="80" Canvas.Left="766"
+                                    Command="{Binding Path=SaveCommand}"/>
         </Canvas>
     </Grid>
 </Window>
