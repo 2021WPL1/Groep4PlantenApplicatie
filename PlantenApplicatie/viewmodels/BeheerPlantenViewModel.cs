@@ -243,22 +243,16 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public void UpdateObservableCollection<T>(ObservableCollection<T> collection, List<T> data)
+        private static void UpdateObservableCollection<T>(ObservableCollection<T> collection, List<T> data)
         {
-            foreach(var elem in collection.ToList())
+            foreach (var elem in collection.ToList().Where(elem => !data.Contains(elem)))
             {
-                if (!data.Contains(elem))
-                {
-                    collection.Remove(elem);
-                }
+                collection.Remove(elem);
             }
 
-            foreach (var elem in data)
+            foreach (var elem in data.Where(elem => !collection.Contains(elem)))
             {
-                if (!collection.Contains(elem))
-                {
-                    collection.Add(elem);
-                }
+                collection.Add(elem);
             }
         }
 
