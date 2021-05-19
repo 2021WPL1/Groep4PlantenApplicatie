@@ -14,7 +14,6 @@
                     <StackPanel Orientation="Vertical">
                         <GroupBox Header="Kenmerken" Height="170">
                             <Canvas Margin="10">
-                                <!-- eerste rij -->
                                 <Label Canvas.Top="0" Content="Plantnaam :"/>
                                 <TextBox 
                                     x:Name="txtPlantnaam" 
@@ -27,17 +26,13 @@
                                     behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>
                                 <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
                                 <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
-                                <!-- tweede rij -->
                                 <Label Content="Type :" Canvas.Top="30" />
                                 <ComboBox SelectedValue="{Binding SelectedType}" x:Name="cmbType" Width="200" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }"  />
                                 <Label Content="Geslacht :" Canvas.Top="30" Canvas.Left="350" />
                                 <ComboBox SelectedValue="{Binding SelectedGeslacht}" x:Name="cmbGeslacht" Width="200" Canvas.Top="35" Canvas.Left="450"  ItemsSource="{Binding Genus }" />
-                                <!-- derde rij -->
-
                                 <Label Content="Soort :" Canvas.Top="60" />
                                 <ComboBox SelectedValue="{Binding SelectedSoort}" x:Name="cmbSoort" Width="200" Canvas.Top="65" Canvas.Left="80" ItemsSource="{Binding Soorten }" />
                                 <Label Content="Variant :" Canvas.Top="60" Canvas.Left="350" />
-                                <!-- vierde rij-->
                                 <Button x:Name="btnZoeken" Content="Zoeken" Canvas.Top="97" Width="80" Canvas.Left="878"
                                         Command="{Binding Path=searchPlantsCommand}"/>
                                 <Label Canvas.Top="95" Content="Naam:"/>
