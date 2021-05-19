@@ -76,10 +76,10 @@ namespace PlantenApplicatie.viewmodels
 
         public void ResetInputs()
         {
-            TextInputPlantName = string.Empty;
-
             SelectedType = SelectedFamilie =
                 SelectedSoort = SelectedFamilie = SelectedGeslacht = SelectedVariant = null;
+            
+            TextInputPlantName = string.Empty;
         }
 
         public Plant SelectedPlant
@@ -98,7 +98,11 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedSoort = value;
-                FilterComboBoxes();
+                
+                if (value is not null) {
+                    FilterComboBoxes();
+                }
+                
                 OnPropertyChanged();
             }
         }
@@ -108,7 +112,11 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedGeslacht = value;
-                FilterComboBoxes();
+                
+                if (value is not null) {
+                    FilterComboBoxes();
+                }
+                
                 OnPropertyChanged();
             }
         }
@@ -120,7 +128,12 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedType = value;
-                FilterComboBoxes();
+
+                if (value is not null)
+                {
+                    FilterComboBoxes();
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -131,7 +144,12 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedFamilie = value;
-                FilterComboBoxes();
+
+                if (value is not null)
+                {
+                    FilterComboBoxes();
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -142,7 +160,12 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedVariant = value;
-                FilterComboBoxes();
+
+                if (value is not null)
+                {
+                    FilterComboBoxes();
+                }
+
                 OnPropertyChanged();
             }
 
@@ -190,7 +213,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            UpdateObservableCollection(Types, types);
+            UpdateObservableCollection(Types, types, SelectedType);
         }
 
         public void LoadSoorten()
@@ -199,7 +222,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            UpdateObservableCollection(Soorten, soorten);
+            UpdateObservableCollection(Soorten, soorten, SelectedSoort);
         }
 
         public void LoadFamilies()
@@ -208,7 +231,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            UpdateObservableCollection(Families, families);
+            UpdateObservableCollection(Families, families, SelectedFamilie);
         }
 
         public void LoadGenus()
@@ -217,7 +240,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            UpdateObservableCollection(Genus, genus);
+            UpdateObservableCollection(Genus, genus, SelectedGeslacht);
         }
 
         public void LoadVariants()
@@ -226,7 +249,7 @@ namespace PlantenApplicatie.viewmodels
                 .Distinct()
                 .ToList();
             
-            UpdateObservableCollection(Variants, variants);
+            UpdateObservableCollection(Variants, variants, SelectedVariant);
         }
 
         // TODO: remove
@@ -243,17 +266,17 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        private static void UpdateObservableCollection<T>(ObservableCollection<T> collection, List<T> data)
+        private static void UpdateObservableCollection<T>(ObservableCollection<T> collection, List<T> data, 
+            T? valueToKeep) where T : notnull
         {
-            /*
-             * TODO: The time complexity of this method is really bad, it is o(2*n*m), fix this
-             */
-            foreach (var elem in collection.ToList().Where(elem => !data.Contains(elem)))
+            foreach (var elem in collection.ToList().Where(elem => valueToKeep is null 
+                                                                   || !elem.Equals(valueToKeep)))
             {
                 collection.Remove(elem);
             }
 
-            foreach (var elem in data.Where(elem => !collection.Contains(elem)))
+            foreach (var elem in data.Where(elem => valueToKeep is null 
+                                                    || !elem.Equals(valueToKeep)))
             {
                 collection.Add(elem);
             }
