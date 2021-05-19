@@ -287,5 +287,22 @@ namespace PlantenApplicatie.Data
         {
             var PlantId = plant.PlantId;
         }
+
+        public void ChangeAbiotiek(Plant plant)
+        {
+            var abiotiek = _context.Abiotiek.FirstOrDefault(s => s.Id == );
+            
+            abiotiek.Bezonning = ;
+            abiotiek.Grondsoort = ;
+            abiotiek.Vochtbehoefte = ;
+            abiotiek.Voedingsbehoefte = ;
+            abiotiek.AntagonischeOmgeving = ;
+            abiotiek.
+
+
+
+
+            _context.SaveChanges();
+        }
     }
 }
