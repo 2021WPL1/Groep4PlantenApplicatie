@@ -262,7 +262,7 @@ namespace PlantenApplicatie.Data
             var speciesId = (int?)GetSpeciesId(species);
             var variantId = (int?)GetVariantId(variant);
             //verander de gegevens van de plant op basis van wat er geselecteerd word, word er niks geselecteerd
-            //dan verandert de waarde niet
+            //dan verandert de waarde niet (Jim)
 
             plant.Type = type ?? plant.Type;
             plant.TypeId = typeId ?? plant.TypeId;
@@ -277,14 +277,14 @@ namespace PlantenApplicatie.Data
             plant.PlantdichtheidMin = plantMin ?? plant.PlantdichtheidMin;
             plant.PlantdichtheidMax = plantMax ?? plant.PlantdichtheidMax;
 
-            //de plantnaam verandert mee als er iets verandert in de FGSV volgorde.
+            //de plantnaam verandert mee als er iets verandert in de FGSV volgorde. (Jim)
             plant.Fgsv = plant.Familie + " " + plant.Geslacht + " " + plant.Soort + " " + plant.Variant;
 
 
             _context.SaveChanges();
         }
 
-        //Voeg een fenotype toe aan de geselecteerde plant
+        //Voeg een fenotype toe aan de geselecteerde plant (Jim)
         public void addFenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
         string habitus, string levensvorm)
         {
@@ -307,7 +307,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        //verander een fenotype van de geselecteerde plant
+        //verander een fenotype van de geselecteerde plant (Jim)
         public void ChangeFenotype(Fenotype fenotype, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
         string habitus, string levensvorm)
         {
@@ -322,7 +322,7 @@ namespace PlantenApplicatie.Data
 
             _context.SaveChanges();
         }
-        //verwijder een fenotype van de geselecteerde plant
+        //verwijder de fenotype van de geselecteerde plant (Jim)
         public void DeleteFenotype(Fenotype fenotype)
         {
             var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.Id == fenotype.Id);
@@ -330,7 +330,7 @@ namespace PlantenApplicatie.Data
             _context.Fenotype.Remove(selectedfenotype);
             _context.SaveChanges();
         }
-        //voeg een multifenotype toe
+        //voeg een multifenotype toe (Jim)
 
         public void AddMultiFenotype(Plant plant, string eigenschap, string maand, string waarde)
         {
@@ -345,7 +345,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        //verander een multifenotype van de geselecteerde plant
+        //verander een multifenotype van de geselecteerde plant (Jim)
 
         public void ChangeMultiFenotype(FenotypeMulti fenotypeMulti, string eigenschap, string maand, string waarde)
         {
@@ -357,12 +357,59 @@ namespace PlantenApplicatie.Data
        
             _context.SaveChanges();
         }
-
+        //verwijder een multifenotype van de geselecteerde plant (Jim)
         public void RemoveMultiFenotype(FenotypeMulti fenotypeMulti)
         {
             var selectedFenotypeMulti = _context.FenotypeMulti.FirstOrDefault(i => i.Id == fenotypeMulti.Id);
             _context.Remove(fenotypeMulti);
             _context.SaveChanges();
         }
+        //voeg een extra eigenschap aan de geselecteerde plant (Jim)
+        public void AddExtraEigenschap(Plant plant, string nectaWaarde,string pollenWaarde, bool bij,bool vlinder,
+            bool eetbaar,bool kruid, bool geur, bool vorst)
+        {
+            var extraEigenschap = new ExtraEigenschap
+            {
+                PlantId = plant.PlantId,
+                Nectarwaarde = nectaWaarde,
+                Pollenwaarde = pollenWaarde,
+                Bijvriendelijke = bij,
+                Vlindervriendelijk = vlinder,
+                Eetbaar = eetbaar,
+                Kruidgebruik = kruid,
+                Geurend = geur,
+                Vorstgevoelig = vorst
+            };
+
+            _context.ExtraEigenschap.Add(extraEigenschap);
+            _context.SaveChanges();
+        }
+        //verander de extra eigenschap aan de geselecteerde plant (Jim)
+
+        public void ChangeExtraEigenschap(ExtraEigenschap extraEigenschap, string nectaWaarde, string pollenWaarde, bool bij, bool vlinder,
+         bool eetbaar, bool kruid, bool geur, bool vorst)
+        {
+            var selectedExtraEigenschap = _context.ExtraEigenschap.FirstOrDefault(i => i.Id == extraEigenschap.Id);
+
+            selectedExtraEigenschap.Nectarwaarde = nectaWaarde ?? selectedExtraEigenschap.Nectarwaarde;
+            selectedExtraEigenschap.Pollenwaarde = pollenWaarde ?? selectedExtraEigenschap.Pollenwaarde;
+            selectedExtraEigenschap.Bijvriendelijke = bij;
+            selectedExtraEigenschap.Eetbaar = eetbaar;
+            selectedExtraEigenschap.Kruidgebruik = kruid;
+            selectedExtraEigenschap.Geurend = geur;
+            selectedExtraEigenschap.Vorstgevoelig = vorst;
+
+            
+            _context.SaveChanges();
+        }
+        //verwijder de extra eigenschap aan de geselecteerde plant (Jim)
+
+        public void DeleteExtraEigenschap(ExtraEigenschap extraEigenschap)
+        {
+            var selectedExtraEigenschap = _context.ExtraEigenschap.FirstOrDefault(i => i.Id == extraEigenschap.Id);
+            _context.ExtraEigenschap.Remove(selectedExtraEigenschap);
+            _context.SaveChanges();
+        }
+
     }
 }
