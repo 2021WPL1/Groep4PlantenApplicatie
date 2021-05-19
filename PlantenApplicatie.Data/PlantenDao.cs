@@ -370,5 +370,76 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
+        public void AddAbiotiekMulti(Plant plant, string eigenschap, string waarde)
+        {
+            
+            AbiotiekMulti abiotiekMulti = new AbiotiekMulti
+            {
+                PlantId = plant.PlantId,
+                Eigenschap = eigenschap,
+                Waarde = waarde
+            };
+
+            _context.Add(abiotiekMulti);
+
+            _context.SaveChanges();
+
+
+        }
+
+        public void ChangeAbiotiekMulti(AbiotiekMulti abiotiekMulti, string eigenschap, string waarde)
+        {
+            var selectedAbiotiekMulti = _context.AbiotiekMulti.FirstOrDefault(s => s.Id == abiotiekMulti.Id);
+
+            selectedAbiotiekMulti.Eigenschap = eigenschap ?? selectedAbiotiekMulti.Eigenschap;
+            selectedAbiotiekMulti.Waarde = waarde ?? selectedAbiotiekMulti.Waarde;
+
+            _context.SaveChanges();
+        }
+
+        public void DeleteAbiotiekMulti(AbiotiekMulti abiotiekMulti)
+        {
+            var selectedAbiotiekMulti = _context.AbiotiekMulti.FirstOrDefault(s => s.Id == abiotiekMulti.Id);
+
+            _context.AbiotiekMulti.Remove(selectedAbiotiekMulti);
+
+            _context.SaveChanges();
+        }
+
+        public void AddCommensalismeMulti(Plant plant, string eigenschap, string waarde)
+        {
+
+            CommensalismeMulti commensalismeMulti = new CommensalismeMulti
+            {
+                PlantId = plant.PlantId,
+                Eigenschap = eigenschap,
+                Waarde = waarde
+            };
+
+            _context.Add(commensalismeMulti);
+
+            _context.SaveChanges();
+
+
+        }
+
+        public void ChangeCommensalismeMulti(CommensalismeMulti commensalismeMulti, string eigenschap, string waarde)
+        {
+            var selectedCommensalismeMulti = _context.CommensalismeMulti.FirstOrDefault(s => s.Id == commensalismeMulti.Id);
+
+            selectedCommensalismeMulti.Eigenschap = eigenschap ?? selectedCommensalismeMulti.Eigenschap;
+            selectedCommensalismeMulti.Waarde = waarde ?? selectedCommensalismeMulti.Waarde;
+
+            _context.SaveChanges();
+        }
+
+        public void DeleteCommensalismeMulti(CommensalismeMulti commensalismeMulti)
+        {
+            var selectedCommensalismeMulti = _context.CommensalismeMulti.FirstOrDefault(s => s.Id == commensalismeMulti.Id);
+
+            _context.CommensalismeMulti.Remove(selectedCommensalismeMulti);
+
+            _context.SaveChanges();
+        }
     }
 }
