@@ -11,9 +11,8 @@ namespace PlantenApplicatie.viewmodels
 {
     class BeheerPlantenViewModel : ViewModelBase
     {
-        public ICommand showPlantDetailsCommand { get; }
-        public ICommand searchPlantsCommand { get; }
-        public ICommand resetCommand { get; }
+        public ICommand ShowDetailsCommand { get; }
+        public ICommand ResetCommand { get; }
 
         public ObservableCollection<Plant> Plants { get; set; }
         public List<string> PlantNames => Plants.Select(p => PlantenParser.ParseSearchText(p.Fgsv))
@@ -29,20 +28,21 @@ namespace PlantenApplicatie.viewmodels
         // hiermee kunnen we de data opvragen aan de databank.
         public PlantenDao _plantenDao;
 
-        private Plant _selectedPlant;   
+        private Plant? _selectedPlant;   
         private string? _selectedType;
         private string? _selectedSoort;
         private string? _selectedGeslacht;
         private string? _selectedFamilie;
         private string? _selectedVariant;
 
-        private string textInputPlantName;
+        // The GUI binds to this variable through a property, therefore it will not be null,
+        // so we tell the compiler it is not null
+        private string _textInputPlantName = null!;
 
         public BeheerPlantenViewModel(PlantenDao plantenDao)
         {
-            showPlantDetailsCommand = new DelegateCommand(showPlantDetails);
-            searchPlantsCommand = new DelegateCommand(SearchPlanten);
-            resetCommand = new DelegateCommand(ResetInputs);
+            ShowDetailsCommand = new DelegateCommand(ShowPlantDetails);
+            ResetCommand = new DelegateCommand(ResetInputs);
 
             Plants = new ObservableCollection<Plant>();
             Types = new ObservableCollection<string>();
@@ -87,7 +87,7 @@ namespace PlantenApplicatie.viewmodels
             OnPropertyChanged("SelectedVariant");
         }
 
-        public Plant SelectedPlant
+        public Plant? SelectedPlant
         {
             get { return _selectedPlant; }
             set
@@ -228,11 +228,11 @@ namespace PlantenApplicatie.viewmodels
         {
             get
             {
-                return textInputPlantName;
+                return _textInputPlantName;
             }
             set
             {
-                textInputPlantName = value;
+                _textInputPlantName = value;
                 FilterComboBoxes();
                 OnPropertyChanged();
             }
@@ -317,14 +317,14 @@ namespace PlantenApplicatie.viewmodels
             Variants = new ObservableCollection<string>(variants);
         }
 
-        private void showPlantDetails()
+        private void ShowPlantDetails()
         {
             if (_selectedPlant is not null)
             {
-                // nieuw venster initialiseren
                 new PlantDetails(SelectedPlant).Show();
             } else { 
-                MessageBox.Show("Gelieve een plant te selecteren uit de listview", "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Gelieve een plant te selecteren uit de listview", 
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
