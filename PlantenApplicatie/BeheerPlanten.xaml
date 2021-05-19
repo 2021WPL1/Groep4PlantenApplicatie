@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlantenApplicatie"
+        xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
         mc:Ignorable="d"
         Title="BeheerPlanten" Height="550" Width="1200">
     <Grid>
@@ -15,12 +16,15 @@
                             <Canvas Margin="10">
                                 <!-- eerste rij -->
                                 <Label Canvas.Top="0" Content="Plantnaam :"/>
-                                <TextBox x:Name="txtPlantnaam" Width="200" Canvas.Top="5" Canvas.Left="80"
-                                         Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}">
-                                    <TextBox.InputBindings>
-                                        <KeyBinding Command="{Binding Path=showPlantByNameCommand}" Key="Enter" />
-                                    </TextBox.InputBindings>
-                                </TextBox>
+                                <TextBox 
+                                    x:Name="txtPlantnaam" 
+                                    Width="200" 
+                                    Canvas.Top="5" 
+                                    Canvas.Left="80" 
+                                    Text="{Binding Path=TextInputPlantName, 
+                                    UpdateSourceTrigger=PropertyChanged}"
+                                    behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding PlantNames}"
+                                    behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>
                                 <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
                                 <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
                                 <!-- tweede rij -->
