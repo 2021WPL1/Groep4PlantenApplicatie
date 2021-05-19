@@ -68,7 +68,7 @@ namespace PlantenApplicatie.viewmodels
             get => _selectedSpecies;
             set
             {
-                MaintainCorrectSetterValueAfterFilter(ref _selectedSpecies, value);
+                MaintainCorrectFieldValueAfterFilter(ref _selectedSpecies, value);
                 OnPropertyChanged();
             }
         }
@@ -77,7 +77,7 @@ namespace PlantenApplicatie.viewmodels
             get => _selectedGenus;
             set
             {
-                MaintainCorrectSetterValueAfterFilter(ref _selectedGenus, value);
+                MaintainCorrectFieldValueAfterFilter(ref _selectedGenus, value);
                 OnPropertyChanged();
             }
         }
@@ -87,7 +87,7 @@ namespace PlantenApplicatie.viewmodels
             get => _selectedType;
             set
             {
-                MaintainCorrectSetterValueAfterFilter(ref _selectedType, value);
+                MaintainCorrectFieldValueAfterFilter(ref _selectedType, value);
                 OnPropertyChanged();
             }
         }
@@ -97,7 +97,7 @@ namespace PlantenApplicatie.viewmodels
             get => _selectedFamily;
             set
             {
-                MaintainCorrectSetterValueAfterFilter(ref _selectedFamily, value);
+                MaintainCorrectFieldValueAfterFilter(ref _selectedFamily, value);
                 OnPropertyChanged();
             }
         }
@@ -107,7 +107,7 @@ namespace PlantenApplicatie.viewmodels
             get => _selectedVariant;
             set
             {
-                MaintainCorrectSetterValueAfterFilter(ref _selectedVariant, value);
+                MaintainCorrectFieldValueAfterFilter(ref _selectedVariant, value);
                 OnPropertyChanged();
             }
         }
@@ -123,7 +123,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
         
-        private void MaintainCorrectSetterValueAfterFilter(ref string? field, string? value)
+        private void MaintainCorrectFieldValueAfterFilter(ref string? field, string? value)
         {
             if (value == field) return;
 
