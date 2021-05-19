@@ -22,7 +22,7 @@ namespace PlantenApplicatie.viewmodels
 
         // The GUI binds to this variable through a property, therefore it will not be null,
         // so we tell the compiler it is not null
-        private string _textInputPlantName = null!; // TODO: rename this and property
+        private string _plantName = null!; 
         
         public ICommand ShowDetailsCommand { get; }
         public ICommand ResetCommand { get; }
@@ -190,15 +190,15 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string TextInputPlantName
+        public string PlantName
         {
             get
             {
-                return _textInputPlantName;
+                return _plantName;
             }
             set
             {
-                _textInputPlantName = value;
+                _plantName = value;
                 FilterComboBoxes();
                 OnPropertyChanged();
             }
@@ -225,7 +225,7 @@ namespace PlantenApplicatie.viewmodels
         {
             _selectedType = _selectedSoort = _selectedFamilie = _selectedGeslacht = _selectedVariant = null;
             
-            TextInputPlantName = string.Empty;
+            PlantName = string.Empty;
             
             OnPropertyChanged("SelectedType");
             OnPropertyChanged("SelectedSoort");
@@ -305,7 +305,7 @@ namespace PlantenApplicatie.viewmodels
         private void SearchPlanten()
         {
             var plants = _plantenDao.SearchPlants(SelectedType, SelectedFamilie, 
-                SelectedGeslacht, SelectedSoort, SelectedVariant, TextInputPlantName);
+                SelectedGeslacht, SelectedSoort, SelectedVariant, PlantName);
                 
             Plants.Clear();
             

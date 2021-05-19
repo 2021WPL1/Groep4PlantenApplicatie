@@ -19,7 +19,7 @@
                                     Width="200" 
                                     Canvas.Top="5" 
                                     Canvas.Left="80" 
-                                    Text="{Binding Path=TextInputPlantName, 
+                                    Text="{Binding Path=PlantName, 
                                     UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
                                 <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
