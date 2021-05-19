@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlantenApplicatie"
-        xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
         mc:Ignorable="d"
         Title="BeheerPlanten" Height="550" Width="1200">
     <Grid>
@@ -21,9 +20,7 @@
                                     Canvas.Top="5" 
                                     Canvas.Left="80" 
                                     Text="{Binding Path=TextInputPlantName, 
-                                    UpdateSourceTrigger=PropertyChanged}"
-                                    behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding PlantNames}"
-                                    behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>
+                                    UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
                                 <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
                                 <Label Content="Type :" Canvas.Top="30" />
