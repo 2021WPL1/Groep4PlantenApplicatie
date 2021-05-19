@@ -7,7 +7,7 @@ namespace PlantenApplicatie.Data
 {
     public class PlantenDao
     {
-        private const string NoVariant = "\0N/A";
+        public const string NoVariant = "N/A";
         
         private readonly PlantenContext _context;
 

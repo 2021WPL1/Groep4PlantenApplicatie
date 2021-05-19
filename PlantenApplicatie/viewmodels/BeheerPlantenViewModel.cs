@@ -66,20 +66,31 @@ namespace PlantenApplicatie.viewmodels
         public void FilterComboBoxes()
         {
             SearchPlanten();
-            
+
             LoadTypes();
             LoadSoorten();
             LoadFamilies();
             LoadGenus();
             LoadVariants();
+            
+            OnPropertyChanged("Types");
+            OnPropertyChanged("Soorten");
+            OnPropertyChanged("Families");
+            OnPropertyChanged("Genus");
+            OnPropertyChanged("Variants");
         }
 
         public void ResetInputs()
         {
-            SelectedType = SelectedFamilie =
-                SelectedSoort = SelectedFamilie = SelectedGeslacht = SelectedVariant = null;
+            _selectedType = _selectedSoort = _selectedFamilie = _selectedGeslacht = _selectedVariant = null;
             
             TextInputPlantName = string.Empty;
+            
+            /*OnPropertyChanged("SelectedType");
+            OnPropertyChanged("SelectedSoort");
+            OnPropertyChanged("SelectedFamilie");
+            OnPropertyChanged("SelectedGeslacht");
+            OnPropertyChanged("SelectedVariant");*/
         }
 
         public Plant SelectedPlant
@@ -97,12 +108,19 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedSoort; }
             set
             {
+                var oldSoort = _selectedSoort;
                 _selectedSoort = value;
+                
+                Console.WriteLine(value ?? "NULL");
                 
                 if (value is not null) {
                     FilterComboBoxes();
                 }
-                
+                else
+                {
+                    _selectedSoort = oldSoort;
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -111,10 +129,17 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedGeslacht; }
             set
             {
+                var oldGeslacht = _selectedGeslacht;
                 _selectedGeslacht = value;
                 
+                Console.WriteLine(value ?? "NULL");
+
                 if (value is not null) {
                     FilterComboBoxes();
+                }
+                else
+                {
+                    _selectedGeslacht = oldGeslacht;
                 }
                 
                 OnPropertyChanged();
@@ -127,11 +152,18 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedType; }
             set
             {
+                var oldType = _selectedType;
                 _selectedType = value;
+                
+                Console.WriteLine(value ?? "NULL");
 
                 if (value is not null)
                 {
                     FilterComboBoxes();
+                }
+                else
+                {
+                    _selectedType = oldType;
                 }
 
                 OnPropertyChanged();
@@ -143,13 +175,19 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedFamilie; }
             set
             {
+                var oldFamilie = _selectedFamilie;
                 _selectedFamilie = value;
+                
+                Console.WriteLine(value ?? "NULL");
 
                 if (value is not null)
                 {
                     FilterComboBoxes();
                 }
-
+                else {
+                    _selectedFamilie = oldFamilie;
+                }
+                
                 OnPropertyChanged();
             }
         }
@@ -159,11 +197,18 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedVariant; }
             set
             {
+                var oldVariant = _selectedVariant;
                 _selectedVariant = value;
+                
+                Console.WriteLine(value ?? "NULL");
 
                 if (value is not null)
                 {
                     FilterComboBoxes();
+                }
+                else
+                {
+                    _selectedVariant = oldVariant;
                 }
 
                 OnPropertyChanged();
@@ -209,47 +254,55 @@ namespace PlantenApplicatie.viewmodels
 
         public void LoadTypes()
         {
-            var types = Plants.Select(p => p.Type)
+            var types = Plants.Select(p => PlantenParser.ParseSearchText(p.Type))
                 .Distinct()
+                .OrderBy(t => t)
                 .ToList();
-            
-            UpdateObservableCollection(Types, types, SelectedType);
+
+            Types = new ObservableCollection<string>(types);
         }
 
         public void LoadSoorten()
         {
-            var soorten = Plants.Select(p => p.Soort)
+            var soorten = Plants.Select(p => PlantenParser.ParseSearchText(p.Soort))
                 .Distinct()
+                .OrderBy(s => s)
                 .ToList();
-            
-            UpdateObservableCollection(Soorten, soorten, SelectedSoort);
+
+            Soorten = new ObservableCollection<string>(soorten);
         }
 
         public void LoadFamilies()
         {
-            var families = Plants.Select(p => p.Familie)
+            var families = Plants.Select(p => PlantenParser.ParseSearchText(p.Familie))
                 .Distinct()
+                .OrderBy(f => f)
                 .ToList();
-            
-            UpdateObservableCollection(Families, families, SelectedFamilie);
+
+            Families = new ObservableCollection<string>(families);
         }
 
         public void LoadGenus()
         {
-            var genus = Plants.Select(p => p.Geslacht)
+            var genus = Plants.Select(p => PlantenParser.ParseSearchText(p.Geslacht))
                 .Distinct()
+                .OrderBy(g => g)
                 .ToList();
-            
-            UpdateObservableCollection(Genus, genus, SelectedGeslacht);
+
+            Genus = new ObservableCollection<string>(genus);
         }
 
         public void LoadVariants()
         {
-            var variants = Plants.Select(p => p.Variant)
+            var variants = Plants.Select(p => PlantenParser.ParseSearchText(p.Variant))
+                .Where(v => v != PlantenDao.NoVariant)
                 .Distinct()
+                .OrderBy(v => v)
                 .ToList();
             
-            UpdateObservableCollection(Variants, variants, SelectedVariant);
+            variants.Insert(0, PlantenDao.NoVariant);
+
+            Variants = new ObservableCollection<string>(variants);
         }
 
         // TODO: remove
@@ -263,22 +316,6 @@ namespace PlantenApplicatie.viewmodels
             foreach (var plant in plants)
             {
                 Plants.Add(plant);
-            }
-        }
-
-        private static void UpdateObservableCollection<T>(ObservableCollection<T> collection, List<T> data, 
-            T? valueToKeep) where T : notnull
-        {
-            foreach (var elem in collection.ToList().Where(elem => valueToKeep is null 
-                                                                   || !elem.Equals(valueToKeep)))
-            {
-                collection.Remove(elem);
-            }
-
-            foreach (var elem in data.Where(elem => valueToKeep is null 
-                                                    || !elem.Equals(valueToKeep)))
-            {
-                collection.Add(elem);
             }
         }
 
@@ -306,14 +343,8 @@ namespace PlantenApplicatie.viewmodels
 
         private void SearchPlanten()
         {
-            var type = SelectedType;
-            var familie = SelectedFamilie;
-            var geslacht = SelectedGeslacht;
-            var soort = SelectedSoort;
-            var variant = SelectedVariant;
-            
-            var plants = _plantenDao.SearchPlants(type, familie, 
-                geslacht, soort, variant, TextInputPlantName);
+            var plants = _plantenDao.SearchPlants(SelectedType, SelectedFamilie, 
+                SelectedGeslacht, SelectedSoort, SelectedVariant, TextInputPlantName);
                 
             Plants.Clear();
             

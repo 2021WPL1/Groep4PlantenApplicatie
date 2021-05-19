@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PlantenApplicatie.Data
 {
-    internal static class PlantenParser
+    public static class PlantenParser
     {
         public static string ParseSearchText(string text)
         {
