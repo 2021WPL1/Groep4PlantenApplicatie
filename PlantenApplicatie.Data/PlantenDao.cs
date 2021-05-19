@@ -255,13 +255,14 @@ namespace PlantenApplicatie.Data
         //verander de gegevens van de Plant Onderwerp (jim)
         public void ChangePlant(Plant plant, string? type,string? family, string? genus, string? species, string? variant,short? plantMin, short? plantMax)
         {
-
-
+            //haal de id's van de verschillende types op
             var typeId = (int?)GetTypeId(type);
             var familyId = (int?)GetFamilyId(family);
             var genusId = (int?)GetGenusId(genus);
             var speciesId = (int?)GetSpeciesId(species);
             var variantId = (int?)GetVariantId(variant);
+            //verander de gegevens van de plant op basis van wat er geselecteerd word, word er niks geselecteerd
+            //dan verandert de waarde niet
 
             plant.Type = type ?? plant.Type;
             plant.TypeId = typeId ?? plant.TypeId;
@@ -276,16 +277,92 @@ namespace PlantenApplicatie.Data
             plant.PlantdichtheidMin = plantMin ?? plant.PlantdichtheidMin;
             plant.PlantdichtheidMax = plantMax ?? plant.PlantdichtheidMax;
 
+            //de plantnaam verandert mee als er iets verandert in de FGSV volgorde.
             plant.Fgsv = plant.Familie + " " + plant.Geslacht + " " + plant.Soort + " " + plant.Variant;
 
-        
 
             _context.SaveChanges();
         }
 
-        public void ChangeFenotype(Plant plant)
+        //Voeg een fenotype toe aan de geselecteerde plant
+        public void addFenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
+        string habitus, string levensvorm)
         {
-            var PlantId = plant.PlantId;
+            var fenotypePlant = new Fenotype
+            {
+                PlantId = plant.PlantId,
+                Bladgrootte = bladgrootte,
+                Bladvorm = bladvorm,
+                RatioBloeiBlad = ratioBloeiBlad,
+                Bloeiwijze = bloeiwijze,
+                Habitus = habitus,
+                Levensvorm = levensvorm
+            };
+
+            if(_context.Fenotype.Contains(fenotypePlant))
+            {
+                fenotypePlant = null;
+            }
+            _context.Fenotype.Add(fenotypePlant);
+            _context.SaveChanges();
+        }
+
+        //verander een fenotype van de geselecteerde plant
+        public void ChangeFenotype(Fenotype fenotype, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
+        string habitus, string levensvorm)
+        {
+            var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.Id == fenotype.Id);
+
+            selectedfenotype.Bladgrootte = bladgrootte ?? selectedfenotype.Bladgrootte;
+            selectedfenotype.Bladvorm = bladvorm ?? selectedfenotype.Bladvorm;
+            selectedfenotype.RatioBloeiBlad = ratioBloeiBlad ?? selectedfenotype.RatioBloeiBlad;
+            selectedfenotype.Bloeiwijze = bloeiwijze ?? selectedfenotype.Bloeiwijze;
+            selectedfenotype.Habitus = habitus ?? selectedfenotype.Habitus;
+            selectedfenotype.Levensvorm = levensvorm ?? selectedfenotype.Levensvorm;
+
+            _context.SaveChanges();
+        }
+        //verwijder een fenotype van de geselecteerde plant
+        public void DeleteFenotype(Fenotype fenotype)
+        {
+            var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.Id == fenotype.Id);
+
+            _context.Fenotype.Remove(selectedfenotype);
+            _context.SaveChanges();
+        }
+        //voeg een multifenotype toe
+
+        public void AddMultiFenotype(Plant plant, string eigenschap, string maand, string waarde)
+        {
+            var fenotypeMultiPlant = new FenotypeMulti
+            {
+                PlantId = plant.PlantId,
+                Eigenschap = eigenschap,
+                Maand = maand,
+                Waarde = waarde
+            };
+            _context.FenotypeMulti.Add(fenotypeMultiPlant);
+            _context.SaveChanges();
+        }
+
+        //verander een multifenotype van de geselecteerde plant
+
+        public void ChangeMultiFenotype(FenotypeMulti fenotypeMulti, string eigenschap, string maand, string waarde)
+        {
+            var selectedFenotypeMulti = _context.FenotypeMulti.FirstOrDefault(i => i.Id == fenotypeMulti.Id);
+
+            selectedFenotypeMulti.Eigenschap = eigenschap ?? selectedFenotypeMulti.Eigenschap;
+            selectedFenotypeMulti.Maand = maand ?? selectedFenotypeMulti.Maand;
+            selectedFenotypeMulti.Waarde = waarde ?? selectedFenotypeMulti.Waarde;
+       
+            _context.SaveChanges();
+        }
+
+        public void RemoveMultiFenotype(FenotypeMulti fenotypeMulti)
+        {
+            var selectedFenotypeMulti = _context.FenotypeMulti.FirstOrDefault(i => i.Id == fenotypeMulti.Id);
+            _context.Remove(fenotypeMulti);
+            _context.SaveChanges();
         }
     }
 }
