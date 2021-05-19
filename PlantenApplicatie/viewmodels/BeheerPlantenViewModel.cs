@@ -24,6 +24,10 @@ namespace PlantenApplicatie.viewmodels
         public ICommand resetCommand { get; set; }
 
         public ObservableCollection<Plant> Plants { get; set; }
+        public List<string> PlantNames => Plants.Select(p => PlantenParser.ParseSearchText(p.Fgsv))
+            .Distinct()
+            .OrderBy(fgsv => fgsv)
+            .ToList();
         public ObservableCollection<string> Types { get; set; }
         public ObservableCollection<string> Soorten { get; set; }
         public ObservableCollection<string> Families { get; set; }
