@@ -287,22 +287,88 @@ namespace PlantenApplicatie.Data
         {
             var PlantId = plant.PlantId;
         }
-
-        public void ChangeAbiotiek(Plant plant)
+        //Toevoegen, veranderen en verwijderen van abiotiek (Liam)
+        public void AddAbiotiek(Plant plant, string? bezonning, string? grondsoort, string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
         {
-            var abiotiek = _context.Abiotiek.FirstOrDefault(s => s.Id == );
-            
-            abiotiek.Bezonning = ;
-            abiotiek.Grondsoort = ;
-            abiotiek.Vochtbehoefte = ;
-            abiotiek.Voedingsbehoefte = ;
-            abiotiek.AntagonischeOmgeving = ;
-            abiotiek.
+             //Habitat ontbreekt
+            Abiotiek abiotiek = new Abiotiek 
+            { PlantId = plant.PlantId,
+               Bezonning = bezonning,
+               Grondsoort = grondsoort,
+               Vochtbehoefte = vochtbehoefte, 
+                Voedingsbehoefte = voedingsbehoefte,
+                AntagonischeOmgeving = antagonischeOmgeving};
+                        
+            _context.Add(abiotiek);
 
+            _context.SaveChanges();
+
+
+        }
+
+        public void ChangeAbiotiek(Abiotiek abiotiek, string? bezonning, string? grondsoort,
+            string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
+        {
+            
+            
+            var selectedAbiotiek = _context.Abiotiek.FirstOrDefault(s => s.Id == abiotiek.Id);
+
+            selectedAbiotiek.Bezonning = bezonning ?? selectedAbiotiek.Bezonning;
+            selectedAbiotiek.Grondsoort = grondsoort ?? selectedAbiotiek.Grondsoort;
+            selectedAbiotiek.Vochtbehoefte = vochtbehoefte ?? selectedAbiotiek.Vochtbehoefte;
+            selectedAbiotiek.Voedingsbehoefte = voedingsbehoefte ?? selectedAbiotiek.Voedingsbehoefte;
+            selectedAbiotiek.AntagonischeOmgeving = antagonischeOmgeving ?? selectedAbiotiek.AntagonischeOmgeving; 
 
 
 
             _context.SaveChanges();
         }
+        
+        public void DeleteAbiotiek(Abiotiek abiotiek)
+        {
+            var selectedAbiotiek = _context.Abiotiek.FirstOrDefault(s => s.Id == abiotiek.Id);
+
+            _context.Abiotiek.Remove(selectedAbiotiek);
+
+            _context.SaveChanges();
+        }
+        
+        //Toevoegen, veranderen en verwijderen van commensalisme (Liam)
+
+        public void AddCommensalisme(Plant plant, string ontwikkelingssnelheid, string strategie)
+        {
+            //sociabiliteit ontbreekt
+            Commensalisme commensalisme = new Commensalisme
+            {
+                PlantId = plant.PlantId,
+                Ontwikkelsnelheid = ontwikkelingssnelheid,
+                Strategie = strategie
+            };
+
+            _context.Add(commensalisme);
+
+            _context.SaveChanges();
+
+
+        }
+
+        public void ChangeCommensalisme(Commensalisme commensalisme, string ontwikkelingssnelheid, string strategie)
+        {
+            var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(s => s.Id == commensalisme.Id);
+
+            selectedCommensalisme.Ontwikkelsnelheid = ontwikkelingssnelheid ?? selectedCommensalisme.Ontwikkelsnelheid;
+            selectedCommensalisme.Strategie = strategie ?? selectedCommensalisme.Strategie;
+
+            _context.SaveChanges();
+        }
+        public void DeleteCommensalisme(Commensalisme commensalisme)
+        {
+            var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(s => s.Id == commensalisme.Id);
+
+            _context.Commensalisme.Remove(selectedCommensalisme);
+
+            _context.SaveChanges();
+        }
+
     }
 }
