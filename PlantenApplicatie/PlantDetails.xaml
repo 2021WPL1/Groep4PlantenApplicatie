@@ -10,25 +10,191 @@
         <ImageBrush ImageSource="/plantjes.png"/>
     </Window.Background>
     <Grid>
-        <Canvas>
-            <Canvas.Background>
-                <ImageBrush ImageSource="/plantjes.png"/>
-            </Canvas.Background>
-            <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
-            <Label x:Name="lblPlantnaamGroot" 
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="Details plant">
+                <Grid>
+                    <Canvas>
+
+                        <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
+                        <Label x:Name="lblPlantnaamGroot" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="25"/>
 
-            <ComboBox x:Name="cmbEigenschappen"
+                        <ComboBox x:Name="cmbEigenschappen"
                       ItemsSource="{Binding PrefixKeys}" 
                       SelectedItem="{Binding SelectedPrefixKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="10" Canvas.Top="57" Width="219" Height="20"/>
-            <Label 
+                        <Label 
                 Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="10" Canvas.Top="153"/>
-            <Label 
+                        <Label 
                 Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="219" Canvas.Top="153"/>
 
-            <Button x:Name="btnEdit" Canvas.Top="510" Canvas.Left="758" Width="86"
+                        <Button x:Name="btnEdit" Canvas.Top="509" Canvas.Left="641" Width="86"
                                         Content="Edit Details" Command="{Binding Path=EditDetailsCommand}" />
-            <Button Content="Beheersdaden" Canvas.Left="30" Canvas.Top="519" Width="178" Command="{Binding Path=AddPlantDetailsCommand}"/>
-        </Canvas>
+                    </Canvas>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Wijzig plant">
+
+            </TabItem>
+            <TabItem Header="Fenotype">
+                <Canvas>
+                    <ComboBox Canvas.Left="128" Canvas.Top="31" Width="598"
+                              
+                      ItemsSource="{Binding FenoBladgroottes}" 
+                      SelectedItem="{Binding SelectedBladgrootte, UpdateSourceTrigger=PropertyChanged}"
+                              DisplayMemberPath="Bladgrootte"
+                              />
+                    <Label Content="Bladgrootte :" Canvas.Left="10" Canvas.Top="27"/>
+                    <Label Content="Bladvorm :" Canvas.Left="10" Canvas.Top="66"/>
+                    <Label Content="Bloeiwijze :" Canvas.Left="10" Canvas.Top="109" RenderTransformOrigin="0.204,0.541"/>
+                    <ComboBox Canvas.Left="128" Canvas.Top="70" Width="598"                              
+                        ItemsSource="{Binding FenoBladvormen}" 
+                        SelectedItem="{Binding SelectedBladvorm, UpdateSourceTrigger=PropertyChanged}"
+                              DisplayMemberPath="Vorm"
+                              />
+                    <ComboBox Canvas.Left="128" Canvas.Top="111" Width="598"
+                        ItemsSource="{Binding FenoBloeiwijzes}" 
+                        SelectedItem="{Binding SelectedBloeiwijze, UpdateSourceTrigger=PropertyChanged}"   
+                              DisplayMemberPath="Naam"                                 
+                              />
+                    <Label Content="Habitus :" Canvas.Left="10" Canvas.Top="148" RenderTransformOrigin="0.204,0.541"/>
+                    <Label Content="Kleur :" Canvas.Left="10" Canvas.Top="189" RenderTransformOrigin="0.204,0.541"/>
+                    <ComboBox Canvas.Left="128" Canvas.Top="152" Width="598"
+                        ItemsSource="{Binding FenoHabitussen}" 
+                        SelectedItem="{Binding SelectedHabitus, UpdateSourceTrigger=PropertyChanged}"
+                              DisplayMemberPath="Naam" />
+                    <ComboBox Canvas.Left="128" Canvas.Top="191" Width="598"
+                        ItemsSource="{Binding FenoKleuren}" 
+                        SelectedItem="{Binding SelectedKleur, UpdateSourceTrigger=PropertyChanged}"
+                              DisplayMemberPath="NaamKleur" />
+                    <Label Content="Levensvorm :" Canvas.Left="10" Canvas.Top="234" RenderTransformOrigin="0.204,0.541"/>
+                    <ComboBox Canvas.Left="128" Canvas.Top="236" Width="598"
+                        ItemsSource="{Binding FenoLevensvormen}" 
+                        SelectedItem="{Binding SelectedLevensvorm, UpdateSourceTrigger=PropertyChanged}"
+                              DisplayMemberPath="Levensvorm" />
+                    <Label Content="SpruitFenologie :" Canvas.Left="10" Canvas.Top="276" RenderTransformOrigin="0.204,0.541"/>
+                    <ComboBox Canvas.Left="128" Canvas.Top="278" Width="598"
+                        ItemsSource="{Binding FenoSpruitFenologieen}" 
+                        SelectedItem="{Binding SelectedSpruitFenologie, UpdateSourceTrigger=PropertyChanged}"
+                              DisplayMemberPath="Fenologie" />
+                    <ListView Height="150" Width="716" Canvas.Left="10" Canvas.Top="320"
+                              ItemsSource="{Binding Fenotypes}" 
+                                          SelectedItem="{Binding SelectedFenotype, Mode=TwoWay}" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="PlantId" Width="Auto" DisplayMemberBinding="{Binding PlantId}" />
+                                <GridViewColumn Header="Bladgrootte" Width="Auto" DisplayMemberBinding="{Binding Bladgrootte}" />
+                                <GridViewColumn Header="Bladvorm" Width="Auto" DisplayMemberBinding="{Binding Bladvorm}" />
+                                <GridViewColumn Header="Ratiobloeiblad" Width="Auto" DisplayMemberBinding="{Binding RatioBloeiBlad}" />
+                                <GridViewColumn Header="SpruitFenologie" Width="Auto" DisplayMemberBinding="{Binding Spruitfenologie}" />
+                                <GridViewColumn Header="Bloeiwijze" Width="Auto" DisplayMemberBinding="{Binding Bloeiwijze}" />
+                                <GridViewColumn Header="Habitus" Width="Auto" DisplayMemberBinding="{Binding Habitus}" />
+                                <GridViewColumn Header="Levensvorm" Width="Auto" DisplayMemberBinding="{Binding Levensvorm}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Command="{Binding Path=AddFenoTypeCommand}" Content="Voeg FenoType toe aan plant" Height="28" Canvas.Left="33" Canvas.Top="505" Width="208"/>
+                    <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="269" Canvas.Top="505" Width="208"/>
+                    <Button Command="{Binding Path=RemoveFenoTypeCommand}" Content="Verwijder FenoType" Height="28" Canvas.Left="498" Canvas.Top="505" Width="208"/>
+
+
+                </Canvas>
+            </TabItem>
+            <TabItem Header="Abiotiek">
+
+            </TabItem>
+            <TabItem Header="Commensalisme">
+
+            </TabItem>
+            <TabItem Header="Extra eigenschappen">
+
+            </TabItem>
+            <TabItem Header="Beheersdaden">
+                <GroupBox Header="Beheersdaden" Width="760" Height="400" Background="White" Margin="0,12,0,166">
+                    <StackPanel Orientation="Vertical">
+                        <ListView x:Name="myListView" Height="150" Width="760"
+                                      ItemsSource="{Binding BeheerMaanden}" 
+                                          SelectedItem="{Binding SelectedBeheerMaand, Mode=TwoWay}"  >
+
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Id" Width="Auto" DisplayMemberBinding="{Binding Id}" />
+                                    <GridViewColumn Header="PlantId" Width="Auto" DisplayMemberBinding="{Binding PlantId}" />
+                                    <GridViewColumn Header="Beheerdaad" Width="Auto" DisplayMemberBinding="{Binding Beheerdaad}" />
+                                    <GridViewColumn Header="Omschrijving" Width="Auto" DisplayMemberBinding="{Binding Omschrijving}" />
+                                    <GridViewColumn Header="Jan" Width="Auto" DisplayMemberBinding="{Binding Jan}" />
+                                    <GridViewColumn Header="Feb" Width="Auto" DisplayMemberBinding="{Binding Feb}" />
+                                    <GridViewColumn Header="Mrt" Width="Auto" DisplayMemberBinding="{Binding Mrt}" />
+                                    <GridViewColumn Header="Apr" Width="Auto" DisplayMemberBinding="{Binding Apr}" />
+                                    <GridViewColumn Header="Mei" Width="Auto" DisplayMemberBinding="{Binding Mei}" />
+                                    <GridViewColumn Header="Jun" Width="Auto" DisplayMemberBinding="{Binding Jun}" />
+                                    <GridViewColumn Header="Jul" Width="Auto" DisplayMemberBinding="{Binding Jul}" />
+                                    <GridViewColumn Header="Aug" Width="Auto" DisplayMemberBinding="{Binding Aug}" />
+                                    <GridViewColumn Header="Sept" Width="Auto" DisplayMemberBinding="{Binding Sept}" />
+                                    <GridViewColumn Header="Okt" Width="Auto" DisplayMemberBinding="{Binding Okt}" />
+                                    <GridViewColumn Header="Nov" Width="Auto" DisplayMemberBinding="{Binding Nov}" />
+                                    <GridViewColumn Header="Dec" Width="Auto" DisplayMemberBinding="{Binding Dec}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Canvas Margin="0,0,20,0" Height="248">
+                            <!-- eerste rij -->
+                            <Label Canvas.Top="-2" Canvas.Left="-1" Content="PlantNaam"/>
+                            <Label Content="{Binding SelectedPlant.Fgsv}" 
+                              Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
+
+                            <!-- tweede rij -->
+                            <Label Content="Beheerdaad :" Canvas.Top="30" />
+                            <TextBox Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
+                            <!-- derde rij -->
+                            <Label Content="Omschrijving :" Canvas.Top="60" />
+                            <TextBox Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
+                            <!-- vierde rij -->
+                            <Label Content="Data:" Canvas.Left="2" Canvas.Top="112"/>
+
+
+                            <CheckBox IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
+                            <CheckBox IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
+                            <CheckBox IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
+                            <CheckBox IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
+                            <CheckBox IsChecked="{Binding IsCheckedMay, UpdateSourceTrigger=PropertyChanged}" Content="Mei" Canvas.Left="486" Canvas.Top="117"/>
+                            <CheckBox IsChecked="{Binding IsCheckedJune, UpdateSourceTrigger=PropertyChanged}" Content="Juni" Canvas.Left="597" Canvas.Top="117"/>
+                            <CheckBox IsChecked="{Binding IsCheckedJuly, UpdateSourceTrigger=PropertyChanged}" Content="Juli" Canvas.Left="84" Canvas.Top="152"/>
+                            <CheckBox IsChecked="{Binding IsCheckedAugust, UpdateSourceTrigger=PropertyChanged}" Content="Augustus" Canvas.Left="187" Canvas.Top="152"/>
+                            <CheckBox IsChecked="{Binding IsCheckedSeptember, UpdateSourceTrigger=PropertyChanged}" Content="September" Canvas.Left="291" Canvas.Top="152"/>
+                            <CheckBox IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
+                            <CheckBox IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
+                            <CheckBox IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
+                            <Button Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan plant" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208"/>
+                            <Button Command="{Binding Path=EditManagementActCommand}" Content="Wijzig Beheerdaad van plant" Height="28" Canvas.Left="245" Canvas.Top="182" Width="208"/>
+                            <Button Command="{Binding Path=RemoveManagementActCommand}" Content="Verwijder Beheerdaad" Height="28" Canvas.Left="474" Canvas.Top="182" Width="208"/>
+
+                        </Canvas>
+
+                    </StackPanel>
+
+
+                </GroupBox>
+            </TabItem>
+            <TabItem Header="Foto">
+                <Canvas>
+                    <Label Height="25" Content="FotoId :" Canvas.Left="25" Canvas.Top="22"></Label>
+                    <TextBox Canvas.Left="114" Canvas.Top="26"  Text="{Binding Path=Fotoid}" TextWrapping="Wrap" Width="376"/>
+                    <Label Height="25" Content="Plant :" Canvas.Left="25" Canvas.Top="53"/>
+                    <TextBox Canvas.Left="114" Canvas.Top="57" Text="{Binding Path=Plant}" TextWrapping="Wrap" Width="376"/>
+                    <Label Height="25" Content="Eigenschap :" Canvas.Left="25" Canvas.Top="84"/>
+                    <TextBox Canvas.Left="114" Canvas.Top="88" Text="{Binding Path=Eigenschap}" TextWrapping="Wrap" Width="376"/>
+                    <Label Height="25" Content="UrlLocatie :" Canvas.Left="25" Canvas.Top="118"/>
+                    <TextBox Canvas.Left="114" Canvas.Top="122" Text="{Binding Path=UrlLocatie}" TextWrapping="Wrap" Width="376"/>
+                    <Label Height="25" Content="Thumbnail :" Canvas.Left="25" Canvas.Top="156"/>
+                    <TextBox Canvas.Left="114" Canvas.Top="160" Text="{Binding Path=Tumbnail}" TextWrapping="Wrap" Width="376"/>
+
+                    <Button Command="{Binding Path=AddPhotoCommand}" Content="Voeg foto toe aan plant" Height="28" Canvas.Left="46" Canvas.Top="215" Width="208"/>
+                    <Button Command="{Binding Path=EditPhotoCommand}" Content="Wijzig foto van plant" Height="28" Canvas.Left="282" Canvas.Top="215" Width="208"/>
+                    <Button Command="{Binding Path=RemovePhotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="215" Width="208"/>
+
+                </Canvas>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>

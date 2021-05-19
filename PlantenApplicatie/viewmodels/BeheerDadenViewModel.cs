@@ -20,10 +20,10 @@ namespace PlantenApplicatie.viewmodels
         // Hiermee kunnen we de data opvragen aan de databank.
         private readonly PlantenDao _plantenDao;
 
-        // collecties (lijsten)
+        // collecties (lijsten) Davy
         public ObservableCollection<BeheerMaand> BeheerMaanden { get; set; }
 
-        // private variabelen
+        // private variabelen Davy
         private Plant _selectedPlant;
         private BeheerMaand _selectedBeheerMaand;
         private string _textInputBeheerdaad;
@@ -297,7 +297,7 @@ namespace PlantenApplicatie.viewmodels
         // wijzig een beheerdaad
         private void EditManagementAct()
         {
-            BeheerMaand beheerMaand = new BeheerMaand();
+            BeheerMaand beheerMaand = SelectedBeheerMaand; 
             beheerMaand.PlantId = SelectedPlant.PlantId;
             beheerMaand.Beheerdaad = TextInputBeheerdaad;
             beheerMaand.Omschrijving = TextInputDescription;

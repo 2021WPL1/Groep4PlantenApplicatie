@@ -234,11 +234,77 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        // verwijder een BeheerMaand uit database
+        // verwijder een BeheerMaand uit database (Davy)
         public void RemoveBeheerMaand(BeheerMaand beheerMaand)
         {
             _context.BeheerMaand.Remove(beheerMaand);
             _context.SaveChanges();
+        }
+
+        // verkrijg lijst FenoBladgrootte (Davy)
+        public List<FenoBladgrootte> GetFenoBladgroottes()
+        {
+            return _context.FenoBladgrootte.ToList();
+        }
+
+        // verkrijg lijst FenoBladvorm (Davy)
+        public List<FenoBladvorm> GetFenoBladvormen()
+        {
+            return _context.FenoBladvorm.ToList();
+        }
+
+        // verkrijg lijst FenoBloeiwijze (Davy)
+        public List<FenoBloeiwijze> GetFenoBloeiwijzes()
+        {
+            return _context.FenoBloeiwijze.ToList();
+        }
+
+        // verkrijg lijst FenoHabitus (Davy)
+        public List<FenoHabitus> GetFenoHabitussen()
+        {
+            return _context.FenoHabitus.ToList();
+        }
+
+        // verkrijg lijst FenoKleur (Davy)
+        public List<FenoKleur> getFenoKleuren()
+        {
+            return _context.FenoKleur.ToList();
+        }
+
+        // verkrijg lijst FenoLevensvorm (Davy)
+        public List<FenoLevensvorm> GetFenoLevensvormen()
+        {
+            return _context.FenoLevensvorm.ToList();
+        }
+
+        // verkrijg lijst FenoSpruitFenologie (Davy)
+        public List<FenoSpruitfenologie> GetFenoSpruitFenologieen()
+        {
+            return _context.FenoSpruitfenologie.ToList();
+        }
+
+        public void CreateFenoType(Fenotype fenotype)
+        {
+            _context.Fenotype.Add(fenotype);
+            _context.SaveChanges();
+        }
+
+        public void EditFenoType(Fenotype fenotype)
+        {
+            _context.Fenotype.Update(fenotype);
+            _context.SaveChanges();
+        }
+
+        public void RemoveFenoType(Fenotype fenotype)
+        {
+            _context.Fenotype.Remove(fenotype);
+            _context.SaveChanges();
+
+        }
+
+        public List<Fenotype> GetFenoTypes()
+        {
+            return _context.Fenotype.ToList();
         }
     }
 }
