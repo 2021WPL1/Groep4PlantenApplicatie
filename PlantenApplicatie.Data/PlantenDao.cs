@@ -163,19 +163,6 @@ namespace PlantenApplicatie.Data
                 .ToList();
         }
 
-        // haal alle beheermaanden op (Davy)
-        public List<BeheerMaand> GetBeheerMaanden()
-        {
-            return _context.BeheerMaand.ToList();
-        }
-
-        // methode Davy, Lily
-        public void CreateBeheerMaand(BeheerMaand beheerMaand)
-        {
-            _context.BeheerMaand.Add(beheerMaand);
-            _context.SaveChanges();
-        }
-
         // Haalt alle unieke geslachtnamen op (Davy&Lily&Jim)
         public List<string> GetUniqueGenusNames()
         {
@@ -225,6 +212,33 @@ namespace PlantenApplicatie.Data
             return _context.CommSocialbiliteit
                 .Where(cm => commensalismeKeys.Contains(cm.Sociabiliteit))
                 .ToList();
+        }
+
+        // haal alle beheermaanden op (Davy)
+        public List<BeheerMaand> GetBeheerMaanden()
+        {
+            return _context.BeheerMaand.ToList();
+        }
+
+        // maak een BeheerMaand aan (Davy, Lily)
+        public void CreateBeheerMaand(BeheerMaand beheerMaand)
+        {
+            _context.BeheerMaand.Add(beheerMaand);
+            _context.SaveChanges();
+        }
+
+        // wijzig een BeheerMaand (Davy)
+        public void EditBeheerMaand(BeheerMaand beheerMaand)
+        {
+            _context.BeheerMaand.Update(beheerMaand);            
+            _context.SaveChanges();
+        }
+
+        // verwijder een BeheerMaand uit database
+        public void RemoveBeheerMaand(BeheerMaand beheerMaand)
+        {
+            _context.BeheerMaand.Remove(beheerMaand);
+            _context.SaveChanges();
         }
     }
 }
