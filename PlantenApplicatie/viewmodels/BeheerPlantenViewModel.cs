@@ -11,14 +11,9 @@ namespace PlantenApplicatie.viewmodels
 {
     class BeheerPlantenViewModel : ViewModelBase
     {
-        public ICommand showPlantDetailsCommand { get; set; }
-        public ICommand showPlantByNameCommand { get; set; }
-
-        public ICommand showVariantByNameCommand { get; set; }
-
-        public ICommand searchPlantsCommand { get; set; }
-
-        public ICommand resetCommand { get; set; }
+        public ICommand showPlantDetailsCommand { get; }
+        public ICommand searchPlantsCommand { get; }
+        public ICommand resetCommand { get; }
 
         public ObservableCollection<Plant> Plants { get; set; }
         public List<string> PlantNames => Plants.Select(p => PlantenParser.ParseSearchText(p.Fgsv))
@@ -46,8 +41,6 @@ namespace PlantenApplicatie.viewmodels
         public BeheerPlantenViewModel(PlantenDao plantenDao)
         {
             showPlantDetailsCommand = new DelegateCommand(showPlantDetails);
-            showPlantByNameCommand = new DelegateCommand(showPlantByName);
-            showVariantByNameCommand = new DelegateCommand(showVariantByName);
             searchPlantsCommand = new DelegateCommand(SearchPlanten);
             resetCommand = new DelegateCommand(ResetInputs);
 
@@ -324,25 +317,6 @@ namespace PlantenApplicatie.viewmodels
             Variants = new ObservableCollection<string>(variants);
         }
 
-        // TODO: remove
-        public void LoadPlantsByVariant(string variant)
-        {
-            var plants = _plantenDao.SearchPlants(null, null, 
-                null, null, variant, null);
-            
-            Plants.Clear();
-            
-            foreach (var plant in plants)
-            {
-                Plants.Add(plant);
-            }
-        }
-
-        public void showVariantByName()
-        {
-            LoadPlantsByVariant(SelectedVariant);
-        }
-
         private void showPlantDetails()
         {
             if (_selectedPlant is not null)
@@ -352,12 +326,6 @@ namespace PlantenApplicatie.viewmodels
             } else { 
                 MessageBox.Show("Gelieve een plant te selecteren uit de listview", "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-        }
-
-        private void showPlantByName()
-        {
-            // string str = TextInput;
-            LoadPlantsByName(TextInputPlantName);
         }
 
         private void SearchPlanten()
