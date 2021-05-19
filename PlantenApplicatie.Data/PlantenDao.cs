@@ -299,10 +299,7 @@ namespace PlantenApplicatie.Data
                 Levensvorm = levensvorm
             };
 
-            if(_context.Fenotype.Contains(fenotypePlant))
-            {
-                fenotypePlant = null;
-            }
+          
             _context.Fenotype.Add(fenotypePlant);
             _context.SaveChanges();
         }
