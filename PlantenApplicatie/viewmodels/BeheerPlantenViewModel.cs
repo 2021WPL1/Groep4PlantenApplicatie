@@ -15,9 +15,9 @@ namespace PlantenApplicatie.viewmodels
         private Plant? _selectedPlant;
         
         private string? _selectedType;
-        private string? _selectedSoort;
-        private string? _selectedGeslacht;
-        private string? _selectedFamilie;
+        private string? _selectedSpecies;
+        private string? _selectedGenus;
+        private string? _selectedFamily;
         private string? _selectedVariant;
 
         // The GUI binds to this variable through a property, therefore it will not be null,
@@ -55,7 +55,7 @@ namespace PlantenApplicatie.viewmodels
         
         public Plant? SelectedPlant
         {
-            get { return _selectedPlant; }
+            get => _selectedPlant;
             set
             {
                 _selectedPlant = value;
@@ -63,139 +63,75 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string? SelectedSoort
+        public string? SelectedSpecies
         {
-            get { return _selectedSoort; }
+            get => _selectedSpecies;
             set
             {
-                if (value == _selectedSoort)
-                {
-                    return;
-                }
-                
-                var oldSoort = _selectedSoort;
-                _selectedSoort = value;
-                
-                if (value is not null) {
-                    FilterComboBoxes();
-                }
-                else
-                {
-                    _selectedSoort = oldSoort;
-                }
-
+                MaintainCorrectSetterValueAfterFilter(ref _selectedSpecies, value);
                 OnPropertyChanged();
             }
         }
-        public string? SelectedGeslacht
+        public string? SelectedGenus
         {
-            get { return _selectedGeslacht; }
+            get => _selectedGenus;
             set
             {
-                if (value == _selectedGeslacht)
-                {
-                    return;
-                }
-                
-                var oldGeslacht = _selectedGeslacht;
-                _selectedGeslacht = value;
-
-                if (value is not null) {
-                    FilterComboBoxes();
-                }
-                else
-                {
-                    _selectedGeslacht = oldGeslacht;
-                }
-                
+                MaintainCorrectSetterValueAfterFilter(ref _selectedGenus, value);
                 OnPropertyChanged();
             }
         }
-
 
         public string? SelectedType
         {
-            get { return _selectedType; }
+            get => _selectedType;
             set
             {
-                if (value == _selectedType)
-                {
-                    return;
-                }
-                
-                var oldType = _selectedType;
-                _selectedType = value;
-
-                if (value is not null)
-                {
-                    FilterComboBoxes();
-                }
-                else
-                {
-                    _selectedType = oldType;
-                }
-
+                MaintainCorrectSetterValueAfterFilter(ref _selectedType, value);
                 OnPropertyChanged();
             }
         }
 
-        public string? SelectedFamilie
+        public string? SelectedFamily
         {
-            get { return _selectedFamilie; }
+            get => _selectedFamily;
             set
             {
-                if (value == _selectedFamilie)
-                {
-                    return;
-                }
-                
-                var oldFamilie = _selectedFamilie;
-                _selectedFamilie = value;
-
-                if (value is not null)
-                {
-                    FilterComboBoxes();
-                }
-                else {
-                    _selectedFamilie = oldFamilie;
-                }
-                
+                MaintainCorrectSetterValueAfterFilter(ref _selectedFamily, value);
                 OnPropertyChanged();
             }
         }
 
         public string? SelectedVariant
         {
-            get { return _selectedVariant; }
+            get => _selectedVariant;
             set
             {
-                if (value == _selectedVariant)
-                {
-                    return;
-                }
-                
-                var oldVariant = _selectedVariant;
-                _selectedVariant = value;
-
-                if (value is not null)
-                {
-                    FilterComboBoxes();
-                }
-                else
-                {
-                    _selectedVariant = oldVariant;
-                }
-
+                MaintainCorrectSetterValueAfterFilter(ref _selectedVariant, value);
                 OnPropertyChanged();
+            }
+        }
+
+        private void MaintainCorrectSetterValueAfterFilter(ref string? field, string? value)
+        {
+            if (value == field) return;
+
+            var oldValue = field;
+            field = value;
+
+            if (value is not null)
+            {
+                FilterComboBoxes();
+            }
+            else
+            {
+                field = oldValue;
             }
         }
 
         public string PlantName
         {
-            get
-            {
-                return _plantName;
-            }
+            get => _plantName;
             set
             {
                 _plantName = value;
@@ -209,13 +145,13 @@ namespace PlantenApplicatie.viewmodels
             SearchPlanten();
 
             LoadTypes();
-            LoadSoorten();
+            LoadSpecies();
             LoadFamilies();
             LoadGenus();
             LoadVariants();
             
             OnPropertyChanged("Types");
-            OnPropertyChanged("Soorten");
+            OnPropertyChanged("Species");
             OnPropertyChanged("Families");
             OnPropertyChanged("Genus");
             OnPropertyChanged("Variants");
@@ -223,14 +159,14 @@ namespace PlantenApplicatie.viewmodels
 
         public void ResetInputs()
         {
-            _selectedType = _selectedSoort = _selectedFamilie = _selectedGeslacht = _selectedVariant = null;
+            _selectedType = _selectedSpecies = _selectedFamily = _selectedGenus = _selectedVariant = null;
             
             PlantName = string.Empty;
             
             OnPropertyChanged("SelectedType");
-            OnPropertyChanged("SelectedSoort");
-            OnPropertyChanged("SelectedFamilie");
-            OnPropertyChanged("SelectedGeslacht");
+            OnPropertyChanged("SelectedSpecies");
+            OnPropertyChanged("SelectedFamily");
+            OnPropertyChanged("SelectedGenus");
             OnPropertyChanged("SelectedVariant");
         }
 
@@ -244,7 +180,7 @@ namespace PlantenApplicatie.viewmodels
             Types = new ObservableCollection<string>(types);
         }
 
-        public void LoadSoorten()
+        public void LoadSpecies()
         {
             var soorten = Plants.Select(p => PlantenParser.ParseSearchText(p.Soort))
                 .Distinct()
@@ -293,7 +229,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void ShowDetails()
         {
-            if (_selectedPlant is not null)
+            if (SelectedPlant is not null)
             {
                 new PlantDetails(SelectedPlant).Show();
             } else { 
@@ -304,9 +240,9 @@ namespace PlantenApplicatie.viewmodels
 
         private void SearchPlanten()
         {
-            var plants = _plantenDao.SearchPlants(SelectedType, SelectedFamilie, 
-                SelectedGeslacht, SelectedSoort, SelectedVariant, PlantName);
-                
+            var plants = _plantenDao.SearchPlants(SelectedType, SelectedFamily, 
+                SelectedGenus, SelectedSpecies, SelectedVariant, PlantName);
+
             Plants.Clear();
             
             foreach (var plant in plants)

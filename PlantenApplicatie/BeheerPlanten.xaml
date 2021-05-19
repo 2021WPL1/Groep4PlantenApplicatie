@@ -22,13 +22,13 @@
                                     Text="{Binding Path=PlantName, 
                                     UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :"/>
-                                <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
+                                <ComboBox SelectedValue="{Binding SelectedFamily, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
                                 <Label Content="Type :" Canvas.Top="30" />
                                 <ComboBox SelectedValue="{Binding SelectedType}" x:Name="cmbType" Width="200" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }"  />
                                 <Label Content="Geslacht :" Canvas.Top="30" Canvas.Left="350" />
-                                <ComboBox SelectedValue="{Binding SelectedGeslacht}" x:Name="cmbGeslacht" Width="200" Canvas.Top="35" Canvas.Left="450"  ItemsSource="{Binding Genus }" />
+                                <ComboBox SelectedValue="{Binding SelectedGenus}" x:Name="cmbGeslacht" Width="200" Canvas.Top="35" Canvas.Left="450"  ItemsSource="{Binding Genus }" />
                                 <Label Content="Soort :" Canvas.Top="60" />
-                                <ComboBox SelectedValue="{Binding SelectedSoort}" x:Name="cmbSoort" Width="200" Canvas.Top="65" Canvas.Left="80" ItemsSource="{Binding Soorten }" />
+                                <ComboBox SelectedValue="{Binding SelectedSpecies}" x:Name="cmbSoort" Width="200" Canvas.Top="65" Canvas.Left="80" ItemsSource="{Binding Species }" />
                                 <Label Content="Variant :" Canvas.Top="60" Canvas.Left="350" />
                                 <Label Canvas.Top="95" Content="Naam:"/>
                                 <TextBox x:Name="txtNLNaam" Width="200" Canvas.Top="99" Canvas.Left="80" Text="Typ de nederlandse naam"   />
