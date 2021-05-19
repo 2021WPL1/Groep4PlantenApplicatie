@@ -11,9 +11,6 @@
     </Window.Background>
     <Grid>
         <Canvas>
-            <Canvas.Background>
-                <ImageBrush ImageSource="/plantjes.png"/>
-            </Canvas.Background>
             <Label Content="Edit Details:" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
             <Label x:Name="lblPlantnaam" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="149" FontSize="25"/>

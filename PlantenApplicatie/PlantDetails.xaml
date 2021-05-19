@@ -28,6 +28,7 @@
 
             <Button x:Name="btnEdit" Canvas.Top="510" Canvas.Left="758" Width="86"
                                         Content="Edit Details" Command="{Binding Path=EditDetailsCommand}" />
+            <Button Content="Beheersdaden" Canvas.Left="30" Canvas.Top="519" Width="178" Command="{Binding Path=AddPlantDetailsCommand}"/>
         </Canvas>
     </Grid>
 </Window>

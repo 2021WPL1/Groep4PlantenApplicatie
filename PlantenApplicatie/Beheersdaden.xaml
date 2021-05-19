@@ -1,0 +1,79 @@
+﻿<Window x:Class="PlantenApplicatie.Beheersdaden"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlantenApplicatie"
+        mc:Ignorable="d"
+        Title="Beheersdaden" Height="500" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="/plantjes.png"/>
+    </Window.Background>
+    <Grid>
+        <GroupBox Header="Beheersdaden" Width="760" Height="400" Background="White">
+            <StackPanel Orientation="Vertical">
+                <ListView x:Name="myListView" Height="150" Width="760"
+                                      ItemsSource="{Binding BeheerMaanden}" 
+                                          SelectedItem="{Binding SelectedBeheerMaand, Mode=TwoWay}"  >
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Id" Width="Auto" DisplayMemberBinding="{Binding Id}" />
+                            <GridViewColumn Header="PlantId" Width="Auto" DisplayMemberBinding="{Binding PlantId}" />
+                            <GridViewColumn Header="Beheerdaad" Width="Auto" DisplayMemberBinding="{Binding Beheerdaad}" />
+                            <GridViewColumn Header="Omschrijving" Width="Auto" DisplayMemberBinding="{Binding Omschrijving}" />
+                            <GridViewColumn Header="Jan" Width="Auto" DisplayMemberBinding="{Binding Jan}" />
+                            <GridViewColumn Header="Feb" Width="Auto" DisplayMemberBinding="{Binding Feb}" />
+                            <GridViewColumn Header="Mrt" Width="Auto" DisplayMemberBinding="{Binding Mrt}" />
+                            <GridViewColumn Header="Apr" Width="Auto" DisplayMemberBinding="{Binding Apr}" />
+                            <GridViewColumn Header="Mei" Width="Auto" DisplayMemberBinding="{Binding Mei}" />
+                            <GridViewColumn Header="Jun" Width="Auto" DisplayMemberBinding="{Binding Jun}" />
+                            <GridViewColumn Header="Jul" Width="Auto" DisplayMemberBinding="{Binding Jul}" />
+                            <GridViewColumn Header="Aug" Width="Auto" DisplayMemberBinding="{Binding Aug}" />
+                            <GridViewColumn Header="Sept" Width="Auto" DisplayMemberBinding="{Binding Sept}" />
+                            <GridViewColumn Header="Okt" Width="Auto" DisplayMemberBinding="{Binding Okt}" />
+                            <GridViewColumn Header="Nov" Width="Auto" DisplayMemberBinding="{Binding Nov}" />
+                            <GridViewColumn Header="Dec" Width="Auto" DisplayMemberBinding="{Binding Dec}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Canvas Margin="0,0,20,0" Height="248">
+                    <!-- eerste rij -->
+                    <Label Canvas.Top="-2" Canvas.Left="-1" Content="PlantNaam"/>
+                    <Label Content="{Binding SelectedPlant.Fgsv}" 
+                              Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
+
+                    <!-- tweede rij -->
+                    <Label Content="Beheerdaad :" Canvas.Top="30" />
+                    <TextBox Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
+                    <!-- derde rij -->
+                    <Label Content="Omschrijving :" Canvas.Top="60" />
+                    <TextBox Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
+                    <!-- vierde rij -->
+                    <Label Content="Data:" Canvas.Left="2" Canvas.Top="112"/>
+
+
+                    <CheckBox IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
+                    <CheckBox IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
+                    <CheckBox IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
+                    <CheckBox IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
+                    <CheckBox IsChecked="{Binding IsCheckedMay, UpdateSourceTrigger=PropertyChanged}" Content="Mei" Canvas.Left="486" Canvas.Top="117"/>
+                    <CheckBox IsChecked="{Binding IsCheckedJune, UpdateSourceTrigger=PropertyChanged}" Content="Juni" Canvas.Left="597" Canvas.Top="117"/>
+                    <CheckBox IsChecked="{Binding IsCheckedJuly, UpdateSourceTrigger=PropertyChanged}" Content="Juli" Canvas.Left="84" Canvas.Top="152"/>
+                    <CheckBox IsChecked="{Binding IsCheckedAugust, UpdateSourceTrigger=PropertyChanged}" Content="Augustus" Canvas.Left="187" Canvas.Top="152"/>
+                    <CheckBox IsChecked="{Binding IsCheckedSeptember, UpdateSourceTrigger=PropertyChanged}" Content="September" Canvas.Left="291" Canvas.Top="152"/>
+                    <CheckBox IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
+                    <CheckBox IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
+                    <CheckBox IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
+                    <Button Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan database" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208"/>
+                    <Button Command="{Binding Path=EditManagementActCommand}" Content="Wijzig Beheerdaad in database" Height="28" Canvas.Left="245" Canvas.Top="182" Width="208"/>
+                    <Button Command="{Binding Path=RemoveManagementActCommand}" Content="Verwijder Beheerdaad uit database" Height="28" Canvas.Left="474" Canvas.Top="182" Width="208"/>
+
+                </Canvas>
+
+            </StackPanel>
+
+
+        </GroupBox>
+    </Grid>
+</Window>

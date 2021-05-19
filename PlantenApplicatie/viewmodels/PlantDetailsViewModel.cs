@@ -12,6 +12,7 @@ namespace PlantenApplicatie.viewmodels
     // MVVM Detailscherm Lily  GUI: Jim&Liam
     public class PlantDetailsViewModel : ViewModelBase
     {
+
         private const string TextSeparator = ",\n";
         
         private readonly PlantenDao _dao;
@@ -24,8 +25,7 @@ namespace PlantenApplicatie.viewmodels
 
         //button commands
         public ICommand EditDetailsCommand { get; set; }
-
-
+        public ICommand AddPlantDetailsCommand { get; set; }    // Davy
 
         // Constructor Lily
         public PlantDetailsViewModel(Plant selectedPlant)
@@ -35,6 +35,7 @@ namespace PlantenApplicatie.viewmodels
             CreatePrefixesAndProperties();
             SelectedPrefixKey = _prefixKeys[0];
             EditDetailsCommand = new DelegateCommand(EditPlantDetails);
+            AddPlantDetailsCommand = new DelegateCommand(AddPlantDetails);  // Davy
         }
 
         // Getters and setters selected waardes (Lily)
@@ -225,6 +226,12 @@ namespace PlantenApplicatie.viewmodels
         private void EditPlantDetails()
         {
             new EditPlantDetails(SelectedPlant).Show();
+        }
+
+        // methode roep nieuw venster op (Davy)
+        public void AddPlantDetails()
+        {
+            new Beheersdaden(SelectedPlant).Show();
         }
     }
 }

@@ -1,14 +1,17 @@
 ﻿using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
     public class EditDetailsViewModel : ViewModelBase
     {
+
         private Plant _selectedPlant;
 
         private const string TextSeparator = ",\n";
@@ -17,7 +20,6 @@ namespace PlantenApplicatie.viewmodels
         private Dictionary<string, List<string>> _prefixes;
         private ObservableCollection<string> _prefixKeys;
         private string _selectedPrefixKey;
-
 
 
 

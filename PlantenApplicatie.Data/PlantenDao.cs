@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PlantenApplicatie.Domain;
@@ -160,6 +161,19 @@ namespace PlantenApplicatie.Data
                 .Select(f => f.Familienaam)
                 .Distinct()
                 .ToList();
+        }
+
+        // haal alle beheermaanden op (Davy)
+        public List<BeheerMaand> GetBeheerMaanden()
+        {
+            return _context.BeheerMaand.ToList();
+        }
+
+        // methode Davy, Lily
+        public void CreateBeheerMaand(BeheerMaand beheerMaand)
+        {
+            _context.BeheerMaand.Add(beheerMaand);
+            _context.SaveChanges();
         }
 
         // Haalt alle unieke geslachtnamen op (Davy&Lily&Jim)
