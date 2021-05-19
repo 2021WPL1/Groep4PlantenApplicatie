@@ -30,14 +30,6 @@ namespace PlantenApplicatie
             beheerPlantenViewModel = new BeheerPlantenViewModel(
                 PlantenDao.Instance);
             DataContext = beheerPlantenViewModel;
-            beheerPlantenViewModel.LoadPlants();
-            beheerPlantenViewModel.LoadTypes();
-            beheerPlantenViewModel.LoadSoorten();
-            beheerPlantenViewModel.LoadFamilies();
-            beheerPlantenViewModel.LoadGenus();
-            beheerPlantenViewModel.LoadVariants();
-
-
         }
 
 

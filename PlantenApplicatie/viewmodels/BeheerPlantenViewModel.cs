@@ -33,7 +33,7 @@ namespace PlantenApplicatie.viewmodels
         // hiermee kunnen we de data opvragen aan de databank.
         public PlantenDao _plantenDao;
 
-        private Plant _selectedPlant;
+        private Plant _selectedPlant;   
         private string? _selectedType;
         private string? _selectedSoort;
         private string? _selectedGeslacht;
@@ -86,11 +86,11 @@ namespace PlantenApplicatie.viewmodels
             
             TextInputPlantName = string.Empty;
             
-            /*OnPropertyChanged("SelectedType");
+            OnPropertyChanged("SelectedType");
             OnPropertyChanged("SelectedSoort");
             OnPropertyChanged("SelectedFamilie");
             OnPropertyChanged("SelectedGeslacht");
-            OnPropertyChanged("SelectedVariant");*/
+            OnPropertyChanged("SelectedVariant");
         }
 
         public Plant SelectedPlant
@@ -108,10 +108,13 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedSoort; }
             set
             {
+                if (value == _selectedSoort)
+                {
+                    return;
+                }
+                
                 var oldSoort = _selectedSoort;
                 _selectedSoort = value;
-                
-                Console.WriteLine(value ?? "NULL");
                 
                 if (value is not null) {
                     FilterComboBoxes();
@@ -129,10 +132,13 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedGeslacht; }
             set
             {
+                if (value == _selectedGeslacht)
+                {
+                    return;
+                }
+                
                 var oldGeslacht = _selectedGeslacht;
                 _selectedGeslacht = value;
-                
-                Console.WriteLine(value ?? "NULL");
 
                 if (value is not null) {
                     FilterComboBoxes();
@@ -152,10 +158,13 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedType; }
             set
             {
+                if (value == _selectedType)
+                {
+                    return;
+                }
+                
                 var oldType = _selectedType;
                 _selectedType = value;
-                
-                Console.WriteLine(value ?? "NULL");
 
                 if (value is not null)
                 {
@@ -175,10 +184,13 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedFamilie; }
             set
             {
+                if (value == _selectedFamilie)
+                {
+                    return;
+                }
+                
                 var oldFamilie = _selectedFamilie;
                 _selectedFamilie = value;
-                
-                Console.WriteLine(value ?? "NULL");
 
                 if (value is not null)
                 {
@@ -197,10 +209,13 @@ namespace PlantenApplicatie.viewmodels
             get { return _selectedVariant; }
             set
             {
+                if (value == _selectedVariant)
+                {
+                    return;
+                }
+                
                 var oldVariant = _selectedVariant;
                 _selectedVariant = value;
-                
-                Console.WriteLine(value ?? "NULL");
 
                 if (value is not null)
                 {
@@ -213,7 +228,6 @@ namespace PlantenApplicatie.viewmodels
 
                 OnPropertyChanged();
             }
-
         }
 
         public string TextInputPlantName
@@ -295,12 +309,16 @@ namespace PlantenApplicatie.viewmodels
         public void LoadVariants()
         {
             var variants = Plants.Select(p => PlantenParser.ParseSearchText(p.Variant))
-                .Where(v => v != PlantenDao.NoVariant)
                 .Distinct()
                 .OrderBy(v => v)
                 .ToList();
-            
-            variants.Insert(0, PlantenDao.NoVariant);
+
+            // TODO: change implementation to only parse within OrderBy, then remove method invocation on the line below
+            if (variants.Contains(PlantenParser.ParseSearchText(PlantenDao.NoVariant)))
+            {
+                variants.Remove(PlantenDao.NoVariant);
+                variants.Insert(0, PlantenDao.NoVariant);
+            }
 
             Variants = new ObservableCollection<string>(variants);
         }
@@ -326,7 +344,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void showPlantDetails()
         {
-            if (_selectedPlant != null)
+            if (_selectedPlant is not null)
             {
                 // nieuw venster initialiseren
                 new PlantDetails(SelectedPlant).Show();
