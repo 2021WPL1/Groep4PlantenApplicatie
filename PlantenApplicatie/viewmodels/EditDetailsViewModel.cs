@@ -13,20 +13,40 @@ namespace PlantenApplicatie.viewmodels
     public class EditDetailsViewModel : ViewModelBase
     {
         private Plant _selectedPlant;
-
-        private const string TextSeparator = ",\n";
-
         private readonly PlantenDao _dao;
+        private const string TextSeparator = ",\n";
         private Dictionary<string, List<string>> _prefixes;
-        private ObservableCollection<string> _prefixKeys;
+
         private string _selectedPrefixKey;
-        
-        
-        public ICommand SaveCommand { get; set; }
         private string _selectedType;
+        private string _selectedFamily;
+        private string _selectedGenus;
+        private string _selectedSpecies;
+        private string _selectedVariant;
+        private string _textInputMin;
+        private string _textInputMax;
+
+
+        //observable collections
         public ObservableCollection<string> Types { get; set; }
 
+        public ObservableCollection<string> Families { get; set; }
 
+        public ObservableCollection<string> Genus { get; set; }
+
+        public ObservableCollection<string> Species { get; set; }
+        public ObservableCollection<string> Variants { get; set; }
+
+
+        public ObservableCollection<string> PrefixKeys => _prefixKeys;
+
+        private ObservableCollection<string> _prefixKeys;
+
+
+        //button commands
+        public ICommand SaveCommand { get; set; }
+
+        //constructor 
         public EditDetailsViewModel(Plant selectedPlant)
         {
 
@@ -36,11 +56,23 @@ namespace PlantenApplicatie.viewmodels
             _dao = PlantenDao.Instance;
             CreatePrefixesAndProperties();
             SelectedPrefixKey = _prefixKeys[0];
+
             Types = new ObservableCollection<string>();
+            Families = new ObservableCollection<string>();
+            Genus = new ObservableCollection<string>();
+            Species = new ObservableCollection<string>();
+            Variants = new ObservableCollection<string>();
 
             LoadDetails();
         }
 
+        public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
+
+
+
+
+
+        //selected values
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -50,10 +82,77 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<string> PrefixKeys => _prefixKeys;
-        public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
 
+        public string SelectedType
+        {
+            get => _selectedPlant.Type;
+            set
+            {
+                _selectedType = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedFamily
+        {
+            get => _selectedPlant.Familie;
+            set
+            {
+                _selectedFamily = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedGenus
+        {
+            get => _selectedPlant.Geslacht;
+            set
+            {
+                _selectedGenus = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedSpecies
+        {
+            get => _selectedPlant.Soort;
+            set
+            {
+                _selectedSpecies = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedVariant
+        {
+            get => _selectedPlant.Variant;
+            set
+            {
+                _selectedVariant = value;
+                OnPropertyChanged();
+            }
+        }
 
+        public string TextInputMin
+        {
+            get
+            {
+                return _textInputMin;
+            }
+            set
+            {
+                _textInputMin = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TextInputMax
+        {
+            get
+            {
+                return _textInputMax;
+            }
+            set
+            {
+                _textInputMax = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string SelectedPrefixKey
         {
@@ -61,21 +160,11 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedPrefixKey = value;
-                OnPropertyChanged("Details");
                 OnPropertyChanged("DetailsPrefixes");
             }
 
         }
 
-        public string SelectedType
-        {
-            get => _selectedType;
-            set
-            {
-                _selectedType = value;
-                OnPropertyChanged();
-            }
-        }
         private void CreatePrefixesAndProperties()
         {
             _prefixes = new Dictionary<string, List<string>>();
@@ -116,28 +205,64 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
+        //load de verschillende details op basis van welke key er is geselecteerd
+
         public void LoadDetails()
         {
             switch (SelectedPrefixKey)
             {
-                case "Plant":
-                    var types = _dao.GetTypes();
-
-                    Types.Clear();
-
-                    foreach (var type in types)
-                    {
-                        Types.Add(type);
-                    }
+                case "Plant": LoadSubjectPlant();
                     break;
-
+                  
             }
 
         }
 
+        public void LoadSubjectPlant()
+        {
+            var types = _dao.GetTypes();
+            var families = _dao.GetUniqueFamilyNames();
+            var genus = _dao.GetUniqueGenusNames();
+            var species = _dao.GetUniqueSpeciesNames();
+            var variants = _dao.GetUniqueVariantNames();
+
+
+            Types.Clear();
+            Families.Clear();
+            Genus.Clear();
+            Species.Clear();
+            Variants.Clear();
+
+            foreach (var type in types)
+            {
+                Types.Add(type);
+            }
+            foreach (var family in families)
+            {
+                Families.Add(family);
+            }
+            foreach (var geslacht in genus)
+            {
+                Genus.Add(geslacht);
+            }
+            foreach(var soort in species)
+            {
+                Species.Add(soort);
+            }
+            foreach (var variant in variants)
+            {
+                Variants.Add(variant);
+            }
+        }
+
         public void Save()
         {
-            _dao.ChangePlant(SelectedType, null,null,null,null);
+           
+                    _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant, Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
+                    TextInputMin = string.Empty;
+                    TextInputMax = string.Empty;
+          
+            
         }
       
     }

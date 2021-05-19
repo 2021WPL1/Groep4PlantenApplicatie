@@ -226,9 +226,9 @@ namespace PlantenApplicatie.Data
         {
             var list = _context.TfgsvVariant
                 .ToList()
-                .Select(v => PlantenParser.ParseSearchText(v.Variantnaam))
+                .Select(v => v.Variantnaam)
                 .Distinct()
-                .OrderBy(variantnaam => variantnaam)
+                .OrderBy(variantnaam => PlantenParser.ParseSearchText(variantnaam))
                 .ToList();
             
             list.Insert(0, NoVariant);
@@ -253,9 +253,9 @@ namespace PlantenApplicatie.Data
         }
 
         //verander de gegevens van de Plant Onderwerp (jim)
-        public void ChangePlant( string? type,string? family,string? genus, string? species, string? variant)
+        public void ChangePlant(Plant plant, string? type,string? family, string? genus, string? species, string? variant,short? plantMin, short? plantMax)
         {
-            var plantdetail = SearchPlants(null,null,null,null,null,null).FirstOrDefault();
+
 
             var typeId = (int?)GetTypeId(type);
             var familyId = (int?)GetFamilyId(family);
@@ -263,24 +263,29 @@ namespace PlantenApplicatie.Data
             var speciesId = (int?)GetSpeciesId(species);
             var variantId = (int?)GetVariantId(variant);
 
-            plantdetail.Type = type;
-            plantdetail.TypeId = typeId;
-            plantdetail.Familie = family;
-            plantdetail.FamilieId = familyId;
-            plantdetail.Geslacht = genus;
-            plantdetail.GeslachtId = genusId;
-            plantdetail.Soort = species;
-            plantdetail.SoortId = speciesId;
-            plantdetail.Variant = variant ?? string.Empty;
-            plantdetail.VariantId = variantId;
+            plant.Type = type ?? plant.Type;
+            plant.TypeId = typeId ?? plant.TypeId;
+            plant.Familie = family ?? plant.Familie;
+            plant.FamilieId = familyId ?? plant.FamilieId;
+            plant.Geslacht = genus ?? plant.Geslacht;
+            plant.GeslachtId = genusId ?? plant.GeslachtId;
+            plant.Soort = species ?? plant.Soort;
+            plant.SoortId = speciesId ?? plant.SoortId;
+            plant.Variant = variant ?? plant.Variant; ;
+            plant.VariantId = variantId ?? plant.VariantId;
+            plant.PlantdichtheidMin = plantMin ?? plant.PlantdichtheidMin;
+            plant.PlantdichtheidMax = plantMax ?? plant.PlantdichtheidMax;
 
+            plant.Fgsv = plant.Familie + " " + plant.Geslacht + " " + plant.Soort + " " + plant.Variant;
+
+        
 
             _context.SaveChanges();
         }
 
-        public void GetPlantId()
+        public void ChangeFenotype(Plant plant)
         {
-
+            var PlantId = plant.PlantId;
         }
     }
 }
