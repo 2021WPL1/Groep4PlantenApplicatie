@@ -24,8 +24,7 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Families { get; set; }
         public ObservableCollection<string> Genus { get; set; }
         public ObservableCollection<string> Variants { get; set; }
-
-        // hiermee kunnen we de data opvragen aan de databank.
+        
         public PlantenDao _plantenDao;
 
         private Plant? _selectedPlant;   
@@ -39,9 +38,9 @@ namespace PlantenApplicatie.viewmodels
         // so we tell the compiler it is not null
         private string _textInputPlantName = null!;
 
-        public BeheerPlantenViewModel(PlantenDao plantenDao)
+        public BeheerPlantenViewModel()
         {
-            ShowDetailsCommand = new DelegateCommand(ShowPlantDetails);
+            ShowDetailsCommand = new DelegateCommand(ShowDetails);
             ResetCommand = new DelegateCommand(ResetInputs);
 
             Plants = new ObservableCollection<Plant>();
@@ -51,7 +50,7 @@ namespace PlantenApplicatie.viewmodels
             Genus = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
 
-            _plantenDao = plantenDao;
+            _plantenDao = PlantenDao.Instance;
 
             LoadPlants();
             FilterComboBoxes();
@@ -317,7 +316,7 @@ namespace PlantenApplicatie.viewmodels
             Variants = new ObservableCollection<string>(variants);
         }
 
-        private void ShowPlantDetails()
+        private void ShowDetails()
         {
             if (_selectedPlant is not null)
             {
