@@ -112,6 +112,17 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        public string PlantName
+        {
+            get => _plantName;
+            set
+            {
+                _plantName = value;
+                FilterComboBoxes();
+                OnPropertyChanged();
+            }
+        }
+        
         private void MaintainCorrectSetterValueAfterFilter(ref string? field, string? value)
         {
             if (value == field) return;
@@ -126,17 +137,6 @@ namespace PlantenApplicatie.viewmodels
             else
             {
                 field = oldValue;
-            }
-        }
-
-        public string PlantName
-        {
-            get => _plantName;
-            set
-            {
-                _plantName = value;
-                FilterComboBoxes();
-                OnPropertyChanged();
             }
         }
 
