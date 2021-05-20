@@ -54,7 +54,7 @@ namespace PlantenApplicatie.Data
         }
 
         // Zoekt op ID's en naam (Lily)
-        private List<Plant> SearchPlantsWithTgsvAndName(List<long> typeIds, List<long> familyIds, 
+        private List<Plant> SearchPlantsWithTgsvAndName(List<long> typeIds, List<long> familyIds,
             List<long> genusIds, List<long> speciesIds, List<long?> variantIds, string name)
         {
             return _context.Plant
@@ -82,7 +82,7 @@ namespace PlantenApplicatie.Data
         // Geef de type ID's terug (Lily)
         private List<long> GetTypeIds(string type)
         {
-            return _context.TfgsvType.ToList().Where(t => 
+            return _context.TfgsvType.ToList().Where(t =>
                 PlantenParser.ParseSearchText(t.Planttypenaam)
                     .Contains(PlantenParser.ParseSearchText(type)))
                 .Select(t => t.Planttypeid)
@@ -135,7 +135,7 @@ namespace PlantenApplicatie.Data
                 .Cast<long?>()
                 .ToList();
 
-           // Voeg null toe aan de lijst om planten met geen variant terug te kunnen krijgen
+            // Voeg null toe aan de lijst om planten met geen variant terug te kunnen krijgen
             if (variant == string.Empty)
             {
                 variants.Add(null);
@@ -230,7 +230,7 @@ namespace PlantenApplicatie.Data
                 .Distinct()
                 .OrderBy(variantnaam => PlantenParser.ParseSearchText(variantnaam))
                 .ToList();
-            
+
             list.Insert(0, NoVariant);
 
             return list;
@@ -253,7 +253,7 @@ namespace PlantenApplicatie.Data
         }
 
         //verander de gegevens van de Plant Onderwerp (jim)
-        public void ChangePlant(Plant plant, string? type,string? family, string? genus, string? species, string? variant,short? plantMin, short? plantMax)
+        public void ChangePlant(Plant plant, string? type, string? family, string? genus, string? species, string? variant, short? plantMin, short? plantMax)
         {
 
 
@@ -278,7 +278,7 @@ namespace PlantenApplicatie.Data
 
             plant.Fgsv = plant.Familie + " " + plant.Geslacht + " " + plant.Soort + " " + plant.Variant;
 
-        
+
 
             _context.SaveChanges();
         }
@@ -290,15 +290,15 @@ namespace PlantenApplicatie.Data
         //Toevoegen, veranderen en verwijderen van abiotiek (Liam)
         public void AddAbiotiek(Plant plant, string? bezonning, string? grondsoort, string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
         {
-             //Habitat ontbreekt
-            Abiotiek abiotiek = new Abiotiek 
+            //Habitat ontbreekt
+            Abiotiek abiotiek = new Abiotiek
             { PlantId = plant.PlantId,
-               Bezonning = bezonning,
-               Grondsoort = grondsoort,
-               Vochtbehoefte = vochtbehoefte, 
+                Bezonning = bezonning,
+                Grondsoort = grondsoort,
+                Vochtbehoefte = vochtbehoefte,
                 Voedingsbehoefte = voedingsbehoefte,
-                AntagonischeOmgeving = antagonischeOmgeving};
-                        
+                AntagonischeOmgeving = antagonischeOmgeving };
+
             _context.Add(abiotiek);
 
             _context.SaveChanges();
@@ -309,21 +309,21 @@ namespace PlantenApplicatie.Data
         public void ChangeAbiotiek(Abiotiek abiotiek, string? bezonning, string? grondsoort,
             string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
         {
-            
-            
+
+
             var selectedAbiotiek = _context.Abiotiek.FirstOrDefault(s => s.Id == abiotiek.Id);
 
             selectedAbiotiek.Bezonning = bezonning ?? selectedAbiotiek.Bezonning;
             selectedAbiotiek.Grondsoort = grondsoort ?? selectedAbiotiek.Grondsoort;
             selectedAbiotiek.Vochtbehoefte = vochtbehoefte ?? selectedAbiotiek.Vochtbehoefte;
             selectedAbiotiek.Voedingsbehoefte = voedingsbehoefte ?? selectedAbiotiek.Voedingsbehoefte;
-            selectedAbiotiek.AntagonischeOmgeving = antagonischeOmgeving ?? selectedAbiotiek.AntagonischeOmgeving; 
+            selectedAbiotiek.AntagonischeOmgeving = antagonischeOmgeving ?? selectedAbiotiek.AntagonischeOmgeving;
 
 
 
             _context.SaveChanges();
         }
-        
+
         public void DeleteAbiotiek(Abiotiek abiotiek)
         {
             var selectedAbiotiek = _context.Abiotiek.FirstOrDefault(s => s.Id == abiotiek.Id);
@@ -332,7 +332,7 @@ namespace PlantenApplicatie.Data
 
             _context.SaveChanges();
         }
-        
+
         //Toevoegen, veranderen en verwijderen van commensalisme (Liam)
 
         public void AddCommensalisme(Plant plant, string ontwikkelingssnelheid, string strategie)
@@ -372,7 +372,7 @@ namespace PlantenApplicatie.Data
 
         public void AddAbiotiekMulti(Plant plant, string eigenschap, string waarde)
         {
-            
+
             AbiotiekMulti abiotiekMulti = new AbiotiekMulti
             {
                 PlantId = plant.PlantId,
@@ -441,5 +441,73 @@ namespace PlantenApplicatie.Data
 
             _context.SaveChanges();
         }
+        //Liam
+        public List<string> GetAbioBezonning()
+        {
+            return _context.AbioBezonning.Select(s => s.Naam).ToList();
+        }
+        //Liam
+        public List<string> GetAbioGrondsoort()
+        {
+            return _context.AbioGrondsoort.Select(s => s.Grondsoort).ToList();
+        }
+        //Liam
+        public List<string> GetAbioVochtbehoefte()
+        {
+            return _context.AbioVochtbehoefte.Select(s => s.Vochtbehoefte).ToList();
+        }
+
+        //Liam
+        public List<string> GetAbioVoedingsbehoefte()
+        {
+            return _context.AbioVoedingsbehoefte.Select(s => s.Voedingsbehoefte).ToList();
+        }
+
+        //Liam
+        public List<string> GetAbioHabitat()
+        {
+            return _context.AbioHabitat.Select(s => s.Afkorting).ToList();
+        }
+
+        //Liam
+        public List<string> GetAbioAntagonischeOmgeving()
+        {
+            return _context.AbioReactieAntagonischeOmg.Select(s => s.Antagonie).ToList();
+        }
+        //Liam
+        public List<string> GetCommLevensvorm()
+        {
+            return _context.CommLevensvorm.Select(s => s.Levensvorm).ToList();
+        }
+        //Liam
+        public List<string> GetCommStrategie()
+        {
+            return _context.CommStrategie.Select(s => s.Strategie).ToList();
+        }
+
+        public List<string> GetCommOntwikkelsnelheid()
+        {
+            return _context.CommOntwikkelsnelheid.Select(s => s.Snelheid).ToList();
+        }
+        //Liam
+        public List<string> GetCommSociabiliteit()
+        {
+            return _context.CommSocialbiliteit.Select(s => s.Sociabiliteit).ToList();
+        }
+        //Liam
+        public List<AbiotiekMulti> GetAbioMulti(Plant plant)
+        {
+            return _context.AbiotiekMulti.Where(s => s.PlantId == plant.PlantId).ToList();
+
+        }
+        //Liam
+        public List<CommensalismeMulti> GetCommensalismeMulti(Plant plant)
+        {
+            return _context.CommensalismeMulti.Where(s => s.PlantId == plant.PlantId).ToList();
+        }
+
+        
+
+      
     }
 }
