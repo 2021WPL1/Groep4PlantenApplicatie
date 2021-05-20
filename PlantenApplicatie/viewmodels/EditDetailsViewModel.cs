@@ -81,7 +81,4 @@ namespace PlantenApplicatie.viewmodels
             _prefixKeys = new ObservableCollection<string>(_prefixes.Keys);
         }
     }
-
-    
-
 }

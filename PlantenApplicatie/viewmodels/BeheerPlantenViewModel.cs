@@ -212,7 +212,7 @@ namespace PlantenApplicatie.viewmodels
             // TODO: change implementation to only parse within OrderBy, then remove method invocation on the line below
             if (variants.Contains(PlantenParser.ParseSearchText(PlantenDao.NoVariant)))
             {
-                variants.Remove(PlantenDao.NoVariant);
+                variants.Remove(PlantenParser.ParseSearchText(PlantenDao.NoVariant));
                 variants.Insert(0, PlantenDao.NoVariant);
             }
 
