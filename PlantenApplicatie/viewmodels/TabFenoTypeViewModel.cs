@@ -23,6 +23,8 @@ namespace PlantenApplicatie.viewmodels
         private FenoSpruitfenologie _selectedSpruitFenologie;
         private Fenotype _selectedFenoType;
 
+        private FenotypeMulti _selectedFenoTypeMulti;
+
 
         // collecties (lijsten) Davy
         public ObservableCollection<FenoBladgrootte> FenoBladgroottes { get; set; }
@@ -34,6 +36,7 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<FenoSpruitfenologie> FenoSpruitFenologieen { get; set; }
 
         public ObservableCollection<Fenotype> Fenotypes { get; set; }
+        public ObservableCollection<FenotypeMulti> FenoTypesMulti { get; set; }
 
 
         // knop commando's fenotype Davy
@@ -58,6 +61,7 @@ namespace PlantenApplicatie.viewmodels
             FenoLevensvormen = new ObservableCollection<FenoLevensvorm>();
             FenoSpruitFenologieen = new ObservableCollection<FenoSpruitfenologie>();
             Fenotypes = new ObservableCollection<Fenotype>();
+            FenoTypesMulti = new ObservableCollection<FenotypeMulti>();
 
             // methoden om comboboxen Fenotype in te laden (Davy)
             LoadFenoBladgrootte();
@@ -69,6 +73,7 @@ namespace PlantenApplicatie.viewmodels
             LoadFenoSpruitFenologie();
 
             LoadFenoTypes();
+            LoadFenoTypesMulti();
         }
         
         // Getters and setters selected waardes (Davy)
@@ -78,6 +83,16 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedPlant = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public FenotypeMulti SelectedFenoTypeMulti
+        {
+            private get => _selectedFenoTypeMulti;
+            set
+            {
+                _selectedFenoTypeMulti = value;
                 OnPropertyChanged();
             }
         }
@@ -313,6 +328,18 @@ namespace PlantenApplicatie.viewmodels
             foreach (var fenotype in fenotypes)
             {
                 Fenotypes.Add(fenotype);
+            }
+        }
+
+        private void LoadFenoTypesMulti()
+        {
+            var fenotypesMulti = _dao.GetFenoTypesMulti();
+
+            FenoTypesMulti.Clear();
+
+            foreach (var fenotypeMulti in fenotypesMulti)
+            {
+                FenoTypesMulti.Add(fenotypeMulti);
             }
         }
     }
