@@ -1,5 +1,7 @@
 ﻿using PlantenApplicatie.Domain;
 using System.Collections.ObjectModel;
+using System.Windows;
+using PlantenApplicatie.Data;
 
 namespace PlantenApplicatie.viewmodels
 {
@@ -8,14 +10,20 @@ namespace PlantenApplicatie.viewmodels
     { 
         public TabAbiotiekViewModel(Plant selectedPlant)
         {
-            // TODO: load data into ObservableCollection by method from here
+            var dao = PlantenDao.Instance;
+
+            Insolations = new ObservableCollection<string>(dao.GetAbioBezonning());
+            SoilTypes = new ObservableCollection<string>(dao.GetAbioGrondsoort());
+            MoistureRequirements = new ObservableCollection<string>(dao.GetAbioVochtbehoefte());
+            NutritionRequirements = new ObservableCollection<string>(dao.GetAbioVoedingsbehoefte());
+            AntagonianEnvironments = new ObservableCollection<string>(dao.GetAbioAntagonischeOmgeving());
         }
 
-        public ObservableCollection<string> Insolations { get; } = new();
-        public ObservableCollection<string> SoilTypes { get; } = new();
-        public ObservableCollection<string> MoistureRequirements { get; } = new();
-        public ObservableCollection<string> NutritionRequirements { get; } = new();
-        public ObservableCollection<string> AntagonianEnvironments { get; } = new();
+        public ObservableCollection<string> Insolations { get; }
+        public ObservableCollection<string> SoilTypes { get; }
+        public ObservableCollection<string> MoistureRequirements { get; }
+        public ObservableCollection<string> NutritionRequirements { get; }
+        public ObservableCollection<string> AntagonianEnvironments { get; }
 
         public string? SelectedInsolation { get; set; }
         public string? SelectedSoilType { get; set; }
