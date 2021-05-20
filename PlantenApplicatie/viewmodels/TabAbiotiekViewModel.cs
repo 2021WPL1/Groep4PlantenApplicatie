@@ -32,25 +32,25 @@ namespace PlantenApplicatie.viewmodels
             
             LoadStandards();
         }
-
-        public void LoadStandards()
+        
+        // TODO: auto property should become property to not have to use the OnPropertyChanged here
+        private void LoadStandards()
         {
             var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
 
-            if (abiotiek is not null)
-            {
-                SelectedInsolation = abiotiek.Bezonning;
-                SelectedSoilType = abiotiek.Grondsoort;
-                SelectedMoistureRequirement = abiotiek.Vochtbehoefte;
-                SelectedNutritionRequirement = abiotiek.Voedingsbehoefte;
-                SelectedAntagonianEnvironment = abiotiek.AntagonischeOmgeving;
+            if (abiotiek is null) return;
+            
+            SelectedInsolation = abiotiek.Bezonning;
+            SelectedSoilType = abiotiek.Grondsoort;
+            SelectedMoistureRequirement = abiotiek.Vochtbehoefte;
+            SelectedNutritionRequirement = abiotiek.Voedingsbehoefte;
+            SelectedAntagonianEnvironment = abiotiek.AntagonischeOmgeving;
                 
-                OnPropertyChanged(nameof(SelectedInsolation));
-                OnPropertyChanged(nameof(SelectedSoilType));
-                OnPropertyChanged(nameof(SelectedMoistureRequirement));
-                OnPropertyChanged(nameof(SelectedNutritionRequirement));
-                OnPropertyChanged(nameof(SelectedAntagonianEnvironment));
-            }
+            OnPropertyChanged(nameof(SelectedInsolation));
+            OnPropertyChanged(nameof(SelectedSoilType));
+            OnPropertyChanged(nameof(SelectedMoistureRequirement));
+            OnPropertyChanged(nameof(SelectedNutritionRequirement));
+            OnPropertyChanged(nameof(SelectedAntagonianEnvironment));
         }
 
         public ObservableCollection<string> Insolations { get; }
