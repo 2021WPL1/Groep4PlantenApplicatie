@@ -134,15 +134,17 @@
                         ItemsSource="{Binding AntagonianEnvironments}"
                         SelectedValue="{Binding SelectedAntagonianEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <ListView Height="150" Width="716" Canvas.Left="10" Canvas.Top="320">
+                    <ListView Height="150" Width="358" Canvas.Left="10" Canvas.Top="320">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Plant naam" Width="Auto"/>
-                                <GridViewColumn Header="Bezonnig" Width="Auto"/>
-                                <GridViewColumn Header="Grondsoort" Width="Auto"/>
-                                <GridViewColumn Header="Vochtbehoefte" Width="Auto"/>
-                                <GridViewColumn Header="Voedselbehoefte" Width="Auto"/>
-                                <GridViewColumn Header="Antagonische Omgeving" Width="Auto"/>
+                                <GridViewColumn Header="Habitats of current plant" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView Height="150" Width="348" Canvas.Left="373" Canvas.Top="320">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Habitats" Width="auto"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -151,6 +153,8 @@
                         Canvas.Top="255" Canvas.Right="50"
                         Content="Edit" 
                         Command="{Binding EditAbiotiekCommand}"/>
+                    <Button Content="Remove" Canvas.Left="322" Canvas.Top="475"/>
+                    <Button Content="Add" Canvas.Left="695" Canvas.Top="475"/>
                 </Canvas>
             </TabItem>
             <TabItem Header="Commensalisme" DataContext="{Binding Children[4]}">
