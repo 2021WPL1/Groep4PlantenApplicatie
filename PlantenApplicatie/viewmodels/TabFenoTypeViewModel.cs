@@ -14,35 +14,33 @@ namespace PlantenApplicatie.viewmodels
         // private variabelen Davy
         private Plant _selectedPlant;
         private readonly PlantenDao _dao;
-        private FenoBladgrootte _selectedBladgrootte;
-        private FenoBladvorm _selectedBladvorm;
-        private FenoBloeiwijze _selectedBloeiWijze;
-        private FenoHabitus _selectedHabitus;
-        private FenoKleur _selectedKleur;
-        private FenoLevensvorm _selectedLevensvorm;
-        private FenoSpruitfenologie _selectedSpruitFenologie;
+        private string _selectedBladgrootte;
+        private string _selectedBladvorm;
+        private string _selectedBloeiWijze;
+        private string _selectedHabitus;
+        private string _selectedKleur;
+        private string _selectedLevensvorm;
+        private string _selectedSpruitFenologie;
         private Fenotype _selectedFenoType;
 
         private FenotypeMulti _selectedFenoTypeMulti;
 
 
         // collecties (lijsten) Davy
-        public ObservableCollection<FenoBladgrootte> FenoBladgroottes { get; set; }
-        public ObservableCollection<FenoBladvorm> FenoBladvormen { get; set; }
-        public ObservableCollection<FenoBloeiwijze> FenoBloeiwijzes { get; set; }
-        public ObservableCollection<FenoHabitus> FenoHabitussen { get; set; }
-        public ObservableCollection<FenoKleur> FenoKleuren { get; set; }
-        public ObservableCollection<FenoLevensvorm> FenoLevensvormen { get; set; }
-        public ObservableCollection<FenoSpruitfenologie> FenoSpruitFenologieen { get; set; }
+        public ObservableCollection<string> FenoBladgroottes { get; set; }
+        public ObservableCollection<string> FenoBladvormen { get; set; }
+        public ObservableCollection<string> FenoBloeiwijzes { get; set; }
+        public ObservableCollection<string> FenoHabitussen { get; set; }
+        public ObservableCollection<string> FenoKleuren { get; set; }
+        public ObservableCollection<string> FenoLevensvormen { get; set; }
+        public ObservableCollection<string> FenoSpruitFenologieen { get; set; }
 
         public ObservableCollection<Fenotype> Fenotypes { get; set; }
         public ObservableCollection<FenotypeMulti> FenoTypesMulti { get; set; }
 
 
         // knop commando's fenotype Davy
-        public ICommand AddFenoTypeCommand { get; set; }
         public ICommand EditFenoTypeCommand { get; set; }
-        public ICommand RemoveFenoTypeCommand { get; set; }
 
         // Constructor Davy
         public TabFenoTypeViewModel(Plant selectedPlant)
@@ -50,16 +48,14 @@ namespace PlantenApplicatie.viewmodels
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             // onderstaande variabelen Davy voor tabblad Fenotype
-            AddFenoTypeCommand = new DelegateCommand(AddFenoType);
             EditFenoTypeCommand = new DelegateCommand(EditFenoType);
-            RemoveFenoTypeCommand = new DelegateCommand(RemoveFenoType);
-            FenoBladgroottes = new ObservableCollection<FenoBladgrootte>();
-            FenoBladvormen = new ObservableCollection<FenoBladvorm>();
-            FenoBloeiwijzes = new ObservableCollection<FenoBloeiwijze>();
-            FenoHabitussen = new ObservableCollection<FenoHabitus>();
-            FenoKleuren = new ObservableCollection<FenoKleur>();
-            FenoLevensvormen = new ObservableCollection<FenoLevensvorm>();
-            FenoSpruitFenologieen = new ObservableCollection<FenoSpruitfenologie>();
+            FenoBladgroottes = new ObservableCollection<string>();
+            FenoBladvormen = new ObservableCollection<string>();
+            FenoBloeiwijzes = new ObservableCollection<string>();
+            FenoHabitussen = new ObservableCollection<string>();
+            FenoKleuren = new ObservableCollection<string>();
+            FenoLevensvormen = new ObservableCollection<string>();
+            FenoSpruitFenologieen = new ObservableCollection<string>();
             Fenotypes = new ObservableCollection<Fenotype>();
             FenoTypesMulti = new ObservableCollection<FenotypeMulti>();
 
@@ -72,7 +68,6 @@ namespace PlantenApplicatie.viewmodels
             LoadFenoLevensVorm();
             LoadFenoSpruitFenologie();
 
-            LoadFenoTypes();
             LoadFenoTypesMulti();
         }
         
@@ -98,7 +93,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         // Getters and setters selected waardes (Davy)
-        public FenoBladgrootte SelectedBladgrootte
+        public string SelectedBladgrootte
         {
             private get => _selectedBladgrootte;
             set
@@ -109,7 +104,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         // Getters and setters selected waardes (Davy)
-        public FenoBladvorm SelectedBladvorm
+        public string SelectedBladvorm
         {
             private get => _selectedBladvorm;
             set
@@ -120,7 +115,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         // Getters and setters selected waardes (Davy)
-        public FenoBloeiwijze SelectedBloeiwijze
+        public string SelectedBloeiwijze
         {
             private get => _selectedBloeiWijze;
             set
@@ -131,7 +126,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         // Getters and setters selected waardes (Davy)
-        public FenoHabitus SelectedHabitus
+        public string SelectedHabitus
         {
             private get => _selectedHabitus;
             set
@@ -142,7 +137,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         // Getters and setters selected waardes (Davy)
-        public FenoKleur SelectedKleur
+        public string SelectedKleur
         {
             private get => _selectedKleur;
             set
@@ -153,7 +148,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         // Getters and setters selected waardes (Davy)
-        public FenoLevensvorm SelectedLevensvorm
+        public string SelectedLevensvorm
         {
             private get => _selectedLevensvorm;
             set
@@ -164,7 +159,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         // Getters and setters selected waardes (Davy)
-        public FenoSpruitfenologie SelectedSpruitFenologie
+        public string SelectedSpruitFenologie
         {
             private get => _selectedSpruitFenologie;
             set
@@ -187,51 +182,20 @@ namespace PlantenApplicatie.viewmodels
 
 
 
-        private void AddFenoType()
-        {
-            Fenotype fenotype = new Fenotype();
-            fenotype.Bladgrootte = Int32.Parse(SelectedBladgrootte.Bladgrootte);
-            fenotype.Bladvorm = SelectedBladvorm.Vorm;
-            fenotype.Bloeiwijze = SelectedBloeiwijze.Naam;
-            fenotype.Habitus = SelectedHabitus.Naam;
-            fenotype.Levensvorm = SelectedLevensvorm.Levensvorm;
-            fenotype.Spruitfenologie = SelectedSpruitFenologie.Fenologie;
-            fenotype.Plant = SelectedPlant;
-
-            _dao.CreateFenoType(fenotype);
-
-            LoadFenoTypes();
-
-        }
+       
 
         private void EditFenoType()
         {
-            Fenotype fenotype = _selectedFenoType;
-            fenotype.Bladgrootte = Int32.Parse(SelectedBladgrootte.Bladgrootte);
-            fenotype.Bladvorm = SelectedBladvorm.Vorm;
-            fenotype.Bloeiwijze = SelectedBloeiwijze.Naam;
-            fenotype.Habitus = SelectedHabitus.Naam;
-            fenotype.Levensvorm = SelectedLevensvorm.Levensvorm;
-            fenotype.Spruitfenologie = SelectedSpruitFenologie.Fenologie;
-            fenotype.Plant = SelectedPlant;
-
-            _dao.EditFenoType(fenotype);
-
-            LoadFenoTypes();
+           SelectedFenotype = _dao.ChangeFenotype(SelectedFenotype, Convert.ToInt32(SelectedBladgrootte), SelectedBladvorm,
+               null, SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm);
         }
 
-        private void RemoveFenoType()
-        {
-            Fenotype fenotype = _selectedFenoType;
-            _dao.RemoveFenoType(fenotype);
-
-            LoadFenoTypes();
-        }
+       
 
         // inladen gegevens (Davy)
         private void LoadFenoBladgrootte()
         {
-            var bladgroottes = _dao.GetFenoBladgroottes();
+            var bladgroottes = _dao.GetFenoBladGrootte();
 
             FenoBladgroottes.Clear();
 
@@ -244,7 +208,7 @@ namespace PlantenApplicatie.viewmodels
         // inladen gegevens (Davy)
         private void LoadFenoBladvorm()
         {
-            var bladvormen = _dao.GetFenoBladvormen();
+            var bladvormen = _dao.GetFenoBladVorm();
 
             FenoBladvormen.Clear();
 
@@ -257,7 +221,7 @@ namespace PlantenApplicatie.viewmodels
         // inladen gegevens (Davy)
         private void LoadFenoBloeiwijze()
         {
-            var bloeiwijzes = _dao.GetFenoBloeiwijzes();
+            var bloeiwijzes = _dao.GetFenoBloeiWijze();
 
             FenoBloeiwijzes.Clear();
 
@@ -270,7 +234,7 @@ namespace PlantenApplicatie.viewmodels
         // inladen gegevens (Davy)
         private void LoadFenoHabitus()
         {
-            var habitussen = _dao.GetFenoHabitussen();
+            var habitussen = _dao.GetFenoHabitus();
 
             FenoHabitussen.Clear();
 
@@ -283,7 +247,7 @@ namespace PlantenApplicatie.viewmodels
         // inladen gegevens (Davy)
         private void LoadFenoKleur()
         {
-            var kleuren = _dao.getFenoKleuren();
+            var kleuren = _dao.GetFenoKleur();
 
             FenoKleuren.Clear();
 
@@ -296,7 +260,7 @@ namespace PlantenApplicatie.viewmodels
         // inladen gegevens (Davy)
         private void LoadFenoLevensVorm()
         {
-            var levensvormen = _dao.GetFenoLevensvormen();
+            var levensvormen = _dao.GetFenoLevensVorm();
 
             FenoLevensvormen.Clear();
 
@@ -309,7 +273,7 @@ namespace PlantenApplicatie.viewmodels
         // inladen gegevens (Davy)
         private void LoadFenoSpruitFenologie()
         {
-            var fenologieen = _dao.GetFenoSpruitFenologieen();
+            var fenologieen = _dao.GetFenoFenologie();
 
             FenoSpruitFenologieen.Clear();
 
@@ -319,21 +283,11 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        private void LoadFenoTypes()
-        {
-            var fenotypes = _dao.GetFenoTypes();
-
-            Fenotypes.Clear();
-
-            foreach (var fenotype in fenotypes)
-            {
-                Fenotypes.Add(fenotype);
-            }
-        }
+        
 
         private void LoadFenoTypesMulti()
         {
-            var fenotypesMulti = _dao.GetFenoTypesMulti();
+            var fenotypesMulti = _dao.GetFenoMultis(SelectedPlant);
 
             FenoTypesMulti.Clear();
 

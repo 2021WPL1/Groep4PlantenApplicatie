@@ -83,7 +83,7 @@
                             <!-- derde rij -->
 
                             <Label Content="Soort :" Canvas.Top="60" />
-                            <ComboBox x:Name="cmbSoort_toevoegen" Width="125" Canvas.Top="65" Canvas.Left="80"  ItemsSource="{Binding Soorten }" />
+                            <ComboBox x:Name="cmbSoort_toevoegen" Width="125" Canvas.Top="65" Canvas.Left="80"  ItemsSource="{Binding Species }" />
                             <Label Content="Variant :" Canvas.Top="31" Canvas.Left="246" />
                             <Label Content="NL naam:" Canvas.Top="63" Canvas.Left="247" />
                             <TextBox x:Name="txtVariant_toevoegen" Height="25" Canvas.Left="312" Canvas.Top="30" Text="TextBox" TextWrapping="Wrap" Width="125"/>

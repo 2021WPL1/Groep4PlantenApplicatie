@@ -258,7 +258,7 @@ namespace PlantenApplicatie.viewmodels
         // geef de BeheerMaanden weer in de listview
         public void LoadBeheerMaanden()
         {
-            var beheermaanden = _plantenDao.GetBeheerMaanden();
+            var beheermaanden = _plantenDao.GetBeheerMaanden(SelectedPlant);
 
             BeheerMaanden.Clear();
 

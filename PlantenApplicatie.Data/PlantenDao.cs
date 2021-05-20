@@ -292,7 +292,7 @@ namespace PlantenApplicatie.Data
         }
 
         //Voeg een fenotype toe aan de geselecteerde plant (Jim)
-        public void addFenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
+        public void AddFenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
         string habitus, string levensvorm)
         {
             var fenotypePlant = new Fenotype
@@ -312,7 +312,7 @@ namespace PlantenApplicatie.Data
         }
 
         //verander een fenotype van de geselecteerde plant (Jim)
-        public void ChangeFenotype(Fenotype fenotype, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
+        public Fenotype ChangeFenotype(Fenotype fenotype, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
         string habitus, string levensvorm)
         {
             var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.Id == fenotype.Id);
@@ -325,6 +325,8 @@ namespace PlantenApplicatie.Data
             selectedfenotype.Levensvorm = levensvorm ?? selectedfenotype.Levensvorm;
 
             _context.SaveChanges();
+
+            return selectedfenotype;
         }
         //verwijder de fenotype van de geselecteerde plant (Jim)
         public void DeleteFenotype(Fenotype fenotype)
@@ -678,9 +680,9 @@ namespace PlantenApplicatie.Data
         }
 
         // haal alle beheermaanden op (Davy)
-        public List<BeheerMaand> GetBeheerMaanden()
+        public List<BeheerMaand> GetBeheerMaanden(Plant plant)
         {
-            return _context.BeheerMaand.ToList();
+            return _context.BeheerMaand.Where(i => i.PlantId == plant.PlantId).ToList();
         }
 
         // maak een BeheerMaand aan (Davy, Lily)

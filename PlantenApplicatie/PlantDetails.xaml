@@ -41,7 +41,6 @@
                               
                       ItemsSource="{Binding FenoBladgroottes}" 
                       SelectedItem="{Binding SelectedBladgrootte, UpdateSourceTrigger=PropertyChanged}"
-                              DisplayMemberPath="Bladgrootte"
                               />
                     <Label Content="Bladgrootte :" Canvas.Left="10" Canvas.Top="27"/>
                     <Label Content="Bladvorm :" Canvas.Left="10" Canvas.Top="66"/>
@@ -49,33 +48,31 @@
                     <ComboBox Canvas.Left="128" Canvas.Top="70" Width="598"                              
                         ItemsSource="{Binding FenoBladvormen}" 
                         SelectedItem="{Binding SelectedBladvorm, UpdateSourceTrigger=PropertyChanged}"
-                              DisplayMemberPath="Vorm"
                               />
                     <ComboBox Canvas.Left="128" Canvas.Top="111" Width="598"
                         ItemsSource="{Binding FenoBloeiwijzes}" 
-                        SelectedItem="{Binding SelectedBloeiwijze, UpdateSourceTrigger=PropertyChanged}"   
-                              DisplayMemberPath="Naam"                                 
+                        SelectedItem="{Binding SelectedBloeiwijze, UpdateSourceTrigger=PropertyChanged}"                 
                               />
                     <Label Content="Habitus :" Canvas.Left="10" Canvas.Top="148" RenderTransformOrigin="0.204,0.541"/>
                     <Label Content="Kleur :" Canvas.Left="10" Canvas.Top="189" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="152" Width="598"
                         ItemsSource="{Binding FenoHabitussen}" 
                         SelectedItem="{Binding SelectedHabitus, UpdateSourceTrigger=PropertyChanged}"
-                              DisplayMemberPath="Naam" />
+                              />
                     <ComboBox Canvas.Left="128" Canvas.Top="191" Width="598"
                         ItemsSource="{Binding FenoKleuren}" 
                         SelectedItem="{Binding SelectedKleur, UpdateSourceTrigger=PropertyChanged}"
-                              DisplayMemberPath="NaamKleur" />
+                             />
                     <Label Content="Levensvorm :" Canvas.Left="10" Canvas.Top="234" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="236" Width="598"
                         ItemsSource="{Binding FenoLevensvormen}" 
                         SelectedItem="{Binding SelectedLevensvorm, UpdateSourceTrigger=PropertyChanged}"
-                              DisplayMemberPath="Levensvorm" />
+                               />
                     <Label Content="SpruitFenologie :" Canvas.Left="10" Canvas.Top="276" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="278" Width="598"
                         ItemsSource="{Binding FenoSpruitFenologieen}" 
                         SelectedItem="{Binding SelectedSpruitFenologie, UpdateSourceTrigger=PropertyChanged}"
-                              DisplayMemberPath="Fenologie" />
+                               />
                     <ListView Height="184" Width="247" Canvas.Left="10" Canvas.Top="320"
                               ItemsSource="{Binding FenoTypesMulti}" 
                                           SelectedItem="{Binding SelectedFenotypeMulti, Mode=TwoWay}" >
@@ -88,9 +85,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding Path=AddFenoTypeCommand}" Content="Voeg FenoType toe aan plant" Height="28" Canvas.Left="53" Canvas.Top="518" Width="208"/>
                     <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="289" Canvas.Top="518" Width="208"/>
-                    <Button Command="{Binding Path=RemoveFenoTypeCommand}" Content="Verwijder FenoType" Height="28" Canvas.Left="518" Canvas.Top="518" Width="208"/>
 
 
                 </Canvas>
