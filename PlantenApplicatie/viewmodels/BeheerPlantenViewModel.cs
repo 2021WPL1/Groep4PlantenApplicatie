@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // MVVM Toepassing (Davy) 
+    // MVVM Toepassing (Davy, Lily) 
     class BeheerPlantenViewModel : ViewModelBase
     {
         private readonly PlantenDao _plantenDao;
