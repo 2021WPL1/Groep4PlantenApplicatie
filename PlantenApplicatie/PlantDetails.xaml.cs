@@ -23,7 +23,7 @@ namespace PlantenApplicatie
         public PlantDetails(Plant selectedPlant)
         {
             InitializeComponent();
-            DataContext = new PlantDetailsViewModel(selectedPlant);
+            DataContext = new TabsViewModel(selectedPlant);
         }
     }
 }

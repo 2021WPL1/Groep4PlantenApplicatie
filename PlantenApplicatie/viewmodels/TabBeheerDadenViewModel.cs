@@ -10,7 +10,7 @@ using System.Windows.Input;
 namespace PlantenApplicatie.viewmodels
 {
     // klasse BeheerDadenViewModel (Davy)
-    public class BeheerDadenViewModel : ViewModelBase
+    public class TabBeheerDadenViewModel : ViewModelBase
     {
         // knop commando's
         public ICommand AddManagementActCommand { get; set; }
@@ -20,7 +20,7 @@ namespace PlantenApplicatie.viewmodels
         // Hiermee kunnen we de data opvragen aan de databank.
         private readonly PlantenDao _plantenDao;
 
-        // collecties (lijsten) Davy
+        // ObservableCollection om de beheermaanden weer te geven (Davy)
         public ObservableCollection<BeheerMaand> BeheerMaanden { get; set; }
 
         // private variabelen Davy
@@ -42,7 +42,7 @@ namespace PlantenApplicatie.viewmodels
         private bool _isCheckedDecember;
 
         // constructor (Davy)
-        public BeheerDadenViewModel(Plant selectedPlant)
+        public TabBeheerDadenViewModel(Plant selectedPlant)
         {
 
             SelectedPlant = selectedPlant;

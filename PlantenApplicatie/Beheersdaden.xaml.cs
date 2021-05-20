@@ -24,7 +24,7 @@ namespace PlantenApplicatie
         public Beheersdaden(Plant selectedPlant)
         {
             InitializeComponent();
-            DataContext = new BeheerDadenViewModel(selectedPlant);
+            DataContext = new TabBeheerDadenViewModel(selectedPlant);
         }
     }
 }

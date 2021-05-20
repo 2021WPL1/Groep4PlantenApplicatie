@@ -11,7 +11,7 @@
     </Window.Background>
     <Grid>
         <TabControl TabStripPlacement="Left">
-            <TabItem Header="Details plant">
+            <TabItem Header="Details plant" DataContext="{Binding Children[0]}">
                 <Grid>
                     <Canvas>
 
@@ -32,10 +32,10 @@
                     </Canvas>
                 </Grid>
             </TabItem>
-            <TabItem Header="Wijzig plant">
+            <TabItem Header="Wijzig plant" DataContext="{Binding Children[1]}">
 
             </TabItem>
-            <TabItem Header="Fenotype">
+            <TabItem Header="Fenotype" DataContext="{Binding Children[2]}">
                 <Canvas>
                     <ComboBox Canvas.Left="128" Canvas.Top="31" Width="598"
                               
@@ -99,16 +99,16 @@
 
                 </Canvas>
             </TabItem>
-            <TabItem Header="Abiotiek">
+            <TabItem Header="Abiotiek" DataContext="{Binding Children[3]}">
 
             </TabItem>
-            <TabItem Header="Commensalisme">
+            <TabItem Header="Commensalisme" DataContext="{Binding Children[4]}">
 
             </TabItem>
-            <TabItem Header="Extra eigenschappen">
+            <TabItem Header="Extra eigenschappen" DataContext="{Binding Children[5]}">
 
             </TabItem>
-            <TabItem Header="Beheersdaden">
+            <TabItem Header="Beheersdaden" DataContext="{Binding Children[6]}">
                 <GroupBox Header="Beheersdaden" Width="760" Height="400" Background="White" Margin="0,12,0,166">
                     <StackPanel Orientation="Vertical">
                         <ListView x:Name="myListView" Height="150" Width="760"
@@ -175,7 +175,7 @@
 
                 </GroupBox>
             </TabItem>
-            <TabItem Header="Foto">
+            <TabItem Header="Foto" DataContext="{Binding Children[7]}">
                 <Canvas>
                     <Label Height="25" Content="FotoId :" Canvas.Left="25" Canvas.Top="22"></Label>
                     <TextBox Canvas.Left="114" Canvas.Top="26"  Text="{Binding Path=Fotoid}" TextWrapping="Wrap" Width="376"/>
