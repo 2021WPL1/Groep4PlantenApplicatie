@@ -1,22 +1,56 @@
-﻿using PlantenApplicatie.Domain;
+﻿using System;
+using PlantenApplicatie.Domain;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using PlantenApplicatie.Data;
+using Prism.Commands;
 
 namespace PlantenApplicatie.viewmodels
 {
     // klasse (Davy, Lily)
     public class TabAbiotiekViewModel : ViewModelBase
-    { 
+    {
+        private readonly PlantenDao _plantenDao;
+        
+        private readonly Plant _selectedPlant;
+        
         public TabAbiotiekViewModel(Plant selectedPlant)
         {
-            var dao = PlantenDao.Instance;
+            _plantenDao = PlantenDao.Instance;
 
-            Insolations = new ObservableCollection<string>(dao.GetAbioBezonning());
-            SoilTypes = new ObservableCollection<string>(dao.GetAbioGrondsoort());
-            MoistureRequirements = new ObservableCollection<string>(dao.GetAbioVochtbehoefte());
-            NutritionRequirements = new ObservableCollection<string>(dao.GetAbioVoedingsbehoefte());
-            AntagonianEnvironments = new ObservableCollection<string>(dao.GetAbioAntagonischeOmgeving());
+            _selectedPlant = selectedPlant;
+
+            Insolations = new ObservableCollection<string>(_plantenDao.GetAbioBezonning());
+            SoilTypes = new ObservableCollection<string>(_plantenDao.GetAbioGrondsoort());
+            MoistureRequirements = new ObservableCollection<string>(_plantenDao.GetAbioVochtbehoefte());
+            NutritionRequirements = new ObservableCollection<string>(_plantenDao.GetAbioVoedingsbehoefte());
+            AntagonianEnvironments = new ObservableCollection<string>(_plantenDao.GetAbioAntagonischeOmgeving());
+
+            EditAbiotiekCommand = new DelegateCommand(EditAbiotiek);
+            
+            LoadStandards();
+        }
+
+        public void LoadStandards()
+        {
+            var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
+
+            if (abiotiek is not null)
+            {
+                SelectedInsolation = abiotiek.Bezonning;
+                SelectedSoilType = abiotiek.Grondsoort;
+                SelectedMoistureRequirement = abiotiek.Vochtbehoefte;
+                SelectedNutritionRequirement = abiotiek.Voedingsbehoefte;
+                SelectedAntagonianEnvironment = abiotiek.AntagonischeOmgeving;
+                
+                OnPropertyChanged(nameof(SelectedInsolation));
+                OnPropertyChanged(nameof(SelectedSoilType));
+                OnPropertyChanged(nameof(SelectedMoistureRequirement));
+                OnPropertyChanged(nameof(SelectedNutritionRequirement));
+                OnPropertyChanged(nameof(SelectedAntagonianEnvironment));
+            }
         }
 
         public ObservableCollection<string> Insolations { get; }
@@ -25,10 +59,32 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> NutritionRequirements { get; }
         public ObservableCollection<string> AntagonianEnvironments { get; }
 
-        public string? SelectedInsolation { get; set; }
-        public string? SelectedSoilType { get; set; }
-        public string? SelectedMoistureRequirement { get; set; }
-        public string? SelectedNutritionRequirement { get; set; }
-        public string? SelectedAntagonianEnvironment { get; set; }
+        public string? SelectedInsolation { private get; set; }
+        public string? SelectedSoilType { private get; set; }
+        public string? SelectedMoistureRequirement { private get; set; }
+        public string? SelectedNutritionRequirement { private get; set; }
+        public string? SelectedAntagonianEnvironment { private get; set; }
+
+        public ICommand EditAbiotiekCommand { get; }
+
+        private void EditAbiotiek()
+        {
+            var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
+            
+            Console.WriteLine(_selectedPlant.Abiotiek.Count);
+            
+            if (abiotiek is null)
+            {
+                _plantenDao.AddAbiotiek(_selectedPlant, SelectedInsolation, SelectedSoilType, 
+                    SelectedMoistureRequirement, SelectedNutritionRequirement, 
+                    SelectedAntagonianEnvironment);
+            }
+            else
+            {
+                _plantenDao.ChangeAbiotiek(abiotiek, SelectedInsolation, SelectedSoilType, 
+                    SelectedMoistureRequirement, SelectedNutritionRequirement, 
+                    SelectedAntagonianEnvironment);
+            }
+        }
     }
 }

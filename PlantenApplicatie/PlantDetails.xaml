@@ -112,27 +112,27 @@
                     <ComboBox 
                         Canvas.Left="178" Canvas.Top="31" Width="548"
                         ItemsSource="{Binding Insolations}"
-                        SelectedValue="{Binding SelectedInsolation}"/>
+                        SelectedValue="{Binding SelectedInsolation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Grondsoort :" Canvas.Left="10" Canvas.Top="66"/>
                     <ComboBox
                         Canvas.Left="178" Canvas.Top="70" Width="548"
                         ItemsSource="{Binding SoilTypes}"
-                        SelectedValue="{Binding SelectedSoilType}"/>
+                        SelectedValue="{Binding SelectedSoilType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Vochtbehoefte :" Canvas.Left="10" Canvas.Top="109"/>
                     <ComboBox
                         Canvas.Left="178" Canvas.Top="111" Width="548"
                         ItemsSource="{Binding MoistureRequirements}"
-                        SelectedValue="{Binding SelectedMoistureRequirement}"/>
+                        SelectedValue="{Binding SelectedMoistureRequirement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Voedingsbehoefte :" Canvas.Left="10" Canvas.Top="148"/>
                     <ComboBox
                         Canvas.Left="178" Canvas.Top="152" Width="548"
                         ItemsSource="{Binding NutritionRequirements}"
-                        SelectedValue="{Binding SelectedNutritionRequirement}"/>
+                        SelectedValue="{Binding SelectedNutritionRequirement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Antagonische Omgeving :" Canvas.Left="10" Canvas.Top="189"/>
                     <ComboBox 
                         Canvas.Left="178" Canvas.Top="191" Width="548"
                         ItemsSource="{Binding AntagonianEnvironments}"
-                        SelectedValue="{Binding SelectedAntagonianEnvironment}"/>
+                        SelectedValue="{Binding SelectedAntagonianEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <ListView Height="150" Width="716" Canvas.Left="10" Canvas.Top="320">
                         <ListView.View>
@@ -146,6 +146,11 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <Button
+                        Width="auto" Height="auto"
+                        Canvas.Top="255" Canvas.Right="50"
+                        Content="Edit" 
+                        Command="{Binding EditAbiotiekCommand}"/>
                 </Canvas>
             </TabItem>
             <TabItem Header="Commensalisme" DataContext="{Binding Children[4]}">
