@@ -131,26 +131,21 @@ namespace PlantenApplicatie.viewmodels
 
         public string TextInputMin
         {
-            get
-            {
-                return _textInputMin;
-            }
+            get =>  _textInputMin;
+            
             set
             {
                 _textInputMin = value;
-                OnPropertyChanged();
+                OnPropertyChanged(_textInputMin);
             }
         }
         public string TextInputMax
         {
-            get
-            {
-                return _textInputMax;
-            }
+            get => _textInputMax;
             set
             {
                 _textInputMax = value;
-                OnPropertyChanged();
+                OnPropertyChanged(_textInputMax);
             }
         }
 
