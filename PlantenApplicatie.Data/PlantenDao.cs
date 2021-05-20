@@ -490,5 +490,50 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
+
+        //Haal alle waardes op in een lijst voor gebruik (Jim)
+        public List<string> GetExtraNectarwaarde()
+        {
+            return _context.ExtraNectarwaarde.Select(s => s.Waarde).ToList();
+        }
+        public List<string> GetExtraPollenwaarde()
+        {
+            return _context.ExtraPollenwaarde.Select(s => s.Waarde).ToList();
+        }
+
+        public List<string> GetFenoBladGrootte()
+        {
+            return _context.FenoBladgrootte.Select(s => s.Bladgrootte).ToList();
+        }
+
+        public List<string> GetFenoBladVorm()
+        {
+            return _context.FenoBladvorm.Select(s => s.Vorm).ToList();
+        }
+        public List<string> GetFenoBloeiWijze()
+        {
+            return _context.FenoBloeiwijze.Select(s => s.Naam).ToList();
+        }
+        public List<string> GetFenoHabitus()
+        {
+            return _context.FenoHabitus.Select(s => s.Naam).ToList();
+        }
+        public List<string> GetFenoKleur()
+        {
+            return _context.FenoKleur.Select(s => s.NaamKleur).ToList();
+        }
+        public List<string> GetFenoLevensVorm()
+        {
+            return _context.FenoLevensvorm.Select(s => s.Levensvorm).ToList();
+        }
+        public List<string> GetFenoFenologie()
+        {
+            return _context.FenoSpruitfenologie.Select(s => s.Fenologie).ToList();
+        }
+        public List<FenotypeMulti> GetFenoMultis(Plant plant)
+        {
+            return _context.FenotypeMulti.Where(i => i.PlantId == plant.PlantId).ToList();
+        }
+
     }
 }
