@@ -9,8 +9,9 @@ namespace PlantenApplicatie.Data
     // De PlantenDao Klasse (Jim&Davy&Liam&Zakaria&Lily)
     public class PlantenDao
     {
+        public const string NoVariant = "N/A";
+        
         private readonly PlantenContext _context;
-        private const string NoVariant = "N/A";
 
         static PlantenDao()
         {
@@ -76,6 +77,11 @@ namespace PlantenApplicatie.Data
                     && typeIds.Contains((long)p.TypeId!)
                     && PlantenParser.ParseSearchText(p.Fgsv)
                         .Contains(PlantenParser.ParseSearchText(name)))
+                .Select(p =>
+                {
+                    p.Variant ??= NoVariant;
+                    return p;
+                })
                 .OrderBy(p => p.Fgsv)
                 .ToList();
         }

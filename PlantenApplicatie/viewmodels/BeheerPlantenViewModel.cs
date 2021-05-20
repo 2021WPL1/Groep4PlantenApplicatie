@@ -1,12 +1,10 @@
-﻿using PlantenApplicatie.Data;
+﻿using System.Collections.Generic;
+using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
 using Prism.Commands;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
@@ -14,288 +12,254 @@ namespace PlantenApplicatie.viewmodels
     // MVVM Toepassing (Davy) 
     class BeheerPlantenViewModel : ViewModelBase
     {
-        // Button commands
-        public ICommand ShowPlantDetailsCommand { get; set; }
-        public ICommand ShowPlantByNameCommand { get; set; }
-        public ICommand ShowVariantByNameCommand { get; set; }
-        public ICommand SearchPlantsCommand { get; set; }
-        public ICommand ResetCommand { get; set; }
-
-        // Observable collections, ipv strings gebruikten we de tfgsv klasses maar distinct/order by kon niet samen gebruikt worden (Davy&Jim)
-        public ObservableCollection<Plant> Plants { get; set; }
-        public ObservableCollection<string> Types { get; set; }
-        public ObservableCollection<string> Soorten { get; set; }
-        public ObservableCollection<string> Families { get; set; }
-        public ObservableCollection<string> Genus { get; set; }
-        public ObservableCollection<string> Variants { get; set; }
-
-        // Hiermee kunnen we de data opvragen aan de databank.
         private readonly PlantenDao _plantenDao;
 
-        private Plant _selectedPlant;
-        private string _selectedType;
-        private string _selectedSoort;
-        private string _selectedGeslacht;
-        private string _selectedFamilie;
-        private string _selectedVariant;
+        private Plant? _selectedPlant;
+        
+        private string? _selectedType;
+        private string? _selectedFamily;
+        private string? _selectedGenus;
+        private string? _selectedSpecies;
+        private string? _selectedVariant;
 
-        private string _textInputPlantName;
+        // The GUI binds to this variable through a property, therefore it will not be null,
+        // so we tell the compiler it is not null
+        private string _plantName = null!; 
+        
+        public ICommand ShowDetailsCommand { get; }
+        public ICommand ResetCommand { get; }
 
-        // Constructor (Davy & Jim)
+        public ObservableCollection<Plant> Plants { get; }
+        
+        public ObservableCollection<string> Types { get; private set; }
+        public ObservableCollection<string> Families { get; private set; }
+        public ObservableCollection<string> Genus { get; private set; }
+        public ObservableCollection<string> Species { get; private set; }
+        public ObservableCollection<string> Variants { get; private set; }
+        
         public BeheerPlantenViewModel()
         {
-            ShowPlantDetailsCommand = new DelegateCommand(ShowPlantDetails);
-            ShowPlantByNameCommand = new DelegateCommand(ShowPlantByName);
-            ShowVariantByNameCommand = new DelegateCommand(ShowVariantByName);
-            SearchPlantsCommand = new DelegateCommand(SearchPlanten);
-            ResetCommand = new DelegateCommand(Reset);
+            _plantenDao = PlantenDao.Instance;
+            
+            ShowDetailsCommand = new DelegateCommand(ShowDetails);
+            ResetCommand = new DelegateCommand(ResetInputs);
 
             Plants = new ObservableCollection<Plant>();
+            
             Types = new ObservableCollection<string>();
-            Soorten = new ObservableCollection<string>();
             Families = new ObservableCollection<string>();
             Genus = new ObservableCollection<string>();
+            Species = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
-
-            _plantenDao = PlantenDao.Instance;
-
-            LoadPlants();
-            Reset();
+            
+            FilterComboBoxes();
         }
-
-        // Wanneer er op de reset knop geklikt word reset de CMB en TextBox (Davy)
-        public void Reset()
+        
+        public Plant? SelectedPlant
         {
-            TextInputPlantName = string.Empty;
-
-            LoadTypes();
-            LoadSoorten();
-            LoadFamilies();
-            LoadGenus();
-            LoadVariants();
-        }
-
-        // Getters en setters voor de selected values (Davy&Jim)
-        public Plant SelectedPlant
-        {
-            get { return _selectedPlant; }
+            get => _selectedPlant;
             set
             {
                 _selectedPlant = value;
                 OnPropertyChanged();
             }
         }
-
-        public string SelectedSoort
+        
+        public string PlantName
         {
-            get { return _selectedSoort; }
+            get => _plantName;
             set
             {
-                _selectedSoort = value;
+                _plantName = value;
+                FilterComboBoxes();
+                OnPropertyChanged();
+            }
+        }
+        
+        public string? SelectedType
+        {
+            get => _selectedType;
+            set
+            {
+                MaintainCorrectFieldValueAfterFilter(ref _selectedType, value);
+                OnPropertyChanged();
+            }
+        }
+        
+        public string? SelectedFamily
+        {
+            get => _selectedFamily;
+            set
+            {
+                MaintainCorrectFieldValueAfterFilter(ref _selectedFamily, value);
+                OnPropertyChanged();
+            }
+        }
+        
+        public string? SelectedGenus
+        {
+            get => _selectedGenus;
+            set
+            {
+                MaintainCorrectFieldValueAfterFilter(ref _selectedGenus, value);
+                OnPropertyChanged();
+            }
+        }
+        
+        public string? SelectedSpecies
+        {
+            get => _selectedSpecies;
+            set
+            {
+                MaintainCorrectFieldValueAfterFilter(ref _selectedSpecies, value);
                 OnPropertyChanged();
             }
         }
 
-        public string SelectedGeslacht
+        public string? SelectedVariant
         {
-            get { return _selectedGeslacht; }
+            get => _selectedVariant;
             set
             {
-                _selectedGeslacht = value;
+                MaintainCorrectFieldValueAfterFilter(ref _selectedVariant, value);
                 OnPropertyChanged();
             }
         }
 
-        public string SelectedType
+        private void MaintainCorrectFieldValueAfterFilter(ref string? field, string? value)
         {
-            get { return _selectedType; }
-            set
+            if (value == field) return;
+
+            var oldValue = field;
+            field = value;
+
+            if (value is not null)
             {
-                _selectedType = value;
-                OnPropertyChanged();
+                FilterComboBoxes();
+            }
+            else
+            {
+                field = oldValue;
             }
         }
 
-        public string SelectedFamilie
+        private void FilterComboBoxes()
         {
-            get { return _selectedFamilie; }
-            set
-            {
-                _selectedFamilie = value;
-                OnPropertyChanged();
-            }
+            SearchPlanten();
+
+            LoadTypes();
+            LoadFamilies();
+            LoadGenus();
+            LoadSpecies();
+            LoadVariants();
         }
 
-        public string SelectedVariant
+        private void LoadTypes()
         {
-            get { return _selectedVariant; }
-            set
-            {
-                _selectedVariant = value;
-                OnPropertyChanged();
-            }
+            var types = Plants.Select(p => PlantenParser.ParseSearchText(p.Type))
+                .Distinct()
+                .OrderBy(t => t)
+                .ToList();
 
-        }
-
-        public string TextInputPlantName
-        {
-            get
-            {
-                return _textInputPlantName;
-            }
-            set
-            {
-                _textInputPlantName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        // Geeft alle planten weer (Davy & Lily)
-        public void LoadPlants()
-        {
-            var plants = _plantenDao.GetPlanten();
-
-            Plants.Clear();
+            Types = new ObservableCollection<string>(types);
             
-            foreach(var plant in plants)
-            {
-                Plants.Add(plant);
-            }
+            OnPropertyChanged(nameof(Types));
         }
 
-        // Geeft alle planten weer op naam (Davy & Lily)
-        public void LoadPlantsByName(string name)
+        private void LoadFamilies()
         {
-            var plants = _plantenDao.SearchPlants(null, null, null, null, null, name);
+            var families = Plants.Select(p => PlantenParser.ParseSearchText(p.Familie))
+                .Distinct()
+                .OrderBy(f => f)
+                .ToList();
 
-            Plants.Clear();
+            Families = new ObservableCollection<string>(families);
             
-            foreach(var plant in plants)
-            {
-                Plants.Add(plant);
-            }
+            OnPropertyChanged(nameof(Families));
         }
 
-        // Geeft alle verschillende planten weer in de combobox (Davy & Lily)
-        public void LoadTypes()
+        private void LoadGenus()
         {
-            var types = _plantenDao.GetTypes();
+            var genus = Plants.Select(p => PlantenParser.ParseSearchText(p.Geslacht))
+                .Distinct()
+                .OrderBy(g => g)
+                .ToList();
 
-            Types.Clear();
-
-            foreach (var type in types)
-            {
-                Types.Add(type);
-            }
-        }
-
-        // Geeft alle soorten weer in de combobox (Davy & Lily)
-        public void LoadSoorten()
-        {
-            var soorten = _plantenDao.GetUniqueSpeciesNames();
-
-            Soorten.Clear();
+            Genus = new ObservableCollection<string>(genus);
             
-            foreach(var soort in soorten)
-            {
-                Soorten.Add(soort);
-            }
+            OnPropertyChanged(nameof(Genus));
         }
-
-        // Geeft alle families weer in de combobox (Davy & Lily)
-        public void LoadFamilies()
+        
+        private void LoadSpecies()
         {
-            var families = _plantenDao.GetUniqueFamilyNames();
+            var species = Plants.Select(p => PlantenParser.ParseSearchText(p.Soort))
+                .Distinct()
+                .OrderBy(s => s)
+                .ToList();
+
+            Species = new ObservableCollection<string>(species);
             
-            Families.Clear();
-
-            foreach (var familie in families)
-            {
-                Families.Add(familie);
-            }
+            OnPropertyChanged(nameof(Species));
         }
 
-        // Geeft alle geslacht weer in de combobox (Davy & Lily)
-        public void LoadGenus()
+        private void LoadVariants()
         {
-            var genus = _plantenDao.GetUniqueGenusNames();
+            var variants = Plants.Select(p => PlantenParser.ParseSearchText(p.Variant))
+                .Distinct()
+                .OrderBy(v => v)
+                .ToList();
 
-            Genus.Clear();
+            // TODO: change implementation to only parse within OrderBy, then remove method invocation on the line below
+            if (variants.Contains(PlantenParser.ParseSearchText(PlantenDao.NoVariant)))
+            {
+                variants.Remove(PlantenDao.NoVariant);
+                variants.Insert(0, PlantenDao.NoVariant);
+            }
+
+            Variants = new ObservableCollection<string>(variants);
             
-            foreach (var gene in genus)
-            {
-                Genus.Add(gene);
-            }
+            OnPropertyChanged(nameof(Variants));
         }
-
-        // Geeft alle varianten weer in de combobox (Davy & Lily)
-        public void LoadVariants()
+        
+        private void ShowDetails()
         {
-            var variants = _plantenDao.GetUniqueVariantNames();
-
-            Variants.Clear();
-            
-            foreach (var v in variants)
+            if (SelectedPlant is not null)
             {
-                Variants.Add(v);
-            }
-        }
-
-        //Zoek op alle varianten (Davy & Lily)
-        public void LoadPlantsByVariant(string variant)
-        {
-            var plants = _plantenDao.SearchPlants(null, null, null, null, variant, null);
-
-            Plants.Clear();
-
-            foreach (var plant in plants)
-            {
-                Plants.Add(plant);
-            }
-        }
-
-        // Geeft de planten op variant weer (Davy & Lily & Jim)
-        public void ShowVariantByName()
-        {
-            LoadPlantsByVariant(SelectedVariant);
-        }
-
-        // Als er geen plant geselecteerd is word er een messagebox geshowed (Lily&Davy)
-        private void ShowPlantDetails()
-        {
-            if (_selectedPlant != null)
-            {
-                // nieuw venster initialiseren
                 new PlantDetails(SelectedPlant).Show();
             } else { 
-                MessageBox.Show("Gelieve een plant te selecteren uit de listview", "Fout", 
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Gelieve een plant te selecteren uit de listview", 
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        // Geeft de plant weer op naam in de lijst (Davy & Jim)
-        private void ShowPlantByName()
-        {
-            LoadPlantsByName(TextInputPlantName);
-        }
-
-        // Zoek de planten op zijn verschillende eigenschappen (Davy & Jim)
         private void SearchPlanten()
         {
-            var type = SelectedType;
-            var familie = SelectedFamilie;
-            var geslacht = SelectedGeslacht;
-            var soort = SelectedSoort;
-            var variant = SelectedVariant;
+            var plants = _plantenDao.SearchPlants(SelectedType, SelectedFamily, 
+                SelectedGenus, SelectedSpecies, SelectedVariant, PlantName);
 
-            var list = _plantenDao.SearchPlants(type,
-                familie, geslacht, soort, variant, TextInputPlantName);
-                
-            Plants.Clear();
+            ClearAndAddAll(Plants, plants);
+        }
+        
+        private void ResetInputs()
+        {
+            _selectedType = _selectedFamily = _selectedGenus = _selectedSpecies = _selectedVariant = null;
             
-            foreach (var plant in list)
+            PlantName = string.Empty;
+            
+            OnPropertyChanged(nameof(SelectedType));
+            OnPropertyChanged(nameof(SelectedFamily));
+            OnPropertyChanged(nameof(SelectedGenus));
+            OnPropertyChanged(nameof(SelectedSpecies));
+            OnPropertyChanged(nameof(SelectedVariant));
+        }
+
+        private static void ClearAndAddAll<T>(ObservableCollection<T> collection, List<T> data) 
+        {
+            collection.Clear();
+
+            foreach (var elem in data)
             {
-                Plants.Add(plant);
+                collection.Add(elem);
             }
         }
     }
