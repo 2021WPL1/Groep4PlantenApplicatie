@@ -301,6 +301,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
+
         public void RemoveFenoType(Fenotype fenotype)
         {
             _context.Fenotype.Remove(fenotype);
@@ -311,6 +312,10 @@ namespace PlantenApplicatie.Data
         public List<Fenotype> GetFenoTypes()
         {
             return _context.Fenotype.ToList();
+        }
+        public List<FenotypeMulti> GetFenoTypesMulti()
+        {
+            return _context.FenotypeMulti.ToList();
         }
     }
 }

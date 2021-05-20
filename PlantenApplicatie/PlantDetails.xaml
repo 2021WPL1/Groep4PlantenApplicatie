@@ -76,26 +76,24 @@
                         ItemsSource="{Binding FenoSpruitFenologieen}" 
                         SelectedItem="{Binding SelectedSpruitFenologie, UpdateSourceTrigger=PropertyChanged}"
                               DisplayMemberPath="Fenologie" />
-                    <ListView Height="150" Width="716" Canvas.Left="10" Canvas.Top="320"
-                              ItemsSource="{Binding Fenotypes}" 
-                                          SelectedItem="{Binding SelectedFenotype, Mode=TwoWay}" >
+                    <ListView Height="184" Width="247" Canvas.Left="10" Canvas.Top="320"
+                              ItemsSource="{Binding FenoTypesMulti}" 
+                                          SelectedItem="{Binding SelectedFenotypeMulti, Mode=TwoWay}" >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="PlantId" Width="Auto" DisplayMemberBinding="{Binding PlantId}" />
-                                <GridViewColumn Header="Bladgrootte" Width="Auto" DisplayMemberBinding="{Binding Bladgrootte}" />
-                                <GridViewColumn Header="Bladvorm" Width="Auto" DisplayMemberBinding="{Binding Bladvorm}" />
-                                <GridViewColumn Header="Ratiobloeiblad" Width="Auto" DisplayMemberBinding="{Binding RatioBloeiBlad}" />
-                                <GridViewColumn Header="SpruitFenologie" Width="Auto" DisplayMemberBinding="{Binding Spruitfenologie}" />
-                                <GridViewColumn Header="Bloeiwijze" Width="Auto" DisplayMemberBinding="{Binding Bloeiwijze}" />
-                                <GridViewColumn Header="Habitus" Width="Auto" DisplayMemberBinding="{Binding Habitus}" />
-                                <GridViewColumn Header="Levensvorm" Width="Auto" DisplayMemberBinding="{Binding Levensvorm}" />
+                                <GridViewColumn Header="PlantNaam" Width="Auto" DisplayMemberBinding="{Binding SelectedPlant.Fsgv}" />
+                                <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
+                                <GridViewColumn Header="Maand" Width="Auto" DisplayMemberBinding="{Binding Maand}" />
+                                <GridViewColumn Header="Waarde" Width="Auto" DisplayMemberBinding="{Binding Waarde}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding Path=AddFenoTypeCommand}" Content="Voeg FenoType toe aan plant" Height="28" Canvas.Left="33" Canvas.Top="505" Width="208"/>
-                    <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="269" Canvas.Top="505" Width="208"/>
-                    <Button Command="{Binding Path=RemoveFenoTypeCommand}" Content="Verwijder FenoType" Height="28" Canvas.Left="498" Canvas.Top="505" Width="208"/>
+                    <Button Command="{Binding Path=AddFenoTypeCommand}" Content="Voeg FenoType toe aan plant" Height="28" Canvas.Left="53" Canvas.Top="518" Width="208"/>
+                    <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="289" Canvas.Top="518" Width="208"/>
+                    <Button Command="{Binding Path=RemoveFenoTypeCommand}" Content="Verwijder FenoType" Height="28" Canvas.Left="518" Canvas.Top="518" Width="208"/>
 
+
+                    <ComboBox Margin="-66,0,0,0" Width="120" Height="25" Canvas.Left="669" Canvas.Top="321"/>
 
                 </Canvas>
             </TabItem>
@@ -116,7 +114,7 @@
                     <Label Content="Antagonische Omgeving :" Canvas.Left="10" Canvas.Top="189"/>
                     <ComboBox 
                         Canvas.Left="178" Canvas.Top="191" Width="548"/>
-                    
+
                     <ListView Height="150" Width="716" Canvas.Left="10" Canvas.Top="320">
                         <ListView.View>
                             <GridView>
