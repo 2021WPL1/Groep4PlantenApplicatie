@@ -103,19 +103,29 @@
                 <Canvas>
                     <Label Content="Bezonning :" Canvas.Left="10" Canvas.Top="27"/>
                     <ComboBox 
-                        Canvas.Left="178" Canvas.Top="31" Width="548"/>
+                        Canvas.Left="178" Canvas.Top="31" Width="548"
+                        ItemsSource="{Binding Insolations}"
+                        SelectedValue="{Binding SelectedInsolation}"/>
                     <Label Content="Grondsoort :" Canvas.Left="10" Canvas.Top="66"/>
                     <ComboBox
-                        Canvas.Left="178" Canvas.Top="70" Width="548"/>
+                        Canvas.Left="178" Canvas.Top="70" Width="548"
+                        ItemsSource="{Binding SoilTypes}"
+                        SelectedValue="{Binding SelectedSoilType}"/>
                     <Label Content="Vochtbehoefte :" Canvas.Left="10" Canvas.Top="109"/>
                     <ComboBox
-                        Canvas.Left="178" Canvas.Top="111" Width="548"/>
+                        Canvas.Left="178" Canvas.Top="111" Width="548"
+                        ItemsSource="{Binding MoistureRequirements}"
+                        SelectedValue="{Binding SelectedMoistureRequirement}"/>
                     <Label Content="Voedingsbehoefte :" Canvas.Left="10" Canvas.Top="148"/>
                     <ComboBox
-                        Canvas.Left="178" Canvas.Top="152" Width="548"/>
+                        Canvas.Left="178" Canvas.Top="152" Width="548"
+                        ItemsSource="{Binding NutritionRequirements}"
+                        SelectedValue="{Binding SelectedNutritionRequirement}"/>
                     <Label Content="Antagonische Omgeving :" Canvas.Left="10" Canvas.Top="189"/>
                     <ComboBox 
-                        Canvas.Left="178" Canvas.Top="191" Width="548"/>
+                        Canvas.Left="178" Canvas.Top="191" Width="548"
+                        ItemsSource="{Binding AntagonianEnvironments}"
+                        SelectedValue="{Binding SelectedAntagonianEnvironment}"/>
                     
                     <ListView Height="150" Width="716" Canvas.Left="10" Canvas.Top="320">
                         <ListView.View>

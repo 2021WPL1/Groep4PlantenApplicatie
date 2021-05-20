@@ -1,28 +1,26 @@
 ﻿using PlantenApplicatie.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Collections.ObjectModel;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // klasse (Davy)
+    // klasse (Davy, Lily)
     public class TabAbiotiekViewModel : ViewModelBase
-    {
-        private Plant _selectedPlant;
-
+    { 
         public TabAbiotiekViewModel(Plant selectedPlant)
         {
-            SelectedPlant = selectedPlant;
+            // TODO: load data into ObservableCollection by method from here
         }
 
-        public Plant SelectedPlant
-        {
-            private get => _selectedPlant;
-            set
-            {
-                _selectedPlant = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<string> Insolations { get; } = new();
+        public ObservableCollection<string> SoilTypes { get; } = new();
+        public ObservableCollection<string> MoistureRequirements { get; } = new();
+        public ObservableCollection<string> NutritionRequirements { get; } = new();
+        public ObservableCollection<string> AntagonianEnvironments { get; } = new();
+
+        public string? SelectedInsolation { get; set; }
+        public string? SelectedSoilType { get; set; }
+        public string? SelectedMoistureRequirement { get; set; }
+        public string? SelectedNutritionRequirement { get; set; }
+        public string? SelectedAntagonianEnvironment { get; set; }
     }
 }
