@@ -21,7 +21,29 @@
             <Label 
                 Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="10" Canvas.Top="153"/>
 
+            <ComboBox x:Name="cmbType"
+                ItemsSource="{Binding Types}"
+                SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="142" Width="219" Height="20"/>
 
+            <Button x:Name="btnSave" Content="Save" Canvas.Top="486" Width="80" Canvas.Left="766"
+                                    Command="{Binding Path=SaveCommand}"/>
+            <ComboBox x:Name="cmbFamily"
+                ItemsSource="{Binding Families}"
+                SelectedItem="{Binding SelectedFamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="167" Width="219" Height="20"/>
+            <ComboBox x:Name="cmbGenus"
+                ItemsSource="{Binding Genus}"
+                SelectedItem="{Binding SelectedGenus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="192" Width="219" Height="20"/>
+            <ComboBox x:Name="cmbSpecies"
+                ItemsSource="{Binding Species}"
+                SelectedItem="{Binding SelectedSpecies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="217" Width="219" Height="20"/>
+            <ComboBox x:Name="cmbVariant"
+                ItemsSource="{Binding Variants}"
+                SelectedItem="{Binding SelectedVariant, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="242" Width="219" Height="20"/>
+            <TextBox x:Name="txtPlantMin" Width="200" Canvas.Top="267" Canvas.Left="133"
+                     Text="{Binding TextInputMin, UpdateSourceTrigger=PropertyChanged}">
+            </TextBox>
+            <TextBox x:Name="txtPlantMax" Width="200" Canvas.Top="290" Canvas.Left="133"
+                Text="{Binding  TextInputMax, UpdateSourceTrigger=PropertyChanged}"/>
         </Canvas>
     </Grid>
 </Window>
