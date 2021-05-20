@@ -5,6 +5,7 @@ using System.Text;
 
 namespace PlantenApplicatie.viewmodels
 {
+    // klasse (Davy)
     public class TabFotoViewModel : ViewModelBase
     {
         private Plant _selectedPlant;
