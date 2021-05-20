@@ -45,7 +45,7 @@
                               />
                     <Label Content="Bladgrootte :" Canvas.Left="10" Canvas.Top="27"/>
                     <Label Content="Bladvorm :" Canvas.Left="10" Canvas.Top="66"/>
-                    <Label Content="Bloeiwijze :" Canvas.Left="10" Canvas.Top="109" RenderTransformOrigin="0.204,0.541"/>
+                    <Label Content="Bloeiwijze :" Canvas.Left="10" Canvas.Top="109"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="70" Width="598"                              
                         ItemsSource="{Binding FenoBladvormen}" 
                         SelectedItem="{Binding SelectedBladvorm, UpdateSourceTrigger=PropertyChanged}"
@@ -99,8 +99,37 @@
 
                 </Canvas>
             </TabItem>
-            <TabItem Header="Abiotiek" DataContext="{Binding Children[3]}">
-
+            <TabItem Header="Abiotiek">
+                <Canvas>
+                    <Label Content="Bezonning :" Canvas.Left="10" Canvas.Top="27"/>
+                    <ComboBox 
+                        Canvas.Left="178" Canvas.Top="31" Width="548"/>
+                    <Label Content="Grondsoort :" Canvas.Left="10" Canvas.Top="66"/>
+                    <ComboBox
+                        Canvas.Left="178" Canvas.Top="70" Width="548"/>
+                    <Label Content="Vochtbehoefte :" Canvas.Left="10" Canvas.Top="109"/>
+                    <ComboBox
+                        Canvas.Left="178" Canvas.Top="111" Width="548"/>
+                    <Label Content="Voedingsbehoefte :" Canvas.Left="10" Canvas.Top="148"/>
+                    <ComboBox
+                        Canvas.Left="178" Canvas.Top="152" Width="548"/>
+                    <Label Content="Antagonische Omgeving :" Canvas.Left="10" Canvas.Top="189"/>
+                    <ComboBox 
+                        Canvas.Left="178" Canvas.Top="191" Width="548"/>
+                    
+                    <ListView Height="150" Width="716" Canvas.Left="10" Canvas.Top="320">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Plant naam" Width="Auto"/>
+                                <GridViewColumn Header="Bezonnig" Width="Auto"/>
+                                <GridViewColumn Header="Grondsoort" Width="Auto"/>
+                                <GridViewColumn Header="Vochtbehoefte" Width="Auto"/>
+                                <GridViewColumn Header="Voedselbehoefte" Width="Auto"/>
+                                <GridViewColumn Header="Antagonische Omgeving" Width="Auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Canvas>
             </TabItem>
             <TabItem Header="Commensalisme" DataContext="{Binding Children[4]}">
 
