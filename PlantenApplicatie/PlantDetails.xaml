@@ -38,6 +38,7 @@
             <TabItem Header="Wijzig plant" DataContext="{Binding Children[1]}">
 
             </TabItem>
+            <!--comboboxen opvullen Davy-->
             <TabItem Header="Fenotype" DataContext="{Binding Children[2]}">
                 <Canvas>
                     <ComboBox Canvas.Left="178" Canvas.Top="31" Width="548"
@@ -163,9 +164,62 @@
             <TabItem Header="Commensalisme" DataContext="{Binding Children[4]}">
 
             </TabItem>
+            <!--Davy-->
             <TabItem Header="Extra eigenschappen" DataContext="{Binding Children[5]}">
+                <GroupBox Header="Extra eigenschappen" Width="760" Background="White" Margin="0,12,0,4">
+                    <StackPanel Orientation="Vertical">
+                        <Canvas Height="40">
 
+                            <!-- eerste rij -->
+                            <Label Canvas.Top="1" Content="PlantNaam"/>
+                            <Label Content="{Binding SelectedPlant.Fgsv}" 
+                              Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
+                        </Canvas>
+                        <ListView Height="150" Width="760"
+                                      ItemsSource="{Binding BeheerExtraEigenschappen}" 
+                                          SelectedItem="{Binding SelectedExtraEigenschap, Mode=TwoWay}"  >
+
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Nectarwaarde" Width="Auto" DisplayMemberBinding="{Binding Nectarwaarde}" />
+                                    <GridViewColumn Header="Pollenwaarde" Width="Auto" DisplayMemberBinding="{Binding Pollenwaarde}" />
+                                    <GridViewColumn Header="Bijvriendelijke" Width="Auto" DisplayMemberBinding="{Binding Bijvriendelijke, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Vlindervriendelijk" Width="Auto" DisplayMemberBinding="{Binding Vlindervriendelijk, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Eetbaar" Width="Auto" DisplayMemberBinding="{Binding Eetbaar, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Kruidgebruik" Width="Auto" DisplayMemberBinding="{Binding Kruidgebruik, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Geurend" Width="Auto" DisplayMemberBinding="{Binding Geurend, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Vorstgevoelig" Width="Auto" DisplayMemberBinding="{Binding Vorstgevoelig, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Canvas Height="200">
+
+
+                            <CheckBox IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
+                            <CheckBox IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
+                            <CheckBox IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
+                            <CheckBox IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
+                            <CheckBox IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
+                            <CheckBox IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
+                            <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
+                            <ComboBox Canvas.Left="114" Canvas.Top="29"
+                                      
+                                    ItemsSource="{Binding Nectars}" 
+                                     SelectedValue="{Binding SelectedNectarValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                            <Label Content="Pollenwaarde :" Canvas.Left="19" Canvas.Top="57"/>
+                            <ComboBox Canvas.Left="113" Canvas.Top="61" 
+                                      
+                                    ItemsSource="{Binding Pollen}" 
+                                     SelectedValue="{Binding SelectedPollenValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                            <Button Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208"/>
+                            <Button Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208"/>
+                            <Button Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208"/>
+                            
+                        </Canvas>
+                    </StackPanel>
+                </GroupBox>
             </TabItem>
+            <!--Davy-->
             <TabItem Header="Beheersdaden" DataContext="{Binding Children[6]}">
                 <GroupBox Header="Beheersdaden" Width="760" Background="White" Margin="0,12,0,4">
                     <StackPanel Orientation="Vertical">
@@ -176,7 +230,7 @@
                             <Label Content="{Binding SelectedPlant.Fgsv}" 
                               Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
                         </Canvas>
-                        <ListView x:Name="myListView" Height="150" Width="760"
+                        <ListView Height="150" Width="760"
                                       ItemsSource="{Binding BeheerMaanden}" 
                                           SelectedItem="{Binding SelectedBeheerMaand, Mode=TwoWay}"  >
 
@@ -201,13 +255,13 @@
                         </ListView>
                         <Canvas Margin="0,0,20,0" Height="248">
 
-                            <!-- tweede rij -->
+                            <!-- eerste rij -->
                             <Label Content="Beheerdaad :" Canvas.Top="30" />
                             <TextBox Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
-                            <!-- derde rij -->
+                            <!-- tweede rij -->
                             <Label Content="Omschrijving :" Canvas.Top="60" />
                             <TextBox Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
-                            <!-- vierde rij -->
+                            <!-- derde rij -->
                             <Label Content="Data:" Canvas.Left="2" Canvas.Top="112"/>
 
 
@@ -234,6 +288,7 @@
 
                 </GroupBox>
             </TabItem>
+            <!--Davy-->
             <TabItem Header="Foto" DataContext="{Binding Children[7]}">
                 <Canvas>
                     <Label Height="25" Content="FotoId :" Canvas.Left="25" Canvas.Top="22"></Label>

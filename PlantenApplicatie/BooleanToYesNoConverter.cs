@@ -16,7 +16,7 @@ namespace PlantenApplicatie
                 else
                     return "Nee";
             }
-            return "no";
+            return "Null";
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
