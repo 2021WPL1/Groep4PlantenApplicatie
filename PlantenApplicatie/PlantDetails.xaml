@@ -9,6 +9,9 @@
     <Window.Background>
         <ImageBrush ImageSource="/plantjes.png"/>
     </Window.Background>
+    <Window.Resources>
+        <local:BooleanToYesNoConverter x:Key="BooleanToYesNoConverter"/>
+    </Window.Resources>
     <Grid>
         <TabControl TabStripPlacement="Left">
             <TabItem Header="Details plant" DataContext="{Binding Children[0]}">
@@ -155,38 +158,39 @@
 
             </TabItem>
             <TabItem Header="Beheersdaden" DataContext="{Binding Children[6]}">
-                <GroupBox Header="Beheersdaden" Width="760" Height="400" Background="White" Margin="0,12,0,166">
+                <GroupBox Header="Beheersdaden" Width="760" Background="White" Margin="0,12,0,4">
                     <StackPanel Orientation="Vertical">
+                        <Canvas Height="40">
+
+                            <!-- eerste rij -->
+                            <Label Canvas.Top="1" Content="PlantNaam"/>
+                            <Label Content="{Binding SelectedPlant.Fgsv}" 
+                              Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
+                        </Canvas>
                         <ListView x:Name="myListView" Height="150" Width="760"
                                       ItemsSource="{Binding BeheerMaanden}" 
                                           SelectedItem="{Binding SelectedBeheerMaand, Mode=TwoWay}"  >
 
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Id" Width="Auto" DisplayMemberBinding="{Binding Id}" />
-                                    <GridViewColumn Header="PlantId" Width="Auto" DisplayMemberBinding="{Binding PlantId}" />
                                     <GridViewColumn Header="Beheerdaad" Width="Auto" DisplayMemberBinding="{Binding Beheerdaad}" />
                                     <GridViewColumn Header="Omschrijving" Width="Auto" DisplayMemberBinding="{Binding Omschrijving}" />
-                                    <GridViewColumn Header="Jan" Width="Auto" DisplayMemberBinding="{Binding Jan}" />
-                                    <GridViewColumn Header="Feb" Width="Auto" DisplayMemberBinding="{Binding Feb}" />
-                                    <GridViewColumn Header="Mrt" Width="Auto" DisplayMemberBinding="{Binding Mrt}" />
-                                    <GridViewColumn Header="Apr" Width="Auto" DisplayMemberBinding="{Binding Apr}" />
-                                    <GridViewColumn Header="Mei" Width="Auto" DisplayMemberBinding="{Binding Mei}" />
-                                    <GridViewColumn Header="Jun" Width="Auto" DisplayMemberBinding="{Binding Jun}" />
-                                    <GridViewColumn Header="Jul" Width="Auto" DisplayMemberBinding="{Binding Jul}" />
-                                    <GridViewColumn Header="Aug" Width="Auto" DisplayMemberBinding="{Binding Aug}" />
-                                    <GridViewColumn Header="Sept" Width="Auto" DisplayMemberBinding="{Binding Sept}" />
-                                    <GridViewColumn Header="Okt" Width="Auto" DisplayMemberBinding="{Binding Okt}" />
-                                    <GridViewColumn Header="Nov" Width="Auto" DisplayMemberBinding="{Binding Nov}" />
-                                    <GridViewColumn Header="Dec" Width="Auto" DisplayMemberBinding="{Binding Dec}" />
+                                    <GridViewColumn Header="Jan" Width="Auto" DisplayMemberBinding="{Binding Jan, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Feb" Width="Auto" DisplayMemberBinding="{Binding Feb, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Mrt" Width="Auto" DisplayMemberBinding="{Binding Mrt, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Apr" Width="Auto" DisplayMemberBinding="{Binding Apr, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Mei" Width="Auto" DisplayMemberBinding="{Binding Mei, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Jun" Width="Auto" DisplayMemberBinding="{Binding Jun, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Jul" Width="Auto" DisplayMemberBinding="{Binding Jul, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Aug" Width="Auto" DisplayMemberBinding="{Binding Aug, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Sept" Width="Auto" DisplayMemberBinding="{Binding Sept, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Okt" Width="Auto" DisplayMemberBinding="{Binding Okt, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Nov" Width="Auto" DisplayMemberBinding="{Binding Nov, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                    <GridViewColumn Header="Dec" Width="Auto" DisplayMemberBinding="{Binding Dec, Converter={StaticResource BooleanToYesNoConverter}}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
                         <Canvas Margin="0,0,20,0" Height="248">
-                            <!-- eerste rij -->
-                            <Label Canvas.Top="-2" Canvas.Left="-1" Content="PlantNaam"/>
-                            <Label Content="{Binding SelectedPlant.Fgsv}" 
-                              Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
 
                             <!-- tweede rij -->
                             <Label Content="Beheerdaad :" Canvas.Top="30" />
