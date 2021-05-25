@@ -606,9 +606,9 @@ namespace PlantenApplicatie.Data
             return _context.AbioReactieAntagonischeOmg.Select(s => s.Antagonie).ToList();
         }
         //Liam
-        public List<string> GetCommLevensvorm()
+        public List<CommLevensvorm> GetCommLevensvorm()
         {
-            return _context.CommLevensvorm.Select(s => s.Levensvorm).ToList();
+            return _context.CommLevensvorm.ToList();
         }
         //Liam
         public List<string> GetCommStrategie()

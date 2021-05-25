@@ -18,11 +18,14 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedOntwikkelingssnelheid;
         private string _selectedStrategie;
         private Commensalisme _selectedCommensalisme;
+        private string _selectedCommen;
 
         private CommensalismeMulti _selectedCommensalismeMulti;
         private CommensalismeMulti _selectedCommenMultiToAdd;
         private CommensalismeMulti _selectedCommenMultiToRemove;
 
+        public ObservableCollection<string> CommenSociabiliteit { get; set; }
+        public ObservableCollection<string> Commen { get; set; }
         public ObservableCollection<string> CommenOntwikkelsnelheid { get; set; }
         public ObservableCollection<string> CommenStrategie { get; set; }
 
@@ -36,6 +39,8 @@ namespace PlantenApplicatie.viewmodels
 
         public ICommand RemoveCommenMultiCommand { get; set; }
 
+        public ICommand SelectMultiCommand { get; set; }
+
 
         public TabCommensalismeViewModel(Plant selectedPlant)
         {
@@ -44,18 +49,47 @@ namespace PlantenApplicatie.viewmodels
             EditCommensalismeCommand = new DelegateCommand(EditCommensalisme);
             AddCommenMultiCommand = new DelegateCommand(AddCommenMulti);
             RemoveCommenMultiCommand = new DelegateCommand(RemoveCommenMulti);
+            SelectMultiCommand = new DelegateCommand(ChangeCombobox);
             CommenOntwikkelsnelheid = new ObservableCollection<string>();
             CommenStrategie = new ObservableCollection<string>();
             Commensalismes = new ObservableCollection<Commensalisme>();
             CommensalismesMulti = new ObservableCollection<CommensalismeMulti>();
+            Commen = new ObservableCollection<string>();
+            CommenSociabiliteit = new ObservableCollection<string>();
 
             LoadCommenOntwikkelsnelheid();
             LoadCommenStrategie();
 
             LoadCommensalismesMulti();
+
+            
         }
 
-        
+        private void ChangeCombobox()
+        {
+            string str = SelectedCommen;
+            
+            if (SelectedCommen == "Levensvorm")
+            {
+                LoadCommLevensvorm();
+            }
+            else if(SelectedCommen == "Sociabiliteit")
+            {
+                LoadSociabiliteit();
+            }
+        }
+
+        private void LoadSociabiliteit()
+        {
+            var sociabiliteiten = _dao.GetCommSociabiliteit();
+
+            Commen.Clear();
+
+            foreach (var sociabiliteit in sociabiliteiten)
+            {
+                Commen.Add(sociabiliteit);
+            }
+        }
 
         public Plant SelectedPlant
         {
@@ -108,6 +142,16 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        public string SelectedCommen
+        {
+            private get => _selectedCommen;
+            set
+            {
+                _selectedCommen = value;
+                OnPropertyChanged();
+            }
+        }
+
         public CommensalismeMulti SelectedCommenMultiToAdd
         {
             private get => _selectedCommenMultiToAdd;
@@ -142,6 +186,18 @@ namespace PlantenApplicatie.viewmodels
             foreach (var ontwikkelsnelheid in ontwikkelsnelheden)
             {
                 CommenOntwikkelsnelheid.Add(ontwikkelsnelheid);
+            }
+        }
+
+        private void LoadCommLevensvorm()
+        {
+            var levensvormen = _dao.GetCommLevensvorm();
+
+            Commen.Clear();
+
+            foreach (var levensvorm in levensvormen)
+            {
+                Commen.Add(levensvorm);
             }
         }
 

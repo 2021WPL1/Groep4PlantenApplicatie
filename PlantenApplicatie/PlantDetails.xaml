@@ -176,7 +176,7 @@
                     </ListView>
                     <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208"/>
                     <ListView Height="141" Width="247" Canvas.Left="392" Canvas.Top="415"
-                        ItemsSource="{Binding CommensalismesMulti}" 
+                        ItemsSource="{Binding Commen}" 
                         SelectedItem="{Binding SelectedCommensalismeMulti, Mode=TwoWay}" >
                         <ListView.View>
                             <GridView>
@@ -187,11 +187,14 @@
                     </ListView>
                     <Button x:Name="btnRemove" Command="{Binding AddCommenMultiCommand}" Content="Remove" Canvas.Left="305" Canvas.Top="500"/>
                     <ComboBox Canvas.Left="392" Canvas.Top="386" Width="120"
-                      >
+                              SelectedValue="{Binding SelectedCommen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              
+                              >
                         <ComboBoxItem Content="Levensvorm"/>
                         <ComboBoxItem Content="Sociabiliteit"/>
                     </ComboBox>
-                    <Button x:Name="btnAdd" Command="{Binding AddCommenMultiCommand}" Content="Add" Canvas.Left="305" Canvas.Top="431" Width="46"/>
+                    <Button x:Name="btnAdd" Command="{Binding Path=AddCommenMultiCommand}" Content="Add" Canvas.Left="305" Canvas.Top="431" Width="46"/>
+                    <Button x:Name="btnSelect" Command ="{Binding Path=SelectMultiCommand}" Content="Select" Canvas.Left="517" Canvas.Top="388" RenderTransformOrigin="-0.183,0.052"/>
 
 
                 </Canvas>
