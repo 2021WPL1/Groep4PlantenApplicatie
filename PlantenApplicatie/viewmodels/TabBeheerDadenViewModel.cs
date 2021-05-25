@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
@@ -288,7 +289,13 @@ namespace PlantenApplicatie.viewmodels
             beheerMaand.Nov = IsCheckedNovember;
             beheerMaand.Dec = IsCheckedDecember;
 
-            _plantenDao.CreateBeheerMaand(beheerMaand);
+            string message = _plantenDao.CreateBeheerMaand(beheerMaand);
+
+            if (message != String.Empty)
+            {
+                MessageBox.Show(message);
+            }
+
 
             // weergeef de aangepaste lijst
             LoadBeheerMaanden();
@@ -298,23 +305,31 @@ namespace PlantenApplicatie.viewmodels
         private void EditManagementAct()
         {
             BeheerMaand beheerMaand = SelectedBeheerMaand; 
-            beheerMaand.PlantId = SelectedPlant.PlantId;
-            beheerMaand.Beheerdaad = TextInputBeheerdaad;
-            beheerMaand.Omschrijving = TextInputDescription;
-            beheerMaand.Jan = IsCheckedJanuary;
-            beheerMaand.Feb = IsCheckedFebruary;
-            beheerMaand.Mrt = IsCheckedMarch;
-            beheerMaand.Apr = IsCheckedApril;
-            beheerMaand.Mei = IsCheckedMay;
-            beheerMaand.Jun = IsCheckedJune;
-            beheerMaand.Jul = IsCheckedJuly;
-            beheerMaand.Aug = IsCheckedAugust;
-            beheerMaand.Sept = IsCheckedSeptember;
-            beheerMaand.Okt = IsCheckedOctober;
-            beheerMaand.Nov = IsCheckedNovember;
-            beheerMaand.Dec = IsCheckedDecember;
 
-            _plantenDao.EditBeheerMaand(beheerMaand);
+            if (beheerMaand != null)
+            {
+                beheerMaand.PlantId = SelectedBeheerMaand.PlantId;
+                beheerMaand.Beheerdaad = TextInputBeheerdaad;
+                beheerMaand.Omschrijving = TextInputDescription;
+                beheerMaand.Jan = IsCheckedJanuary;
+                beheerMaand.Feb = IsCheckedFebruary;
+                beheerMaand.Mrt = IsCheckedMarch;
+                beheerMaand.Apr = IsCheckedApril;
+                beheerMaand.Mei = IsCheckedMay;
+                beheerMaand.Jun = IsCheckedJune;
+                beheerMaand.Jul = IsCheckedJuly;
+                beheerMaand.Aug = IsCheckedAugust;
+                beheerMaand.Sept = IsCheckedSeptember;
+                beheerMaand.Okt = IsCheckedOctober;
+                beheerMaand.Nov = IsCheckedNovember;
+                beheerMaand.Dec = IsCheckedDecember;
+
+                _plantenDao.EditBeheerMaand(beheerMaand);
+            } else
+            {
+                MessageBox.Show("Gelieve eerst een beheersdaad te selecteren.");
+            }
+
 
             LoadBeheerMaanden();
         }
@@ -325,8 +340,14 @@ namespace PlantenApplicatie.viewmodels
             // toewijzen object BeheerMaand aan geselecteerd object BeheerMaand uit listview
             BeheerMaand beheerMaand = SelectedBeheerMaand;
 
-            // verwijder BeheerMaand uit database
-            _plantenDao.RemoveBeheerMaand(beheerMaand);
+            // ken een string waarde toe uit methode verwijder BeheerMaand uit database            
+            if (SelectedBeheerMaand != null)
+            {
+                _plantenDao.RemoveBeheerMaand(beheerMaand);
+            } else
+            {
+                MessageBox.Show("Gelieve eerst een beheersdaad te selecteren uit de lijst.");
+            }
 
             // toon opnieuw de listview met lijst BeheerMaanden
             LoadBeheerMaanden();

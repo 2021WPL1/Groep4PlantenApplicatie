@@ -676,20 +676,32 @@ namespace PlantenApplicatie.Data
         }
         public List<FenotypeMulti> GetFenoMultis(Plant plant)
         {
-            return _context.FenotypeMulti.Where(i => i.PlantId == plant.PlantId).ToList();
+            return _context.FenotypeMulti.Where(f => f.PlantId == plant.PlantId).ToList();
         }
 
-        // haal alle beheermaanden op (Davy)
+        // haal beheermaanden per plant (Davy)
         public List<BeheerMaand> GetBeheerMaanden(Plant plant)
         {
-            return _context.BeheerMaand.Where(i => i.PlantId == plant.PlantId).ToList();
+            return _context.BeheerMaand.Where(b => b.PlantId == plant.PlantId).ToList();
         }
 
         // maak een BeheerMaand aan (Davy, Lily)
-        public void CreateBeheerMaand(BeheerMaand beheerMaand)
+        public string CreateBeheerMaand(BeheerMaand beheerMaand)
         {
-            _context.BeheerMaand.Add(beheerMaand);
-            _context.SaveChanges();
+            string message = "";
+            var item = _context.BeheerMaand.Where(b => b.PlantId == beheerMaand.PlantId);
+
+            if (item.Count() == 1)
+            {
+                message = "Je kan maar 1 beheersdaad toevoegen.";
+            }
+            else
+            {
+                _context.BeheerMaand.Add(beheerMaand);
+                _context.SaveChanges();
+            }
+
+            return message;
         }
 
         // wijzig een BeheerMaand (Davy)
@@ -704,6 +716,7 @@ namespace PlantenApplicatie.Data
         {
             _context.BeheerMaand.Remove(beheerMaand);
             _context.SaveChanges();
+
         }
 
         public Fenotype GetFenotypeFromPlant(Plant plant)
