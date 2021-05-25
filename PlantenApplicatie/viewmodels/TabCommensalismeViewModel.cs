@@ -7,7 +7,8 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using System.Windows;
-
+using System.Windows.Controls;
+using System.Linq;
 
 namespace PlantenApplicatie.viewmodels
 {
@@ -18,7 +19,7 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedOntwikkelingssnelheid;
         private string _selectedStrategie;
         private Commensalisme _selectedCommensalisme;
-        private string _selectedCommen;
+        private ComboBoxItem _selectedCommen;
 
         private CommensalismeMulti _selectedCommensalismeMulti;
         private CommensalismeMulti _selectedCommenMultiToAdd;
@@ -59,7 +60,7 @@ namespace PlantenApplicatie.viewmodels
 
             LoadCommenOntwikkelsnelheid();
             LoadCommenStrategie();
-
+            LoadSelectedValue();
             LoadCommensalismesMulti();
 
             
@@ -67,13 +68,13 @@ namespace PlantenApplicatie.viewmodels
 
         private void ChangeCombobox()
         {
-            string str = SelectedCommen;
+            ComboBoxItem str = SelectedCommen;
             
-            if (SelectedCommen == "Levensvorm")
+            if (SelectedCommen.Content == "Levensvorm")
             {
                 LoadCommLevensvorm();
             }
-            else if(SelectedCommen == "Sociabiliteit")
+            else if(SelectedCommen.Content == "Sociabiliteit")
             {
                 LoadSociabiliteit();
             }
@@ -142,7 +143,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string SelectedCommen
+        public ComboBoxItem SelectedCommen
         {
             private get => _selectedCommen;
             set
@@ -174,8 +175,16 @@ namespace PlantenApplicatie.viewmodels
 
         private void EditCommensalisme()
         {
-            SelectedCommensalisme = _dao.ChangeCommensalisme(SelectedCommensalisme, SelectedOntwikkelingssnelheid, SelectedStrategie);
-        }
+            var commensialismePlant = _dao.GetCommensialisme(SelectedPlant);
+            if (commensialismePlant is null)
+            {
+                _dao.AddCommensalisme(SelectedPlant, SelectedOntwikkelingssnelheid, SelectedStrategie);
+            }
+            else
+            {
+                _dao.ChangeCommensalisme(SelectedPlant, SelectedOntwikkelingssnelheid, SelectedStrategie);
+            }
+            }
 
         private void LoadCommenOntwikkelsnelheid()
         {
@@ -250,6 +259,18 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Gelieve eerst een selectie te maken om toe te voegen",
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        private void LoadSelectedValue()
+        {
+            var commensialisme = _selectedPlant.Commensalisme.SingleOrDefault();
+            if(commensialisme is null)
+            {
+                return;
+            }
+
+            SelectedOntwikkelingssnelheid = commensialisme.Ontwikkelsnelheid;
+            SelectedStrategie = commensialisme.Strategie;
         }
     }
 }

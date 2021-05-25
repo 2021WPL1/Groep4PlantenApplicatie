@@ -481,9 +481,9 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public Commensalisme ChangeCommensalisme(Commensalisme commensalisme, string ontwikkelingssnelheid, string strategie)
+        public Commensalisme ChangeCommensalisme(Plant plant, string ontwikkelingssnelheid, string strategie)
         {
-            var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(s => s.Id == commensalisme.Id);
+            var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
             selectedCommensalisme.Ontwikkelsnelheid = ontwikkelingssnelheid ?? selectedCommensalisme.Ontwikkelsnelheid;
             selectedCommensalisme.Strategie = strategie ?? selectedCommensalisme.Strategie;
@@ -606,9 +606,9 @@ namespace PlantenApplicatie.Data
             return _context.AbioReactieAntagonischeOmg.Select(s => s.Antagonie).ToList();
         }
         //Liam
-        public List<CommLevensvorm> GetCommLevensvorm()
+        public List<string> GetCommLevensvorm()
         {
-            return _context.CommLevensvorm.ToList();
+            return _context.CommLevensvorm.Select(l => l.Levensvorm).ToList();
         }
         //Liam
         public List<string> GetCommStrategie()
@@ -708,5 +708,9 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
+        public Commensalisme GetCommensialisme(Plant plant)
+        {
+            return _context.Commensalisme.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
+        }
     }
 }
