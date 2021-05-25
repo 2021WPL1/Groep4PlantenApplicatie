@@ -481,7 +481,7 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeCommensalisme(Commensalisme commensalisme, string ontwikkelingssnelheid, string strategie)
+        public Commensalisme ChangeCommensalisme(Commensalisme commensalisme, string ontwikkelingssnelheid, string strategie)
         {
             var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(s => s.Id == commensalisme.Id);
 
@@ -489,6 +489,8 @@ namespace PlantenApplicatie.Data
             selectedCommensalisme.Strategie = strategie ?? selectedCommensalisme.Strategie;
 
             _context.SaveChanges();
+
+            return selectedCommensalisme;
         }
         public void DeleteCommensalisme(Commensalisme commensalisme)
         {
