@@ -706,5 +706,9 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
+        public Fenotype GetFenotypeFromPlant(Plant plant)
+        {
+            return _context.Fenotype.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
+        }
     }
 }

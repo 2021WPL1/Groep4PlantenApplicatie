@@ -37,7 +37,8 @@
             </TabItem>
             <TabItem Header="Fenotype" DataContext="{Binding Children[2]}">
                 <Canvas>
-                    <ComboBox Canvas.Left="178" Canvas.Top="31" Width="548"
+
+                    <ComboBox Canvas.Left="128" Canvas.Top="31" Width="598"
                               
                       ItemsSource="{Binding FenoBladgroottes}" 
                       SelectedItem="{Binding SelectedBladgrootte, UpdateSourceTrigger=PropertyChanged}"
@@ -73,35 +74,31 @@
                         ItemsSource="{Binding FenoSpruitFenologieen}" 
                         SelectedItem="{Binding SelectedSpruitFenologie, UpdateSourceTrigger=PropertyChanged}"
                                />
-                    <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
-                              ItemsSource="{Binding FenoTypesMulti}" 
-                                          SelectedItem="{Binding SelectedFenoTypeMulti, Mode=TwoWay}" >
+                    <ListView Height="141" Width="247" Canvas.Left="21" Canvas.Top="413"   ItemsSource="{Binding PlantFenoTypesMulti}" 
+                                          SelectedItem="{Binding SelectedPlantFenoTypeMulti, Mode=TwoWay}" >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="PlantNaam" Width="Auto" DisplayMemberBinding="{Binding SelectedPlant.Fsgv}" />
                                 <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
                                 <GridViewColumn Header="Maand" Width="Auto" DisplayMemberBinding="{Binding Maand}" />
                                 <GridViewColumn Header="Waarde" Width="Auto" DisplayMemberBinding="{Binding Waarde}" />
                             </GridView>
                         </ListView.View>
+                        <Label Content="Label"/>
                     </ListView>
-                    <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="281" Canvas.Top="321" Width="208"/>
-                    <ListView Height="141" Width="247" Canvas.Left="385" Canvas.Top="413"
+                    <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="518" Canvas.Top="317" Width="208"/>
+                    <ListView Height="141" Width="247" Canvas.Left="355" Canvas.Top="413"
                         ItemsSource="{Binding FenoTypesMulti}" 
                         SelectedItem="{Binding SelectedFenoTypeMulti, Mode=TwoWay}" >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="PlantNaam" Width="Auto" DisplayMemberBinding="{Binding SelectedPlant.Fsgv}" />
-                                <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
-                                <GridViewColumn Header="Maand" Width="Auto" DisplayMemberBinding="{Binding Maand}" />
                                 <GridViewColumn Header="Waarde" Width="Auto" DisplayMemberBinding="{Binding Waarde}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Content="Button" Canvas.Left="305" Canvas.Top="469"/>
-                    <ComboBox Canvas.Left="392" Canvas.Top="386" Width="120"/>
-                    <Button Content="Button" Canvas.Left="686" Canvas.Top="415"/>
-                    <Button Content="Button" Canvas.Left="686" Canvas.Top="454"/>
+                    <Button  Command="{Binding Path=AddFenotypeMulti}" Content="Add" Canvas.Left="622" Canvas.Top="415" Width="37" />
+                    <ComboBox Canvas.Left="358" Canvas.Top="386" Width="120"  ItemsSource="{Binding FenotypeEigenschappen}" 
+                        SelectedItem="{Binding SelectedFenotypeEigenschappen, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Command="{Binding Path=DeleteFenotypeMulti}" Content="delete" Canvas.Left="288" Canvas.Top="415"/>
 
 
                 </Canvas>

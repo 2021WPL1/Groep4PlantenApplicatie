@@ -54,7 +54,7 @@ namespace PlantenApplicatie.viewmodels
 
             BeheerMaanden = new ObservableCollection<BeheerMaand>();
 
-            LoadBeheerMaanden();            
+            LoadBeheerMaanden();
         }
 
         // Getters and setters selected waardes (Davy)

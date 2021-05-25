@@ -225,6 +225,7 @@ namespace PlantenApplicatie.viewmodels
         {
             if (SelectedPlant is not null)
             {
+                Plant plant = SelectedPlant;
                 new PlantDetails(SelectedPlant).Show();
             } else { 
                 MessageBox.Show("Gelieve een plant te selecteren uit de listview", 
