@@ -21,19 +21,40 @@ namespace PlantenApplicatie.viewmodels
         private ObservableCollection<string> _prefixKeys;
         private string _selectedPrefixKey;
 
+        private string _selectedType;
+        private string _selectedFamily;
+        private string _selectedGenus;
+        private string _selectedSpecies;
+        private string _selectedVariant;
+        private string _textInputMin;
+        private string _textInputMax;
         //button commands
-        public ICommand EditDetailsCommand { get; set; }
 
+        public ICommand SaveCommand { get; set; }
 
         // Constructor Lily
         public TabPlantDetailsViewModel(Plant selectedPlant)
         {
+
+            SaveCommand = new DelegateCommand(Save);
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             // onderstaande variabelen voor tabblad details plant
             CreatePrefixesAndProperties();
             SelectedPrefixKey = _prefixKeys[0];
-            EditDetailsCommand = new DelegateCommand(EditPlantDetails);
+
+
+
+
+            Types = new ObservableCollection<string>();
+            Families = new ObservableCollection<string>();
+            Genus = new ObservableCollection<string>();
+            Species = new ObservableCollection<string>();
+            Variants = new ObservableCollection<string>();
+
+            CreatePlantDetailsList();
+            LoadSubjectPlant();
+            LoadSelectedValue();
         }
 
         // Getters and setters selected waardes (Lily)
@@ -47,17 +68,89 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+
+        public string SelectedType
+        {
+            get => _selectedType;
+            set
+            {
+                _selectedType = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedFamily
+        {
+            get => _selectedFamily;
+            set
+            {
+                _selectedFamily = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedGenus
+        {
+            get => _selectedGenus;
+            set
+            {
+                _selectedGenus = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedSpecies
+        {
+            get => _selectedSpecies;
+            set
+            {
+                _selectedSpecies = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SelectedVariant
+        {
+            get => _selectedVariant;
+            set
+            {
+                _selectedVariant = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string TextInputMin
+        {
+            get => _textInputMin;
+
+            set
+            {
+                _textInputMin = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TextInputMax
+        {
+            get => _textInputMax;
+            set
+            {
+                _textInputMax = value;
+                OnPropertyChanged();
+            }
+        }
         // ObservableCollection + prefixes om de plantdetails te kunnen weergeven
         public ObservableCollection<string> PrefixKeys => _prefixKeys;
 
 
-        // ObservableCollection om de beheermaanden weer te geven (Davy)
-        public ObservableCollection<BeheerMaand> BeheerMaanden { get; set; }
+        public ObservableCollection<string> Types { get; set; }
+
+        public ObservableCollection<string> Families { get; set; }
+
+        public ObservableCollection<string> Genus { get; set; }
+
+        public ObservableCollection<string> Species { get; set; }
+        public ObservableCollection<string> Variants { get; set; }
 
         // string.join om de labels te veranderen per onderwerp
         public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
 
-        public string Details => string.Join("\n", CreateDetailsList());
+        public string Details => string.Join("\n", CreatePlantDetailsList());
 
         public string SelectedPrefixKey
         {
@@ -65,7 +158,6 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedPrefixKey = value;
-                OnPropertyChanged("Details");
                 OnPropertyChanged("DetailsPrefixes");
             }
         }
@@ -80,59 +172,9 @@ namespace PlantenApplicatie.viewmodels
                 "Type", "Familie", "Geslacht", "Soort", "Variant", "Minimum plantdichtheid", 
                 "Maximum plantdichtheid"
             };
-            _prefixes["Fenotype"] = new List<string>()
-            {
-                "Bladgrootte", "Bladvorm", "Ratio Bloei/Blad", "Bloeiwijze", "Habitus", "Levensvorm"
-            };
-            _prefixes["Abiotiek"] = new List<string>()
-            {
-                "Bezonning", "Grondsoort", "Vochtbehoefte", "Voedingsbehoefte", "Antagonische omgeving", 
-                "Habitats"
-            };
-            _prefixes["Commensalisme"] = new List<string>()
-            {
-                "Ontwikkelsnelheid", "Strategie", "Sociabiliteit"
-            };
-            _prefixes["Extra eigenschappen"] = new List<string>()
-            {
-                "Nectarwaarde", "Pollenwaarde", "Bijvriendelijke", "Vlindervriendelijk", "Eetbaar",
-                "Kruidgebruik", "Geurend", "Vorstgevoelig"
-            };
-            _prefixes["Beheer"] = new List<string>()
-            {
-                "Beheerdaad", "Omschrijving", "Datum bereik"
-            };
-            _prefixes["Foto"] = new List<string>()
-            {
-                "Eigenschap", "Locatie (URL)" 
-            };
-
             _prefixKeys = new ObservableCollection<string>(_prefixes.Keys);
         }
 
-        // Roept de correcte methode op afhangent van de geselecteerde comboboxitem
-        private List<object> CreateDetailsList()
-        {
-            switch (_selectedPrefixKey)
-            {
-                case "Plant":
-                    return CreatePlantDetailsList();
-                case "Fenotype":
-                    return CreateFenotypeDetailsList();
-                case "Abiotiek":
-                    return CreateAbiotiekDetailsList();
-                case "Commensalisme":
-                    return CreateCommensalismeDetailsList();
-                case "Extra eigenschappen":
-                    return CreateExtraEigenschappenDetailsList();
-                case "Beheer":
-                    return CreateBeheerDetailsList();
-                case "Foto":
-                    return CreateFotoDetailsList();
-                default:
-                    return new List<object>();
-            }
-        }
 
         // Maakt de detail lijst op voor onderwerp plant
         private List<object> CreatePlantDetailsList()
@@ -144,90 +186,69 @@ namespace PlantenApplicatie.viewmodels
             };
         }
 
-        // Maakt de detail lijst op voor onderwerp fenotype
-        private List<object> CreateFenotypeDetailsList()
+        public void LoadSelectedValue()
         {
-            var fenotype = SelectedPlant.Fenotype.FirstOrDefault();
-            
-            return new List<object>
+            var plant = _selectedPlant;
+
+            SelectedType = plant.Type;
+            SelectedFamily = plant.Familie;
+            SelectedGenus = plant.Geslacht;
+            SelectedSpecies = plant.Soort;
+            SelectedVariant = plant.Variant;
+            TextInputMin = plant.PlantdichtheidMin.ToString();
+            TextInputMax = plant.PlantdichtheidMax.ToString();
+
+        }
+
+
+        public void LoadSubjectPlant()
+        {
+            var types = _dao.GetTypes();
+            var families = _dao.GetUniqueFamilyNames();
+            var genus = _dao.GetUniqueGenusNames();
+            var species = _dao.GetUniqueSpeciesNames();
+            var variants = _dao.GetUniqueVariantNames();
+
+
+            Types.Clear();
+            Families.Clear();
+            Genus.Clear();
+            Species.Clear();
+            Variants.Clear();
+
+            foreach (var type in types)
             {
-                fenotype?.Bladgrootte, fenotype?.Bladvorm, fenotype?.RatioBloeiBlad,
-                fenotype?.Bloeiwijze, fenotype?.Habitus, fenotype?.Levensvorm
-            };
-        }
-
-        // Maakt de detail lijst op voor onderwerp abiotiek het returned een nieuwe lijst,
-        // zodat het gejoined kan worden in de string
-        private List<object> CreateAbiotiekDetailsList()
-        {   
-            var abiotiek = SelectedPlant.Abiotiek.FirstOrDefault();
-            var abiotiekMultiValues = SelectedPlant.AbiotiekMulti
-                .Select(am => am.Waarde)
-                .ToList();
-            
-            return new List<object>
+                Types.Add(type);
+            }
+            foreach (var family in families)
             {
-                abiotiek?.Bezonning, abiotiek?.Grondsoort, abiotiek?.Vochtbehoefte, 
-                abiotiek?.Voedingsbehoefte, abiotiek?.AntagonischeOmgeving, 
-                string.Join(TextSeparator, _dao.GetHabitatsByValues(abiotiekMultiValues)
-                    .Select(ah => ah.Waarde))
-            };
-        }
-
-        // Maakt de detail lijst op voor onderwerp commensalisme het returned een nieuwe lijst,
-        // zodat het gejoined kan worden in de string
-        private List<object> CreateCommensalismeDetailsList()
-        {
-            var commensalisme = SelectedPlant.Commensalisme.FirstOrDefault();
-            var commensalismeMultiValues = SelectedPlant.CommensalismeMulti
-                .Select(cm => cm.Waarde)
-                .ToList();
-
-            return new List<object>
+                Families.Add(family);
+            }
+            foreach (var geslacht in genus)
             {
-                commensalisme?.Ontwikkelsnelheid, commensalisme?.Strategie, 
-                string.Join(TextSeparator, _dao.GetCommSociabiliteitByValues(commensalismeMultiValues)
-                    .Select(cs => cs.Waarde)), 
-            };
+                Genus.Add(geslacht);
+            }
+            foreach (var soort in species)
+            {
+                Species.Add(soort);
+            }
+            foreach (var variant in variants)
+            {
+                Variants.Add(variant);
+            }
         }
 
-        // Maakt de detail lijst op voor onderwerp Extra Eigenschappen het returned een nieuwe lijst,
-        // zodat het gejoined kan worden in de string
-        private List<object> CreateExtraEigenschappenDetailsList()
-        {
-            var extraEigenschappen = SelectedPlant.ExtraEigenschap.FirstOrDefault();
 
-            return new List<object> 
-            { 
-                extraEigenschappen.Nectarwaarde, extraEigenschappen.Pollenwaarde, extraEigenschappen.Bijvriendelijke, 
-                extraEigenschappen.Vlindervriendelijk, extraEigenschappen.Eetbaar, extraEigenschappen.Kruidgebruik, 
-                extraEigenschappen.Geurend, extraEigenschappen.Vorstgevoelig
-            };
-        }
+        public void Save()
+        {
 
-        // Maakt de detail lijst op voor onderwerp beheer het returned een nieuwe lijst,
-        // zodat het gejoined kan worden in de string
-        // maar het geeft een return op omdat we niet weten uit welke relaties het bestaat.
-        private List<object> CreateBeheerDetailsList()
-        {
-            return new List<object>();
-        }
-        // Maakt de detail lijst op voor onderwerp Foto het returned een nieuwe lijst,
-        // zodat het gejoined kan worden in de string
-        private List<object> CreateFotoDetailsList()
-        {
-            return _selectedPlant.Foto
-                    .SelectMany(f => new[] {
-                        string.Join(TextSeparator, f.Eigenschap),
-                        string.Join(TextSeparator, f.UrlLocatie) // only url to image given
-                    })
-                    .Cast<object>()
-                    .ToList();
-        }
+            _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant, Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
+            TextInputMin = string.Empty;
+            TextInputMax = string.Empty;
 
-        private void EditPlantDetails()
-        {
-            new EditPlantDetails(SelectedPlant).Show();
+
         }
+     
+
     }
 }

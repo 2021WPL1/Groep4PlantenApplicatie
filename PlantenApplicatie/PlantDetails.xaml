@@ -21,25 +21,38 @@
                         <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
                         <Label x:Name="lblPlantnaamGroot" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="25"/>
-
-                        <ComboBox x:Name="cmbEigenschappen"
-                      ItemsSource="{Binding PrefixKeys}" 
-                      SelectedItem="{Binding SelectedPrefixKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="10" Canvas.Top="57" Width="219" Height="20"/>
                         <Label 
                 Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="10" Canvas.Top="153"/>
-                        <Label 
-                Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="219" Canvas.Top="153"/>
+                        <ComboBox x:Name="cmbType"
+                ItemsSource="{Binding Types}"
+                SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="142" Width="219" Height="20"/>
 
-                        <Button x:Name="btnEdit" Canvas.Top="509" Canvas.Left="641" Width="86"
-                                        Content="Edit Details" Command="{Binding Path=EditDetailsCommand}" />
+                       
+                        <ComboBox x:Name="cmbFamily"
+                ItemsSource="{Binding Families}"
+                SelectedItem="{Binding SelectedFamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="167" Width="219" Height="20"/>
+                        <ComboBox x:Name="cmbGenus"
+                ItemsSource="{Binding Genus}"
+                SelectedItem="{Binding SelectedGenus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="192" Width="219" Height="20"/>
+                        <ComboBox x:Name="cmbSpecies"
+                ItemsSource="{Binding Species}"
+                SelectedItem="{Binding SelectedSpecies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="217" Width="219" Height="20"/>
+                        <ComboBox x:Name="cmbVariant"
+                ItemsSource="{Binding Variants}"
+                SelectedItem="{Binding SelectedVariant, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="133" Canvas.Top="242" Width="219" Height="20"/>
+                        <TextBox x:Name="txtPlantMin" Width="200" Canvas.Top="267" Canvas.Left="133"
+                     Text="{Binding TextInputMin, UpdateSourceTrigger=PropertyChanged}">
+                        </TextBox>
+                        <TextBox x:Name="txtPlantMax" Width="200" Canvas.Top="290" Canvas.Left="133"
+                Text="{Binding  TextInputMax, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button x:Name="btnSave" Content="Save" Canvas.Top="512" Width="80" Canvas.Left="630"
+                                    Command="{Binding Path=SaveCommand}"/>
                     </Canvas>
+                    
                 </Grid>
             </TabItem>
-            <TabItem Header="Wijzig plant" DataContext="{Binding Children[1]}">
-
-            </TabItem>
             <!--comboboxen opvullen Davy-->
-            <TabItem Header="Fenotype" DataContext="{Binding Children[2]}">
+            <TabItem Header="Fenotype" DataContext="{Binding Children[1]}">
                 <Canvas>
                     <Label x:Name="lblPlantNaamFenotype" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="10" FontSize="25"/>
@@ -105,7 +118,7 @@
 
                 </Canvas>
             </TabItem>
-            <TabItem Header="Abiotiek"  DataContext="{Binding Children[3]}">
+            <TabItem Header="Abiotiek"  DataContext="{Binding Children[2]}">
                 <Canvas>
                     <Label Content="Bezonning :" Canvas.Left="10" Canvas.Top="27"/>
                     <ComboBox 
@@ -156,11 +169,12 @@
                     <Button Content="Add" Canvas.Left="695" Canvas.Top="475"/>
                 </Canvas>
             </TabItem>
-            <TabItem Header="Commensalisme" DataContext="{Binding Children[4]}">
+            <TabItem Header="Commensalisme" DataContext="{Binding Children[3]}">
+                
 
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Extra eigenschappen" DataContext="{Binding Children[5]}">
+            <TabItem Header="Extra eigenschappen" DataContext="{Binding Children[4]}">
                 <GroupBox Header="Extra eigenschappen" Width="760" Background="White" Margin="0,12,0,4">
                     <StackPanel Orientation="Vertical">
                         <Canvas Height="40">
@@ -209,13 +223,13 @@
                             <Button Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208"/>
                             <Button Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208"/>
                             <Button Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208"/>
-                            
+
                         </Canvas>
                     </StackPanel>
                 </GroupBox>
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Beheersdaden" DataContext="{Binding Children[6]}">
+            <TabItem Header="Beheersdaden" DataContext="{Binding Children[5]}">
                 <GroupBox Header="Beheersdaden" Width="760" Background="White" Margin="0,12,0,4">
                     <StackPanel Orientation="Vertical">
                         <Canvas Height="40">
@@ -284,7 +298,7 @@
                 </GroupBox>
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Foto" DataContext="{Binding Children[7]}">
+            <TabItem Header="Foto" DataContext="{Binding Children[6]}">
                 <Canvas>
                     <Label Height="25" Content="FotoId :" Canvas.Left="25" Canvas.Top="22"></Label>
                     <TextBox Canvas.Left="114" Canvas.Top="26"  Text="{Binding Path=Fotoid}" TextWrapping="Wrap" Width="376"/>
