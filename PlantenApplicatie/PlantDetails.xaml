@@ -165,21 +165,21 @@
                 <Canvas>
                     <ComboBox x:Name="cmbOntwikkelSnelheid" Canvas.Left="178" Canvas.Top="31" Width="548"
                               
-                      ItemsSource="{Binding CommenOntwikkelsnelheid}" 
-                      SelectedItem="{Binding SelectedOntwikkelingssnelheid, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding CommenOntwikkelsnelheden}" 
+                      SelectedItem="{Binding SelectedCommenOntwikkelsnelheid, UpdateSourceTrigger=PropertyChanged}"
                               />
                     <Label x:Name="lblOntwikkelSnelheid" Content="Ontwikkelingssnelheid :" Canvas.Left="10" Canvas.Top="27"/>
                     <Label x:Name="lblStrategie" Content="Strategie :" Canvas.Left="10" Canvas.Top="66"/>
                     <ComboBox x:Name="cmbStrategie" Canvas.Left="128" Canvas.Top="70" Width="598" 
                               
-                      ItemsSource="{Binding CommenStrategie}"
-                      SelectedItem="{Binding SelectedStrategie, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding CommenStrategien}"
+                      SelectedItem="{Binding SelectedCommenStrategie, UpdateSourceTrigger=PropertyChanged}"
                               >
 
                     </ComboBox>
                     <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
-                              ItemsSource="{Binding CommensalismesMulti}" 
-                                          SelectedItem="{Binding SelectedCommensalismeMulti, Mode=TwoWay}" >
+                              ItemsSource="{Binding CommensalismeMulti}" 
+                                          SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
@@ -188,26 +188,20 @@
                         </ListView.View>
                     </ListView>
                     <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208"/>
-                    <ListView Height="141" Width="247" Canvas.Left="392" Canvas.Top="415"
-                        ItemsSource="{Binding Commen}" 
-                        SelectedItem="{Binding SelectedCommensalismeMulti, Mode=TwoWay}" >
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
-                                <GridViewColumn Header="Waarde" Width="Auto" DisplayMemberBinding="{Binding Waarde}" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <Button x:Name="btnRemove" Command="{Binding AddCommenMultiCommand}" Content="Remove" Canvas.Left="305" Canvas.Top="500"/>
-                    <ComboBox Canvas.Left="392" Canvas.Top="386" Width="120"
-                              SelectedValue="{Binding SelectedCommen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    <Button x:Name="btnRemove" Command="{Binding RemoveCommensalismeMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447"/>
+                    <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
+                      
+                        ItemsSource="{Binding CommenEigenschappen}"
+                      SelectedItem="{Binding SelectedCommenEigenschappen, UpdateSourceTrigger=PropertyChanged}"      
+                        />
+                    <ComboBox Canvas.Left="392" Canvas.Top="446" Width="298"
+                       ItemsSource="{Binding CommenMulti}"
+                      SelectedItem="{Binding SelectedCommensalismeMulti, UpdateSourceTrigger=PropertyChanged}"
                               
-                              >
-                        <ComboBoxItem Content="Levensvorm"/>
-                        <ComboBoxItem Content="Sociabiliteit"/>
-                    </ComboBox>
-                    <Button x:Name="btnAdd" Command="{Binding Path=AddCommenMultiCommand}" Content="Add" Canvas.Left="305" Canvas.Top="431" Width="46"/>
-                    <Button x:Name="btnSelect" Command ="{Binding Path=SelectMultiCommand}" Content="Select" Canvas.Left="517" Canvas.Top="388" RenderTransformOrigin="-0.183,0.052"/>
+                              
+                              />
+                    <Button x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismeMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46"/>
+                    <Button x:Name="btnWijzig" Command="{Binding EditCommensalismeMultiCommand}" Content="Wijzig" Canvas.Left="493" Canvas.Top="509" Height="22" Width="96"/>
 
 
                 </Canvas>
@@ -263,7 +257,7 @@
                             <Button Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208"/>
                             <Button Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208"/>
                             <Button Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208"/>
-                            
+
                         </Canvas>
                     </StackPanel>
                 </GroupBox>

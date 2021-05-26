@@ -642,9 +642,9 @@ namespace PlantenApplicatie.Data
             return _context.AbioReactieAntagonischeOmg.Select(s => s.Antagonie).ToList();
         }
         //Liam
-        public List<string> GetCommLevensvorm()
+        public List<CommLevensvorm> GetCommLevensvorm()
         {
-            return _context.CommLevensvorm.Select(l => l.Levensvorm).ToList();
+            return _context.CommLevensvorm.ToList();
         }
         //Liam
         public List<string> GetCommStrategie()
@@ -657,10 +657,12 @@ namespace PlantenApplicatie.Data
             return _context.CommOntwikkelsnelheid.Select(s => s.Snelheid).ToList();
         }
         //Liam
-        public List<string> GetCommSociabiliteit()
+        public List<CommSocialbiliteit> GetCommSociabiliteit()
         {
-            return _context.CommSocialbiliteit.Select(s => s.Sociabiliteit).ToList();
+            return _context.CommSocialbiliteit.ToList();
         }
+
+       
         //Liam
         public List<AbiotiekMulti> GetAbioMulti(Plant plant)
         {
