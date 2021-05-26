@@ -289,12 +289,9 @@ namespace PlantenApplicatie.viewmodels
             beheerMaand.Nov = IsCheckedNovember;
             beheerMaand.Dec = IsCheckedDecember;
 
-            string message = _plantenDao.CreateBeheerMaand(beheerMaand);
+            _plantenDao.CreateBeheerMaand(beheerMaand);
 
-            if (message != String.Empty)
-            {
-                MessageBox.Show(message);
-            }
+            
 
 
             // weergeef de aangepaste lijst

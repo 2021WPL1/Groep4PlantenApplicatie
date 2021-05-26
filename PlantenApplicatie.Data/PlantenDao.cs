@@ -737,22 +737,11 @@ namespace PlantenApplicatie.Data
         }
 
         // maak een BeheerMaand aan (Davy, Lily)
-        public string CreateBeheerMaand(BeheerMaand beheerMaand)
+        public void CreateBeheerMaand(BeheerMaand beheerMaand)
         {
-            string message = "";
-            var item = _context.BeheerMaand.Where(b => b.PlantId == beheerMaand.PlantId);
-
-            if (item.Count() == 1)
-            {
-                message = "Je kan maar 1 beheersdaad toevoegen.";
-            }
-            else
-            {
                 _context.BeheerMaand.Add(beheerMaand);
                 _context.SaveChanges();
-            }
-
-            return message;
+            
         }
 
         // wijzig een BeheerMaand (Davy)
