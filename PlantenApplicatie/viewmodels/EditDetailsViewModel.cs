@@ -65,6 +65,7 @@ namespace PlantenApplicatie.viewmodels
             Variants = new ObservableCollection<string>();
 
             LoadDetails();
+            LoadSelectedValue();
         }
 
         public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
@@ -86,7 +87,7 @@ namespace PlantenApplicatie.viewmodels
 
         public string SelectedType
         {
-            get => _selectedPlant.Type;
+            get => _selectedType;
             set
             {
                 _selectedType = value;
@@ -95,7 +96,7 @@ namespace PlantenApplicatie.viewmodels
         }
         public string SelectedFamily
         {
-            get => _selectedPlant.Familie;
+            get => _selectedFamily;
             set
             {
                 _selectedFamily = value;
@@ -104,7 +105,7 @@ namespace PlantenApplicatie.viewmodels
         }
         public string SelectedGenus
         {
-            get => _selectedPlant.Geslacht;
+            get => _selectedGenus;
             set
             {
                 _selectedGenus = value;
@@ -113,7 +114,7 @@ namespace PlantenApplicatie.viewmodels
         }
         public string SelectedSpecies
         {
-            get => _selectedPlant.Soort;
+            get => _selectedSpecies;
             set
             {
                 _selectedSpecies = value;
@@ -122,7 +123,7 @@ namespace PlantenApplicatie.viewmodels
         }
         public string SelectedVariant
         {
-            get => _selectedPlant.Variant;
+            get => _selectedVariant;
             set
             {
                 _selectedVariant = value;
@@ -137,7 +138,7 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _textInputMin = value;
-                OnPropertyChanged(_textInputMin);
+                OnPropertyChanged();
             }
         }
         public string TextInputMax
@@ -146,7 +147,7 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _textInputMax = value;
-                OnPropertyChanged(_textInputMax);
+                OnPropertyChanged();
             }
         }
 
@@ -213,6 +214,20 @@ namespace PlantenApplicatie.viewmodels
             }
 
         }
+
+        public void LoadSelectedValue()
+        {
+            var plant = _selectedPlant;
+
+            SelectedType = plant.Type;
+            SelectedFamily = plant.Familie;
+            SelectedGenus = plant.Geslacht;
+            SelectedSpecies = plant.Soort;
+            SelectedVariant = plant.Variant;
+            TextInputMin = plant.PlantdichtheidMin.ToString();
+            TextInputMax = plant.PlantdichtheidMax.ToString();
+
+                   }
 
         public void LoadSubjectPlant()
         {

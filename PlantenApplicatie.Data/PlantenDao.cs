@@ -55,6 +55,11 @@ namespace PlantenApplicatie.Data
                 typeIds, familyIds, genusIds, speciesIds, variantIds, name is null ? string.Empty : name);
         }
 
+        public List<ExtraEigenschap> getExtraEigenschappen(Plant selectedPlant)
+        {
+            return _context.ExtraEigenschap.Where(p => p.PlantId == selectedPlant.PlantId).ToList();
+        }
+
         // Zoekt op ID's en naam (Lily)
         private List<Plant> SearchPlantsWithTgsvAndName(List<long> typeIds, List<long> familyIds,
             List<long> genusIds, List<long> speciesIds, List<long?> variantIds, string name)
@@ -84,6 +89,24 @@ namespace PlantenApplicatie.Data
                 })
                 .OrderBy(p => p.Fgsv)
                 .ToList();
+        }
+
+        public string CreateExtraEigenschap(ExtraEigenschap extraEigenschap)
+        {
+            string message = "";
+            var item = _context.ExtraEigenschap.Where(b => b.PlantId == extraEigenschap.PlantId);
+
+            if (item.Count() == 1)
+            {
+                message = "Je kan maar 1 extra eigenschap toevoegen.";
+            }
+            else
+            {
+                _context.ExtraEigenschap.Add(extraEigenschap);
+                _context.SaveChanges();
+            }
+
+            return message;
         }
 
         // Geef de type ID's terug (Lily)
@@ -171,6 +194,13 @@ namespace PlantenApplicatie.Data
                 .SingleOrDefault(t => t.Geslachtnaam == genus)
                 .GeslachtId;
         }
+
+        public void EditExtraEigenschap(ExtraEigenschap extraEigenschap)
+        {
+            _context.ExtraEigenschap.Update(extraEigenschap);
+            _context.SaveChanges();
+        }
+
         private long GetSpeciesId(string species)
         {
             return _context.TfgsvSoort
@@ -187,6 +217,12 @@ namespace PlantenApplicatie.Data
             return _context.TfgsvVariant
                 .SingleOrDefault(t => t.Variantnaam == variant)
                 .VariantId;
+        }
+
+        public void RemoveExtraEigenschap(ExtraEigenschap extraEigenschap)
+        {
+            _context.ExtraEigenschap.Remove(extraEigenschap);
+            _context.SaveChanges();
         }
 
 
@@ -293,7 +329,7 @@ namespace PlantenApplicatie.Data
 
         //Voeg een fenotype toe aan de geselecteerde plant (Jim)
         public void AddFenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
-        string habitus, string levensvorm)
+        string habitus, string levensvorm,string spruitfenologie)
         {
             var fenotypePlant = new Fenotype
             {
@@ -303,7 +339,8 @@ namespace PlantenApplicatie.Data
                 RatioBloeiBlad = ratioBloeiBlad,
                 Bloeiwijze = bloeiwijze,
                 Habitus = habitus,
-                Levensvorm = levensvorm
+                Levensvorm = levensvorm,
+                Spruitfenologie = spruitfenologie
             };
 
           
@@ -312,10 +349,10 @@ namespace PlantenApplicatie.Data
         }
 
         //verander een fenotype van de geselecteerde plant (Jim)
-        public Fenotype ChangeFenotype(Fenotype fenotype, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
-        string habitus, string levensvorm)
+        public Fenotype ChangeFenotype(Plant plant, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
+        string habitus, string levensvorm,string spruitfenologie)
         {
-            var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.Id == fenotype.Id);
+            var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
             selectedfenotype.Bladgrootte = bladgrootte ?? selectedfenotype.Bladgrootte;
             selectedfenotype.Bladvorm = bladvorm ?? selectedfenotype.Bladvorm;
@@ -323,7 +360,7 @@ namespace PlantenApplicatie.Data
             selectedfenotype.Bloeiwijze = bloeiwijze ?? selectedfenotype.Bloeiwijze;
             selectedfenotype.Habitus = habitus ?? selectedfenotype.Habitus;
             selectedfenotype.Levensvorm = levensvorm ?? selectedfenotype.Levensvorm;
-
+            selectedfenotype.Spruitfenologie = spruitfenologie ?? selectedfenotype.Spruitfenologie;
             _context.SaveChanges();
 
             return selectedfenotype;
@@ -342,6 +379,7 @@ namespace PlantenApplicatie.Data
         {
             var fenotypeMultiPlant = new FenotypeMulti
             {
+                Id = GetLastFenoMultiId(),
                 PlantId = plant.PlantId,
                 Eigenschap = eigenschap,
                 Maand = maand,
@@ -350,6 +388,19 @@ namespace PlantenApplicatie.Data
             _context.FenotypeMulti.Add(fenotypeMultiPlant);
             _context.SaveChanges();
         }
+
+        //haal de laatste ID op van fenotype multi
+        public long GetLastFenoMultiId()
+        {
+            var fenotypeMulti = _context.FenotypeMulti.Count();
+            if (fenotypeMulti == null)
+            {
+                return 0;
+            }
+
+            return fenotypeMulti;
+        }
+
 
         //verander een multifenotype van de geselecteerde plant (Jim)
 
@@ -607,7 +658,7 @@ namespace PlantenApplicatie.Data
                 .ToList();
         }
 
-        //Liam
+        //Liam, Lily
         public List<string> GetAbioHabitatAbbreviations()
         {
             return _context.AbioHabitat.Select(s => s.Afkorting).ToList();
@@ -684,9 +735,9 @@ namespace PlantenApplicatie.Data
         {
             return _context.FenoHabitus.Select(s => s.Naam).ToList();
         }
-        public List<string> GetFenoKleur()
+        public List<FenoKleur> GetFenoKleur()
         {
-            return _context.FenoKleur.Select(s => s.NaamKleur).ToList();
+            return _context.FenoKleur.ToList();
         }
         public List<string> GetFenoLevensVorm()
         {
@@ -698,20 +749,32 @@ namespace PlantenApplicatie.Data
         }
         public List<FenotypeMulti> GetFenoMultis(Plant plant)
         {
-            return _context.FenotypeMulti.Where(i => i.PlantId == plant.PlantId).ToList();
+            return _context.FenotypeMulti.Where(f => f.PlantId == plant.PlantId).ToList();
         }
 
-        // haal alle beheermaanden op (Davy)
+        // haal beheermaanden per plant (Davy)
         public List<BeheerMaand> GetBeheerMaanden(Plant plant)
         {
-            return _context.BeheerMaand.Where(i => i.PlantId == plant.PlantId).ToList();
+            return _context.BeheerMaand.Where(b => b.PlantId == plant.PlantId).ToList();
         }
 
         // maak een BeheerMaand aan (Davy, Lily)
-        public void CreateBeheerMaand(BeheerMaand beheerMaand)
+        public string CreateBeheerMaand(BeheerMaand beheerMaand)
         {
-            _context.BeheerMaand.Add(beheerMaand);
-            _context.SaveChanges();
+            string message = "";
+            var item = _context.BeheerMaand.Where(b => b.PlantId == beheerMaand.PlantId);
+
+            if (item.Count() == 1)
+            {
+                message = "Je kan maar 1 beheersdaad toevoegen.";
+            }
+            else
+            {
+                _context.BeheerMaand.Add(beheerMaand);
+                _context.SaveChanges();
+            }
+
+            return message;
         }
 
         // wijzig een BeheerMaand (Davy)
@@ -726,6 +789,12 @@ namespace PlantenApplicatie.Data
         {
             _context.BeheerMaand.Remove(beheerMaand);
             _context.SaveChanges();
+
+        }
+
+        public Fenotype GetFenotypeFromPlant(Plant plant)
+        {
+            return _context.Fenotype.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
         }
     }
 }
