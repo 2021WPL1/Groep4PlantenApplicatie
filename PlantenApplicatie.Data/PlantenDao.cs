@@ -293,7 +293,7 @@ namespace PlantenApplicatie.Data
 
         //Voeg een fenotype toe aan de geselecteerde plant (Jim)
         public void AddFenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
-        string habitus, string levensvorm)
+        string habitus, string levensvorm,string spruitfenologie)
         {
             var fenotypePlant = new Fenotype
             {
@@ -303,7 +303,8 @@ namespace PlantenApplicatie.Data
                 RatioBloeiBlad = ratioBloeiBlad,
                 Bloeiwijze = bloeiwijze,
                 Habitus = habitus,
-                Levensvorm = levensvorm
+                Levensvorm = levensvorm,
+                Spruitfenologie = spruitfenologie
             };
 
           
@@ -312,10 +313,10 @@ namespace PlantenApplicatie.Data
         }
 
         //verander een fenotype van de geselecteerde plant (Jim)
-        public Fenotype ChangeFenotype(Fenotype fenotype, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
-        string habitus, string levensvorm)
+        public Fenotype ChangeFenotype(Plant plant, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
+        string habitus, string levensvorm,string spruitfenologie)
         {
-            var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.Id == fenotype.Id);
+            var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
             selectedfenotype.Bladgrootte = bladgrootte ?? selectedfenotype.Bladgrootte;
             selectedfenotype.Bladvorm = bladvorm ?? selectedfenotype.Bladvorm;
@@ -323,7 +324,7 @@ namespace PlantenApplicatie.Data
             selectedfenotype.Bloeiwijze = bloeiwijze ?? selectedfenotype.Bloeiwijze;
             selectedfenotype.Habitus = habitus ?? selectedfenotype.Habitus;
             selectedfenotype.Levensvorm = levensvorm ?? selectedfenotype.Levensvorm;
-
+            selectedfenotype.Spruitfenologie = spruitfenologie ?? selectedfenotype.Spruitfenologie;
             _context.SaveChanges();
 
             return selectedfenotype;
@@ -342,6 +343,7 @@ namespace PlantenApplicatie.Data
         {
             var fenotypeMultiPlant = new FenotypeMulti
             {
+                Id = GetLastFenoMultiId(),
                 PlantId = plant.PlantId,
                 Eigenschap = eigenschap,
                 Maand = maand,
@@ -350,6 +352,19 @@ namespace PlantenApplicatie.Data
             _context.FenotypeMulti.Add(fenotypeMultiPlant);
             _context.SaveChanges();
         }
+
+        //haal de laatste ID op van fenotype multi
+        public long GetLastFenoMultiId()
+        {
+            var fenotypeMulti = _context.FenotypeMulti.Count();
+            if (fenotypeMulti == null)
+            {
+                return 0;
+            }
+
+            return fenotypeMulti;
+        }
+
 
         //verander een multifenotype van de geselecteerde plant (Jim)
 
@@ -662,9 +677,9 @@ namespace PlantenApplicatie.Data
         {
             return _context.FenoHabitus.Select(s => s.Naam).ToList();
         }
-        public List<string> GetFenoKleur()
+        public List<FenoKleur> GetFenoKleur()
         {
-            return _context.FenoKleur.Select(s => s.NaamKleur).ToList();
+            return _context.FenoKleur.ToList();
         }
         public List<string> GetFenoLevensVorm()
         {
