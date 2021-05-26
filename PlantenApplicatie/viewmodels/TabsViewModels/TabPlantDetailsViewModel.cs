@@ -13,7 +13,6 @@ namespace PlantenApplicatie.viewmodels
     public class TabPlantDetailsViewModel : ViewModelBase
     {
 
-        private const string TextSeparator = ",\n";
         
         private readonly PlantenDao _dao;
         private Plant _selectedPlant;
