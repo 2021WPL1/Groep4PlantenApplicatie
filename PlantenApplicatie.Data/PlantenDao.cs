@@ -592,10 +592,32 @@ namespace PlantenApplicatie.Data
             return _context.AbioVoedingsbehoefte.Select(s => s.Voedingsbehoefte).ToList();
         }
 
+        public List<string> GetAbioHabitatNames()
+        {
+            return _context.AbioHabitat.Select(ah => ah.Waarde).ToList();
+        }
+
+        public List<string> GetAbioHabitatNames(Plant plant)
+        {
+            var habitatsAbbreviations = plant.AbiotiekMulti.Select(am => am.Waarde);
+
+            return _context.AbioHabitat
+                .Where(ah => habitatsAbbreviations.Contains(ah.Afkorting))
+                .Select(ah => ah.Waarde)
+                .ToList();
+        }
+
         //Liam
-        public List<string> GetAbioHabitat()
+        public List<string> GetAbioHabitatAbbreviations()
         {
             return _context.AbioHabitat.Select(s => s.Afkorting).ToList();
+        }
+
+        public string GetAbioHabitatAbbreviation(string value)
+        {
+            var habitat = _context.AbioHabitat.First(ah => ah.Waarde == value);
+
+            return habitat.Afkorting;
         }
 
         //Liam
@@ -705,6 +727,5 @@ namespace PlantenApplicatie.Data
             _context.BeheerMaand.Remove(beheerMaand);
             _context.SaveChanges();
         }
-
     }
 }

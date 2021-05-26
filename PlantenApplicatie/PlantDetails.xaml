@@ -134,14 +134,18 @@
                         ItemsSource="{Binding AntagonianEnvironments}"
                         SelectedValue="{Binding SelectedAntagonianEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <ListView Height="150" Width="358" Canvas.Left="10" Canvas.Top="320">
+                    <ListView Height="150" Width="358" Canvas.Left="10" Canvas.Top="320"
+                              ItemsSource="{Binding SelectedPlantHabitats}"
+                              SelectedValue="{Binding SelectedAbioPlantHabitat}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Habitats of current plant" Width="auto"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ListView Height="150" Width="348" Canvas.Left="373" Canvas.Top="320">
+                    <ListView Height="150" Width="348" Canvas.Left="373" Canvas.Top="320"
+                              ItemsSource="{Binding PlantHabitats, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedValue="{Binding SelectedAbioHabitat}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Habitats" Width="auto"/>
@@ -153,8 +157,10 @@
                         Canvas.Top="255" Canvas.Right="50"
                         Content="Edit" 
                         Command="{Binding EditAbiotiekCommand}"/>
-                    <Button Content="Remove" Canvas.Left="322" Canvas.Top="475"/>
-                    <Button Content="Add" Canvas.Left="695" Canvas.Top="475"/>
+                    <Button Content="Remove" Canvas.Left="322" Canvas.Top="475"
+                            Command="{Binding RemoveHabitatCommand}"/>
+                    <Button Content="Add" Canvas.Left="695" Canvas.Top="475"
+                            Command="{Binding AddHabitatCommand}"/>
                 </Canvas>
             </TabItem>
             <TabItem Header="Commensalisme" DataContext="{Binding Children[4]}">
