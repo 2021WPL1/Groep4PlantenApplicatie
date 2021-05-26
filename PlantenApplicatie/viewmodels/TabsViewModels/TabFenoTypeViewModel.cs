@@ -28,8 +28,6 @@ namespace PlantenApplicatie.viewmodels
         private FenotypeMulti _selectedPlantFenoTypeMulti;
 
 
-
-
         // collecties (lijsten) Davy & Jim
         public ObservableCollection<int> FenoBladgroottes { get; set; }
         public ObservableCollection<string> FenoBladvormen { get; set; }
@@ -44,6 +42,7 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<FenotypeMulti> PlantFenoTypesMulti { get; set; }
 
         public ObservableCollection<string> FenoTypesMulti { get; set; }
+
         // knop commando's fenotype Davy
         public ICommand EditFenoTypeCommand { get; set; }
         public ICommand AddFenotypeMultiCommand { get; set; }
@@ -57,24 +56,26 @@ namespace PlantenApplicatie.viewmodels
         {
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
-            // onderstaande variabelen Davy voor tabblad Fenotype
-            EditFenoTypeCommand = new DelegateCommand(EditFenoType);
+            //variabelen (Davy &Jim)
             FenoBladgroottes = new ObservableCollection<int>();
+
             FenoBladvormen = new ObservableCollection<string>();
             FenoBloeiwijzes = new ObservableCollection<string>();
             FenoHabitussen = new ObservableCollection<string>();
             FenoLevensvormen = new ObservableCollection<string>();
             FenoSpruitFenologieen = new ObservableCollection<string>();
-
-            //variabelen Jim
-            AddFenotypeMultiCommand = new DelegateCommand(AddFenotypeMulti);
-            EditFenotypeMultiCommand = new DelegateCommand(EditFenotypeMulti);
-            DeleteFenotypeMultiPlantCommand = new DelegateCommand(DeleteFenotypeMultiPlant);
             FenotypeEigenschappen = new ObservableCollection<string>();
             FenoTypesMulti = new ObservableCollection<string>();
             FenoMultiMaand = new ObservableCollection<string>();
+
             PlantFenoTypesMulti = new ObservableCollection<FenotypeMulti>();
-            // methoden om comboboxen Fenotype in te laden (Davy)
+
+
+            EditFenoTypeCommand = new DelegateCommand(EditFenoType);
+            AddFenotypeMultiCommand = new DelegateCommand(AddFenotypeMulti);
+            EditFenotypeMultiCommand = new DelegateCommand(EditFenotypeMulti);
+            DeleteFenotypeMultiPlantCommand = new DelegateCommand(DeleteFenotypeMultiPlant);
+            // methoden om comboboxen Fenotype in te laden (Davy & Jim)
             LoadFenoBladgrootte();
             LoadFenoBladvorm();
             LoadFenoBloeiwijze();
@@ -89,19 +90,19 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //herlaad de gegevens (Jim)
-        public void Reset()
-        {
-            LoadFenoBladgrootte();
-            LoadFenoBladvorm();
-            LoadFenoBloeiwijze();
-            LoadFenoHabitus();
-            LoadFenoLevensVorm();
-            LoadFenoSpruitFenologie();
-            LoadFenoTypesMultiPlant();
-        }
+        //public void Reset()
+        //{
+        //    LoadFenoBladgrootte();
+        //    LoadFenoBladvorm();
+        //    LoadFenoBloeiwijze();
+        //    LoadFenoHabitus();
+        //    LoadFenoLevensVorm();
+        //    LoadFenoSpruitFenologie();
+        //    LoadFenoTypesMultiPlant();
+        //}
 
 
-        // Getters and setters selected waardes (Davy)
+        // Getters and setters selected waardes (Davy & Jim)
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -135,7 +136,6 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        // Getters and setters selected waardes (Davy)
         public int SelectedBladgrootte
         {
              get => _selectedBladgrootte;
@@ -145,8 +145,6 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-        // Getters and setters selected waardes (Davy)
         public string SelectedBladvorm
         {
             private get => _selectedBladvorm;
@@ -156,8 +154,6 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-        // Getters and setters selected waardes (Davy)
         public string SelectedBloeiwijze
         {
             private get => _selectedBloeiWijze;
@@ -167,8 +163,6 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-        // Getters and setters selected waardes (Davy)
         public string SelectedHabitus
         {
             private get => _selectedHabitus;
@@ -178,10 +172,6 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-        
-
-        // Getters and setters selected waardes (Davy)
         public string SelectedLevensvorm
         {
             private get => _selectedLevensvorm;
@@ -191,8 +181,6 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-        // Getters and setters selected waardes (Davy)
         public string SelectedSpruitFenologie
         {
             private get => _selectedSpruitFenologie;
@@ -224,30 +212,11 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-   
-       
 
 
 
-        private void EditFenoType()
-        {
-            var fenotype = _dao.GetFenotypeFromPlant(SelectedPlant);
-           
-            if(fenotype == null)
-            {
-                _dao.AddFenotype(SelectedPlant, SelectedBladgrootte,SelectedBladvorm, null, SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm,
-                    SelectedSpruitFenologie);
-            }
-            else
-            {
-                _dao.ChangeFenotype(SelectedPlant, SelectedBladgrootte, SelectedBladvorm, null, SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm,
-                    SelectedSpruitFenologie);
-            }
-        }
 
-       
-
-        // inladen gegevens (Davy)
+        //laad de verschillende gegevens in de comboboxes (Davy & Jim)
         private void LoadFenoBladgrootte()
         {
             var bladgroottes = _dao.GetFenoBladGrootte();
@@ -260,7 +229,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // inladen gegevens (Davy)
         private void LoadFenoBladvorm()
         {
             var bladvormen = _dao.GetFenoBladVorm();
@@ -273,7 +241,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // inladen gegevens (Davy)
         private void LoadFenoBloeiwijze()
         {
             var bloeiwijzes = _dao.GetFenoBloeiWijze();
@@ -286,7 +253,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // inladen gegevens (Davy)
         private void LoadFenoHabitus()
         {
             var habitussen = _dao.GetFenoHabitus();
@@ -298,10 +264,6 @@ namespace PlantenApplicatie.viewmodels
                 FenoHabitussen.Add(habitus);
             }
         }
-
-
-
-        // inladen gegevens (Davy)
         private void LoadFenoLevensVorm()
         {
             var levensvormen = _dao.GetFenoLevensVorm();
@@ -313,8 +275,6 @@ namespace PlantenApplicatie.viewmodels
                 FenoLevensvormen.Add(levensvorm);
             }
         }
-
-        // inladen gegevens (Davy)
         private void LoadFenoSpruitFenologie()
         {
             var fenologieen = _dao.GetFenoFenologie();
@@ -327,7 +287,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //de multi fenotypes inladen van de geselecteerde plant
         private void LoadFenoTypesMultiPlant()
         {
             var fenotypesMulti = _dao.GetFenoMultis(SelectedPlant);
@@ -356,12 +315,11 @@ namespace PlantenApplicatie.viewmodels
             var kleuren = _dao.GetFenoKleur();
             FenoTypesMulti.Clear();
 
-            foreach(var kleur in kleuren)
+            foreach (var kleur in kleuren)
             {
                 FenoTypesMulti.Add(kleur.NaamKleur);
             }
         }
-       
         private void LoadHoogte()
         {
             FenoTypesMulti.Clear();
@@ -369,29 +327,13 @@ namespace PlantenApplicatie.viewmodels
             int maxHoogte = 300;
             int hoogte = 0;
 
-            while(hoogte <= maxHoogte)
+            while (hoogte <= maxHoogte)
             {
                 FenoTypesMulti.Add(hoogte.ToString());
                 hoogte += 10;
             }
 
-
         }
-
-        private void LoadSelectedValues()
-        {
-            var fenotype = _selectedPlant.Fenotype.SingleOrDefault();
-
-            if (fenotype is null) return;
-
-            SelectedBladgrootte = (int)fenotype.Bladgrootte;
-            SelectedBladvorm = fenotype.Bladvorm;
-            SelectedBloeiwijze = fenotype.Bloeiwijze;
-            SelectedSpruitFenologie = fenotype.Spruitfenologie;
-            SelectedHabitus = fenotype.Habitus;
-            SelectedLevensvorm = fenotype.Levensvorm;
-        }
-
         private void LoadFenoMultiMaanden()
         {
             FenoMultiMaand.Clear();
@@ -409,9 +351,41 @@ namespace PlantenApplicatie.viewmodels
             FenoMultiMaand.Add("Dec");
         }
 
-      
+        private void LoadSelectedValues()
+        {
+            var fenotype = _selectedPlant.Fenotype.SingleOrDefault();
 
-        //voeg de FenotypeMulti toe aan de plant met de geselecteerde waardes
+            if (fenotype is null) return;
+
+            SelectedBladgrootte = (int)fenotype.Bladgrootte;
+            SelectedBladvorm = fenotype.Bladvorm;
+            SelectedBloeiwijze = fenotype.Bloeiwijze;
+            SelectedSpruitFenologie = fenotype.Spruitfenologie;
+            SelectedHabitus = fenotype.Habitus;
+            SelectedLevensvorm = fenotype.Levensvorm;
+        }
+
+
+
+
+        //wijzig de fenotype van de plant. Als een plant nog geen fenotype heeft word er eentje aangemaakt met de geselecteerde waardes (Jim)
+        private void EditFenoType()
+        {
+            var fenotype = _dao.GetFenotypeFromPlant(SelectedPlant);
+           
+            if(fenotype == null)
+            {
+                _dao.AddFenotype(SelectedPlant, SelectedBladgrootte,SelectedBladvorm, null, SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm,
+                    SelectedSpruitFenologie);
+            }
+            else
+            {
+                _dao.ChangeFenotype(SelectedPlant, SelectedBladgrootte, SelectedBladvorm, null, SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm,
+                    SelectedSpruitFenologie);
+            }
+        }
+
+        //voeg de FenotypeMulti toe aan de plant met de geselecteerde waardes (Jim)
         private void AddFenotypeMulti()
         {
             _dao.AddMultiFenotype(SelectedPlant, SelectedFenotypeEigenschappen, SelectedFenoMultiMaand, SelectedFenoTypesMulti);
@@ -419,7 +393,7 @@ namespace PlantenApplicatie.viewmodels
             
         }
 
-        //wijzig de geselecteerde FenotypeMulti
+        //wijzig de geselecteerde FenotypeMulti (Jim)
 
         private void EditFenotypeMulti()
         {
@@ -428,6 +402,7 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
+        //laad de geselecteerde waardes van een Fenotype multi in (Jim)
         private void LoadSelectedValuesMulti()
         {
             SelectedFenotypeEigenschappen = SelectedPlantFenoTypeMulti.Eigenschap;
@@ -435,7 +410,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedFenoTypesMulti = SelectedPlantFenoTypeMulti.Waarde;
         }
 
-        //laat de verschillende waardes in op basis van de eigenschappen (Jim)
+        //laat de verschillende waardes in op basis van de eigenschap dat geselecteerd is (Jim)
         private void ChangeEigenschappen()
         {
             switch (SelectedFenotypeEigenschappen.ToLower())
@@ -471,7 +446,6 @@ namespace PlantenApplicatie.viewmodels
                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             LoadFenoTypesMultiPlant();
-
 
         }
     }

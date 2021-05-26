@@ -9,16 +9,12 @@ using Prism.Commands;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // MVVM Detailscherm Lily  GUI: Jim&Liam
+    // MVVM Detailscherm Lily,Jim  GUI: Jim&Liam
     public class TabPlantDetailsViewModel : ViewModelBase
     {
-
-        
+        //private variabelen  (Jim & Lily)
         private readonly PlantenDao _dao;
         private Plant _selectedPlant;
-        private Dictionary<string, List<string>> _prefixes;
-        private ObservableCollection<string> _prefixKeys;
-        private string _selectedPrefixKey;
 
         private string _selectedType;
         private string _selectedFamily;
@@ -27,23 +23,16 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedVariant;
         private string _textInputMin;
         private string _textInputMax;
-        //button commands
+        //button command (Jim)
 
         public ICommand SaveCommand { get; set; }
 
         // Constructor Lily
         public TabPlantDetailsViewModel(Plant selectedPlant)
         {
-
-            SaveCommand = new DelegateCommand(Save);
-            SelectedPlant = selectedPlant;
+            _selectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             // onderstaande variabelen voor tabblad details plant
-            CreatePrefixesAndProperties();
-            SelectedPrefixKey = _prefixKeys[0];
-
-
-
 
             Types = new ObservableCollection<string>();
             Families = new ObservableCollection<string>();
@@ -51,12 +40,15 @@ namespace PlantenApplicatie.viewmodels
             Species = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
 
-            CreatePlantDetailsList();
+
+
+            SaveCommand = new DelegateCommand(Save);
+            //laad de gegevens in 
             LoadSubjectPlant();
             LoadSelectedValue();
         }
 
-        // Getters and setters selected waardes (Lily)
+        // Getters and setters selected waardes (Lily & Jim)
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -133,8 +125,9 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        // ObservableCollection + prefixes om de plantdetails te kunnen weergeven
-        public ObservableCollection<string> PrefixKeys => _prefixKeys;
+
+
+        // ObservableCollection om de plantdetails te kunnen weergeven (Lily)
 
 
         public ObservableCollection<string> Types { get; set; }
@@ -146,45 +139,11 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Species { get; set; }
         public ObservableCollection<string> Variants { get; set; }
 
-        // string.join om de labels te veranderen per onderwerp
-        public string DetailsPrefixes => string.Join(":\n", _prefixes[_selectedPrefixKey]) + ":";
-
-        public string Details => string.Join("\n", CreatePlantDetailsList());
-
-        public string SelectedPrefixKey
-        {
-            get => _selectedPrefixKey;
-            set
-            {
-                _selectedPrefixKey = value;
-                OnPropertyChanged("DetailsPrefixes");
-            }
-        }
-
-        // Maakt een dictionary aan en een lijst van de keys.
-        private void CreatePrefixesAndProperties()
-        {
-            _prefixes = new Dictionary<string, List<string>>();
-            
-            _prefixes["Plant"] = new List<string>()
-            {
-                "Type", "Familie", "Geslacht", "Soort", "Variant", "Minimum plantdichtheid", 
-                "Maximum plantdichtheid"
-            };
-            _prefixKeys = new ObservableCollection<string>(_prefixes.Keys);
-        }
 
 
-        // Maakt de detail lijst op voor onderwerp plant
-        private List<object> CreatePlantDetailsList()
-        {
-            return new List<object> { 
-                _selectedPlant.Type, _selectedPlant.Familie, _selectedPlant.Geslacht, 
-                _selectedPlant.Soort, _selectedPlant.Variant, _selectedPlant.PlantdichtheidMin, 
-                _selectedPlant.PlantdichtheidMax 
-            };
-        }
 
+      
+        //laad de waardes van de plant in (Jim)
         public void LoadSelectedValue()
         {
             var plant = _selectedPlant;
@@ -199,7 +158,7 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
-
+        //laad de lijsten in de combobox (Jim)
         public void LoadSubjectPlant()
         {
             var types = _dao.GetTypes();
@@ -237,14 +196,11 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
+        //sla de veranderde plant op (Jim)
         public void Save()
         {
-
-            _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant, Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
-            TextInputMin = string.Empty;
-            TextInputMax = string.Empty;
-
+            _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,
+                Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
 
         }
      

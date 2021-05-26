@@ -11,6 +11,8 @@ namespace PlantenApplicatie.viewmodels
     // klasse (Davy, Lily)
     public class TabAbiotiekViewModel : ViewModelBase
     {
+
+        //variabelen instellen(Lily)
         private const string Eigenschap = "habitat";
         
         private readonly PlantenDao _plantenDao;
@@ -21,12 +23,14 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedMoistureRequirement;
         private string? _selectedNutritionRequirement;
         private string? _selectedAntagonianEnvironment;
-        
+
+        //constructor(Lily)
         public TabAbiotiekViewModel(Plant selectedPlant)
         {
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedPlant;
 
+            //observable collections voor de comboboxes, word opgevuld met de functies in DAO
             Insolations = new ObservableCollection<string>(_plantenDao.GetAbioBezonning());
             SoilTypes = new ObservableCollection<string>(_plantenDao.GetAbioGrondsoort());
             MoistureRequirements = new ObservableCollection<string>(_plantenDao.GetAbioVochtbehoefte());
@@ -36,14 +40,16 @@ namespace PlantenApplicatie.viewmodels
             SelectedPlantHabitats = new ObservableCollection<string>(
                 _plantenDao.GetAbioHabitatNames(_selectedPlant));
             PlantHabitats = new ObservableCollection<string>(_plantenDao.GetAbioHabitatNames());
-
+            //Commands voor de buttons
             EditAbiotiekCommand = new DelegateCommand(EditAbiotiek);
             RemoveHabitatCommand = new DelegateCommand(RemoveHabitat);
             AddHabitatCommand = new DelegateCommand(AddHabitat);
             
+            //laad de geselecteerde values in
             LoadStandards();
         }
 
+        //observable collections
         public ObservableCollection<string> Insolations { get; }
         public ObservableCollection<string> SoilTypes { get; }
         public ObservableCollection<string> MoistureRequirements { get; }
@@ -53,6 +59,8 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> SelectedPlantHabitats { get; }
         public ObservableCollection<string> PlantHabitats { get; }
 
+
+        //getters en setters (Lily)
         public string? SelectedInsolation
         {
             private get { return _selectedInsolation; }
@@ -109,7 +117,8 @@ namespace PlantenApplicatie.viewmodels
         public ICommand EditAbiotiekCommand { get; }
         public ICommand RemoveHabitatCommand { get; }
         public ICommand AddHabitatCommand { get; }
-        
+
+        //geef de geselecteerde waardes weer in de combobox, als er geen gegevens is van de geselecteerde plant geef null terug (Lily)
         private void LoadStandards()
         {
             var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
@@ -123,6 +132,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedAntagonianEnvironment = abiotiek.AntagonischeOmgeving;
         }
 
+        //wijzig de abiotiek van een plant, als er geen is word er eerst een nieuwe abiotiek aangemaakt met de geselecteerde waardes (Lily)
         private void EditAbiotiek()
         {
             var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
@@ -143,6 +153,8 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //verwijder de geselecteerde habitat uit de lijst van de geselecteerde plant (Lily)
+
         private void RemoveHabitat()
         {
             var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioPlantHabitat);
@@ -153,6 +165,8 @@ namespace PlantenApplicatie.viewmodels
 
             SelectedPlantHabitats.Remove(SelectedAbioPlantHabitat);
         }
+
+        //voeg een habitat toe aan de plant (Lily)
 
         private void AddHabitat()
         {
