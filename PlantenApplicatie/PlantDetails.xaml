@@ -181,7 +181,49 @@
                 </Canvas>
             </TabItem>
             <TabItem Header="Commensalisme" DataContext="{Binding Children[3]}">
+                <Canvas>
+                    <ComboBox x:Name="cmbOntwikkelSnelheid" Canvas.Left="178" Canvas.Top="31" Width="548"
+                              
+                      ItemsSource="{Binding CommenOntwikkelsnelheden}" 
+                      SelectedItem="{Binding SelectedCommenOntwikkelsnelheid, UpdateSourceTrigger=PropertyChanged}"
+                              />
+                    <Label x:Name="lblOntwikkelSnelheid" Content="Ontwikkelingssnelheid :" Canvas.Left="10" Canvas.Top="27"/>
+                    <Label x:Name="lblStrategie" Content="Strategie :" Canvas.Left="10" Canvas.Top="66"/>
+                    <ComboBox x:Name="cmbStrategie" Canvas.Left="128" Canvas.Top="70" Width="598" 
+                              
+                      ItemsSource="{Binding CommenStrategien}"
+                      SelectedItem="{Binding SelectedCommenStrategie, UpdateSourceTrigger=PropertyChanged}"
+                              >
 
+                    </ComboBox>
+                    <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
+                              ItemsSource="{Binding CommensalismeMulti}" 
+                                          SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
+                                <GridViewColumn Header="Waarde" Width="Auto" DisplayMemberBinding="{Binding Waarde}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208"/>
+                    <Button x:Name="btnRemove" Command="{Binding RemoveCommensalismeMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447"/>
+                    <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
+                      
+                        ItemsSource="{Binding CommenEigenschappen}"
+                      SelectedItem="{Binding SelectedCommenEigenschappen, UpdateSourceTrigger=PropertyChanged}"      
+                        />
+                    <ComboBox Canvas.Left="392" Canvas.Top="446" Width="298"
+                       ItemsSource="{Binding CommenMulti}"
+                      SelectedItem="{Binding SelectedCommensalismeMulti, UpdateSourceTrigger=PropertyChanged}"
+                              
+                              
+                              />
+                    <Button x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismeMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46"/>
+                    <Button x:Name="btnWijzig" Command="{Binding EditCommensalismeMultiCommand}" Content="Wijzig" Canvas.Left="493" Canvas.Top="509" Height="22" Width="96"/>
+
+
+                </Canvas>
 
             </TabItem>
             <!--Davy-->
@@ -328,6 +370,7 @@
 
                 </Canvas>
             </TabItem>
+
         </TabControl>
 
     </Grid>

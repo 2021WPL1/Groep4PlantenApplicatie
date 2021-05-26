@@ -532,14 +532,16 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeCommensalisme(Commensalisme commensalisme, string ontwikkelingssnelheid, string strategie)
+        public Commensalisme ChangeCommensalisme(Plant plant, string ontwikkelingssnelheid, string strategie)
         {
-            var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(s => s.Id == commensalisme.Id);
+            var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
             selectedCommensalisme.Ontwikkelsnelheid = ontwikkelingssnelheid ?? selectedCommensalisme.Ontwikkelsnelheid;
             selectedCommensalisme.Strategie = strategie ?? selectedCommensalisme.Strategie;
 
             _context.SaveChanges();
+
+            return selectedCommensalisme;
         }
         public void DeleteCommensalisme(Commensalisme commensalisme)
         {
@@ -677,9 +679,9 @@ namespace PlantenApplicatie.Data
             return _context.AbioReactieAntagonischeOmg.Select(s => s.Antagonie).ToList();
         }
         //Liam
-        public List<string> GetCommLevensvorm()
+        public List<CommLevensvorm> GetCommLevensvorm()
         {
-            return _context.CommLevensvorm.Select(s => s.Levensvorm).ToList();
+            return _context.CommLevensvorm.ToList();
         }
         //Liam
         public List<string> GetCommStrategie()
@@ -692,10 +694,12 @@ namespace PlantenApplicatie.Data
             return _context.CommOntwikkelsnelheid.Select(s => s.Snelheid).ToList();
         }
         //Liam
-        public List<string> GetCommSociabiliteit()
+        public List<CommSocialbiliteit> GetCommSociabiliteit()
         {
-            return _context.CommSocialbiliteit.Select(s => s.Sociabiliteit).ToList();
+            return _context.CommSocialbiliteit.ToList();
         }
+
+       
         //Liam
         public List<AbiotiekMulti> GetAbioMulti(Plant plant)
         {
@@ -784,6 +788,10 @@ namespace PlantenApplicatie.Data
         public Fenotype GetFenotypeFromPlant(Plant plant)
         {
             return _context.Fenotype.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
+        }
+        public Commensalisme GetCommensialisme(Plant plant)
+        {
+            return _context.Commensalisme.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
         }
     }
 }
