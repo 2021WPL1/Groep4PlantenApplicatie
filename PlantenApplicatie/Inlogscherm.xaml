@@ -1,0 +1,23 @@
+﻿<Window x:Class="PlantenApplicatie.Inlogscherm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlantenApplicatie"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        mc:Ignorable="d"
+        Title="Login" Height="250" Width="550">
+    <Grid>
+        <Canvas>
+            <Label Content="Gebruikersnaam (e-mailadres) :" Canvas.Left="23" Canvas.Top="54"/>
+            <TextBox Canvas.Left="203" Canvas.Top="58" Text="{Binding TextInputLogin, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" Width="293"/>
+            <Label Content="Wachtwoord :" Canvas.Left="23" Canvas.Top="89"/>
+            <TextBox Canvas.Left="203" Canvas.Top="93" Text="{Binding TextInputPassword, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" Width="293"/>
+            <Button Content="Inloggen" Command="{Binding Path=LoginCommand}" Canvas.Left="93" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="80"/>
+            <Button Content="Annuleren" Command="{Binding Path=CancelCommand}" Canvas.Left="189" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="80"/>
+            <Button Content="Wachtwoord vergeten ?" Command="{Binding Path=ForgotPasswordCommand}" Canvas.Left="286" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="170"/>
+
+        </Canvas>
+    </Grid>
+</Window>

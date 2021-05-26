@@ -727,15 +727,8 @@ namespace PlantenApplicatie.Data
             string message = "";
             var item = _context.BeheerMaand.Where(b => b.PlantId == beheerMaand.PlantId);
 
-            if (item.Count() == 1)
-            {
-                message = "Je kan maar 1 beheersdaad toevoegen.";
-            }
-            else
-            {
-                _context.BeheerMaand.Add(beheerMaand);
-                _context.SaveChanges();
-            }
+            _context.BeheerMaand.Add(beheerMaand);
+            _context.SaveChanges();
 
             return message;
         }
@@ -755,5 +748,47 @@ namespace PlantenApplicatie.Data
 
         }
 
+        public void GenerateLoginSeed()
+        {
+
+        }
+
+        public void CreateLogin(Gebruiker gebruiker)
+        {
+            _context.Gebruiker.Add(gebruiker);
+            _context.SaveChanges();
+        }
+
+        public bool CheckLogin(string emailadress, string password, out string message)
+        {
+            //Gebruiker gebruiker = new Gebruiker();
+            //gebruiker.Emailadres = emailadress;
+            //gebruiker.Rol = "student";
+            //gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+
+            // maak gebruiker aan in database met hash waarde voor wachtwoord
+            //CreateLogin(gebruiker);
+
+            message = "";
+
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres.Equals(emailadress) && g.HashPaswoord.Equals(Encryptor.GenerateMD5Hash(password)));
+
+            if (user != null)
+            {
+                message = "U bent geverifieerd, even geduld ...";
+                return true;
+            }
+
+            message = "Account niet gevonden in database";
+            return false;
+        
+        }
+
+        public Gebruiker GetGebruiker(string emailadres)
+        {
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres.Equals(emailadres));
+
+            return user;
+        }
     }
 }
