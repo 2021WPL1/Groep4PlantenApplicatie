@@ -759,13 +759,13 @@ namespace PlantenApplicatie.Data
 
         public bool CheckLogin(string emailadress, string password, out string message)
         {
-            // Gebruiker gebruiker = new Gebruiker();
-            // gebruiker.Emailadres = emailadress;
-            // gebruiker.Rol = "manager";
-            // gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+            //Gebruiker gebruiker = new Gebruiker();
+            //gebruiker.Emailadres = emailadress;
+            //gebruiker.Rol = "gebruiker";
+            //gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
 
             // maak gebruiker aan in database met hash waarde voor wachtwoord
-            // CreateLogin(gebruiker);
+            //CreateLogin(gebruiker);
 
             message = "";
 

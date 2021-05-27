@@ -23,6 +23,9 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedSpruitFenologie;
         private Fenotype _selectedFenoType;
 
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
+
         private FenotypeMulti _selectedFenoTypeMulti;
 
 
@@ -43,8 +46,9 @@ namespace PlantenApplicatie.viewmodels
         public ICommand EditFenoTypeCommand { get; set; }
 
         // Constructor Davy
-        public TabFenoTypeViewModel(Plant selectedPlant)
+        public TabFenoTypeViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
+            SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             // onderstaande variabelen Davy voor tabblad Fenotype
@@ -69,8 +73,45 @@ namespace PlantenApplicatie.viewmodels
             LoadFenoSpruitFenologie();
 
             LoadFenoTypesMulti();
+            UserRole();
         }
-        
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Getters and setters selected waardes (Davy)
         public Plant SelectedPlant
         {

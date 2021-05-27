@@ -15,12 +15,16 @@ namespace PlantenApplicatie.viewmodels
         private readonly PlantenDao _plantenDao;
         
         private readonly Plant _selectedPlant;
-        
-        public TabAbiotiekViewModel(Plant selectedPlant)
+
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
+
+        public TabAbiotiekViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
             _plantenDao = PlantenDao.Instance;
 
             _selectedPlant = selectedPlant;
+            SelectedGebruiker = gebruiker;
 
             Insolations = new ObservableCollection<string>(_plantenDao.GetAbioBezonning());
             SoilTypes = new ObservableCollection<string>(_plantenDao.GetAbioGrondsoort());
@@ -32,7 +36,43 @@ namespace PlantenApplicatie.viewmodels
             
             LoadStandards();
         }
-        
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
+        }
+
         // TODO: auto property should become property to not have to use the OnPropertyChanged here
         private void LoadStandards()
         {
