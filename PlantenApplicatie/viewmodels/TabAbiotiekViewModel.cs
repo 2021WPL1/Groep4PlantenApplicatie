@@ -35,6 +35,7 @@ namespace PlantenApplicatie.viewmodels
             EditAbiotiekCommand = new DelegateCommand(EditAbiotiek);
             
             LoadStandards();
+            UserRole();
         }
         public bool IsManager
         {
