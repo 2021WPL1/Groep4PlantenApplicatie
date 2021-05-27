@@ -5,12 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlantenApplicatie"
         mc:Ignorable="d"
-        Title="BeheerPlanten" Height="550" Width="1200">
+        Title="BeheerPlanten" Height="550" Width="1200" BorderBrush="Black">
+    <Window.Background>
+        <ImageBrush ImageSource="/bloemenachtergrondMetKlimopBloemen.png"/>
+    </Window.Background>
     <Grid>
         <TabControl TabStripPlacement="Left">
+            <TabControl.Background>
+                <ImageBrush ImageSource="/bloemenachtergrondVmulti.png" Stretch="Fill"/>
+            </TabControl.Background>
             <TabItem Header="Opzoeken">
                 <Grid>
                     <StackPanel Orientation="Vertical">
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/bloemenachtergrondVmultiGroen.png"/>
+                        </StackPanel.Background>
                         <GroupBox Header="Kenmerken" Height="170">
                             <Canvas Margin="10">
                                 <Label Canvas.Top="0" Content="Plantnaam :"/>

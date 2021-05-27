@@ -9,6 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="bloemenachtergrondMetKlimopBloemen.png" />
+    <None Remove="bloemenachtergrondMetKlimopbutanimeagain.png" />
+    <None Remove="bloemenachtergrondMetKlimopKort.png" />
+    <None Remove="bloemenachtergrondMetKlimopKortbutanime.png" />
+    <None Remove="bloemenachtergrondMetKlimopLang.png" />
+    <None Remove="bloemenachtergrondv2.2.png" />
+    <None Remove="bloemenachtergrondv2.png" />
+    <None Remove="bloemenachtergrondVblauw.png" />
+    <None Remove="bloemenachtergrondVblauwgroen.png" />
+    <None Remove="bloemenachtergrondVgeel.png" />
+    <None Remove="bloemenachtergrondVgroen.png" />
+    <None Remove="bloemenachtergrondVmulti.png" />
+    <None Remove="bloemenachtergrondVmultiGroen.png" />
+    <None Remove="bloemenachtergrondVmultiOranje.png" />
+    <None Remove="bloemenachtergrondVpaars.png" />
+    <None Remove="bloemenachtergrondVrood.png" />
+    <None Remove="bloemenachtergrondVroos.png" />
+    <None Remove="klimopachtergrond.png" />
     <None Remove="plantjes.png" />
   </ItemGroup>
 
@@ -31,6 +49,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="bloemenachtergrondMetKlimopBloemen.png" />
+    <Resource Include="bloemenachtergrondMetKlimopbutanimeagain.png" />
+    <Resource Include="bloemenachtergrondMetKlimopKort.png" />
+    <Resource Include="bloemenachtergrondMetKlimopKortbutanime.png" />
+    <Resource Include="bloemenachtergrondMetKlimopLang.png" />
+    <Resource Include="bloemenachtergrondv2.2.png" />
+    <Resource Include="bloemenachtergrondv2.png" />
+    <Resource Include="bloemenachtergrondVblauw.png" />
+    <Resource Include="bloemenachtergrondVblauwgroen.png" />
+    <Resource Include="bloemenachtergrondVgeel.png" />
+    <Resource Include="bloemenachtergrondVgroen.png" />
+    <Resource Include="bloemenachtergrondVmulti.png" />
+    <Resource Include="bloemenachtergrondVmultiGroen.png" />
+    <Resource Include="bloemenachtergrondVmultiOranje.png" />
+    <Resource Include="bloemenachtergrondVpaars.png" />
+    <Resource Include="bloemenachtergrondVrood.png" />
+    <Resource Include="bloemenachtergrondVroos.png" />
+    <Resource Include="klimopachtergrond.png" />
     <Resource Include="plantjes.png" />
   </ItemGroup>
 
