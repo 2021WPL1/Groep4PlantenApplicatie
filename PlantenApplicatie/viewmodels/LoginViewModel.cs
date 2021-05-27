@@ -27,7 +27,6 @@ namespace PlantenApplicatie.viewmodels
             _loginWindow = window;
             LoginCommand = new DelegateCommand(Login);
             CancelCommand = new DelegateCommand(Cancel);
-            ForgotPasswordCommand = new DelegateCommand(ForgotPassword);
 
             _dao = PlantenDao.Instance;
         }
@@ -62,9 +61,10 @@ namespace PlantenApplicatie.viewmodels
 
             if (myBool == true)
             {
+                var gebruiker =_dao.GetGebruiker(TextInputLogin);
                 MessageBox.Show(message);
                 _loginWindow.Hide();
-                BeheerPlanten beheerPlanten = new BeheerPlanten();
+                BeheerPlanten beheerPlanten = new BeheerPlanten(gebruiker);
                 beheerPlanten.Show(); 
                 
             } else
@@ -80,11 +80,6 @@ namespace PlantenApplicatie.viewmodels
             TextInputPassword = String.Empty;
         }
 
-        public void ForgotPassword()
-        {
-            Wachtwoord_vergeten wachtwoord_Vergeten = new Wachtwoord_vergeten();
-            wachtwoord_Vergeten.Show();
-            _loginWindow.Hide();
-        }
+       
     }
 }

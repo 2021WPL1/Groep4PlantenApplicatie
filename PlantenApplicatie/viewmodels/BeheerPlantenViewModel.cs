@@ -15,7 +15,9 @@ namespace PlantenApplicatie.viewmodels
         private readonly PlantenDao _plantenDao;
 
         private Plant? _selectedPlant;
-        
+
+        private bool _IsManager;
+        private Gebruiker _selectedGebruiker;
         private string? _selectedType;
         private string? _selectedFamily;
         private string? _selectedGenus;
@@ -26,6 +28,7 @@ namespace PlantenApplicatie.viewmodels
         // so we tell the compiler it is not null
         private string _plantName = null!; 
         
+        public ICommand AddUserCommand { get; }
         public ICommand ShowDetailsCommand { get; }
         public ICommand ResetCommand { get; }
 
@@ -37,12 +40,14 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Species { get; private set; }
         public ObservableCollection<string> Variants { get; private set; }
         
-        public BeheerPlantenViewModel()
+        public BeheerPlantenViewModel(Gebruiker gebruiker)
         {
+            SelectedGebruiker = gebruiker;
             _plantenDao = PlantenDao.Instance;
             
             ShowDetailsCommand = new DelegateCommand(ShowDetails);
             ResetCommand = new DelegateCommand(ResetInputs);
+            AddUserCommand = new DelegateCommand(AddUser);
 
             Plants = new ObservableCollection<Plant>();
             
@@ -51,10 +56,21 @@ namespace PlantenApplicatie.viewmodels
             Genus = new ObservableCollection<string>();
             Species = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
-            
+
+
+            UserRole();
             FilterComboBoxes();
         }
-        
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Plant? SelectedPlant
         {
             get => _selectedPlant;
@@ -64,7 +80,18 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        
+
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
         public string PlantName
         {
             get => _plantName;
@@ -261,6 +288,28 @@ namespace PlantenApplicatie.viewmodels
             {
                 collection.Add(elem);
             }
+        }
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch(SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+
+        //voeg een gebruiker toe als je een docent bent (Jim)
+        private void AddUser()
+        {
+
         }
     }
 }

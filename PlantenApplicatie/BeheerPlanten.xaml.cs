@@ -1,4 +1,5 @@
-﻿using PlantenApplicatie.viewmodels;
+﻿using PlantenApplicatie.Domain;
+using PlantenApplicatie.viewmodels;
 using System.Windows;
 
 namespace PlantenApplicatie
@@ -8,11 +9,11 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class BeheerPlanten : Window
     {
-        public BeheerPlanten()
+        public BeheerPlanten(Gebruiker gebruiker)
         {
             InitializeComponent();
 
-            BeheerPlantenViewModel beheerPlantenViewModel = new();
+            BeheerPlantenViewModel beheerPlantenViewModel = new(gebruiker);
             DataContext = beheerPlantenViewModel;
         }
     }

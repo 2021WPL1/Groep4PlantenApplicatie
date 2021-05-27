@@ -750,10 +750,6 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void GenerateLoginSeed()
-        {
-
-        }
 
         public void CreateLogin(Gebruiker gebruiker)
         {
@@ -763,18 +759,18 @@ namespace PlantenApplicatie.Data
 
         public bool CheckLogin(string emailadress, string password, out string message)
         {
-            //    Gebruiker gebruiker = new Gebruiker();
-            //    gebruiker.Emailadres = emailadress;
-            //    gebruiker.Rol = "student";
-            //    gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+            Gebruiker gebruiker = new Gebruiker();
+            gebruiker.Emailadres = emailadress;
+            gebruiker.Rol = "data-collector";
+            gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
 
             //maak gebruiker aan in database met hash waarde voor wachtwoord
-            //CreateLogin(gebruiker);
+            CreateLogin(gebruiker);
 
             message = "";
 
 
-            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == emailadress && g.HashPaswoord.Equals(Encryptor.GenerateMD5Hash(password)));
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == emailadress && g.HashPaswoord == (Encryptor.GenerateMD5Hash(password)));
 
             if (user != null)
             {
@@ -786,13 +782,7 @@ namespace PlantenApplicatie.Data
             return false;
 
         }
-        public string GenerateNewPassword(int length)
-        {
-            Random random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
+      
 
         public Gebruiker GetGebruiker(string emailadres)
         {

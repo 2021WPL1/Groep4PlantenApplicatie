@@ -15,8 +15,7 @@
             <Label Content="Wachtwoord :" Canvas.Left="23" Canvas.Top="89"/>
             <TextBox Canvas.Left="203" Canvas.Top="93" Text="{Binding TextInputPassword, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" Width="293"/>
             <Button Content="Inloggen" Command="{Binding Path=LoginCommand}" Canvas.Left="93" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="80"/>
-            <Button Content="Annuleren" Command="{Binding Path=CancelCommand}" Canvas.Left="189" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="80"/>
-            <Button Content="Wachtwoord vergeten ?" Command="{Binding Path=ForgotPasswordCommand}" Canvas.Left="286" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="170"/>
+            <Button Content="Annuleren" Command="{Binding Path=CancelCommand}" Canvas.Left="350" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="80"/>
 
         </Canvas>
     </Grid>
