@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PlantenApplicatie.Domain;
 
@@ -12,7 +10,7 @@ namespace PlantenApplicatie.Data
     public class PlantenDao
     {
         public const string NoVariant = "N/A";
-        
+
         private readonly PlantenContext _context;
 
         static PlantenDao()
@@ -330,7 +328,7 @@ namespace PlantenApplicatie.Data
         }
 
         //Voeg een fenotype toe aan de geselecteerde plant (Jim)
-        public void AddFenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
+        public void AddFenotype(Plant plant, int bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
         string habitus, string levensvorm)
         {
             var fenotypePlant = new Fenotype
@@ -344,7 +342,7 @@ namespace PlantenApplicatie.Data
                 Levensvorm = levensvorm
             };
 
-          
+
             _context.Fenotype.Add(fenotypePlant);
             _context.SaveChanges();
         }
@@ -398,7 +396,7 @@ namespace PlantenApplicatie.Data
             selectedFenotypeMulti.Eigenschap = eigenschap ?? selectedFenotypeMulti.Eigenschap;
             selectedFenotypeMulti.Maand = maand ?? selectedFenotypeMulti.Maand;
             selectedFenotypeMulti.Waarde = waarde ?? selectedFenotypeMulti.Waarde;
-       
+
             _context.SaveChanges();
         }
         //verwijder een multifenotype van de geselecteerde plant (Jim)
@@ -409,8 +407,8 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
         //voeg een extra eigenschap aan de geselecteerde plant (Jim)
-        public void AddExtraEigenschap(Plant plant, string nectaWaarde,string pollenWaarde, bool bij,bool vlinder,
-            bool eetbaar,bool kruid, bool geur, bool vorst)
+        public void AddExtraEigenschap(Plant plant, string nectaWaarde, string pollenWaarde, bool bij, bool vlinder,
+            bool eetbaar, bool kruid, bool geur, bool vorst)
         {
             var extraEigenschap = new ExtraEigenschap
             {
@@ -443,7 +441,7 @@ namespace PlantenApplicatie.Data
             selectedExtraEigenschap.Geurend = geur;
             selectedExtraEigenschap.Vorstgevoelig = vorst;
 
-            
+
             _context.SaveChanges();
         }
         //verwijder de extra eigenschap aan de geselecteerde plant (Jim)
@@ -459,12 +457,14 @@ namespace PlantenApplicatie.Data
         {
             //Habitat ontbreekt
             Abiotiek abiotiek = new Abiotiek
-            { PlantId = plant.PlantId,
+            {
+                PlantId = plant.PlantId,
                 Bezonning = bezonning,
                 Grondsoort = grondsoort,
                 Vochtbehoefte = vochtbehoefte,
                 Voedingsbehoefte = voedingsbehoefte,
-                AntagonischeOmgeving = antagonischeOmgeving };
+                AntagonischeOmgeving = antagonischeOmgeving
+            };
 
             _context.Add(abiotiek);
 
@@ -761,22 +761,12 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public static string ToHex(this byte[] bytes, bool upperCase)
-        {
-            StringBuilder result = new StringBuilder(bytes.Length * 2);
-
-            for (int i = 0; i < bytes.Length; i++)
-                result.Append(bytes[i].ToString(upperCase ? "X2" : "x2"));
-
-            return result.ToString();
-        }
-
         public bool CheckLogin(string emailadress, string password, out string message)
-       {
-        //    Gebruiker gebruiker = new Gebruiker();
-        //    gebruiker.Emailadres = emailadress;
-        //    gebruiker.Rol = "student";
-        //    gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+        {
+            //    Gebruiker gebruiker = new Gebruiker();
+            //    gebruiker.Emailadres = emailadress;
+            //    gebruiker.Rol = "student";
+            //    gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
 
             //maak gebruiker aan in database met hash waarde voor wachtwoord
             //CreateLogin(gebruiker);
@@ -794,13 +784,13 @@ namespace PlantenApplicatie.Data
 
             message = "Gebruiker niet gevonden, Controleer of u juiste email en paswoord gebruikt";
             return false;
-        
+
         }
         public string GenerateNewPassword(int length)
         {
             Random random = new Random();
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars,length)
+            return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
