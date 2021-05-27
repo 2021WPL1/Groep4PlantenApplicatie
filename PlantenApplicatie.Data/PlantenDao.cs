@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PlantenApplicatie.Domain;
 
@@ -759,6 +761,16 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
+        public static string ToHex(this byte[] bytes, bool upperCase)
+        {
+            StringBuilder result = new StringBuilder(bytes.Length * 2);
+
+            for (int i = 0; i < bytes.Length; i++)
+                result.Append(bytes[i].ToString(upperCase ? "X2" : "x2"));
+
+            return result.ToString();
+        }
+
         public bool CheckLogin(string emailadress, string password, out string message)
         {
             //Gebruiker gebruiker = new Gebruiker();
@@ -770,8 +782,6 @@ namespace PlantenApplicatie.Data
             //CreateLogin(gebruiker);
 
             message = "";
-
-            
 
 
             var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == emailadress && g.HashPaswoord.Equals(password));
