@@ -309,7 +309,7 @@ namespace PlantenApplicatie.viewmodels
         //voeg een gebruiker toe als je een docent bent (Jim)
         private void AddUser()
         {
-
+            new AddGebruiker().Show();
         }
     }
 }

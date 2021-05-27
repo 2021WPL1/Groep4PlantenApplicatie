@@ -17,6 +17,7 @@ namespace PlantenApplicatie.Domain
         public string Rol { get; set; }
         public string Emailadres { get; set; }
         public DateTime? LastLogin { get; set; }
+
         public byte[] HashPaswoord { get; set; }
 
         public virtual ICollection<UpdatePlant> UpdatePlant { get; set; }

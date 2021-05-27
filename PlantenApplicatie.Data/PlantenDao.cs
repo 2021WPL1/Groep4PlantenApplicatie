@@ -759,13 +759,13 @@ namespace PlantenApplicatie.Data
 
         public bool CheckLogin(string emailadress, string password, out string message)
         {
-            Gebruiker gebruiker = new Gebruiker();
-            gebruiker.Emailadres = emailadress;
-            gebruiker.Rol = "data-collector";
-            gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+            // Gebruiker gebruiker = new Gebruiker();
+            // gebruiker.Emailadres = emailadress;
+            // gebruiker.Rol = "manager";
+            // gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
 
-            //maak gebruiker aan in database met hash waarde voor wachtwoord
-            CreateLogin(gebruiker);
+            // maak gebruiker aan in database met hash waarde voor wachtwoord
+            // CreateLogin(gebruiker);
 
             message = "";
 
@@ -786,9 +786,8 @@ namespace PlantenApplicatie.Data
 
         public Gebruiker GetGebruiker(string emailadres)
         {
-            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres.Equals(emailadres));
+            return _context.Gebruiker.SingleOrDefault(g => g.Emailadres.Equals(emailadres));
 
-            return user;
         }
     }
 }
