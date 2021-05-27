@@ -771,7 +771,10 @@ namespace PlantenApplicatie.Data
 
             message = "";
 
-            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres.Equals(emailadress) && g.HashPaswoord.Equals(Encryptor.GenerateMD5Hash(password)));
+            
+
+
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == emailadress && g.HashPaswoord.Equals(password));
 
             if (user != null)
             {
