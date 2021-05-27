@@ -38,8 +38,13 @@ namespace PlantenApplicatie.viewmodels
         {
             Gebruiker gebruiker = _dao.GetGebruiker(TextInputEmail);
 
+            string newPassword = Encoding.ASCII.GetString(gebruiker.HashPaswoord);
+           
+
             try
             {
+                                
+
                 using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
                 {
                     client.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -48,11 +53,9 @@ namespace PlantenApplicatie.viewmodels
                     client.EnableSsl = true;
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress(mailFrom);
-                    string password = "0x" + BitConverter.ToString(gebruiker.HashPaswoord);
-                    password = password.Replace("-", "");
+                    string password = newPassword;
                     mail.Body = "Wachtwoord : " + password;
                     mail.Subject = "Wachtwoord";
-
                    
                     mail.To.Add(gebruiker.Emailadres);
 
