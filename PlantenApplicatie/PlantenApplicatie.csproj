@@ -53,27 +53,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="bloemenachtergrondMetKlimopBloemen.png" />
-    <Resource Include="bloemenachtergrondMetKlimopbutanimeagain.png" />
-    <Resource Include="bloemenachtergrondMetKlimopKort.png" />
-    <Resource Include="bloemenachtergrondMetKlimopKortbutanime.png" />
-    <Resource Include="bloemenachtergrondMetKlimopLang.png" />
-    <Resource Include="bloemenachtergrondmetZijkantKort.png" />
-    <Resource Include="bloemenachtergrondv2.2.png" />
-    <Resource Include="bloemenachtergrondv2.png" />
-    <Resource Include="bloemenachtergrondVblauw.png" />
-    <Resource Include="bloemenachtergrondVblauwgroen.png" />
-    <Resource Include="bloemenachtergrondVgeel.png" />
-    <Resource Include="bloemenachtergrondVgroen.png" />
-    <Resource Include="bloemenachtergrondVmulti.png" />
-    <Resource Include="bloemenachtergrondVmultiDauw.png" />
-    <Resource Include="bloemenachtergrondVmultiGroen.png" />
-    <Resource Include="bloemenachtergrondVmultiOranje.png" />
-    <Resource Include="bloemenachtergrondVmultiSchaduw.png" />
-    <Resource Include="bloemenachtergrondVmultiZomer.png" />
-    <Resource Include="bloemenachtergrondVpaars.png" />
-    <Resource Include="bloemenachtergrondVrood.png" />
-    <Resource Include="bloemenachtergrondVroos.png" />
+    <Resource Include="Images\bloemenachtergrondMetKlimopBloemen.png" />
+    <Resource Include="Images\bloemenachtergrondMetKlimopbutanimeagain.png" />
+    <Resource Include="Images\bloemenachtergrondMetKlimopKort.png" />
+    <Resource Include="Images\bloemenachtergrondMetKlimopKortbutanime.png" />
+    <Resource Include="Images\bloemenachtergrondMetKlimopLang.png" />
+    <Resource Include="Images\bloemenachtergrondmetZijkantKort.png" />
+    <Resource Include="Images\bloemenachtergrondv2.2.png" />
+    <Resource Include="Images\bloemenachtergrondv2.png" />
+    <Resource Include="Images\bloemenachtergrondVblauw.png" />
+    <Resource Include="Images\bloemenachtergrondVblauwgroen.png" />
+    <Resource Include="Images\bloemenachtergrondVgeel.png" />
+    <Resource Include="Images\bloemenachtergrondVgroen.png" />
+    <Resource Include="Images\bloemenachtergrondVmulti.png" />
+    <Resource Include="Images\bloemenachtergrondVmultiDauw.png" />
+    <Resource Include="Images\bloemenachtergrondVmultiGroen.png" />
+    <Resource Include="Images\bloemenachtergrondVmultiOranje.png" />
+    <Resource Include="Images\bloemenachtergrondVmultiSchaduw.png" />
+    <Resource Include="Images\bloemenachtergrondVmultiZomer.png" />
+    <Resource Include="Images\bloemenachtergrondVpaars.png" />
+    <Resource Include="Images\bloemenachtergrondVrood.png" />
+    <Resource Include="Images\bloemenachtergrondVroos.png" />
     <Resource Include="klimopachtergrond.png" />
     <Resource Include="plantjes.png" />
   </ItemGroup>
