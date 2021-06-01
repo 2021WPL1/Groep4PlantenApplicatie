@@ -27,7 +27,7 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedEigenschap;
         private string? _selectedUrl;
 
-        public TabFotoViewModel(Plant selectedplant)
+        public TabFotoViewModel(Plant selectedplant,Gebruiker gebruiker)
         {
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedplant;
