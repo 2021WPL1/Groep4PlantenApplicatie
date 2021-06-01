@@ -570,41 +570,6 @@
                     <Canvas.Background>
                         <ImageBrush ImageSource="images/bloemenachtergrondVpaars.png" Stretch="UniformToFill"/>
                     </Canvas.Background>
-                    <Label Height="25" Content="FotoId :" Canvas.Left="25" Canvas.Top="22"></Label>
-                    <TextBox Canvas.Left="114" Canvas.Top="26"  Text="{Binding Path=Fotoid}" TextWrapping="Wrap" Width="376"/>
-                    <Label Height="25" Content="Plant :" Canvas.Left="25" Canvas.Top="53"/>
-                    <TextBox Canvas.Left="114" Canvas.Top="57" Text="{Binding Path=Plant}" TextWrapping="Wrap" Width="376"/>
-                    <Label Height="25" Content="Eigenschap :" Canvas.Left="25" Canvas.Top="84"/>
-                    <TextBox Canvas.Left="114" Canvas.Top="88" Text="{Binding Path=Eigenschap}" TextWrapping="Wrap" Width="376"/>
-                    <Label Height="25" Content="UrlLocatie :" Canvas.Left="25" Canvas.Top="118"/>
-                    <TextBox Canvas.Left="114" Canvas.Top="122" Text="{Binding Path=UrlLocatie}" TextWrapping="Wrap" Width="376"/>
-                    <Label Height="25" Content="Thumbnail :" Canvas.Left="25" Canvas.Top="156"/>
-                    <TextBox Canvas.Left="114" Canvas.Top="160" Text="{Binding Path=Tumbnail}" TextWrapping="Wrap" Width="376"/>
-
-                    <Button Command="{Binding Path=AddPhotoCommand}" Content="Voeg foto toe aan plant" Height="28" Canvas.Left="46" Canvas.Top="215" Width="208" BorderBrush="Black">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFA396B9" Offset="0"/>
-                                <GradientStop Color="#FF6B577A" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
-                    <Button Command="{Binding Path=EditPhotoCommand}" Content="Wijzig foto van plant" Height="28" Canvas.Left="282" Canvas.Top="215" Width="208" BorderBrush="Black">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFA598BB"/>
-                                <GradientStop Color="#FF6B577A" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
-                    <Button Command="{Binding Path=RemovePhotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="215" Width="208" BorderBrush="Black">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFA398BA"/>
-                                <GradientStop Color="#FF6C577B" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
                     <Label Height="25" Content="Eigenschap :" Canvas.Left="10" Canvas.Top="10"/>
                     <ComboBox Canvas.Left="99" Canvas.Top="13" Width="120" 
                               ItemsSource="{Binding Eigenschappen}"
