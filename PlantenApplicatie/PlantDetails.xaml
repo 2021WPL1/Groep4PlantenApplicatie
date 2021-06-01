@@ -10,7 +10,7 @@
         <local:BooleanToYesNoConverter x:Key="BooleanToYesNoConverter"/>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/plantjes.png" Stretch="Fill"/>
+        <ImageBrush ImageSource="/bloemenachtergrondmetZijkantKort.png" Stretch="Fill"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
