@@ -27,6 +27,10 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedFenoMultiMaand;
         private FenotypeMulti _selectedPlantFenoTypeMulti;
 
+        // private variabelen (Davy)
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
+
 
         // collecties (lijsten) Davy & Jim
         public ObservableCollection<int> FenoBladgroottes { get; set; }
@@ -52,8 +56,9 @@ namespace PlantenApplicatie.viewmodels
         public ICommand DeleteFenotypeMultiPlantCommand { get; set; }
 
         // Constructor Davy
-        public TabFenoTypeViewModel(Plant selectedPlant)
+        public TabFenoTypeViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
+            SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             //variabelen (Davy &Jim)
@@ -87,6 +92,7 @@ namespace PlantenApplicatie.viewmodels
             LoadFenoMultiMaanden();
             LoadKleur();
             LoadSelectedValues();
+            UserRole();
         }
 
         //herlaad de gegevens (Jim)
@@ -100,6 +106,43 @@ namespace PlantenApplicatie.viewmodels
         //    LoadFenoSpruitFenologie();
         //    LoadFenoTypesMultiPlant();
         //}
+
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         // Getters and setters selected waardes (Davy & Jim)
@@ -138,7 +181,7 @@ namespace PlantenApplicatie.viewmodels
 
         public int SelectedBladgrootte
         {
-             get => _selectedBladgrootte;
+            get => _selectedBladgrootte;
             set
             {
                 _selectedBladgrootte = value;
@@ -372,10 +415,10 @@ namespace PlantenApplicatie.viewmodels
         private void EditFenoType()
         {
             var fenotype = _dao.GetFenotypeFromPlant(SelectedPlant);
-           
-            if(fenotype == null)
+
+            if (fenotype == null)
             {
-                _dao.AddFenotype(SelectedPlant, SelectedBladgrootte,SelectedBladvorm, null, SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm,
+                _dao.AddFenotype(SelectedPlant, SelectedBladgrootte, SelectedBladvorm, null, SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm,
                     SelectedSpruitFenologie);
             }
             else
@@ -390,7 +433,7 @@ namespace PlantenApplicatie.viewmodels
         {
             _dao.AddMultiFenotype(SelectedPlant, SelectedFenotypeEigenschappen, SelectedFenoMultiMaand, SelectedFenoTypesMulti);
             LoadFenoTypesMultiPlant();
-            
+
         }
 
         //wijzig de geselecteerde FenotypeMulti (Jim)
@@ -423,7 +466,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
                 case "bloeihoogte":
                     LoadHoogte();
-                  
+
                     break;
                 case "bloeikleur":
                     LoadKleur();
@@ -434,8 +477,8 @@ namespace PlantenApplicatie.viewmodels
         //verwijder de geselecteerde fenotypemulti van de listview (Jim)
         private void DeleteFenotypeMultiPlant()
         {
-         
-            if(SelectedPlantFenoTypeMulti is not null)
+
+            if (SelectedPlantFenoTypeMulti is not null)
             {
 
                 _dao.RemoveMultiFenotype(SelectedPlantFenoTypeMulti);

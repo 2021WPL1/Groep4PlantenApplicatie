@@ -10,7 +10,7 @@ using System.Windows.Input;
 namespace PlantenApplicatie.viewmodels
 {
     // MVVM Toepassing (Davy, Lily) 
-    class BeheerPlantenViewModel : ViewModelBase
+    class TabBeheerPlantenViewModel : ViewModelBase
     {
         private readonly PlantenDao _plantenDao;
 
@@ -40,7 +40,7 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Species { get; private set; }
         public ObservableCollection<string> Variants { get; private set; }
         
-        public BeheerPlantenViewModel(Gebruiker gebruiker)
+        public TabBeheerPlantenViewModel(Gebruiker gebruiker)
         {
             SelectedGebruiker = gebruiker;
             _plantenDao = PlantenDao.Instance;

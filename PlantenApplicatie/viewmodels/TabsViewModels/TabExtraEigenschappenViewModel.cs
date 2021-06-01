@@ -39,6 +39,10 @@ namespace PlantenApplicatie.viewmodels
         private Gebruiker _selectedGebruiker;
         private bool _IsManager;
 
+        public ObservableCollection<ExtraEigenschap> BeheerExtraEigenschappen { get; set; }
+        public ObservableCollection<string> Nectars { get; set; }
+        public ObservableCollection<string> Pollen { get; set; }
+
         public TabExtraEigenschappenViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
             SelectedPlant = selectedPlant;

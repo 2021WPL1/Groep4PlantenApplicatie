@@ -15,7 +15,7 @@ namespace PlantenApplicatie.viewmodels
     //MVVM Liam
     public class TabCommensalismeViewModel : ViewModelBase
     {
-       
+
         //private selecters en de dao (Liam)
         private Plant _selectedPlant;
         private readonly PlantenDao _dao;
@@ -24,6 +24,10 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedCommenEigenschappen;
         private string _selectedCommensalismeMulti;
         private CommensalismeMulti _selectedCommenMulti;
+
+        // private variabelen (Davy)
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
 
         //observable collections voor de lijst en comboboxes (Liam)
         public ObservableCollection<string> CommenStrategien { get; set; }
@@ -39,11 +43,12 @@ namespace PlantenApplicatie.viewmodels
         public ICommand RemoveCommensalismeMultiCommand { get; set; }
 
         //constructor (Liam)
-        public TabCommensalismeViewModel(Plant selectedPlant)
+        public TabCommensalismeViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
+            SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
-           
+
             CommenOntwikkelsnelheden = new ObservableCollection<string>();
             CommenStrategien = new ObservableCollection<string>();
             CommenEigenschappen = new ObservableCollection<string>();
@@ -64,6 +69,44 @@ namespace PlantenApplicatie.viewmodels
             LoadLevensvorm();
             LoadSociabiliteit();
             LoadSelectedValues();
+            UserRole();
+        }
+
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
         }
 
         //herlaad de comboboxes (Liam)
@@ -224,7 +267,7 @@ namespace PlantenApplicatie.viewmodels
         {
             var commensalisme = _dao.GetCommensialisme(SelectedPlant);
 
-            if(commensalisme == null)
+            if (commensalisme == null)
             {
                 _dao.AddCommensalisme(SelectedPlant, SelectedCommenOntwikkelsnelheid, SelectedCommenStrategie);
             }

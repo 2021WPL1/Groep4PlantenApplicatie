@@ -8,7 +8,7 @@
         Title="BeheerPlanten" Height="550" Width="1200">
     <Grid>
         <TabControl TabStripPlacement="Left">
-            <TabItem Header="Opzoeken">
+            <TabItem Header="Opzoeken" DataContext="{Binding Children[0]}">
                 <Grid>
                     <StackPanel Orientation="Vertical">
                         <GroupBox Header="Kenmerken" Height="170">
@@ -35,7 +35,6 @@
                                 <ComboBox SelectedValue="{Binding SelectedVariant}" x:Name="cmbVariant" Width="200" Canvas.Top="65" Canvas.Left="450"  ItemsSource="{Binding Variants}" />
                                 <Button x:Name="btnReset" Content="Reset" Canvas.Top="88" Width="80" Canvas.Left="946"
                                     Command="{Binding Path=ResetCommand}"/>
-                                <Button Content="Voeg gebruiker toe" Canvas.Left="912" Canvas.Top="5" Width="114" Height="22"  Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}" />
                             </Canvas>
                         </GroupBox>
                         <GroupBox Header="Resultaten" Height="265">
@@ -189,6 +188,18 @@
             </TabItem>
             <TabItem Header="Afdrukken">
                 <Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Gebruiker" DataContext="{Binding Children[1]}">
+                <Grid>
+                    <Canvas>
+                        <Button Content="Voeg gebruiker toe" Canvas.Left="10" Canvas.Top="10" Width="114" Height="22"
+                                Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}" />
+                        <Button Content="Wijzigen wachtwoord" Command="{Binding Path=EditPasswordCommand}"
+                                 IsEnabled="{Binding Path=IsManager}"
+                                Canvas.Left="10" Canvas.Top="49" RenderTransformOrigin="0.395,0.703" Width="158"/>
+
+                    </Canvas>
                 </Grid>
             </TabItem>
         </TabControl>

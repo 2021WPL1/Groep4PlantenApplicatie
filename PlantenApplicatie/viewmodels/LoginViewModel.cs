@@ -79,7 +79,5 @@ namespace PlantenApplicatie.viewmodels
             TextInputLogin = String.Empty;
             TextInputPassword = String.Empty;
         }
-
-       
     }
 }

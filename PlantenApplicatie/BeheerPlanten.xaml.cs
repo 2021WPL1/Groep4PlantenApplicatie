@@ -12,9 +12,7 @@ namespace PlantenApplicatie
         public BeheerPlanten(Gebruiker gebruiker)
         {
             InitializeComponent();
-
-            BeheerPlantenViewModel beheerPlantenViewModel = new(gebruiker);
-            DataContext = beheerPlantenViewModel;
+            DataContext = new TabsBeheerViewModel(gebruiker);
         }
     }
 }

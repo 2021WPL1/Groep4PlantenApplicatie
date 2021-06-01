@@ -26,12 +26,18 @@ namespace PlantenApplicatie.viewmodels
 
         public ICommand AddUserCommand { get; set; }
 
-        public AddGebruikerViewModel()
+        // variabelen Davy
+        public ICommand CloseWindowCommand { get; set; }
+        private Window _addGebruikerWindow;
+
+        public AddGebruikerViewModel(Window window)
         {
+            _addGebruikerWindow = window;       // Davy
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 
             AddUserCommand = new DelegateCommand(AddUser);
+            CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
         }
 
@@ -152,6 +158,11 @@ namespace PlantenApplicatie.viewmodels
             {
                 MessageBox.Show("Email mag alleen van het Vives domein zijn.");
             }
+        }
+
+        private void CloseWindow()
+        {
+            _addGebruikerWindow.Close();
         }
 
     }

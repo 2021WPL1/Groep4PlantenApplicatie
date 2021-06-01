@@ -1,4 +1,5 @@
-﻿using PlantenApplicatie.viewmodels;
+﻿using PlantenApplicatie.Domain;
+using PlantenApplicatie.viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,15 +15,14 @@ using System.Windows.Shapes;
 namespace PlantenApplicatie
 {
     /// <summary>
-    /// Interaction logic for AddGebruiker.xaml
+    /// Interaction logic for WijzigWachtwoord.xaml
     /// </summary>
-    public partial class AddGebruiker : Window
+    public partial class WijzigWachtwoord : Window
     {
-        public AddGebruiker()
+        public WijzigWachtwoord(Gebruiker gebruiker)
         {
             InitializeComponent();
-            DataContext = new AddGebruikerViewModel(this);
-
+            this.DataContext = new EditPasswordViewModel(this, gebruiker);
         }
     }
 }

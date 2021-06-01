@@ -23,13 +23,18 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedVariant;
         private string _textInputMin;
         private string _textInputMax;
-        //button command (Jim)
 
+        // private variabelen (Davy)
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
+
+        //button command (Jim)
         public ICommand SaveCommand { get; set; }
 
         // Constructor Lily
-        public TabPlantDetailsViewModel(Plant selectedPlant)
+        public TabPlantDetailsViewModel(Plant selectedPlant,Gebruiker gebruiker)
         {
+            SelectedGebruiker = gebruiker;
             _selectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             // onderstaande variabelen voor tabblad details plant
@@ -46,6 +51,44 @@ namespace PlantenApplicatie.viewmodels
             //laad de gegevens in 
             LoadSubjectPlant();
             LoadSelectedValue();
+            UserRole();
+        }
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
         }
 
         // Getters and setters selected waardes (Lily & Jim)

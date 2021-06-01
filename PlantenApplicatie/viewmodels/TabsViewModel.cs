@@ -15,7 +15,6 @@ namespace PlantenApplicatie.viewmodels
         {
             _children = new ObservableCollection<object>();
             _children.Add(new TabPlantDetailsViewModel(selectedPlant, gebruiker));
-            _children.Add(new TabWijzigPlantViewModel(selectedPlant, gebruiker));
             _children.Add(new TabFenoTypeViewModel(selectedPlant, gebruiker));
             _children.Add(new TabAbiotiekViewModel(selectedPlant, gebruiker));
             _children.Add(new TabCommensalismeViewModel(selectedPlant, gebruiker));

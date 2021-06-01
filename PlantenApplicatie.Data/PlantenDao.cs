@@ -55,6 +55,24 @@ namespace PlantenApplicatie.Data
                 typeIds, familyIds, genusIds, speciesIds, variantIds, name is null ? string.Empty : name);
         }
 
+        public string UpdateUser(string email, string password)
+        {
+            var gebruiker = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == email);
+
+            if (gebruiker != null)
+            {
+                gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+
+                _context.Gebruiker.Update(gebruiker);
+                _context.SaveChanges();
+
+                return "Wachtwoord aangepast";
+            } else
+            {
+                return "Emailadres werd niet teruggevonden in de database";
+            }
+        }
+
         public List<ExtraEigenschap> getExtraEigenschappen(Plant selectedPlant)
         {
             return _context.ExtraEigenschap.Where(p => p.PlantId == selectedPlant.PlantId).ToList();
