@@ -13,6 +13,7 @@ namespace PlantenApplicatie.viewmodels
     // klasse (Davy)
     public class TabExtraEigenschappenViewModel : ViewModelBase
     {
+        //private variabels (Davy)
         private Plant _selectedPlant;
         private ExtraEigenschap _selectedExtraEigenschap;
 
@@ -22,17 +23,11 @@ namespace PlantenApplicatie.viewmodels
         public ICommand EditExtraCommand { get; set; }
         public ICommand RemoveExtraCommand { get; set; }
 
-        // Hiermee kunnen we de data opvragen aan de databank.
+        // Hiermee kunnen we de data opvragen aan de databank. (Davy)
         private readonly PlantenDao _plantenDao;
 
         private string _selectedNectarValue;
         private string _selectedPollenValue;
-
-        public ObservableCollection<ExtraEigenschap> BeheerExtraEigenschappen { get; set; }
-
-        public ObservableCollection<string> Nectars { get; set; }
-
-        public ObservableCollection<string> Pollen { get; set; }
 
         private bool _isCheckedBeeFriendly;
         private bool _isCheckedButterflyFriendly;
@@ -58,6 +53,7 @@ namespace PlantenApplicatie.viewmodels
             EditExtraCommand = new DelegateCommand(EditExtra);
             RemoveExtraCommand = new DelegateCommand(RemoveExtra);
 
+            //laad de gegevens in (Davy)
             LoadBeheerExtraEigenschappen();
             LoadNectars();
             LoadPollen();
@@ -103,6 +99,25 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //getters setters (Davy)
+        public Plant SelectedPlant
+        {
+            private get => _selectedPlant;
+            set
+            {
+                _selectedPlant = value;
+                OnPropertyChanged();
+            }
+        }
+        public ExtraEigenschap SelectedExtraEigenschap
+        {
+            private get => _selectedExtraEigenschap;
+            set
+            {
+                _selectedExtraEigenschap = value;
+                OnPropertyChanged();
+            }
+        }
         public bool IsCheckedBeeFriendly
         {
             get { return _isCheckedBeeFriendly; }
@@ -187,6 +202,28 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        public string SelectedNectarValue
+        {
+            private get => _selectedNectarValue;
+            set
+            {
+                _selectedNectarValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string SelectedPollenValue
+        {
+            private get => _selectedPollenValue;
+            set
+            {
+                _selectedPollenValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //laad de gegevens in de comboboxes (Davy)
+
         private void LoadBeheerExtraEigenschappen()
         {
             var eigenschappen = _plantenDao.getExtraEigenschappen(SelectedPlant);
@@ -223,26 +260,8 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string SelectedNectarValue
-        {
-            private get => _selectedNectarValue;
-            set
-            {
-                _selectedNectarValue = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string SelectedPollenValue
-        {
-            private get => _selectedPollenValue;
-            set
-            {
-                _selectedPollenValue = value;
-                OnPropertyChanged();
-            }
-        }
-
+      
+        //voeg een extra eigenschap toe aan de plant, plant kan maar 1 hebben (Davy)
         public void AddExtra()
         {
             ExtraEigenschap extraEigenschap = new ExtraEigenschap();
@@ -267,7 +286,7 @@ namespace PlantenApplicatie.viewmodels
             // weergeef de aangepaste lijst
             LoadBeheerExtraEigenschappen();
         }
-
+        //wijzig de extra eigenschap van een plant (Davy)
         public void EditExtra()
         {
             ExtraEigenschap extraEigenschap = SelectedExtraEigenschap;
@@ -294,7 +313,7 @@ namespace PlantenApplicatie.viewmodels
             LoadBeheerExtraEigenschappen();
 
         }
-
+        //verwijder de extra eigenschap van een plant (Davy)
         public void RemoveExtra()
         {
             // toewijzen object ExtraEigenschap aan geselecteerd object ExtraEigenschap uit listview
@@ -314,23 +333,6 @@ namespace PlantenApplicatie.viewmodels
             LoadBeheerExtraEigenschappen();
         }
 
-        public Plant SelectedPlant
-        {
-            private get => _selectedPlant;
-            set
-            {
-                _selectedPlant = value;
-                OnPropertyChanged();
-            }
-        }
-        public ExtraEigenschap SelectedExtraEigenschap
-        {
-            private get => _selectedExtraEigenschap;
-            set
-            {
-                _selectedExtraEigenschap = value;
-                OnPropertyChanged();
-            }
-        }
+      
     }
 }

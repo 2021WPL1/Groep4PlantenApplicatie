@@ -33,7 +33,7 @@ namespace PlantenApplicatie.viewmodels
         public ICommand ResetCommand { get; }
 
         public ObservableCollection<Plant> Plants { get; }
-        
+
         public ObservableCollection<string> Types { get; private set; }
         public ObservableCollection<string> Families { get; private set; }
         public ObservableCollection<string> Genus { get; private set; }
@@ -44,13 +44,13 @@ namespace PlantenApplicatie.viewmodels
         {
             SelectedGebruiker = gebruiker;
             _plantenDao = PlantenDao.Instance;
-            
+
             ShowDetailsCommand = new DelegateCommand(ShowDetails);
             ResetCommand = new DelegateCommand(ResetInputs);
             AddUserCommand = new DelegateCommand(AddUser);
 
             Plants = new ObservableCollection<Plant>();
-            
+
             Types = new ObservableCollection<string>();
             Families = new ObservableCollection<string>();
             Genus = new ObservableCollection<string>();
@@ -102,7 +102,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        
+
         public string? SelectedType
         {
             get => _selectedType;
@@ -112,7 +112,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        
+
         public string? SelectedFamily
         {
             get => _selectedFamily;
@@ -122,7 +122,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        
+
         public string? SelectedGenus
         {
             get => _selectedGenus;
@@ -132,7 +132,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        
+
         public string? SelectedSpecies
         {
             get => _selectedSpecies;
@@ -189,7 +189,7 @@ namespace PlantenApplicatie.viewmodels
                 .ToList();
 
             Types = new ObservableCollection<string>(types);
-            
+
             OnPropertyChanged(nameof(Types));
         }
 
@@ -201,7 +201,7 @@ namespace PlantenApplicatie.viewmodels
                 .ToList();
 
             Families = new ObservableCollection<string>(families);
-            
+
             OnPropertyChanged(nameof(Families));
         }
 
@@ -213,10 +213,10 @@ namespace PlantenApplicatie.viewmodels
                 .ToList();
 
             Genus = new ObservableCollection<string>(genus);
-            
+
             OnPropertyChanged(nameof(Genus));
         }
-        
+
         private void LoadSpecies()
         {
             var species = Plants.Select(p => PlantenParser.ParseSearchText(p.Soort))
@@ -225,7 +225,7 @@ namespace PlantenApplicatie.viewmodels
                 .ToList();
 
             Species = new ObservableCollection<string>(species);
-            
+
             OnPropertyChanged(nameof(Species));
         }
 
@@ -244,10 +244,10 @@ namespace PlantenApplicatie.viewmodels
             }
 
             Variants = new ObservableCollection<string>(variants);
-            
+
             OnPropertyChanged(nameof(Variants));
         }
-        
+
         private void ShowDetails()
         {
             if (SelectedPlant is not null)
@@ -261,18 +261,18 @@ namespace PlantenApplicatie.viewmodels
 
         private void SearchPlanten()
         {
-            var plants = _plantenDao.SearchPlants(SelectedType, SelectedFamily, 
+            var plants = _plantenDao.SearchPlants(SelectedType, SelectedFamily,
                 SelectedGenus, SelectedSpecies, SelectedVariant, PlantName);
 
             ClearAndAddAll(Plants, plants);
         }
-        
+
         private void ResetInputs()
         {
             _selectedType = _selectedFamily = _selectedGenus = _selectedSpecies = _selectedVariant = null;
-            
+
             PlantName = string.Empty;
-            
+
             OnPropertyChanged(nameof(SelectedType));
             OnPropertyChanged(nameof(SelectedFamily));
             OnPropertyChanged(nameof(SelectedGenus));
@@ -280,7 +280,7 @@ namespace PlantenApplicatie.viewmodels
             OnPropertyChanged(nameof(SelectedVariant));
         }
 
-        private static void ClearAndAddAll<T>(ObservableCollection<T> collection, List<T> data) 
+        private static void ClearAndAddAll<T>(ObservableCollection<T> collection, List<T> data)
         {
             collection.Clear();
 

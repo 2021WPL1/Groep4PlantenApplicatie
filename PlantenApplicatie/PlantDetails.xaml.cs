@@ -25,6 +25,8 @@ namespace PlantenApplicatie
             InitializeComponent();
             DataContext = new TabsViewModel(selectedPlant, gebruiker);
         }
+
+      
     }
 }
 

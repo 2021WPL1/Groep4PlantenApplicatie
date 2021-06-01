@@ -13,7 +13,7 @@ namespace PlantenApplicatie.viewmodels
     // klasse BeheerDadenViewModel (Davy)
     public class TabBeheerDadenViewModel : ViewModelBase
     {
-        // knop commando's
+        // knop commando's (Davy)
         public ICommand AddManagementActCommand { get; set; }
         public ICommand EditManagementActCommand { get; set; }
         public ICommand RemoveManagementActCommand { get; set; }
@@ -115,6 +115,7 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedBeheerMaand = value;
+                LoadSelectedValues();
                 OnPropertyChanged();
             }
         }
@@ -149,6 +150,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedJanuary = value;
+                OnPropertyChanged();
+
             }
         }
 
@@ -163,6 +166,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedFebruary = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedMarch
@@ -176,6 +181,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedMarch = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedApril
@@ -189,6 +196,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedApril = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedMay
@@ -202,6 +211,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedMay = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedJune
@@ -215,6 +226,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedJune = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedJuly
@@ -228,6 +241,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedJuly = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedAugust
@@ -241,6 +256,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedAugust = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedSeptember
@@ -254,6 +271,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedSeptember = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedOctober
@@ -267,6 +286,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedOctober = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedNovember
@@ -280,6 +301,8 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedNovember = value;
+                OnPropertyChanged();
+
             }
         }
         public bool IsCheckedDecember
@@ -293,10 +316,11 @@ namespace PlantenApplicatie.viewmodels
                 }
 
                 _isCheckedDecember = value;
+                OnPropertyChanged();
             }
         }
 
-        // geef de BeheerMaanden weer in de listview
+        // geef de BeheerMaanden weer in de listview (Davy)
         public void LoadBeheerMaanden()
         {
             var beheermaanden = _plantenDao.GetBeheerMaanden(SelectedPlant);
@@ -309,7 +333,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // maak een beheerdaad aan
+        // maak een beheerdaad aan (Davy)
         private void AddManagementAct()
         {
             BeheerMaand beheerMaand = new BeheerMaand();
@@ -329,19 +353,16 @@ namespace PlantenApplicatie.viewmodels
             beheerMaand.Nov = IsCheckedNovember;
             beheerMaand.Dec = IsCheckedDecember;
 
-            string message = _plantenDao.CreateBeheerMaand(beheerMaand);
+            _plantenDao.CreateBeheerMaand(beheerMaand);
 
-            if (message != String.Empty)
-            {
-                MessageBox.Show(message);
-            }
+            
 
 
-            // weergeef de aangepaste lijst
+            // geef de aangepaste lijst terug weer 
             LoadBeheerMaanden();
         }
 
-        // wijzig een beheerdaad
+        // wijzig een beheerdaad (Davy)
         private void EditManagementAct()
         {
             BeheerMaand beheerMaand = SelectedBeheerMaand; 
@@ -374,7 +395,29 @@ namespace PlantenApplicatie.viewmodels
             LoadBeheerMaanden();
         }
 
-        // verwijder beheerdaad
+        //Wanneer er een beheersdaad geselecteerd word, dan verandert de waardes naar de geselecteerde waardes (Jim)
+        private void LoadSelectedValues()
+        {
+            var beheerMaand = SelectedBeheerMaand;
+
+            TextInputBeheerdaad = beheerMaand.Beheerdaad;
+            TextInputDescription = beheerMaand.Omschrijving;
+            IsCheckedJanuary = beheerMaand.Jan ?? false;
+            IsCheckedFebruary = beheerMaand.Feb ?? false;
+            IsCheckedMarch = beheerMaand.Mrt ?? false;
+            IsCheckedApril = beheerMaand.Apr ?? false;
+            IsCheckedMay = beheerMaand.Mei ?? false;
+            IsCheckedJune = beheerMaand.Jun ?? false;
+            IsCheckedJuly = beheerMaand.Jul ?? false;
+            IsCheckedAugust = beheerMaand.Aug ?? false;
+            IsCheckedSeptember = beheerMaand.Sept ?? false;
+            IsCheckedOctober = beheerMaand.Okt ?? false;
+            IsCheckedNovember = beheerMaand.Nov ?? false;
+            IsCheckedDecember = beheerMaand.Dec ?? false;
+        }
+
+
+        // verwijder beheerdaad (Davy)
         private void RemoveManagementAct()
         {
             // toewijzen object BeheerMaand aan geselecteerd object BeheerMaand uit listview

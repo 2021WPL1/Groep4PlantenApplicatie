@@ -21,50 +21,71 @@
                         <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
                         <Label x:Name="lblPlantnaamGroot" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="25"/>
+                        <ComboBox x:Name="cmbType"
+                ItemsSource="{Binding Types}"
+                SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="63" Width="219" Height="20"/>
 
-                        <ComboBox x:Name="cmbEigenschappen"
-                      ItemsSource="{Binding PrefixKeys}" 
-                      SelectedItem="{Binding SelectedPrefixKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="10" Canvas.Top="57" Width="219" Height="20"/>
-                        <Label 
-                Content="{Binding Path=DetailsPrefixes, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="10" Canvas.Top="153"/>
-                        <Label 
-                Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="219" Canvas.Top="153"/>
 
+                        <ComboBox x:Name="cmbFamily"
+                ItemsSource="{Binding Families}"
+                SelectedItem="{Binding SelectedFamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="104" Width="219" Height="20"/>
+                        <ComboBox x:Name="cmbGenus"
+                ItemsSource="{Binding Genus}"
+                SelectedItem="{Binding SelectedGenus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="147" Width="219" Height="20"/>
+                        <ComboBox x:Name="cmbSpecies"
+                ItemsSource="{Binding Species}"
+                SelectedItem="{Binding SelectedSpecies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="107" Canvas.Top="203" Width="220" Height="20"/>
+                        <ComboBox x:Name="cmbVariant"
+                ItemsSource="{Binding Variants}"
+                SelectedItem="{Binding SelectedVariant, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="246" Width="219" Height="20"/>
+                        <TextBox x:Name="txtPlantMin" Width="200" Canvas.Top="321" Canvas.Left="204"
+                     Text="{Binding TextInputMin, UpdateSourceTrigger=PropertyChanged}">
+                        </TextBox>
+                        <TextBox x:Name="txtPlantMax" Width="200" Canvas.Top="373" Canvas.Left="204"
+                Text="{Binding  TextInputMax, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button x:Name="btnSave" Content="Save" Canvas.Top="512" Width="80" Canvas.Left="630"
+                                    Command="{Binding Path=SaveCommand}"/>
+                        <Label Content="Type:" Canvas.Left="10" Canvas.Top="52" RenderTransformOrigin="0.494,0.541" Width="77" FontSize="20"/>
+                        <Label Content="Familie:" Canvas.Left="10" Canvas.Top="93" RenderTransformOrigin="0.494,0.541" Width="77" FontSize="20"/>
+                        <Label Content="Geslacht:" Canvas.Left="10" Canvas.Top="136" RenderTransformOrigin="0.494,0.541" Width="93" FontSize="20"/>
+                        <Label Content="Soort:" Canvas.Left="9" Canvas.Top="192" RenderTransformOrigin="0.494,0.541" Width="93" FontSize="20"/>
+                        <Label Content="Variant:" Canvas.Left="9" Canvas.Top="234" RenderTransformOrigin="0.494,0.541" Width="93" FontSize="20"/>
+                        <Label Content="Plantdichtheid Minimum:" Canvas.Left="10" Canvas.Top="314" RenderTransformOrigin="0.494,0.541" Width="189" FontSize="16"/>
+                        <Label Content="Plantdichtheid Maximum:" Canvas.Left="10" Canvas.Top="366" RenderTransformOrigin="0.494,0.541" Width="189" FontSize="16"/>
                         <Button x:Name="btnEdit" Canvas.Top="509" Canvas.Left="641" Width="86"
                                         Content="Edit Details" Command="{Binding Path=EditDetailsCommand}"
                                 IsEnabled="{Binding Path=IsManager}"
                                 />
                     </Canvas>
+
                 </Grid>
             </TabItem>
-            <TabItem Header="Wijzig plant" DataContext="{Binding Children[1]}">
-
-            </TabItem>
             <!--comboboxen opvullen Davy-->
-            <TabItem Header="Fenotype" DataContext="{Binding Children[2]}">
+            <TabItem Header="Fenotype" DataContext="{Binding Children[1]}">
                 <Canvas>
-                    <ComboBox Canvas.Left="178" Canvas.Top="31" Width="548"
+                    <Label x:Name="lblPlantNaamFenotype" 
+                   Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="10" FontSize="25"/>
+                    <ComboBox Canvas.Left="178" Canvas.Top="77" Width="548"
                               
                       ItemsSource="{Binding FenoBladgroottes}" 
                       SelectedItem="{Binding SelectedBladgrootte, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}"
                               />
-                    <Label Content="Bladgrootte :" Canvas.Left="10" Canvas.Top="27"/>
-                    <Label Content="Bladvorm :" Canvas.Left="10" Canvas.Top="66"/>
-                    <Label Content="Bloeiwijze :" Canvas.Left="10" Canvas.Top="109"/>
-                    <ComboBox Canvas.Left="128" Canvas.Top="70" Width="598"                              
+                    <Label Content="Bladgrootte :" Canvas.Left="10" Canvas.Top="73"/>
+                    <Label Content="Bladvorm :" Canvas.Left="10" Canvas.Top="116"/>
+                    <Label Content="Bloeiwijze :" Canvas.Left="10" Canvas.Top="151"/>
+                    <ComboBox Canvas.Left="128" Canvas.Top="120" Width="598"                              
                         ItemsSource="{Binding FenoBladvormen}" 
                         SelectedItem="{Binding SelectedBladvorm, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}"
                               />
-                    <ComboBox Canvas.Left="128" Canvas.Top="111" Width="598"
+                    <ComboBox Canvas.Left="128" Canvas.Top="155" Width="598"
                         ItemsSource="{Binding FenoBloeiwijzes}" 
                         SelectedItem="{Binding SelectedBloeiwijze, UpdateSourceTrigger=PropertyChanged}"   
                               IsEnabled="{Binding Path=IsManager}"
                               />
-                    <Label Content="Habitus :" Canvas.Left="10" Canvas.Top="148" RenderTransformOrigin="0.204,0.541"/>
-                    <Label Content="Kleur :" Canvas.Left="10" Canvas.Top="189" RenderTransformOrigin="0.204,0.541"/>
-                    <ComboBox Canvas.Left="128" Canvas.Top="152" Width="598"
+                    <Label Content="Habitus :" Canvas.Left="10" Canvas.Top="189" RenderTransformOrigin="0.204,0.541"/>
+                    <ComboBox Canvas.Left="128" Canvas.Top="191" Width="598"
                         ItemsSource="{Binding FenoHabitussen}" 
                         SelectedItem="{Binding SelectedHabitus, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}"
@@ -86,12 +107,11 @@
                         ItemsSource="{Binding FenoSpruitFenologieen}" 
                         SelectedItem="{Binding SelectedSpruitFenologie, UpdateSourceTrigger=PropertyChanged}"
                                />
-                    <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
-                              ItemsSource="{Binding FenoTypesMulti}" 
-                                          SelectedItem="{Binding SelectedFenoTypeMulti, Mode=TwoWay}" >
+                    <ListView Height="141" Width="205" Canvas.Left="10" Canvas.Top="413"
+                              ItemsSource="{Binding PlantFenoTypesMulti}" 
+                                          SelectedItem="{Binding SelectedPlantFenoTypeMulti, Mode=TwoWay}" >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="PlantNaam" Width="Auto" DisplayMemberBinding="{Binding SelectedPlant.Fsgv}" />
                                 <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
                                 <GridViewColumn Header="Maand" Width="Auto" DisplayMemberBinding="{Binding Maand}" />
                                 <GridViewColumn Header="Waarde" Width="Auto" DisplayMemberBinding="{Binding Waarde}" />
@@ -122,7 +142,7 @@
 
                 </Canvas>
             </TabItem>
-            <TabItem Header="Abiotiek"  DataContext="{Binding Children[3]}">
+            <TabItem Header="Abiotiek"  DataContext="{Binding Children[2]}">
                 <Canvas>
                     <Label Content="Bezonning :" Canvas.Left="10" Canvas.Top="27"/>
                     <ComboBox 
@@ -155,14 +175,18 @@
                         ItemsSource="{Binding AntagonianEnvironments}"
                         SelectedValue="{Binding SelectedAntagonianEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <ListView Height="150" Width="358" Canvas.Left="10" Canvas.Top="320">
+                    <ListView Height="150" Width="358" Canvas.Left="10" Canvas.Top="320"
+                              ItemsSource="{Binding SelectedPlantHabitats}"
+                              SelectedValue="{Binding SelectedAbioPlantHabitat}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Habitats of current plant" Width="auto"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ListView Height="150" Width="348" Canvas.Left="373" Canvas.Top="320">
+                    <ListView Height="150" Width="348" Canvas.Left="373" Canvas.Top="320"
+                              ItemsSource="{Binding PlantHabitats, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedValue="{Binding SelectedAbioHabitat}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Habitats" Width="auto"/>
@@ -175,17 +199,60 @@
                         Canvas.Top="255" Canvas.Right="50"
                         Content="Edit" 
                         Command="{Binding EditAbiotiekCommand}"/>
-                    <Button
-                              IsEnabled="{Binding Path=IsManager}" Content="Remove" Canvas.Left="322" Canvas.Top="475"/>
-                    <Button 
-                              IsEnabled="{Binding Path=IsManager}" Content="Add" Canvas.Left="695" Canvas.Top="475"/>
+                    <Button Content="Remove" Canvas.Left="322" Canvas.Top="475"
+                            Command="{Binding RemoveHabitatCommand}"/>
+                    <Button Content="Add" Canvas.Left="695" Canvas.Top="475"
+                            Command="{Binding AddHabitatCommand}"/>
                 </Canvas>
             </TabItem>
-            <TabItem Header="Commensalisme" DataContext="{Binding Children[4]}">
+            <TabItem Header="Commensalisme" DataContext="{Binding Children[3]}">
+                <Canvas>
+                    <ComboBox x:Name="cmbOntwikkelSnelheid" Canvas.Left="178" Canvas.Top="31" Width="548"
+                              
+                      ItemsSource="{Binding CommenOntwikkelsnelheden}" 
+                      SelectedItem="{Binding SelectedCommenOntwikkelsnelheid, UpdateSourceTrigger=PropertyChanged}"
+                              />
+                    <Label x:Name="lblOntwikkelSnelheid" Content="Ontwikkelingssnelheid :" Canvas.Left="10" Canvas.Top="27"/>
+                    <Label x:Name="lblStrategie" Content="Strategie :" Canvas.Left="10" Canvas.Top="66"/>
+                    <ComboBox x:Name="cmbStrategie" Canvas.Left="128" Canvas.Top="70" Width="598" 
+                              
+                      ItemsSource="{Binding CommenStrategien}"
+                      SelectedItem="{Binding SelectedCommenStrategie, UpdateSourceTrigger=PropertyChanged}"
+                              >
+
+                    </ComboBox>
+                    <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
+                              ItemsSource="{Binding CommensalismeMulti}" 
+                                          SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
+                                <GridViewColumn Header="Waarde" Width="Auto" DisplayMemberBinding="{Binding Waarde}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208"/>
+                    <Button x:Name="btnRemove" Command="{Binding RemoveCommensalismeMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447"/>
+                    <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
+                      
+                        ItemsSource="{Binding CommenEigenschappen}"
+                      SelectedItem="{Binding SelectedCommenEigenschappen, UpdateSourceTrigger=PropertyChanged}"      
+                        />
+                    <ComboBox Canvas.Left="392" Canvas.Top="446" Width="298"
+                       ItemsSource="{Binding CommenMulti}"
+                      SelectedItem="{Binding SelectedCommensalismeMulti, UpdateSourceTrigger=PropertyChanged}"
+                              
+                              
+                              />
+                    <Button x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismeMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46"/>
+                    <Button x:Name="btnWijzig" Command="{Binding EditCommensalismeMultiCommand}" Content="Wijzig" Canvas.Left="493" Canvas.Top="509" Height="22" Width="96"/>
+
+
+                </Canvas>
 
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Extra eigenschappen" DataContext="{Binding Children[5]}">
+            <TabItem Header="Extra eigenschappen" DataContext="{Binding Children[4]}">
                 <GroupBox Header="Extra eigenschappen" Width="760" Background="White" Margin="0,12,0,4">
                     <StackPanel Orientation="Vertical">
                         <Canvas Height="40">
@@ -251,7 +318,7 @@
                 </GroupBox>
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Beheersdaden" DataContext="{Binding Children[6]}">
+            <TabItem Header="Beheersdaden" DataContext="{Binding Children[5]}">
                 <GroupBox Header="Beheersdaden" Width="760" Background="White" Margin="0,12,0,4">
                     <StackPanel Orientation="Vertical">
                         <Canvas Height="40">
@@ -267,7 +334,7 @@
 
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Beheerdaad" Width="Auto" DisplayMemberBinding="{Binding Beheerdaad}" />
+                                    <GridViewColumn Header="Beheersdaad" Width="Auto" DisplayMemberBinding="{Binding Beheerdaad}" />
                                     <GridViewColumn Header="Omschrijving" Width="Auto" DisplayMemberBinding="{Binding Omschrijving}" />
                                     <GridViewColumn Header="Jan" Width="Auto" DisplayMemberBinding="{Binding Jan, Converter={StaticResource BooleanToYesNoConverter}}" />
                                     <GridViewColumn Header="Feb" Width="Auto" DisplayMemberBinding="{Binding Feb, Converter={StaticResource BooleanToYesNoConverter}}" />
@@ -295,7 +362,7 @@
                             <TextBox
                               IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
                             <!-- derde rij -->
-                            <Label Content="Data:" Canvas.Left="2" Canvas.Top="112"/>
+                            <Label Content="Datum:" Canvas.Left="2" Canvas.Top="112"/>
 
 
                             <CheckBox
@@ -337,7 +404,7 @@
                 </GroupBox>
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Foto" DataContext="{Binding Children[7]}">
+            <TabItem Header="Foto" DataContext="{Binding Children[6]}">
                 <Canvas>
                     <Label Height="25" Content="FotoId :" Canvas.Left="25" Canvas.Top="22"></Label>
                     <TextBox Canvas.Left="114" Canvas.Top="26"  Text="{Binding Path=Fotoid}" TextWrapping="Wrap" Width="376"/>
@@ -359,7 +426,9 @@
 
                 </Canvas>
             </TabItem>
+
         </TabControl>
 
     </Grid>
 </Window>
+
