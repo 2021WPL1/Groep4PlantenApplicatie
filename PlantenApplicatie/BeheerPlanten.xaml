@@ -14,7 +14,7 @@
             <TabControl.Background>
                 <ImageBrush ImageSource="images/bloemenachtergrondVmulti.png" Stretch="Fill"/>
             </TabControl.Background>
-            <TabItem Header="Opzoeken">
+            <TabItem Header="Opzoeken"  DataContext="{Binding Children[0]}">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FF78E59D" Offset="1"/>

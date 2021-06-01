@@ -66,8 +66,8 @@
                      Text="{Binding TextInputMin, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=IsManager}">
                         </TextBox>
                         <TextBox x:Name="txtPlantMax" Width="200" Canvas.Top="373" Canvas.Left="204"
-                Text="{Binding  TextInputMax, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Button x:Name="btnSave" Content="Save" Canvas.Top="512" Width="80" Canvas.Left="630"
+                Text="{Binding  TextInputMax, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding Path=IsManager}"/>
+                        <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnSave" Content="Save" Canvas.Top="512" Width="80" Canvas.Left="630"
                                     Command="{Binding Path=SaveCommand}">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -166,7 +166,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="518" Canvas.Top="322" Width="208" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="518" Canvas.Top="322" Width="208" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC892A4"/>
@@ -174,7 +174,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button Content="Delete from plant" Canvas.Left="230" Canvas.Top="449" Command="{Binding Path=DeleteFenotypeMultiPlantCommand}" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" Content="Delete from plant" Canvas.Left="230" Canvas.Top="449" Command="{Binding Path=DeleteFenotypeMultiPlantCommand}" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC791A3"/>
@@ -182,11 +182,11 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <ComboBox Canvas.Left="385" Canvas.Top="386" Width="98"
+                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="385" Canvas.Top="386" Width="98"
                         ItemsSource="{Binding FenotypeEigenschappen}" 
                         SelectedItem="{Binding SelectedFenotypeEigenschappen, UpdateSourceTrigger=PropertyChanged}"
                                />
-                    <Button Content="Add to Plant" Canvas.Left="599" Canvas.Top="449" Command="{Binding Path=AddFenotypeMultiCommand}" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" Content="Add to Plant" Canvas.Left="599" Canvas.Top="449" Command="{Binding Path=AddFenotypeMultiCommand}" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC791A1"/>
@@ -194,15 +194,15 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <ComboBox Canvas.Left="506" Canvas.Top="386" Width="54"
+                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="506" Canvas.Top="386" Width="54"
                         ItemsSource="{Binding FenoMultiMaand}" 
                         SelectedItem="{Binding SelectedFenoMultiMaand, UpdateSourceTrigger=PropertyChanged}"
                                />
-                    <ComboBox Canvas.Left="587" Canvas.Top="386" Width="82"
+                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="587" Canvas.Top="386" Width="82"
                         ItemsSource="{Binding FenoTypesMulti}" 
                         SelectedItem="{Binding SelectedFenoTypesMulti, UpdateSourceTrigger=PropertyChanged}"
                                />
-                    <Button Content="Edit fenotype" Canvas.Left="599" Canvas.Top="484" Command="{Binding EditFenotypeMultiCommand}" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" Content="Edit fenotype" Canvas.Left="599" Canvas.Top="484" Command="{Binding EditFenotypeMultiCommand}" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC790A1"/>
@@ -287,7 +287,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button Content="Remove" Canvas.Left="308" Canvas.Top="475"
+                    <Button IsEnabled="{Binding Path=IsManager}" Content="Remove" Canvas.Left="308" Canvas.Top="475"
                             Command="{Binding RemoveHabitatCommand}" BorderBrush="Black" Width="60">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -296,7 +296,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button Content="Add" Canvas.Left="656" Canvas.Top="475"
+                    <Button IsEnabled="{Binding Path=IsManager}" Content="Add" Canvas.Left="656" Canvas.Top="475"
                             Command="{Binding AddHabitatCommand}" BorderBrush="Black" Width="65">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -342,7 +342,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF90B4C6"/>
@@ -350,7 +350,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnRemove" Command="{Binding RemoveCommensalismeMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnRemove" Command="{Binding RemoveCommensalismeMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF8FB3C5"/>
@@ -369,7 +369,7 @@
                               
                               
                               />
-                    <Button x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismeMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismeMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF8FB1C5"/>
@@ -454,7 +454,7 @@
                               IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Pollen}" 
                                      SelectedValue="{Binding SelectedPollenValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
-                        <Button Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208" BorderBrush="Black">
+                        <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208" BorderBrush="Black">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFC89593"/>
@@ -462,7 +462,7 @@
                                 </LinearGradientBrush>
                             </Button.Background>
                         </Button>
-                        <Button Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208" BorderBrush="Black">
+                        <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208" BorderBrush="Black">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFC89594"/>
@@ -470,7 +470,7 @@
                                 </LinearGradientBrush>
                             </Button.Background>
                         </Button>
-                        <Button Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208" BorderBrush="Black">
+                        <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208" BorderBrush="Black">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFC89594"/>
@@ -505,7 +505,7 @@
                     </Canvas>
                     <ListView Height="150" Width="760"
                                       ItemsSource="{Binding BeheerMaanden}" 
-                                          SelectedItem="{Binding SelectedBeheerMaand, Mode=TwoWay}"  >
+                                          SelectedItem="{Binding SelectedBeheerMaand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
 
                         <ListView.View>
                             <GridView>
@@ -530,26 +530,26 @@
 
                         <!-- eerste rij -->
                         <Label Content="Beheersdaad :" Canvas.Top="30" />
-                        <TextBox Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
+                        <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
                         <!-- tweede rij -->
                         <Label Content="Omschrijving :" Canvas.Top="60" />
-                        <TextBox Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
+                        <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
                         <!-- derde rij -->
                         <Label Content="Datum:" Canvas.Left="2" Canvas.Top="112"/>
 
 
-                        <CheckBox IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
-                        <CheckBox IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
-                        <CheckBox IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
-                        <CheckBox IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
-                        <CheckBox IsChecked="{Binding IsCheckedMay, UpdateSourceTrigger=PropertyChanged}" Content="Mei" Canvas.Left="486" Canvas.Top="117"/>
-                        <CheckBox IsChecked="{Binding IsCheckedJune, UpdateSourceTrigger=PropertyChanged}" Content="Juni" Canvas.Left="597" Canvas.Top="117"/>
-                        <CheckBox IsChecked="{Binding IsCheckedJuly, UpdateSourceTrigger=PropertyChanged}" Content="Juli" Canvas.Left="84" Canvas.Top="152"/>
-                        <CheckBox IsChecked="{Binding IsCheckedAugust, UpdateSourceTrigger=PropertyChanged}" Content="Augustus" Canvas.Left="187" Canvas.Top="152"/>
-                        <CheckBox IsChecked="{Binding IsCheckedSeptember, UpdateSourceTrigger=PropertyChanged}" Content="September" Canvas.Left="291" Canvas.Top="152"/>
-                        <CheckBox IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
-                        <CheckBox IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
-                        <CheckBox IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedMay, UpdateSourceTrigger=PropertyChanged}" Content="Mei" Canvas.Left="486" Canvas.Top="117"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedJune, UpdateSourceTrigger=PropertyChanged}" Content="Juni" Canvas.Left="597" Canvas.Top="117"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedJuly, UpdateSourceTrigger=PropertyChanged}" Content="Juli" Canvas.Left="84" Canvas.Top="152"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedAugust, UpdateSourceTrigger=PropertyChanged}" Content="Augustus" Canvas.Left="187" Canvas.Top="152"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedSeptember, UpdateSourceTrigger=PropertyChanged}" Content="September" Canvas.Left="291" Canvas.Top="152"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
                         <Button Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan plant" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208" BorderBrush="Black">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -595,15 +595,15 @@
                         <ImageBrush ImageSource="images/bloemenachtergrondVpaars.png" Stretch="UniformToFill"/>
                     </Canvas.Background>
                     <Label Height="25" Content="Eigenschap :" Canvas.Left="10" Canvas.Top="10"/>
-                    <ComboBox Canvas.Left="99" Canvas.Top="13" Width="120" 
+                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="99" Canvas.Top="13" Width="120" 
                               ItemsSource="{Binding Eigenschappen}"
                               SelectedValue="{Binding SelectedEigenschap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Height="25" Content="Url Locatie :" Canvas.Left="10" Canvas.Top="44"/>
-                    <TextBox Canvas.Left="99" Canvas.Top="48" TextWrapping="Wrap" Width="376"
+                    <TextBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="99" Canvas.Top="48" TextWrapping="Wrap" Width="376"
                              Text="{Binding Path=SelectedUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Button Command="{Binding Path=ChangeFotoCommand}" Content="Wijzig foto" Height="28" Canvas.Left="282" Canvas.Top="509" Width="208"/>
-                    <Button Command="{Binding Path=DeleteFotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="509" Width="208"/>
+                    <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=ChangeFotoCommand}" Content="Wijzig foto" Height="28" Canvas.Left="282" Canvas.Top="509" Width="208"/>
+                    <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=DeleteFotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="509" Width="208"/>
                     <Image Height="318" Canvas.Left="126" Canvas.Top="130" Width="518" 
                            Source="{Binding Path=SelectedImage, UpdateSourceTrigger=PropertyChanged}" />
                 </Canvas>

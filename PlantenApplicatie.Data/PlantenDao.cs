@@ -222,7 +222,7 @@ namespace PlantenApplicatie.Data
         private long GetSpeciesId(string species)
         {
             return _context.TfgsvSoort
-                .SingleOrDefault(t => t.Soortnaam == species)
+                .FirstOrDefault(t => t.Soortnaam == species)
                 .Soortid;
         }
         private long? GetVariantId(string variant)
@@ -313,8 +313,8 @@ namespace PlantenApplicatie.Data
                 .ToList();
         }
 
-        //verander de gegevens van de Plant Onderwerp (jim)
-        public void ChangePlant(Plant plant, string? type, string? family, string? genus, string? species, string? variant, short? plantMin, short? plantMax)
+        //verander de gegevens van de Plant Onderwerp (jim & Davy)
+        public Plant ChangePlant(Plant plant, string? type, string? family, string? genus, string? species, string? variant, short? plantMin, short? plantMax)
         {
             //haal de id's van de verschillende types op
             var typeId = (int?)GetTypeId(type);
@@ -341,8 +341,9 @@ namespace PlantenApplicatie.Data
             //de plantnaam verandert mee als er iets verandert in de FGSV volgorde. (Jim)
             plant.Fgsv = plant.Familie + " " + plant.Geslacht + " " + plant.Soort + " " + plant.Variant;
 
-
             _context.SaveChanges();
+
+            return plant;
         }
 
         //Voeg een fenotype toe aan de geselecteerde plant (Jim)

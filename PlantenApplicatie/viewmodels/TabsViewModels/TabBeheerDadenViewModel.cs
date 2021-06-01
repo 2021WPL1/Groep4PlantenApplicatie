@@ -75,18 +75,7 @@ namespace PlantenApplicatie.viewmodels
         //controleer welke rol de gebruiker heeft
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
+            IsManager = SelectedGebruiker.Rol.ToLower() == "manager";
         }
         public Gebruiker SelectedGebruiker
         {
@@ -115,7 +104,6 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedBeheerMaand = value;
-                LoadSelectedValues();
                 OnPropertyChanged();
             }
         }
@@ -327,9 +315,22 @@ namespace PlantenApplicatie.viewmodels
 
             BeheerMaanden.Clear();
 
+            //indien object beheermaand niet gelijk is aan SelectedBeheerMaand, verwijder object uit lijst
+            foreach (var beheermaand in BeheerMaanden)
+            {
+                if (beheermaand != SelectedBeheerMaand)
+                {
+                    BeheerMaanden.Remove(beheermaand);
+                }
+            }
+
+            // indien object beheermaand niet gelijk is aan SelectedBeheermaand, voeg object toe aan lijst
             foreach (var beheermaand in beheermaanden)
             {
-                BeheerMaanden.Add(beheermaand);
+                if (beheermaand != SelectedBeheerMaand)
+                {
+                    BeheerMaanden.Add(beheermaand);
+                }
             }
         }
 
@@ -367,7 +368,7 @@ namespace PlantenApplicatie.viewmodels
         {
             BeheerMaand beheerMaand = SelectedBeheerMaand; 
 
-            if (beheerMaand != null)
+            if (beheerMaand is not null)
             {
                 beheerMaand.PlantId = SelectedBeheerMaand.PlantId;
                 beheerMaand.Beheerdaad = TextInputBeheerdaad;
@@ -400,8 +401,8 @@ namespace PlantenApplicatie.viewmodels
         {
             var beheerMaand = SelectedBeheerMaand;
 
-            TextInputBeheerdaad = beheerMaand.Beheerdaad;
-            TextInputDescription = beheerMaand.Omschrijving;
+            TextInputBeheerdaad = beheerMaand.Beheerdaad ?? String.Empty;
+            TextInputDescription = beheerMaand.Omschrijving ?? String.Empty;
             IsCheckedJanuary = beheerMaand.Jan ?? false;
             IsCheckedFebruary = beheerMaand.Feb ?? false;
             IsCheckedMarch = beheerMaand.Mrt ?? false;
