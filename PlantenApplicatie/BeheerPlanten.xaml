@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="BeheerPlanten" Height="550" Width="1200" BorderBrush="Black">
     <Window.Background>
-        <ImageBrush ImageSource="/bloemenachtergrondMetKlimopBloemen.png"/>
+        <ImageBrush ImageSource="Images/bloemenachtergrondMetKlimopBloemen.png"/>
     </Window.Background>
     <Grid>
         <TabControl TabStripPlacement="Left">
             <TabControl.Background>
-                <ImageBrush ImageSource="/bloemenachtergrondVmulti.png" Stretch="Fill"/>
+                <ImageBrush ImageSource="images/bloemenachtergrondVmulti.png" Stretch="Fill"/>
             </TabControl.Background>
             <TabItem Header="Opzoeken">
                 <TabItem.Background>
@@ -24,7 +24,7 @@
                 <Grid>
                     <StackPanel Orientation="Vertical">
                         <StackPanel.Background>
-                            <ImageBrush ImageSource="/bloemenachtergrondVmultiGroen.png"/>
+                            <ImageBrush ImageSource="images/bloemenachtergrondVmultiGroen.png"/>
                         </StackPanel.Background>
                         <GroupBox Header="Kenmerken" Height="170">
                             <Canvas Margin="10" OpacityMask="#FF663F3F">
@@ -32,13 +32,10 @@
                                 <Label Canvas.Top="0" Content="Plantnaam :"/>
                                 <TextBox x:Name="txtPlantnaam" Width="200" Canvas.Top="5" Canvas.Left="80"
                                          
-                                        Text="{Binding Path=TextInputPlantName, UpdateSourceTrigger=PropertyChanged}" Background="White">
-                                    <TextBox.InputBindings>
-                                        <KeyBinding Command="{Binding Path=showPlantByNameCommand}" Key="Enter" />
-                                    </TextBox.InputBindings>
+                                        Text="{Binding Path=PlantName, UpdateSourceTrigger=PropertyChanged}" Background="White">
                                 </TextBox>
                                 <Label Canvas.Top="0" Canvas.Left="350" Content="Familie :" Background="{x:Null}" FontWeight="Normal"/>
-                                <ComboBox SelectedValue="{Binding SelectedFamilie, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
+                                <ComboBox SelectedValue="{Binding SelectedFamily, UpdateSourceTrigger=PropertyChanged}" x:Name="cmbFamilie" Canvas.Top="5" Canvas.Left="450" Width="200"  ItemsSource="{Binding Families }" />
                                 <!-- tweede rij -->
                                 <Label Content="Type :" Canvas.Top="30" />
                                 <ComboBox SelectedValue="{Binding SelectedType}" x:Name="cmbType" Width="200" Canvas.Top="35" Canvas.Left="80" ItemsSource="{Binding Types }" Background="{x:Null}"  />
@@ -66,9 +63,6 @@
                                 <ListView x:Name="lvPlanten" Canvas.Left="10" Height="218" Width="1036"
                                           ItemsSource="{Binding Plants}" 
                                           SelectedItem="{Binding SelectedPlant}" Background="#FFFBFBFB">
-                                    <ListView.Foreground>
-                                        <ImageBrush ImageSource="/bloemenachtergrond6.png"/>
-                                    </ListView.Foreground>
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="Plantnaam" Width="Auto" DisplayMemberBinding="{Binding Fgsv}" />
@@ -111,7 +105,7 @@
                 </TabItem.Background>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVmultiZomer.png"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVmultiZomer.png"/>
                     </Grid.Background>
                     <GroupBox Header="Naam en toebehoren" Margin="0,0,0,284">
                         <Canvas Margin="10,0,10,0" Height="112">
@@ -195,7 +189,7 @@
                         <RowDefinition Height="459*"/>
                     </Grid.RowDefinitions>
                     <Grid.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVmultiOranje.png"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVmultiOranje.png"/>
                     </Grid.Background>
                     <ListView x:Name="lvPlanten_wijzigen_verwijderen" Margin="10,64,40,253" Grid.RowSpan="2">
                         <ListView.View>
@@ -229,7 +223,7 @@
                 </TabItem.Background>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVmulti.png"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVmulti.png"/>
                     </Grid.Background>
                     <Label Content="Kies bestand :" HorizontalAlignment="Left" Margin="35,31,0,0" VerticalAlignment="Top"/>
                     <Button Content="Bestand ..." HorizontalAlignment="Left" Margin="141,34,0,0" VerticalAlignment="Top" Width="109">
@@ -269,7 +263,7 @@
                 <Grid>
                     <Canvas>
                         <Canvas.Background>
-                            <ImageBrush ImageSource="/bloemenachtergrondVmultiDauw.png"/>
+                            <ImageBrush ImageSource="images/bloemenachtergrondVmultiDauw.png"/>
                         </Canvas.Background>
                         <Label Content="Kies planten om te exporteren :" Canvas.Left="348" FontSize="24" />
 
@@ -318,7 +312,7 @@
                 </TabItem.Background>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVmultiSchaduw.png"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVmultiSchaduw.png"/>
                     </Grid.Background>
                 </Grid>
             </TabItem>

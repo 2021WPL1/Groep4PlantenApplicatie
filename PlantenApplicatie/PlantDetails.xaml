@@ -10,7 +10,7 @@
         <local:BooleanToYesNoConverter x:Key="BooleanToYesNoConverter"/>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/bloemenachtergrondmetZijkantKort.png" Stretch="Fill"/>
+        <ImageBrush ImageSource="images/bloemenachtergrondmetZijkantKort.png" Stretch="Fill"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -32,7 +32,7 @@
                     </Grid.RowDefinitions>
                     <Canvas Grid.RowSpan="2">
                         <Canvas.Background>
-                            <ImageBrush ImageSource="/bloemenachtergrondVgroen.png" Stretch="UniformToFill"/>
+                            <ImageBrush ImageSource="images/bloemenachtergrondVgroen.png" Stretch="UniformToFill"/>
                         </Canvas.Background>
 
                         <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" Background="{x:Null}" />
@@ -109,7 +109,7 @@
                 </TabItem.Foreground>
                 <Canvas>
                     <Canvas.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVroos.png" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVroos.png" Stretch="UniformToFill"/>
                     </Canvas.Background>
                     <Label x:Name="lblPlantNaamFenotype" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="10" FontSize="25"/>
@@ -212,7 +212,7 @@
                 </TabItem.Background>
                 <Canvas>
                     <Canvas.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVgeel.png" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVgeel.png" Stretch="UniformToFill"/>
                     </Canvas.Background>
                     <Label Content="Bezonning :" Canvas.Left="10" Canvas.Top="27"/>
                     <ComboBox 
@@ -299,7 +299,7 @@
                 </TabItem.Background>
                 <Canvas>
                     <Canvas.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVblauw.png" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVblauw.png" Stretch="UniformToFill"/>
                     </Canvas.Background>
                     <ComboBox x:Name="cmbOntwikkelSnelheid" Canvas.Left="178" Canvas.Top="31" Width="548"
                               
@@ -378,7 +378,7 @@
                 <!--<GroupBox Header="Extra eigenschappen" Width="760" Margin="0,12,0,4">-->
                 <StackPanel Orientation="Vertical">
                     <StackPanel.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVrood.png" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVrood.png" Stretch="UniformToFill"/>
                     </StackPanel.Background>
                     <Canvas Height="40">
 
@@ -470,7 +470,7 @@
                 <!--<GroupBox Header="Beheersdaden" Width="760" Margin="0,12,0,4">-->
                 <StackPanel Orientation="Vertical">
                     <StackPanel.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVblauwgroen.png" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVblauwgroen.png" Stretch="UniformToFill"/>
                     </StackPanel.Background>
                     <Canvas Height="40">
 
@@ -568,7 +568,7 @@
                 </TabItem.Background>
                 <Canvas>
                     <Canvas.Background>
-                        <ImageBrush ImageSource="/bloemenachtergrondVpaars.png" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="images/bloemenachtergrondVpaars.png" Stretch="UniformToFill"/>
                     </Canvas.Background>
                     <Label Height="25" Content="FotoId :" Canvas.Left="25" Canvas.Top="22"></Label>
                     <TextBox Canvas.Left="114" Canvas.Top="26"  Text="{Binding Path=Fotoid}" TextWrapping="Wrap" Width="376"/>
