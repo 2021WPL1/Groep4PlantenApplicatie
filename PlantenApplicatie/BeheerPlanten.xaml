@@ -316,6 +316,18 @@
                     </Grid.Background>
                 </Grid>
             </TabItem>
+            <TabItem Header="Gebruiker" DataContext="{Binding Children[1]}">
+                <Grid>
+                    <Canvas>
+                        <Button Content="Voeg gebruiker toe" Canvas.Left="10" Canvas.Top="10" Width="114" Height="22"
+                                Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}" />
+                        <Button Content="Wijzigen wachtwoord" Command="{Binding Path=EditPasswordCommand}"
+                                 IsEnabled="{Binding Path=IsManager}"
+                                Canvas.Left="10" Canvas.Top="49" RenderTransformOrigin="0.395,0.703" Width="158"/>
+
+                    </Canvas>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

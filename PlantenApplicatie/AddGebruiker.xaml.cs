@@ -1,6 +1,4 @@
-﻿using PlantenApplicatie.Data;
-using PlantenApplicatie.Domain;
-using PlantenApplicatie.viewmodels;
+﻿using PlantenApplicatie.viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,17 +14,15 @@ using System.Windows.Shapes;
 namespace PlantenApplicatie
 {
     /// <summary>
-    /// Interaction logic for PlantDetails.xaml
+    /// Interaction logic for AddGebruiker.xaml
     /// </summary>
-    public partial class PlantDetails : Window
+    public partial class AddGebruiker : Window
     {
-        public PlantDetails(Plant selectedPlant, Gebruiker gebruiker)
+        public AddGebruiker()
         {
             InitializeComponent();
-            DataContext = new TabsViewModel(selectedPlant, gebruiker);
-        }
+            DataContext = new AddGebruikerViewModel(this);
 
-       
+        }
     }
 }
-

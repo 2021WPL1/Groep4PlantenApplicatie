@@ -1,5 +1,4 @@
-﻿using PlantenApplicatie.Domain;
-using PlantenApplicatie.viewmodels;
+﻿using PlantenApplicatie.viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,16 +14,14 @@ using System.Windows.Shapes;
 namespace PlantenApplicatie
 {
     /// <summary>
-    /// Interaction logic for Beheersdaden.xaml
+    /// Interaction logic for Inlogscherm.xaml
     /// </summary>
-    public partial class Beheersdaden : Window
+    public partial class Inlogscherm : Window
     {
-
-        // constructor Davy
-        public Beheersdaden(Plant selectedPlant)
+        public Inlogscherm()
         {
             InitializeComponent();
-            DataContext = new TabBeheerDadenViewModel(selectedPlant);
+            this.DataContext = new LoginViewModel(this);
         }
     }
 }

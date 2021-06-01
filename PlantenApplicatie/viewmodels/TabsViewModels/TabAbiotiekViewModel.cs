@@ -8,13 +8,13 @@ using Prism.Commands;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // klasse (Davy, Lily)
+    // klasse (Lily)
     public class TabAbiotiekViewModel : ViewModelBase
     {
 
         //variabelen instellen(Lily)
         private const string Eigenschap = "habitat";
-        
+
         private readonly PlantenDao _plantenDao;
         private readonly Plant _selectedPlant;
 
@@ -24,9 +24,15 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedNutritionRequirement;
         private string? _selectedAntagonianEnvironment;
 
+
+        // private variabelen (Davy)
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
+
         //constructor(Lily)
-        public TabAbiotiekViewModel(Plant selectedPlant)
+        public TabAbiotiekViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
+            SelectedGebruiker = gebruiker;
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedPlant;
 
@@ -44,9 +50,47 @@ namespace PlantenApplicatie.viewmodels
             EditAbiotiekCommand = new DelegateCommand(EditAbiotiek);
             RemoveHabitatCommand = new DelegateCommand(RemoveHabitat);
             AddHabitatCommand = new DelegateCommand(AddHabitat);
-            
+
             //laad de geselecteerde values in
             LoadStandards();
+            UserRole();
+        }
+
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
         }
 
         //observable collections
@@ -55,7 +99,7 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> MoistureRequirements { get; }
         public ObservableCollection<string> NutritionRequirements { get; }
         public ObservableCollection<string> AntagonianEnvironments { get; }
-        
+
         public ObservableCollection<string> SelectedPlantHabitats { get; }
         public ObservableCollection<string> PlantHabitats { get; }
 
@@ -110,7 +154,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        
+
         public string? SelectedAbioPlantHabitat { get; set; }
         public string? SelectedAbioHabitat { get; set; }
 
@@ -124,7 +168,7 @@ namespace PlantenApplicatie.viewmodels
             var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
 
             if (abiotiek is null) return;
-            
+
             SelectedInsolation = abiotiek.Bezonning;
             SelectedSoilType = abiotiek.Grondsoort;
             SelectedMoistureRequirement = abiotiek.Vochtbehoefte;
@@ -136,19 +180,19 @@ namespace PlantenApplicatie.viewmodels
         private void EditAbiotiek()
         {
             var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
-            
+
             Console.WriteLine(_selectedPlant.Abiotiek.Count);
-            
+
             if (abiotiek is null)
             {
-                _plantenDao.AddAbiotiek(_selectedPlant, SelectedInsolation, SelectedSoilType, 
-                    SelectedMoistureRequirement, SelectedNutritionRequirement, 
+                _plantenDao.AddAbiotiek(_selectedPlant, SelectedInsolation, SelectedSoilType,
+                    SelectedMoistureRequirement, SelectedNutritionRequirement,
                     SelectedAntagonianEnvironment);
             }
             else
             {
-                _plantenDao.ChangeAbiotiek(abiotiek, SelectedInsolation, SelectedSoilType, 
-                    SelectedMoistureRequirement, SelectedNutritionRequirement, 
+                _plantenDao.ChangeAbiotiek(abiotiek, SelectedInsolation, SelectedSoilType,
+                    SelectedMoistureRequirement, SelectedNutritionRequirement,
                     SelectedAntagonianEnvironment);
             }
         }
@@ -171,11 +215,11 @@ namespace PlantenApplicatie.viewmodels
         private void AddHabitat()
         {
             if (SelectedPlantHabitats.Contains(SelectedAbioHabitat)) return;
-            
+
             var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioHabitat);
-            
+
             _plantenDao.AddAbiotiekMulti(_selectedPlant, Eigenschap, habitatAbbreviation);
-            
+
             SelectedPlantHabitats.Add(SelectedAbioHabitat);
         }
     }

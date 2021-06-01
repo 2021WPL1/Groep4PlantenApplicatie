@@ -10,12 +10,14 @@ using System.Windows.Input;
 namespace PlantenApplicatie.viewmodels
 {
     // MVVM Toepassing (Davy, Lily) 
-    class BeheerPlantenViewModel : ViewModelBase
+    class TabBeheerPlantenViewModel : ViewModelBase
     {
         private readonly PlantenDao _plantenDao;
 
         private Plant? _selectedPlant;
 
+        private bool _IsManager;
+        private Gebruiker _selectedGebruiker;
         private string? _selectedType;
         private string? _selectedFamily;
         private string? _selectedGenus;
@@ -24,8 +26,9 @@ namespace PlantenApplicatie.viewmodels
 
         // The GUI binds to this variable through a property, therefore it will not be null,
         // so we tell the compiler it is not null
-        private string _plantName = null!;
-
+        private string _plantName = null!; 
+        
+        public ICommand AddUserCommand { get; }
         public ICommand ShowDetailsCommand { get; }
         public ICommand ResetCommand { get; }
 
@@ -36,13 +39,15 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Genus { get; private set; }
         public ObservableCollection<string> Species { get; private set; }
         public ObservableCollection<string> Variants { get; private set; }
-
-        public BeheerPlantenViewModel()
+        
+        public TabBeheerPlantenViewModel(Gebruiker gebruiker)
         {
+            SelectedGebruiker = gebruiker;
             _plantenDao = PlantenDao.Instance;
 
             ShowDetailsCommand = new DelegateCommand(ShowDetails);
             ResetCommand = new DelegateCommand(ResetInputs);
+            AddUserCommand = new DelegateCommand(AddUser);
 
             Plants = new ObservableCollection<Plant>();
 
@@ -52,7 +57,18 @@ namespace PlantenApplicatie.viewmodels
             Species = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
 
+
+            UserRole();
             FilterComboBoxes();
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
         }
 
         public Plant? SelectedPlant
@@ -64,6 +80,17 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
 
         public string PlantName
         {
@@ -225,11 +252,9 @@ namespace PlantenApplicatie.viewmodels
         {
             if (SelectedPlant is not null)
             {
-                new PlantDetails(SelectedPlant).Show();
-            }
-            else
-            {
-                MessageBox.Show("Gelieve een plant te selecteren uit de listview",
+                new PlantDetails(SelectedPlant, SelectedGebruiker).Show();
+            } else { 
+                MessageBox.Show("Gelieve een plant te selecteren uit de listview", 
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
@@ -263,6 +288,28 @@ namespace PlantenApplicatie.viewmodels
             {
                 collection.Add(elem);
             }
+        }
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch(SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+
+        //voeg een gebruiker toe als je een docent bent (Jim)
+        private void AddUser()
+        {
+            new AddGebruiker().Show();
         }
     }
 }

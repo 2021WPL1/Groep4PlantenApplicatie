@@ -38,7 +38,7 @@
                         <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" Background="{x:Null}" />
                         <Label x:Name="lblPlantnaamGroot" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="25"/>
-                        <ComboBox x:Name="cmbType"
+                        <ComboBox x:Name="cmbType" IsEnabled="{Binding Path=IsManager}"
                 ItemsSource="{Binding Types}"
                 SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="63" Width="219" Height="20">
                             <ComboBox.Background>
@@ -50,20 +50,20 @@
                         </ComboBox>
 
 
-                        <ComboBox x:Name="cmbFamily"
+                        <ComboBox x:Name="cmbFamily" IsEnabled="{Binding Path=IsManager}"
                 ItemsSource="{Binding Families}"
                 SelectedItem="{Binding SelectedFamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="104" Width="219" Height="20"/>
-                        <ComboBox x:Name="cmbGenus"
+                        <ComboBox x:Name="cmbGenus" IsEnabled="{Binding Path=IsManager}"
                 ItemsSource="{Binding Genus}"
                 SelectedItem="{Binding SelectedGenus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="147" Width="219" Height="20"/>
-                        <ComboBox x:Name="cmbSpecies"
+                        <ComboBox x:Name="cmbSpecies" IsEnabled="{Binding Path=IsManager}"
                 ItemsSource="{Binding Species}"
                 SelectedItem="{Binding SelectedSpecies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="107" Canvas.Top="203" Width="220" Height="20"/>
-                        <ComboBox x:Name="cmbVariant"
+                        <ComboBox x:Name="cmbVariant" IsEnabled="{Binding Path=IsManager}"
                 ItemsSource="{Binding Variants}"
                 SelectedItem="{Binding SelectedVariant, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="246" Width="219" Height="20"/>
                         <TextBox x:Name="txtPlantMin" Width="200" Canvas.Top="321" Canvas.Left="204"
-                     Text="{Binding TextInputMin, UpdateSourceTrigger=PropertyChanged}">
+                     Text="{Binding TextInputMin, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=IsManager}">
                         </TextBox>
                         <TextBox x:Name="txtPlantMax" Width="200" Canvas.Top="373" Canvas.Left="204"
                 Text="{Binding  TextInputMax, UpdateSourceTrigger=PropertyChanged}"/>
@@ -117,6 +117,7 @@
                               
                       ItemsSource="{Binding FenoBladgroottes}" 
                       SelectedItem="{Binding SelectedBladgrootte, UpdateSourceTrigger=PropertyChanged}"
+                              IsEnabled="{Binding Path=IsManager}"
                               />
                     <Label Content="Bladgrootte :" Canvas.Left="10" Canvas.Top="73"/>
                     <Label Content="Bladvorm :" Canvas.Left="10" Canvas.Top="116"/>
@@ -124,23 +125,33 @@
                     <ComboBox Canvas.Left="128" Canvas.Top="120" Width="598"                              
                         ItemsSource="{Binding FenoBladvormen}" 
                         SelectedItem="{Binding SelectedBladvorm, UpdateSourceTrigger=PropertyChanged}"
+                              IsEnabled="{Binding Path=IsManager}"
                               />
                     <ComboBox Canvas.Left="128" Canvas.Top="155" Width="598"
                         ItemsSource="{Binding FenoBloeiwijzes}" 
-                        SelectedItem="{Binding SelectedBloeiwijze, UpdateSourceTrigger=PropertyChanged}"                 
+                        SelectedItem="{Binding SelectedBloeiwijze, UpdateSourceTrigger=PropertyChanged}"   
+                              IsEnabled="{Binding Path=IsManager}"
                               />
                     <Label Content="Habitus :" Canvas.Left="10" Canvas.Top="189" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="191" Width="598"
                         ItemsSource="{Binding FenoHabitussen}" 
                         SelectedItem="{Binding SelectedHabitus, UpdateSourceTrigger=PropertyChanged}"
+                              IsEnabled="{Binding Path=IsManager}"
                               />
+                    <ComboBox Canvas.Left="128" Canvas.Top="191" Width="598"
+                        ItemsSource="{Binding FenoKleuren}" 
+                        SelectedItem="{Binding SelectedKleur, UpdateSourceTrigger=PropertyChanged}"
+                              IsEnabled="{Binding Path=IsManager}"
+                             />
                     <Label Content="Levensvorm :" Canvas.Left="10" Canvas.Top="234" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="236" Width="598"
+                              IsEnabled="{Binding Path=IsManager}"
                         ItemsSource="{Binding FenoLevensvormen}" 
                         SelectedItem="{Binding SelectedLevensvorm, UpdateSourceTrigger=PropertyChanged}"
                                />
                     <Label Content="SpruitFenologie :" Canvas.Left="10" Canvas.Top="276" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="278" Width="598"
+                              IsEnabled="{Binding Path=IsManager}"
                         ItemsSource="{Binding FenoSpruitFenologieen}" 
                         SelectedItem="{Binding SelectedSpruitFenologie, UpdateSourceTrigger=PropertyChanged}"
                                />
@@ -216,26 +227,31 @@
                     </Canvas.Background>
                     <Label Content="Bezonning :" Canvas.Left="10" Canvas.Top="27"/>
                     <ComboBox 
+                              IsEnabled="{Binding Path=IsManager}"
                         Canvas.Left="178" Canvas.Top="31" Width="548"
                         ItemsSource="{Binding Insolations}"
                         SelectedValue="{Binding SelectedInsolation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Grondsoort :" Canvas.Left="10" Canvas.Top="66"/>
                     <ComboBox
+                              IsEnabled="{Binding Path=IsManager}"
                         Canvas.Left="178" Canvas.Top="70" Width="548"
                         ItemsSource="{Binding SoilTypes}"
                         SelectedValue="{Binding SelectedSoilType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Vochtbehoefte :" Canvas.Left="10" Canvas.Top="109"/>
                     <ComboBox
+                              IsEnabled="{Binding Path=IsManager}"
                         Canvas.Left="178" Canvas.Top="111" Width="548"
                         ItemsSource="{Binding MoistureRequirements}"
                         SelectedValue="{Binding SelectedMoistureRequirement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Voedingsbehoefte :" Canvas.Left="10" Canvas.Top="148"/>
                     <ComboBox
+                              IsEnabled="{Binding Path=IsManager}"
                         Canvas.Left="178" Canvas.Top="152" Width="548"
                         ItemsSource="{Binding NutritionRequirements}"
                         SelectedValue="{Binding SelectedNutritionRequirement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Antagonische Omgeving :" Canvas.Left="10" Canvas.Top="189"/>
                     <ComboBox 
+                              IsEnabled="{Binding Path=IsManager}"
                         Canvas.Left="178" Canvas.Top="191" Width="548"
                         ItemsSource="{Binding AntagonianEnvironments}"
                         SelectedValue="{Binding SelectedAntagonianEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -259,8 +275,9 @@
                         </ListView.View>
                     </ListView>
                     <Button
-                        Width="104" Height="auto"
-                        Canvas.Top="233" Canvas.Right="50"
+                              IsEnabled="{Binding Path=IsManager}"
+                        Width="auto" Height="auto"
+                        Canvas.Top="255" Canvas.Right="50"
                         Content="Edit" 
                         Command="{Binding EditAbiotiekCommand}" BorderBrush="Black" Canvas.Left="373">
                         <Button.Background>
@@ -305,14 +322,14 @@
                               
                       ItemsSource="{Binding CommenOntwikkelsnelheden}" 
                       SelectedItem="{Binding SelectedCommenOntwikkelsnelheid, UpdateSourceTrigger=PropertyChanged}"
-                              />
+                               IsEnabled="{Binding Path=IsManager}"/>
                     <Label x:Name="lblOntwikkelSnelheid" Content="Ontwikkelingssnelheid :" Canvas.Left="10" Canvas.Top="27"/>
                     <Label x:Name="lblStrategie" Content="Strategie :" Canvas.Left="10" Canvas.Top="66"/>
                     <ComboBox x:Name="cmbStrategie" Canvas.Left="128" Canvas.Top="70" Width="598" 
                               
                       ItemsSource="{Binding CommenStrategien}"
                       SelectedItem="{Binding SelectedCommenStrategie, UpdateSourceTrigger=PropertyChanged}"
-                              >
+                              IsEnabled="{Binding Path=IsManager}" >
 
                     </ComboBox>
                     <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
@@ -342,11 +359,11 @@
                         </Button.Background>
                     </Button>
                     <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
-                      
+                       IsEnabled="{Binding Path=IsManager}"
                         ItemsSource="{Binding CommenEigenschappen}"
                       SelectedItem="{Binding SelectedCommenEigenschappen, UpdateSourceTrigger=PropertyChanged}"      
                         />
-                    <ComboBox Canvas.Left="392" Canvas.Top="446" Width="298"
+                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="392" Canvas.Top="446" Width="298"
                        ItemsSource="{Binding CommenMulti}"
                       SelectedItem="{Binding SelectedCommensalismeMulti, UpdateSourceTrigger=PropertyChanged}"
                               
@@ -407,15 +424,21 @@
                     <Canvas Height="200">
 
 
-                        <CheckBox IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
-                        <CheckBox IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
-                        <CheckBox IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
-                        <CheckBox IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
-                        <CheckBox IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
-                        <CheckBox IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
-                        <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
-                        <ComboBox Canvas.Left="114" Canvas.Top="29"
-                                      
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}"  IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
+                            <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
+                            <ComboBox Canvas.Left="114" Canvas.Top="29"
+                              IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Nectars}" 
                                      SelectedValue="{Binding SelectedNectarValue, UpdateSourceTrigger=PropertyChanged}" Width="120">
                             <ComboBox.Background>
@@ -428,6 +451,7 @@
                         <Label Content="Pollenwaarde :" Canvas.Left="19" Canvas.Top="57"/>
                         <ComboBox Canvas.Left="113" Canvas.Top="61" 
                                       
+                              IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Pollen}" 
                                      SelectedValue="{Binding SelectedPollenValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
                         <Button Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208" BorderBrush="Black">
