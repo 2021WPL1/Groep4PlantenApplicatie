@@ -12,10 +12,11 @@ using System.Linq;
 
 namespace PlantenApplicatie.viewmodels
 {
+    //MVVM Liam
     public class TabCommensalismeViewModel : ViewModelBase
     {
        
-
+        //private selecters en de dao (Liam)
         private Plant _selectedPlant;
         private readonly PlantenDao _dao;
         private string _selectedOntwikkelingssnelheid;
@@ -24,31 +25,38 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedCommensalismeMulti;
         private CommensalismeMulti _selectedCommenMulti;
 
+        //observable collections voor de lijst en comboboxes (Liam)
         public ObservableCollection<string> CommenStrategien { get; set; }
         public ObservableCollection<string> CommenOntwikkelsnelheden { get; set; }
         public ObservableCollection<string> CommenEigenschappen { get; set; }
         public ObservableCollection<CommensalismeMulti> CommensalismeMulti { get; set; }
         public ObservableCollection<string> CommenMulti { get; set; }
 
+        //button commands (Liam)
         public ICommand EditCommensalismeCommand { get; set; }
         public ICommand AddCommensalismeMultiCommand { get; set; }
         public ICommand EditCommensalismeMultiCommand { get; set; }
         public ICommand RemoveCommensalismeMultiCommand { get; set; }
 
+        //constructor (Liam)
         public TabCommensalismeViewModel(Plant selectedPlant)
         {
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
-            EditCommensalismeCommand = new DelegateCommand(EditCommensalisme);
+           
             CommenOntwikkelsnelheden = new ObservableCollection<string>();
             CommenStrategien = new ObservableCollection<string>();
-            AddCommensalismeMultiCommand = new DelegateCommand(AddCommenMulti);
-            EditCommensalismeMultiCommand = new DelegateCommand(EditCommenMulti);
-            RemoveCommensalismeMultiCommand = new DelegateCommand(RemoveCommenMulti);
             CommenEigenschappen = new ObservableCollection<string>();
             CommenMulti = new ObservableCollection<string>();
             CommensalismeMulti = new ObservableCollection<CommensalismeMulti>();
 
+            //de delegate commands voor de knoppen (Liam)
+            EditCommensalismeCommand = new DelegateCommand(EditCommensalisme);
+            AddCommensalismeMultiCommand = new DelegateCommand(AddCommenMulti);
+            EditCommensalismeMultiCommand = new DelegateCommand(EditCommenMulti);
+            RemoveCommensalismeMultiCommand = new DelegateCommand(RemoveCommenMulti);
+
+            //laad de verschillende lijsten in voor de comboboxes en listview (Liam)
             LoadCommenOntwikkelingssnelheid();
             LoadCommenStrategie();
             LoadCommenMulti();
@@ -58,12 +66,15 @@ namespace PlantenApplicatie.viewmodels
             LoadSelectedValues();
         }
 
+        //herlaad de comboboxes (Liam)
         public void Reset()
         {
             LoadCommenStrategie();
             LoadCommenOntwikkelingssnelheid();
             LoadCommenMulti();
         }
+
+        //getters and setters (Liam)
 
         public Plant SelectedPlant
         {
@@ -126,20 +137,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        private void EditCommensalisme()
-        {
-            var commensalisme = _dao.GetCommensialisme(SelectedPlant);
-
-            if(commensalisme == null)
-            {
-                _dao.AddCommensalisme(SelectedPlant, SelectedCommenOntwikkelsnelheid, SelectedCommenStrategie);
-            }
-            else
-            {
-                _dao.ChangeCommensalisme(SelectedPlant, SelectedCommenOntwikkelsnelheid, SelectedCommenStrategie);
-            }
-        }
-
+        //laad de verschillende lijsten in (Liam)
         private void LoadCommenOntwikkelingssnelheid()
         {
             var ontwikkelingssnelheden = _dao.GetCommOntwikkelsnelheid();
@@ -190,7 +188,7 @@ namespace PlantenApplicatie.viewmodels
 
             CommenMulti.Clear();
 
-            foreach(var sociabiliteit in sociabiliteiten)
+            foreach (var sociabiliteit in sociabiliteiten)
             {
                 CommenMulti.Add(sociabiliteit.Sociabiliteit);
             }
@@ -202,7 +200,7 @@ namespace PlantenApplicatie.viewmodels
 
             CommenMulti.Clear();
 
-            foreach(var levensvorm in levensvormen)
+            foreach (var levensvorm in levensvormen)
             {
                 CommenMulti.Add(levensvorm.Levensvorm);
             }
@@ -219,24 +217,41 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
+
+
+        //wijzig de commensialisme van de plant, als de plant er geen heeft word er eentje aangemaakt voor de plant (Liam)
+        private void EditCommensalisme()
+        {
+            var commensalisme = _dao.GetCommensialisme(SelectedPlant);
+
+            if(commensalisme == null)
+            {
+                _dao.AddCommensalisme(SelectedPlant, SelectedCommenOntwikkelsnelheid, SelectedCommenStrategie);
+            }
+            else
+            {
+                _dao.ChangeCommensalisme(SelectedPlant, SelectedCommenOntwikkelsnelheid, SelectedCommenStrategie);
+            }
+        }
+
+        //voeg een Commensialisme multi toe (Liam)
+
         private void AddCommenMulti()
         {
             _dao.AddCommensalismeMulti(SelectedPlant, SelectedCommenEigenschappen, SelectedCommensalismeMulti);
             LoadCommenMulti();
         }
 
+        //wijzig de geselecteerde commensialisme multi toe (Liam)
         private void EditCommenMulti()
         {
             _dao.ChangeCommensalismeMulti(SelectedCommenMulti, SelectedCommenEigenschappen, SelectedCommensalismeMulti);
             LoadCommenMulti();
         }
-        
-        
 
-        private void EditCommensalismeMulti()
-        {
-        }
 
+
+        //wijzig de eigenschap van de combobox, gebaseerd op welke er geselecteerd is word die ingeladen (Liam)
         private void ChangeCommEigenschappen()
         {
             switch (SelectedCommenEigenschappen.ToLower())
@@ -251,6 +266,8 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
+
+        //verwijder de geselecteerde commensialisme multi (Liam)
         private void RemoveCommenMulti()
         {
             if (SelectedCommenMulti is not null)
