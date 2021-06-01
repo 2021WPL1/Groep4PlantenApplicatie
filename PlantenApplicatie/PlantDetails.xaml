@@ -6,24 +6,48 @@
         xmlns:local="clr-namespace:PlantenApplicatie"
         mc:Ignorable="d"
         Title="Plant Details" Height="600" Width="900">
-    <Window.Background>
-        <ImageBrush ImageSource="/plantjes.png"/>
-    </Window.Background>
     <Window.Resources>
         <local:BooleanToYesNoConverter x:Key="BooleanToYesNoConverter"/>
     </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/bloemenachtergrondmetZijkantKort.png" Stretch="Fill"/>
+    </Window.Background>
     <Grid>
-        <TabControl TabStripPlacement="Left">
-            <TabItem Header="Details plant" DataContext="{Binding Children[0]}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="111*"/>
+            <RowDefinition Height="181*"/>
+        </Grid.RowDefinitions>
+        <TabControl TabStripPlacement="Left" Background="#FF423D3D" Grid.RowSpan="2"  >
+            <TabItem Header="Details plant" DataContext="{Binding Children[0]}" Foreground="Black" BorderBrush="Black">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFAFC18E"/>
+                        <GradientStop Color="#FF678350" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
-                    <Canvas>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="160*"/>
+                        <RowDefinition Height="419*"/>
+                    </Grid.RowDefinitions>
+                    <Canvas Grid.RowSpan="2">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="/bloemenachtergrondVgroen.png" Stretch="UniformToFill"/>
+                        </Canvas.Background>
 
-                        <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" />
+                        <Label Content="Details plant :" Canvas.Top="10" Canvas.Left="10" FontSize="24" Background="{x:Null}" />
                         <Label x:Name="lblPlantnaamGroot" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="12" Canvas.Left="169" FontSize="25"/>
                         <ComboBox x:Name="cmbType"
                 ItemsSource="{Binding Types}"
-                SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="63" Width="219" Height="20"/>
+                SelectedItem="{Binding SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="108" Canvas.Top="63" Width="219" Height="20">
+                            <ComboBox.Background>
+                                <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Color="#FFF0F0F0"/>
+                                    <GradientStop Color="#FF708D54" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ComboBox.Background>
+                        </ComboBox>
 
 
                         <ComboBox x:Name="cmbFamily"
@@ -44,8 +68,21 @@
                         <TextBox x:Name="txtPlantMax" Width="200" Canvas.Top="373" Canvas.Left="204"
                 Text="{Binding  TextInputMax, UpdateSourceTrigger=PropertyChanged}"/>
                         <Button x:Name="btnSave" Content="Save" Canvas.Top="512" Width="80" Canvas.Left="630"
-                                    Command="{Binding Path=SaveCommand}"/>
-                        <Label Content="Type:" Canvas.Left="10" Canvas.Top="52" RenderTransformOrigin="0.494,0.541" Width="77" FontSize="20"/>
+                                    Command="{Binding Path=SaveCommand}">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFB7C893"/>
+                                    <GradientStop Color="#FF678350" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Button.BorderBrush>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Black"/>
+                                    <GradientStop Color="Black" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.BorderBrush>
+                        </Button>
+                        <Label Content="Type:" Canvas.Left="10" Canvas.Top="52" RenderTransformOrigin="0.494,0.541" Width="77" FontSize="20" Background="{x:Null}"/>
                         <Label Content="Familie:" Canvas.Left="10" Canvas.Top="93" RenderTransformOrigin="0.494,0.541" Width="77" FontSize="20"/>
                         <Label Content="Geslacht:" Canvas.Left="10" Canvas.Top="136" RenderTransformOrigin="0.494,0.541" Width="93" FontSize="20"/>
                         <Label Content="Soort:" Canvas.Left="9" Canvas.Top="192" RenderTransformOrigin="0.494,0.541" Width="93" FontSize="20"/>
@@ -57,8 +94,23 @@
                 </Grid>
             </TabItem>
             <!--comboboxen opvullen Davy-->
-            <TabItem Header="Fenotype" DataContext="{Binding Children[1]}">
+            <TabItem Header="Fenotype" DataContext="{Binding Children[1]}" BorderBrush="Black">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF825055" Offset="1"/>
+                        <GradientStop Color="#FFC58F9F" Offset="0"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <TabItem.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="Black" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Foreground>
                 <Canvas>
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVroos.png" Stretch="UniformToFill"/>
+                    </Canvas.Background>
                     <Label x:Name="lblPlantNaamFenotype" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="10" FontSize="25"/>
                     <ComboBox Canvas.Left="178" Canvas.Top="77" Width="548"
@@ -103,13 +155,34 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="518" Canvas.Top="322" Width="208"/>
-                    <Button Content="Delete from plant" Canvas.Left="230" Canvas.Top="449" Command="{Binding Path=DeleteFenotypeMultiPlantCommand}"/>
+                    <Button Command="{Binding Path=EditFenoTypeCommand}" Content="Wijzig FenoType van plant" Height="28" Canvas.Left="518" Canvas.Top="322" Width="208" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC892A4"/>
+                                <GradientStop Color="#FF825055" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Content="Delete from plant" Canvas.Left="230" Canvas.Top="449" Command="{Binding Path=DeleteFenotypeMultiPlantCommand}" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC791A3"/>
+                                <GradientStop Color="#FF824F54" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                     <ComboBox Canvas.Left="385" Canvas.Top="386" Width="98"
                         ItemsSource="{Binding FenotypeEigenschappen}" 
                         SelectedItem="{Binding SelectedFenotypeEigenschappen, UpdateSourceTrigger=PropertyChanged}"
                                />
-                    <Button Content="Add to Plant" Canvas.Left="599" Canvas.Top="449" Command="{Binding Path=AddFenotypeMultiCommand}"/>
+                    <Button Content="Add to Plant" Canvas.Left="599" Canvas.Top="449" Command="{Binding Path=AddFenotypeMultiCommand}" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC791A1"/>
+                                <GradientStop Color="#FF825055" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                     <ComboBox Canvas.Left="506" Canvas.Top="386" Width="54"
                         ItemsSource="{Binding FenoMultiMaand}" 
                         SelectedItem="{Binding SelectedFenoMultiMaand, UpdateSourceTrigger=PropertyChanged}"
@@ -118,13 +191,29 @@
                         ItemsSource="{Binding FenoTypesMulti}" 
                         SelectedItem="{Binding SelectedFenoTypesMulti, UpdateSourceTrigger=PropertyChanged}"
                                />
-                    <Button Content="Edit fenotype" Canvas.Left="599" Canvas.Top="484" Command="{Binding EditFenotypeMultiCommand}"/>
+                    <Button Content="Edit fenotype" Canvas.Left="599" Canvas.Top="484" Command="{Binding EditFenotypeMultiCommand}" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC790A1"/>
+                                <GradientStop Color="#FF825055" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
 
 
                 </Canvas>
             </TabItem>
-            <TabItem Header="Abiotiek"  DataContext="{Binding Children[2]}">
+            <TabItem Header="Abiotiek"  DataContext="{Binding Children[2]}" BorderBrush="Black">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFC2AD8F"/>
+                        <GradientStop Color="#FF827850" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Canvas>
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVgeel.png" Stretch="UniformToFill"/>
+                    </Canvas.Background>
                     <Label Content="Bezonning :" Canvas.Left="10" Canvas.Top="27"/>
                     <ComboBox 
                         Canvas.Left="178" Canvas.Top="31" Width="548"
@@ -170,18 +259,48 @@
                         </ListView.View>
                     </ListView>
                     <Button
-                        Width="auto" Height="auto"
-                        Canvas.Top="255" Canvas.Right="50"
+                        Width="104" Height="auto"
+                        Canvas.Top="233" Canvas.Right="50"
                         Content="Edit" 
-                        Command="{Binding EditAbiotiekCommand}"/>
-                    <Button Content="Remove" Canvas.Left="322" Canvas.Top="475"
-                            Command="{Binding RemoveHabitatCommand}"/>
-                    <Button Content="Add" Canvas.Left="695" Canvas.Top="475"
-                            Command="{Binding AddHabitatCommand}"/>
+                        Command="{Binding EditAbiotiekCommand}" BorderBrush="Black" Canvas.Left="373">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC6AF90"/>
+                                <GradientStop Color="#FF827750" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Content="Remove" Canvas.Left="308" Canvas.Top="475"
+                            Command="{Binding RemoveHabitatCommand}" BorderBrush="Black" Width="60">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC7B091"/>
+                                <GradientStop Color="#FF827850" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Content="Add" Canvas.Left="656" Canvas.Top="475"
+                            Command="{Binding AddHabitatCommand}" BorderBrush="Black" Width="65">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC5B08F"/>
+                                <GradientStop Color="#FF827750" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                 </Canvas>
             </TabItem>
-            <TabItem Header="Commensalisme" DataContext="{Binding Children[3]}">
+            <TabItem Header="Commensalisme" DataContext="{Binding Children[3]}" BorderBrush="Black">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF8FB2C6"/>
+                        <GradientStop Color="#FF506782" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Canvas>
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVblauw.png" Stretch="UniformToFill"/>
+                    </Canvas.Background>
                     <ComboBox x:Name="cmbOntwikkelSnelheid" Canvas.Left="178" Canvas.Top="31" Width="548"
                               
                       ItemsSource="{Binding CommenOntwikkelsnelheden}" 
@@ -206,8 +325,22 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208"/>
-                    <Button x:Name="btnRemove" Command="{Binding RemoveCommensalismeMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447"/>
+                    <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF90B4C6"/>
+                                <GradientStop Color="#FF506782" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="btnRemove" Command="{Binding RemoveCommensalismeMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF8FB3C5"/>
+                                <GradientStop Color="#FF506782" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                     <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
                       
                         ItemsSource="{Binding CommenEigenschappen}"
@@ -219,140 +352,224 @@
                               
                               
                               />
-                    <Button x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismeMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46"/>
-                    <Button x:Name="btnWijzig" Command="{Binding EditCommensalismeMultiCommand}" Content="Wijzig" Canvas.Left="493" Canvas.Top="509" Height="22" Width="96"/>
+                    <Button x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismeMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF8FB1C5"/>
+                                <GradientStop Color="#FF506682" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
 
 
                 </Canvas>
 
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Extra eigenschappen" DataContext="{Binding Children[4]}">
-                <GroupBox Header="Extra eigenschappen" Width="760" Background="White" Margin="0,12,0,4">
-                    <StackPanel Orientation="Vertical">
-                        <Canvas Height="40">
 
-                            <!-- eerste rij -->
-                            <Label Canvas.Top="1" Content="PlantNaam"/>
-                            <Label Content="{Binding SelectedPlant.Fgsv}" 
+            <TabItem Header="Extra eigenschappen" DataContext="{Binding Children[4]}" BorderBrush="Black">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFC69290"/>
+                        <GradientStop Color="#FF825B50" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+
+                <!--<GroupBox Header="Extra eigenschappen" Width="760" Margin="0,12,0,4">-->
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVrood.png" Stretch="UniformToFill"/>
+                    </StackPanel.Background>
+                    <Canvas Height="40">
+
+                        <!-- eerste rij -->
+                        <Label Canvas.Top="1" Content="PlantNaam"/>
+                        <Label Content="{Binding SelectedPlant.Fgsv}" 
                               Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
-                        </Canvas>
-                        <ListView Height="150" Width="760"
+                    </Canvas>
+                    <ListView Height="150" Width="760"
                                       ItemsSource="{Binding BeheerExtraEigenschappen}" 
                                           SelectedItem="{Binding SelectedExtraEigenschap, Mode=TwoWay}"  >
 
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Nectarwaarde" Width="Auto" DisplayMemberBinding="{Binding Nectarwaarde}" />
-                                    <GridViewColumn Header="Pollenwaarde" Width="Auto" DisplayMemberBinding="{Binding Pollenwaarde}" />
-                                    <GridViewColumn Header="Bijvriendelijke" Width="Auto" DisplayMemberBinding="{Binding Bijvriendelijke, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Vlindervriendelijk" Width="Auto" DisplayMemberBinding="{Binding Vlindervriendelijk, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Eetbaar" Width="Auto" DisplayMemberBinding="{Binding Eetbaar, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Kruidgebruik" Width="Auto" DisplayMemberBinding="{Binding Kruidgebruik, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Geurend" Width="Auto" DisplayMemberBinding="{Binding Geurend, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Vorstgevoelig" Width="Auto" DisplayMemberBinding="{Binding Vorstgevoelig, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                        <Canvas Height="200">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Nectarwaarde" Width="Auto" DisplayMemberBinding="{Binding Nectarwaarde}" />
+                                <GridViewColumn Header="Pollenwaarde" Width="Auto" DisplayMemberBinding="{Binding Pollenwaarde}" />
+                                <GridViewColumn Header="Bijvriendelijke" Width="Auto" DisplayMemberBinding="{Binding Bijvriendelijke, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Vlindervriendelijk" Width="Auto" DisplayMemberBinding="{Binding Vlindervriendelijk, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Eetbaar" Width="Auto" DisplayMemberBinding="{Binding Eetbaar, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Kruidgebruik" Width="Auto" DisplayMemberBinding="{Binding Kruidgebruik, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Geurend" Width="Auto" DisplayMemberBinding="{Binding Geurend, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Vorstgevoelig" Width="Auto" DisplayMemberBinding="{Binding Vorstgevoelig, Converter={StaticResource BooleanToYesNoConverter}}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Canvas Height="200">
 
 
-                            <CheckBox IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
-                            <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
-                            <ComboBox Canvas.Left="114" Canvas.Top="29"
+                        <CheckBox IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
+                        <CheckBox IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
+                        <CheckBox IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
+                        <CheckBox IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
+                        <CheckBox IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
+                        <CheckBox IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
+                        <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
+                        <ComboBox Canvas.Left="114" Canvas.Top="29"
                                       
                                     ItemsSource="{Binding Nectars}" 
-                                     SelectedValue="{Binding SelectedNectarValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
-                            <Label Content="Pollenwaarde :" Canvas.Left="19" Canvas.Top="57"/>
-                            <ComboBox Canvas.Left="113" Canvas.Top="61" 
+                                     SelectedValue="{Binding SelectedNectarValue, UpdateSourceTrigger=PropertyChanged}" Width="120">
+                            <ComboBox.Background>
+                                <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Color="#FFF0F0F0"/>
+                                    <GradientStop Color="#FF1E51FF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ComboBox.Background>
+                        </ComboBox>
+                        <Label Content="Pollenwaarde :" Canvas.Left="19" Canvas.Top="57"/>
+                        <ComboBox Canvas.Left="113" Canvas.Top="61" 
                                       
                                     ItemsSource="{Binding Pollen}" 
                                      SelectedValue="{Binding SelectedPollenValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
-                            <Button Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208"/>
-                            <Button Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208"/>
-                            <Button Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208"/>
+                        <Button Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208" BorderBrush="Black">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFC89593"/>
+                                    <GradientStop Color="#FF835D50" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                        <Button Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208" BorderBrush="Black">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFC89594"/>
+                                    <GradientStop Color="#FF825B50" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                        <Button Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208" BorderBrush="Black">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFC89594"/>
+                                    <GradientStop Color="#FF825B50" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
 
-                        </Canvas>
-                    </StackPanel>
-                </GroupBox>
+                    </Canvas>
+                </StackPanel>
+                <!--</GroupBox>-->
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Beheersdaden" DataContext="{Binding Children[5]}">
-                <GroupBox Header="Beheersdaden" Width="760" Background="White" Margin="0,12,0,4">
-                    <StackPanel Orientation="Vertical">
-                        <Canvas Height="40">
+            <TabItem Header="Beheersdaden" DataContext="{Binding Children[5]}" BorderBrush="Black">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF90C3A6"/>
+                        <GradientStop Color="#FF508372" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <!--<GroupBox Header="Beheersdaden" Width="760" Margin="0,12,0,4">-->
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVblauwgroen.png" Stretch="UniformToFill"/>
+                    </StackPanel.Background>
+                    <Canvas Height="40">
 
-                            <!-- eerste rij -->
-                            <Label Canvas.Top="1" Content="PlantNaam"/>
-                            <Label Content="{Binding SelectedPlant.Fgsv}" 
+                        <!-- eerste rij -->
+                        <Label Canvas.Top="1" Content="PlantNaam"/>
+                        <Label Content="{Binding SelectedPlant.Fgsv}" 
                               Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
-                        </Canvas>
-                        <ListView Height="150" Width="760"
+                    </Canvas>
+                    <ListView Height="150" Width="760"
                                       ItemsSource="{Binding BeheerMaanden}" 
                                           SelectedItem="{Binding SelectedBeheerMaand, Mode=TwoWay}"  >
 
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Beheersdaad" Width="Auto" DisplayMemberBinding="{Binding Beheerdaad}" />
-                                    <GridViewColumn Header="Omschrijving" Width="Auto" DisplayMemberBinding="{Binding Omschrijving}" />
-                                    <GridViewColumn Header="Jan" Width="Auto" DisplayMemberBinding="{Binding Jan, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Feb" Width="Auto" DisplayMemberBinding="{Binding Feb, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Mrt" Width="Auto" DisplayMemberBinding="{Binding Mrt, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Apr" Width="Auto" DisplayMemberBinding="{Binding Apr, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Mei" Width="Auto" DisplayMemberBinding="{Binding Mei, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Jun" Width="Auto" DisplayMemberBinding="{Binding Jun, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Jul" Width="Auto" DisplayMemberBinding="{Binding Jul, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Aug" Width="Auto" DisplayMemberBinding="{Binding Aug, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Sept" Width="Auto" DisplayMemberBinding="{Binding Sept, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Okt" Width="Auto" DisplayMemberBinding="{Binding Okt, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Nov" Width="Auto" DisplayMemberBinding="{Binding Nov, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                    <GridViewColumn Header="Dec" Width="Auto" DisplayMemberBinding="{Binding Dec, Converter={StaticResource BooleanToYesNoConverter}}" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                        <Canvas Margin="0,0,20,0" Height="248">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Beheersdaad" Width="Auto" DisplayMemberBinding="{Binding Beheerdaad}" />
+                                <GridViewColumn Header="Omschrijving" Width="Auto" DisplayMemberBinding="{Binding Omschrijving}" />
+                                <GridViewColumn Header="Jan" Width="Auto" DisplayMemberBinding="{Binding Jan, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Feb" Width="Auto" DisplayMemberBinding="{Binding Feb, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Mrt" Width="Auto" DisplayMemberBinding="{Binding Mrt, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Apr" Width="Auto" DisplayMemberBinding="{Binding Apr, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Mei" Width="Auto" DisplayMemberBinding="{Binding Mei, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Jun" Width="Auto" DisplayMemberBinding="{Binding Jun, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Jul" Width="Auto" DisplayMemberBinding="{Binding Jul, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Aug" Width="Auto" DisplayMemberBinding="{Binding Aug, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Sept" Width="Auto" DisplayMemberBinding="{Binding Sept, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Okt" Width="Auto" DisplayMemberBinding="{Binding Okt, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Nov" Width="Auto" DisplayMemberBinding="{Binding Nov, Converter={StaticResource BooleanToYesNoConverter}}" />
+                                <GridViewColumn Header="Dec" Width="Auto" DisplayMemberBinding="{Binding Dec, Converter={StaticResource BooleanToYesNoConverter}}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Canvas Margin="0,0,20,0" Height="248">
 
-                            <!-- eerste rij -->
-                            <Label Content="Beheersdaad :" Canvas.Top="30" />
-                            <TextBox Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
-                            <!-- tweede rij -->
-                            <Label Content="Omschrijving :" Canvas.Top="60" />
-                            <TextBox Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
-                            <!-- derde rij -->
-                            <Label Content="Datum:" Canvas.Left="2" Canvas.Top="112"/>
-
-
-                            <CheckBox IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedMay, UpdateSourceTrigger=PropertyChanged}" Content="Mei" Canvas.Left="486" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedJune, UpdateSourceTrigger=PropertyChanged}" Content="Juni" Canvas.Left="597" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedJuly, UpdateSourceTrigger=PropertyChanged}" Content="Juli" Canvas.Left="84" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedAugust, UpdateSourceTrigger=PropertyChanged}" Content="Augustus" Canvas.Left="187" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedSeptember, UpdateSourceTrigger=PropertyChanged}" Content="September" Canvas.Left="291" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
-                            <Button Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan plant" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208"/>
-                            <Button Command="{Binding Path=EditManagementActCommand}" Content="Wijzig Beheerdaad van plant" Height="28" Canvas.Left="245" Canvas.Top="182" Width="208"/>
-                            <Button Command="{Binding Path=RemoveManagementActCommand}" Content="Verwijder Beheerdaad" Height="28" Canvas.Left="474" Canvas.Top="182" Width="208"/>
-
-                        </Canvas>
-
-                    </StackPanel>
+                        <!-- eerste rij -->
+                        <Label Content="Beheersdaad :" Canvas.Top="30" />
+                        <TextBox Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
+                        <!-- tweede rij -->
+                        <Label Content="Omschrijving :" Canvas.Top="60" />
+                        <TextBox Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
+                        <!-- derde rij -->
+                        <Label Content="Datum:" Canvas.Left="2" Canvas.Top="112"/>
 
 
-                </GroupBox>
+                        <CheckBox IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
+                        <CheckBox IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
+                        <CheckBox IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
+                        <CheckBox IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
+                        <CheckBox IsChecked="{Binding IsCheckedMay, UpdateSourceTrigger=PropertyChanged}" Content="Mei" Canvas.Left="486" Canvas.Top="117"/>
+                        <CheckBox IsChecked="{Binding IsCheckedJune, UpdateSourceTrigger=PropertyChanged}" Content="Juni" Canvas.Left="597" Canvas.Top="117"/>
+                        <CheckBox IsChecked="{Binding IsCheckedJuly, UpdateSourceTrigger=PropertyChanged}" Content="Juli" Canvas.Left="84" Canvas.Top="152"/>
+                        <CheckBox IsChecked="{Binding IsCheckedAugust, UpdateSourceTrigger=PropertyChanged}" Content="Augustus" Canvas.Left="187" Canvas.Top="152"/>
+                        <CheckBox IsChecked="{Binding IsCheckedSeptember, UpdateSourceTrigger=PropertyChanged}" Content="September" Canvas.Left="291" Canvas.Top="152"/>
+                        <CheckBox IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
+                        <CheckBox IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
+                        <CheckBox IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
+                        <Button Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan plant" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208" BorderBrush="Black">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF94C8AD"/>
+                                    <GradientStop Color="#FF508272" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                        <Button Command="{Binding Path=EditManagementActCommand}" Content="Wijzig Beheerdaad van plant" Height="28" Canvas.Left="245" Canvas.Top="182" Width="208" BorderBrush="Black">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF91C9AD"/>
+                                    <GradientStop Color="#FF4F8272" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                        <Button Command="{Binding Path=RemoveManagementActCommand}" Content="Verwijder Beheerdaad" Height="28" Canvas.Left="474" Canvas.Top="182" Width="208" BorderBrush="Black">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF94C8AC" Offset="0.006"/>
+                                    <GradientStop Color="#FF508272" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+
+                    </Canvas>
+
+                </StackPanel>
+
+
+                <!--</GroupBox>-->
             </TabItem>
             <!--Davy-->
-            <TabItem Header="Foto" DataContext="{Binding Children[6]}">
+            <TabItem Header="Foto" DataContext="{Binding Children[6]}" BorderBrush="Black">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA599BC"/>
+                        <GradientStop Color="#FF6B577A" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Canvas>
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVpaars.png" Stretch="UniformToFill"/>
+                    </Canvas.Background>
                     <Label Height="25" Content="FotoId :" Canvas.Left="25" Canvas.Top="22"></Label>
                     <TextBox Canvas.Left="114" Canvas.Top="26"  Text="{Binding Path=Fotoid}" TextWrapping="Wrap" Width="376"/>
                     <Label Height="25" Content="Plant :" Canvas.Left="25" Canvas.Top="53"/>
@@ -364,9 +581,30 @@
                     <Label Height="25" Content="Thumbnail :" Canvas.Left="25" Canvas.Top="156"/>
                     <TextBox Canvas.Left="114" Canvas.Top="160" Text="{Binding Path=Tumbnail}" TextWrapping="Wrap" Width="376"/>
 
-                    <Button Command="{Binding Path=AddPhotoCommand}" Content="Voeg foto toe aan plant" Height="28" Canvas.Left="46" Canvas.Top="215" Width="208"/>
-                    <Button Command="{Binding Path=EditPhotoCommand}" Content="Wijzig foto van plant" Height="28" Canvas.Left="282" Canvas.Top="215" Width="208"/>
-                    <Button Command="{Binding Path=RemovePhotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="215" Width="208"/>
+                    <Button Command="{Binding Path=AddPhotoCommand}" Content="Voeg foto toe aan plant" Height="28" Canvas.Left="46" Canvas.Top="215" Width="208" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFA396B9" Offset="0"/>
+                                <GradientStop Color="#FF6B577A" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Command="{Binding Path=EditPhotoCommand}" Content="Wijzig foto van plant" Height="28" Canvas.Left="282" Canvas.Top="215" Width="208" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFA598BB"/>
+                                <GradientStop Color="#FF6B577A" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Command="{Binding Path=RemovePhotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="215" Width="208" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFA398BA"/>
+                                <GradientStop Color="#FF6C577B" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
 
                 </Canvas>
             </TabItem>

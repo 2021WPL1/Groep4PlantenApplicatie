@@ -5,23 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlantenApplicatie"
         mc:Ignorable="d"
-        Title="BeheerPlanten" Height="550" Width="1200">
+        Title="BeheerPlanten" Height="550" Width="1200" BorderBrush="Black">
     <Window.Background>
-        <ImageBrush ImageSource="/bloemenachtergrond6.png"/>
+        <ImageBrush ImageSource="/bloemenachtergrondMetKlimopBloemen.png"/>
     </Window.Background>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="53*"/>
-            <ColumnDefinition Width="29*"/>
-            <ColumnDefinition Width="1118*"/>
-        </Grid.ColumnDefinitions>
-        <TabControl TabStripPlacement="Left" Grid.ColumnSpan="3" OpacityMask="#FFC71B1B" Foreground="#FFBD2424">
+        <TabControl TabStripPlacement="Left">
             <TabControl.Background>
-                <ImageBrush ImageSource="/bloemenachtergrond6.png"/>
+                <ImageBrush ImageSource="/bloemenachtergrondVmulti.png" Stretch="Fill"/>
             </TabControl.Background>
-            <TabItem Header="Opzoeken"  BorderBrush="#FFD4D0D0">
+            <TabItem Header="Opzoeken">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FF78E59D" Offset="1"/>
+                        <GradientStop Color="#FFA6E4DA" Offset="0"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
                     <StackPanel Orientation="Vertical">
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/bloemenachtergrondVmultiGroen.png"/>
+                        </StackPanel.Background>
                         <GroupBox Header="Kenmerken" Height="170">
                             <Canvas Margin="10" OpacityMask="#FF663F3F">
                                 <!-- eerste rij -->
@@ -47,7 +51,14 @@
                                 <TextBox x:Name="txtNLNaam" Width="200" Canvas.Top="99" Canvas.Left="80" Text="Typ de nederlandse naam"   />
                                 <ComboBox SelectedValue="{Binding SelectedVariant}" x:Name="cmbVariant" Width="200" Canvas.Top="65" Canvas.Left="450"  ItemsSource="{Binding Variants}" />
                                 <Button x:Name="btnReset" Content="Reset" Canvas.Top="97" Width="80" Canvas.Left="878"
-                                    Command="{Binding Path=ResetCommand}"/>
+                                    Command="{Binding Path=ResetCommand}">
+                                    <Button.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFA6E4DA"/>
+                                            <GradientStop Color="#FF77E59C" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Button.Background>
+                                </Button>
                             </Canvas>
                         </GroupBox>
                         <GroupBox Header="Resultaten" Height="265">
@@ -77,7 +88,14 @@
                         <Grid Height="50">
                             <Canvas>
                                 <Button x:Name="btnDetailsPlant" Canvas.Top="15" Canvas.Left="21" Width="150"
-                                        Content="Details plant bekijken" Command="{Binding Path=ShowDetailsCommand}" />
+                                        Content="Details plant bekijken" Command="{Binding Path=ShowDetailsCommand}" >
+                                    <Button.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFA6E4DA"/>
+                                            <GradientStop Color="#FF78E59D" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Button.Background>
+                                </Button>
 
                             </Canvas>
                         </Grid>
@@ -85,7 +103,16 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Toevoegen">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFCCE4A6" Offset="1"/>
+                        <GradientStop Color="#FFE5D978" Offset="0"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVmultiZomer.png"/>
+                    </Grid.Background>
                     <GroupBox Header="Naam en toebehoren" Margin="0,0,0,284">
                         <Canvas Margin="10,0,10,0" Height="112">
                             <!-- eerste rij -->
@@ -103,7 +130,14 @@
                             <Label Content="Variant :" Canvas.Top="31" Canvas.Left="246" />
                             <Label Content="NL naam:" Canvas.Top="63" Canvas.Left="247" />
                             <TextBox x:Name="txtVariant_toevoegen" Height="25" Canvas.Left="312" Canvas.Top="30" Text="TextBox" TextWrapping="Wrap" Width="125"/>
-                            <Button x:Name="btnVoegPlantToe_toevoegen" Content="Voeg Plant toe aan database" Height="28" Canvas.Left="598" Canvas.Top="10" Width="160"/>
+                            <Button x:Name="btnVoegPlantToe_toevoegen" Content="Voeg Plant toe aan database" Height="28" Canvas.Left="598" Canvas.Top="10" Width="160">
+                                <Button.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFCCE4A6" Offset="0.009"/>
+                                        <GradientStop Color="#FFE5D978" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                            </Button>
                             <TextBox x:Name="txtNederlandseNaam_toevoegen" Height="25" Canvas.Left="312" Canvas.Top="63" Text="TextBox" TextWrapping="Wrap" Width="125"/>
                             <Label Content="Resultaat: " Canvas.Left="534" Canvas.Top="55"/>
                             <Label x:Name="lblResultaatNaam_toevoegen" Content="Berguntia white chocolate " Canvas.Left="598" Canvas.Top="55"/>
@@ -113,7 +147,14 @@
                     <GroupBox Header="Geselecteerde eigenschappen" HorizontalAlignment="Left" Height="263" Margin="534,230,0,0" VerticalAlignment="Top" Width="279">
                         <Canvas HorizontalAlignment="Left" Height="241" Margin="10,0,0,0" VerticalAlignment="Center" Width="259">
                             <ListBox x:Name="lbEigenschappen" Height="191" Width="242" Canvas.Top="10"/>
-                            <Button x:Name="btnVerwijderEigenschap" Content="Verwijder eigenschap" Height="25" Canvas.Top="206" Width="120"/>
+                            <Button x:Name="btnVerwijderEigenschap" Content="Verwijder eigenschap" Height="25" Canvas.Top="206" Width="120">
+                                <Button.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFCCE4A6"/>
+                                        <GradientStop Color="#FFE5D978" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                            </Button>
                         </Canvas>
                     </GroupBox>
 
@@ -126,7 +167,14 @@
                             <Label Content="Bezonning:" Height="33" Canvas.Left="16" Canvas.Top="71" Width="78"/>
                             <ComboBox x:Name="cmbBezonning" Height="24" Canvas.Left="99" Canvas.Top="73" Width="48"/>
                             <Label Content="GrondSoort: " Height="27" Canvas.Left="16" Canvas.Top="121" Width="88"/>
-                            <Button x:Name="btnVoegHuidigeKenmerkenToe" Content="Voeg Huidige kenmerken toe" Height="24" Canvas.Left="310" Canvas.Top="175" Width="164"/>
+                            <Button x:Name="btnVoegHuidigeKenmerkenToe" Content="Voeg Huidige kenmerken toe" Height="24" Canvas.Left="310" Canvas.Top="175" Width="164">
+                                <Button.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFCCE4A6"/>
+                                        <GradientStop Color="#FFE5D978" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                            </Button>
                             <Label Content="VochtBehoefte: " Height="27" Canvas.Left="208" Canvas.Top="70" Width="98"/>
                             <Label Content="VoedingsBehoefte: " Height="27" Canvas.Left="208" Canvas.Top="121" Width="111"/>
                             <ComboBox x:Name="cmbGrondSoort" Height="24" Canvas.Left="104" Canvas.Top="124" Width="48"/>
@@ -135,8 +183,21 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Wijzigen-verwijderen">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFFFCE8E"/>
+                        <GradientStop Color="#FFFF8668" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
-                    <ListView x:Name="lvPlanten_wijzigen_verwijderen" Margin="10,64,40,253">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="459*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVmultiOranje.png"/>
+                    </Grid.Background>
+                    <ListView x:Name="lvPlanten_wijzigen_verwijderen" Margin="10,64,40,253" Grid.RowSpan="2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Plantnaam" Width="70" DisplayMemberBinding="{Binding Plantnaam}" />
@@ -151,19 +212,42 @@
                     </ListView>
                     <Label Content="Plantnaam:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Height="25" Width="74"/>
                     <TextBox HorizontalAlignment="Left" Margin="89,27,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <ListBox HorizontalAlignment="Left" Height="178" Margin="10,316,0,0" VerticalAlignment="Top" Width="146"/>
-                    <Label Content="Huidige eigenschappen" HorizontalAlignment="Left" Height="28" Margin="10,283,0,0" VerticalAlignment="Top" Width="139"/>
-                    <ListBox HorizontalAlignment="Left" Height="179" Margin="518,316,0,0" VerticalAlignment="Top" Width="146"/>
-                    <Label Content="Nieuwe eigenschappen" HorizontalAlignment="Left" Height="28" Margin="518,282,0,0" VerticalAlignment="Top" Width="139"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="316,285,0,0" VerticalAlignment="Top" Width="83"/>
+                    <ListBox HorizontalAlignment="Left" Height="178" Margin="10,246,0,0" VerticalAlignment="Top" Width="146" Grid.Row="1"/>
+                    <Label Content="Huidige eigenschappen" HorizontalAlignment="Left" Height="28" Margin="10,213,0,0" VerticalAlignment="Top" Width="139" Grid.Row="1"/>
+                    <ListBox HorizontalAlignment="Left" Height="179" Margin="518,246,0,0" VerticalAlignment="Top" Width="146" Grid.Row="1"/>
+                    <Label Content="Nieuwe eigenschappen" HorizontalAlignment="Left" Height="28" Margin="518,212,0,0" VerticalAlignment="Top" Width="139" Grid.Row="1"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="316,215,0,0" VerticalAlignment="Top" Width="83" Grid.Row="1"/>
 
                 </Grid>
             </TabItem>
             <TabItem Header="Importeren">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="White"/>
+                        <GradientStop Color="#FFBBEAEC" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVmulti.png"/>
+                    </Grid.Background>
                     <Label Content="Kies bestand :" HorizontalAlignment="Left" Margin="35,31,0,0" VerticalAlignment="Top"/>
-                    <Button Content="Bestand ..." HorizontalAlignment="Left" Margin="141,34,0,0" VerticalAlignment="Top" Width="109"/>
-                    <Button Content="Importeren" HorizontalAlignment="Left" Margin="929,473,0,0" VerticalAlignment="Top" Width="99"/>
+                    <Button Content="Bestand ..." HorizontalAlignment="Left" Margin="141,34,0,0" VerticalAlignment="Top" Width="109">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="#FFBBEAEC" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Content="Importeren" HorizontalAlignment="Left" Margin="929,473,0,0" VerticalAlignment="Top" Width="99">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="#FFBBEAEC" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                     <GroupBox Header="Data preview" Margin="35,84,40,86">
                         <ListView Height="258" Margin="43,0,68,0">
                             <ListView.View>
@@ -176,12 +260,28 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Exporteren">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFE4ABA6"/>
+                        <GradientStop Color="#FFE578A6" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
                     <Canvas>
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="/bloemenachtergrondVmultiDauw.png"/>
+                        </Canvas.Background>
                         <Label Content="Kies planten om te exporteren :" Canvas.Left="348" FontSize="24" />
 
                         <Image x:Name="imgFoto" Height="200" Width="200" Canvas.Top="80" Canvas.Left="498" />
-                        <Button x:Name="btnExporteren" Content="Exporteren naar Excel" Canvas.Left="873" Canvas.Top="471" Width="145" />
+                        <Button x:Name="btnExporteren" Content="Exporteren naar Excel" Canvas.Left="873" Canvas.Top="471" Width="145" >
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE4ABA6"/>
+                                    <GradientStop Color="#FFE577A6" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                         <ListView Height="186" Width="998" Canvas.Left="20" Canvas.Top="47">
                             <ListView.View>
                                 <GridView>
@@ -197,13 +297,29 @@
                             </ListView.View>
                         </ListView>
                         <Label Content="Overzicht geselecteerde planten" Canvas.Left="20" Canvas.Top="238"/>
-                        <Button Content="Plant uit overzicht verwijderen" Canvas.Left="20" Canvas.Top="471" Width="180"/>
+                        <Button Content="Plant uit overzicht verwijderen" Canvas.Left="20" Canvas.Top="471" Width="180">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE4ABA6"/>
+                                    <GradientStop Color="#FFE578A6" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
 
                     </Canvas>
                 </Grid>
             </TabItem>
             <TabItem Header="Afdrukken">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFB2A6E4"/>
+                        <GradientStop Color="#FF789AE5" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/bloemenachtergrondVmultiSchaduw.png"/>
+                    </Grid.Background>
                 </Grid>
             </TabItem>
         </TabControl>
