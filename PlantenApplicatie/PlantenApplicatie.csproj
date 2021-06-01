@@ -9,7 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="plantjes.png" />
+    <None Remove="bloemenachtergrond.png" />
+    <None Remove="bloemenachtergrond.xcf" />
+    <None Remove="bloemenachtergrond2.png" />
+    <None Remove="bloemenachtergrond3.png" />
+    <None Remove="bloemenachtergrond4.png" />
+    <None Remove="bloemenachtergrond5.png" />
+    <None Remove="bloemenachtergrond6.png" />
+    <None Remove="klimopachtergrond.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +38,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="plantjes.png" />
+    <Resource Include="bloemenachtergrond.png" />
+    <Resource Include="bloemenachtergrond.xcf" />
+    <Resource Include="bloemenachtergrond2.png" />
+    <Resource Include="bloemenachtergrond3.png" />
+    <Resource Include="bloemenachtergrond4.png" />
+    <Resource Include="bloemenachtergrond5.png" />
+    <Resource Include="bloemenachtergrond6.png" />
+    <Resource Include="klimopachtergrond.png" />
   </ItemGroup>
 
 </Project>
