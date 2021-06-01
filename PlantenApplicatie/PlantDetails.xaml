@@ -605,7 +605,18 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
+                    <Label Height="25" Content="Eigenschap :" Canvas.Left="10" Canvas.Top="10"/>
+                    <ComboBox Canvas.Left="99" Canvas.Top="13" Width="120" 
+                              ItemsSource="{Binding Eigenschappen}"
+                              SelectedValue="{Binding SelectedEigenschap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Height="25" Content="Url Locatie :" Canvas.Left="10" Canvas.Top="44"/>
+                    <TextBox Canvas.Left="99" Canvas.Top="48" TextWrapping="Wrap" Width="376"
+                             Text="{Binding Path=SelectedUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
+                    <Button Command="{Binding Path=ChangeFotoCommand}" Content="Wijzig foto" Height="28" Canvas.Left="282" Canvas.Top="509" Width="208"/>
+                    <Button Command="{Binding Path=DeleteFotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="509" Width="208"/>
+                    <Image Height="318" Canvas.Left="126" Canvas.Top="130" Width="518" 
+                           Source="{Binding Path=SelectedImage, UpdateSourceTrigger=PropertyChanged}" />
                 </Canvas>
             </TabItem>
 
