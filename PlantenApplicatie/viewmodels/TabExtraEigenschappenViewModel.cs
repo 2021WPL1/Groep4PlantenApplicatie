@@ -41,11 +41,14 @@ namespace PlantenApplicatie.viewmodels
         private bool _isCheckedFragrant;
         private bool _isCheckedFrostSensitive;
 
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
 
-        public TabExtraEigenschappenViewModel(Plant selectedPlant)
+        public TabExtraEigenschappenViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
             SelectedPlant = selectedPlant;
             _plantenDao = PlantenDao.Instance;
+            SelectedGebruiker = gebruiker;
 
             BeheerExtraEigenschappen = new ObservableCollection<ExtraEigenschap>();
             Nectars = new ObservableCollection<string>();
@@ -58,6 +61,46 @@ namespace PlantenApplicatie.viewmodels
             LoadBeheerExtraEigenschappen();
             LoadNectars();
             LoadPollen();
+
+            UserRole();
+        }
+
+
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool IsCheckedBeeFriendly

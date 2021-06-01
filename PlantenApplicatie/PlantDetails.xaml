@@ -31,7 +31,9 @@
                 Content="{Binding Path=Details, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Canvas.Left="219" Canvas.Top="153"/>
 
                         <Button x:Name="btnEdit" Canvas.Top="509" Canvas.Left="641" Width="86"
-                                        Content="Edit Details" Command="{Binding Path=EditDetailsCommand}" />
+                                        Content="Edit Details" Command="{Binding Path=EditDetailsCommand}"
+                                IsEnabled="{Binding Path=IsManager}"
+                                />
                     </Canvas>
                 </Grid>
             </TabItem>
@@ -213,25 +215,36 @@
                         <Canvas Height="200">
 
 
-                            <CheckBox IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
-                            <CheckBox IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}"  IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
                             <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
                             <ComboBox Canvas.Left="114" Canvas.Top="29"
                                       
+                              IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Nectars}" 
                                      SelectedValue="{Binding SelectedNectarValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
                             <Label Content="Pollenwaarde :" Canvas.Left="19" Canvas.Top="57"/>
                             <ComboBox Canvas.Left="113" Canvas.Top="61" 
                                       
+                              IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Pollen}" 
                                      SelectedValue="{Binding SelectedPollenValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
-                            <Button Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208"/>
-                            <Button Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208"/>
-                            <Button Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208"/>
+                            <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208"/>
+                            <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=EditExtraCommand}" Content="Wijzig extra eigenschap van plant" Height="28" Canvas.Left="258" Canvas.Top="162" Width="208"/>
+                            <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=RemoveExtraCommand}" Content="Verwijder extra eigenschap" Height="28" Canvas.Left="487" Canvas.Top="162" Width="208"/>
                             
                         </Canvas>
                     </StackPanel>
@@ -275,29 +288,46 @@
 
                             <!-- eerste rij -->
                             <Label Content="Beheerdaad :" Canvas.Top="30" />
-                            <TextBox Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
+                            <TextBox
+                              IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
                             <!-- tweede rij -->
                             <Label Content="Omschrijving :" Canvas.Top="60" />
-                            <TextBox Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
+                            <TextBox
+                              IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
                             <!-- derde rij -->
                             <Label Content="Data:" Canvas.Left="2" Canvas.Top="112"/>
 
 
-                            <CheckBox IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedMay, UpdateSourceTrigger=PropertyChanged}" Content="Mei" Canvas.Left="486" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedJune, UpdateSourceTrigger=PropertyChanged}" Content="Juni" Canvas.Left="597" Canvas.Top="117"/>
-                            <CheckBox IsChecked="{Binding IsCheckedJuly, UpdateSourceTrigger=PropertyChanged}" Content="Juli" Canvas.Left="84" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedAugust, UpdateSourceTrigger=PropertyChanged}" Content="Augustus" Canvas.Left="187" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedSeptember, UpdateSourceTrigger=PropertyChanged}" Content="September" Canvas.Left="291" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
-                            <CheckBox IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
-                            <Button Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan plant" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208"/>
-                            <Button Command="{Binding Path=EditManagementActCommand}" Content="Wijzig Beheerdaad van plant" Height="28" Canvas.Left="245" Canvas.Top="182" Width="208"/>
-                            <Button Command="{Binding Path=RemoveManagementActCommand}" Content="Verwijder Beheerdaad" Height="28" Canvas.Left="474" Canvas.Top="182" Width="208"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedMay, UpdateSourceTrigger=PropertyChanged}" Content="Mei" Canvas.Left="486" Canvas.Top="117"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedJune, UpdateSourceTrigger=PropertyChanged}" Content="Juni" Canvas.Left="597" Canvas.Top="117"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedJuly, UpdateSourceTrigger=PropertyChanged}" Content="Juli" Canvas.Left="84" Canvas.Top="152"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedAugust, UpdateSourceTrigger=PropertyChanged}" Content="Augustus" Canvas.Left="187" Canvas.Top="152"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedSeptember, UpdateSourceTrigger=PropertyChanged}" Content="September" Canvas.Left="291" Canvas.Top="152"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
+                            <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
+                            <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan plant" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208"/>
+                            <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=EditManagementActCommand}" Content="Wijzig Beheerdaad van plant" Height="28" Canvas.Left="245" Canvas.Top="182" Width="208"/>
+                            <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=RemoveManagementActCommand}" Content="Verwijder Beheerdaad" Height="28" Canvas.Left="474" Canvas.Top="182" Width="208"/>
 
                         </Canvas>
 
@@ -320,9 +350,12 @@
                     <Label Height="25" Content="Thumbnail :" Canvas.Left="25" Canvas.Top="156"/>
                     <TextBox Canvas.Left="114" Canvas.Top="160" Text="{Binding Path=Tumbnail}" TextWrapping="Wrap" Width="376"/>
 
-                    <Button Command="{Binding Path=AddPhotoCommand}" Content="Voeg foto toe aan plant" Height="28" Canvas.Left="46" Canvas.Top="215" Width="208"/>
-                    <Button Command="{Binding Path=EditPhotoCommand}" Content="Wijzig foto van plant" Height="28" Canvas.Left="282" Canvas.Top="215" Width="208"/>
-                    <Button Command="{Binding Path=RemovePhotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="215" Width="208"/>
+                    <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=AddPhotoCommand}" Content="Voeg foto toe aan plant" Height="28" Canvas.Left="46" Canvas.Top="215" Width="208"/>
+                    <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=EditPhotoCommand}" Content="Wijzig foto van plant" Height="28" Canvas.Left="282" Canvas.Top="215" Width="208"/>
+                    <Button
+                              IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=RemovePhotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="215" Width="208"/>
 
                 </Canvas>
             </TabItem>

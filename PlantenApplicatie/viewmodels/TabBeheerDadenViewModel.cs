@@ -42,10 +42,13 @@ namespace PlantenApplicatie.viewmodels
         private bool _isCheckedNovember;
         private bool _isCheckedDecember;
 
-        // constructor (Davy)
-        public TabBeheerDadenViewModel(Plant selectedPlant)
-        {
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
 
+        // constructor (Davy)
+        public TabBeheerDadenViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        {
+            SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             _plantenDao = PlantenDao.Instance;
 
@@ -55,7 +58,44 @@ namespace PlantenApplicatie.viewmodels
 
             BeheerMaanden = new ObservableCollection<BeheerMaand>();
 
-            LoadBeheerMaanden();            
+            LoadBeheerMaanden();
+            UserRole();
+        }
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
         }
 
         // Getters and setters selected waardes (Davy)

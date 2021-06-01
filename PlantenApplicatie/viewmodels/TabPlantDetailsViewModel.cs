@@ -21,19 +21,61 @@ namespace PlantenApplicatie.viewmodels
         private ObservableCollection<string> _prefixKeys;
         private string _selectedPrefixKey;
 
+        private Gebruiker _selectedGebruiker;
+        private bool _IsManager;
+
         //button commands
         public ICommand EditDetailsCommand { get; set; }
 
 
         // Constructor Lily
-        public TabPlantDetailsViewModel(Plant selectedPlant)
+        public TabPlantDetailsViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
+            SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             // onderstaande variabelen voor tabblad details plant
             CreatePrefixesAndProperties();
             SelectedPrefixKey = _prefixKeys[0];
             EditDetailsCommand = new DelegateCommand(EditPlantDetails);
+
+            UserRole();
+        }
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedGebruiker.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedGebruiker
+        {
+            private get => _selectedGebruiker;
+            set
+            {
+                _selectedGebruiker = value;
+                OnPropertyChanged();
+            }
         }
 
         // Getters and setters selected waardes (Lily)
