@@ -110,6 +110,14 @@ namespace PlantenApplicatie.viewmodels
 
         private static BitmapImage? GenerateBitmapImageFromByteArray(byte[]? imageBytes)
         {
+            /*
+             * We create a BitmapImage from the byte array by creating a memory
+             * stream (a stream is a flow of data, a sequence, generally with a
+             * pointer pointing to the current data) to read the byte array
+             * into a BitmapImage, we set the CacheOption to OnLoad so the image
+             * gets loaded fully into memory on load time, this way the image
+             * is rendered correctly, making it display in the GUI without issues
+             */
             if (imageBytes is null) return null;
 
             using var stream = new MemoryStream(imageBytes);
@@ -144,6 +152,19 @@ namespace PlantenApplicatie.viewmodels
         {
             try
             {
+                /*
+                 * Send a web request and check whether the content type of the
+                 * response is an image type by checking whether the content type
+                 * in the response starts with "image/", culture-invariant makes
+                 * sure to ignore special characters and read the string raw,
+                 * the request method we use is HEAD, which requests the headers
+                 * that would be the headers if the request method were GET, which
+                 * contains the information we need to know whether it is an image
+                 * (the content type) without having to request any additional data
+                 * Return false if any exception occured, since this mean something
+                 * went wrong with creating or sending the request, indicating the
+                 * URL was either invalid or did not work
+                 */
                 var request = (HttpWebRequest) WebRequest.Create(url);
                 request.Method = "HEAD";
 
