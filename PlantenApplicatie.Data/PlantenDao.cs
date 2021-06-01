@@ -350,7 +350,7 @@ namespace PlantenApplicatie.Data
 
         //verander een fenotype van de geselecteerde plant (Jim)
         public Fenotype ChangeFenotype(Plant plant, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
-        string habitus, string levensvorm,string spruitfenologie)
+            string habitus, string levensvorm,string spruitfenologie)
         {
             var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
@@ -621,6 +621,7 @@ namespace PlantenApplicatie.Data
 
             _context.SaveChanges();
         }
+
         //Liam
         public List<string> GetAbioBezonning()
         {
@@ -795,6 +796,52 @@ namespace PlantenApplicatie.Data
         public Fenotype GetFenotypeFromPlant(Plant plant)
         {
             return _context.Fenotype.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
+        }
+
+        public List<string> GetFotoEigenschappen()
+        {
+            return new()
+            {
+                "Blad",
+                "Bloei",
+                "Habitus"
+            };
+        }
+
+        public void AddFoto(string? property, Plant plant, string? url, byte[]? imageBytes)
+        {
+            var foto = new Foto
+            {
+                PlantNavigation = plant,
+                Eigenschap = property,
+                UrlLocatie = url,
+                Tumbnail = imageBytes
+            };
+
+            _context.Foto.Add(foto);
+
+            _context.SaveChanges();
+        }
+
+        public void ChangeFoto(Foto foto, string? property, string? url, byte[]? imageBytes)
+        {
+            foto.Eigenschap = property;
+            foto.UrlLocatie = url;
+            foto.Tumbnail = imageBytes;
+
+            _context.Foto.Add(foto);
+            _context.Entry(foto)
+                .State = EntityState.Modified;
+
+            _context.SaveChanges();
+        }
+
+        public void DeleteFoto(Foto foto)
+        {
+            _context.Foto
+                .Remove(foto);
+
+            _context.SaveChanges();
         }
     }
 }
