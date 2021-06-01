@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PlantenApplicatie.viewmodels
 {
@@ -30,6 +31,8 @@ namespace PlantenApplicatie.viewmodels
         public ICommand CloseWindowCommand { get; set; }
         private Window _addGebruikerWindow;
 
+        private Brush _color;
+
         public AddGebruikerViewModel(Window window)
         {
             _addGebruikerWindow = window;       // Davy
@@ -40,6 +43,19 @@ namespace PlantenApplicatie.viewmodels
             CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
         }
+
+        public Brush ChangeColor
+        {
+            get => _color;
+            set
+            {
+                _color = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        
 
         //getters setters (Jim)
 
@@ -126,37 +142,48 @@ namespace PlantenApplicatie.viewmodels
             if(TextInputPaswoord != TextInputPaswoordCheck)
             {
                 Check = "Paswoorden zijn niet gelijk";
+                ChangeColor = Brushes.Red;
             }
             else
             {
                 Check = "Paswoorden zijn gelijk";
+                ChangeColor = Brushes.Green;
             }
 
         }
 
         public void AddUser()
         {
+            string message;
 
-            if(TextInputEmail.Contains("@vives.be") || TextInputEmail.Contains("@student.vives.be"))
+            if (SelectedRole == null || TextInputVoornaam == null || _TextInputAchternaam == null ||
+                TextInputEmail == null || TextInputPaswoord == null || TextInputPaswoordCheck == null)
             {
-                
-                var gebruiker = new Gebruiker
-                {
-                    Voornaam = TextInputVoornaam,
-                    Achternaam = TextInputAchternaam,
-                    Rol = SelectedRole,
-                    Emailadres = TextInputEmail,
-                    HashPaswoord = Encryptor.GenerateMD5Hash(TextInputPaswoord)
-                };
-
-
-                MessageBox.Show($"gebruiker: {TextInputVoornaam} {TextInputAchternaam} werd aangemaakt");
-
-                _dao.CreateLogin(gebruiker);
+                MessageBox.Show("Niet alle velden zijn ingevuld");
             }
             else
             {
-                MessageBox.Show("Email mag alleen van het Vives domein zijn.");
+                if (TextInputEmail.Contains("@vives.be") || TextInputEmail.Contains("@student.vives.be"))
+                {
+                    if (TextInputPaswoord == TextInputPaswoordCheck)
+                    {
+                        var gebruiker = new Gebruiker
+                        {
+                            Voornaam = TextInputVoornaam,
+                            Achternaam = TextInputAchternaam,
+                            Rol = SelectedRole,
+                            Emailadres = TextInputEmail,
+                            HashPaswoord = Encryptor.GenerateMD5Hash(TextInputPaswoord)
+                        };
+                        _dao.CreateLogin(gebruiker, out message);
+                        MessageBox.Show(message);
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Email mag alleen van het Vives domein zijn.");
+                }
             }
         }
 

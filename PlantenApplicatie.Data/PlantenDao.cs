@@ -812,13 +812,26 @@ namespace PlantenApplicatie.Data
         }
 
 
-        public void CreateLogin(Gebruiker gebruiker)
+        public bool CreateLogin(Gebruiker gebruiker, out string message)
         {
+            var gebruikers = _context.Gebruiker.ToList();
+            message = "";
+
+            foreach (var user in gebruikers)
+            {
+                if (gebruiker.Emailadres == user.Emailadres)
+                {
+                    message = "Email is al in gebruik";
+                    return false;
+                }
+            }
             _context.Gebruiker.Add(gebruiker);
             _context.SaveChanges();
+            message = $"{gebruiker.Rol} {gebruiker.Voornaam} {gebruiker.Achternaam} werd aangemaakt";
+            return true;
         }
 
-        public bool CheckLogin(string emailadress, string password, out string message)
+            public bool CheckLogin(string emailadress, string password, out string message)
         {
             //Gebruiker gebruiker = new Gebruiker();
             //gebruiker.Emailadres = emailadress;
