@@ -111,21 +111,11 @@ namespace PlantenApplicatie.viewmodels
         //load in the roles, for now database is empty so the roles are hardcoded to access the program (Jim)
         public void LoadRoles()
         {
-            var roles = _dao.GetRoles();
-
-            if (roles is null)
-            {
+            
                 Roles.Add("manager");
                 Roles.Add("data-collector");
                 Roles.Add("gebruiker");
-            }
-            else
-            {
-                foreach(var role in roles)
-                {
-                    roles.Add(role);
-                }
-            }
+           
         }
 
         public void PasswordChecker(string password, string passwordConfirm)
