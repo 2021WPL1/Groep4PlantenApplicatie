@@ -4,6 +4,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -251,7 +252,7 @@ namespace PlantenApplicatie.viewmodels
             RefreshObservableCollection(PlantFenoTypesMulti, _plantenDao.GetFenoMultis(SelectedPlant));
         }
 
-        // TODO: create constant somewhere for this
+        // TODO: create constant in dao
         private void LoadEigenschappen()
         {
             FenotypeEigenschappen.Clear();
@@ -278,21 +279,9 @@ namespace PlantenApplicatie.viewmodels
         
         private void LoadFenoMultiMaanden()
         {
-            FenoMultiMaand.Clear();
+            var monthNames = new DateTimeFormatInfo().AbbreviatedMonthNames;
             
-            // TODO: this should not be hard coded 
-            FenoMultiMaand.Add("Jan");
-            FenoMultiMaand.Add("Feb");
-            FenoMultiMaand.Add("Mar");
-            FenoMultiMaand.Add("Apr");
-            FenoMultiMaand.Add("May");
-            FenoMultiMaand.Add("Jun");
-            FenoMultiMaand.Add("Jul");
-            FenoMultiMaand.Add("Aug");
-            FenoMultiMaand.Add("Sep");
-            FenoMultiMaand.Add("Okt");
-            FenoMultiMaand.Add("Nov");
-            FenoMultiMaand.Add("Dec");
+            RefreshObservableCollection(FenoMultiMaand, monthNames[0..12]);
         }
         
         private static void RefreshObservableCollection<T>(ICollection<T> collection, IEnumerable<T> data) 
