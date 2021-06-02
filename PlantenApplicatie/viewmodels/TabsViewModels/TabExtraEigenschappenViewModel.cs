@@ -36,14 +36,14 @@ namespace PlantenApplicatie.viewmodels
         private bool _isCheckedFragrant;
         private bool _isCheckedFrostSensitive;
 
-        private Gebruiker _selectedGebruiker;
+        private User _selectedGebruiker;
         private bool _IsManager;
 
         public ObservableCollection<ExtraEigenschap> BeheerExtraEigenschappen { get; set; }
         public ObservableCollection<string> Nectars { get; set; }
         public ObservableCollection<string> Pollen { get; set; }
 
-        public TabExtraEigenschappenViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabExtraEigenschappenViewModel(Plant selectedPlant, User gebruiker)
         {
             SelectedPlant = selectedPlant;
             _plantenDao = PlantenDao.Instance;
@@ -93,7 +93,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
-        public Gebruiker SelectedGebruiker
+        public User SelectedGebruiker
         {
             private get => _selectedGebruiker;
             set

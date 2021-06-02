@@ -9,11 +9,11 @@ using Prism.Commands;
 namespace PlantenApplicatie.viewmodels
 {
     // klasse (Lily)
-    public class TabAbiotiekViewModel : ViewModelBase
+    public class TabAbioticViewModel : ViewModelBase
     {
 
         //variabelen instellen(Lily)
-        private const string Eigenschap = "habitat";
+        private const string Property = "habitat";
 
         private readonly PlantenDao _plantenDao;
         private readonly Plant _selectedPlant;
@@ -26,22 +26,22 @@ namespace PlantenApplicatie.viewmodels
 
 
         // private variabelen (Davy)
-        private Gebruiker _selectedGebruiker;
+        private User _selectedUser;
         private bool _IsManager;
 
         //constructor(Lily)
-        public TabAbiotiekViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabAbioticViewModel(Plant selectedPlant, User user)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedGebruiker = user;
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedPlant;
 
             //observable collections voor de comboboxes, word opgevuld met de functies in DAO
-            Insolations = new ObservableCollection<string>(_plantenDao.GetAbioBezonning());
-            SoilTypes = new ObservableCollection<string>(_plantenDao.GetAbioGrondsoort());
-            MoistureRequirements = new ObservableCollection<string>(_plantenDao.GetAbioVochtbehoefte());
-            NutritionRequirements = new ObservableCollection<string>(_plantenDao.GetAbioVoedingsbehoefte());
-            AntagonianEnvironments = new ObservableCollection<string>(_plantenDao.GetAbioAntagonischeOmgeving());
+            Insolations = new ObservableCollection<string>(_plantenDao.GetAbioInsolation());
+            SoilTypes = new ObservableCollection<string>(_plantenDao.GetAbioSoilType());
+            MoistureRequirements = new ObservableCollection<string>(_plantenDao.GetAbioMoistureRequirement());
+            NutritionRequirements = new ObservableCollection<string>(_plantenDao.GetAbioNutritionRequirement());
+            AntagonianEnvironments = new ObservableCollection<string>(_plantenDao.GetAbioAntagonianEnvironments());
 
             SelectedPlantHabitats = new ObservableCollection<string>(
                 _plantenDao.GetAbioHabitatNames(_selectedPlant));
@@ -83,12 +83,12 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
-        public Gebruiker SelectedGebruiker
+        public User SelectedGebruiker
         {
-            private get => _selectedGebruiker;
+            private get => _selectedUser;
             set
             {
-                _selectedGebruiker = value;
+                _selectedUser = value;
                 OnPropertyChanged();
             }
         }
@@ -203,7 +203,7 @@ namespace PlantenApplicatie.viewmodels
         {
             var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioPlantHabitat);
             var abiothiekMulti = _plantenDao.GetAbioMulti(_selectedPlant)
-                .Single(am => am.Eigenschap == Eigenschap && am.Waarde == habitatAbbreviation);
+                .Single(am => am.Eigenschap == Property && am.Waarde == habitatAbbreviation);
 
             _plantenDao.DeleteAbiotiekMulti(abiothiekMulti);
 
@@ -218,7 +218,7 @@ namespace PlantenApplicatie.viewmodels
 
             var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioHabitat);
 
-            _plantenDao.AddAbiotiekMulti(_selectedPlant, Eigenschap, habitatAbbreviation);
+            _plantenDao.AddAbiotiekMulti(_selectedPlant, Property, habitatAbbreviation);
 
             SelectedPlantHabitats.Add(SelectedAbioHabitat);
         }

@@ -26,7 +26,7 @@ namespace PlantenApplicatie.viewmodels
         private CommensalismeMulti _selectedCommenMulti;
 
         // private variabelen (Davy)
-        private Gebruiker _selectedGebruiker;
+        private User _selectedGebruiker;
         private bool _IsManager;
 
         //observable collections voor de lijst en comboboxes (Liam)
@@ -43,7 +43,7 @@ namespace PlantenApplicatie.viewmodels
         public ICommand RemoveCommensalismeMultiCommand { get; set; }
 
         //constructor (Liam)
-        public TabCommensalismeViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabCommensalismeViewModel(Plant selectedPlant, User gebruiker)
         {
             SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
@@ -99,7 +99,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
-        public Gebruiker SelectedGebruiker
+        public User SelectedGebruiker
         {
             private get => _selectedGebruiker;
             set

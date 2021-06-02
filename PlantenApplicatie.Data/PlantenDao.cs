@@ -645,23 +645,23 @@ namespace PlantenApplicatie.Data
         }
 
         //Liam
-        public List<string> GetAbioBezonning()
+        public List<string> GetAbioInsolation()
         {
             return _context.AbioBezonning.Select(s => s.Naam).ToList();
         }
         //Liam
-        public List<string> GetAbioGrondsoort()
+        public List<string> GetAbioSoilType()
         {
             return _context.AbioGrondsoort.Select(s => s.Grondsoort).ToList();
         }
         //Liam
-        public List<string> GetAbioVochtbehoefte()
+        public List<string> GetAbioMoistureRequirement()
         {
             return _context.AbioVochtbehoefte.Select(s => s.Vochtbehoefte).ToList();
         }
 
         //Liam
-        public List<string> GetAbioVoedingsbehoefte()
+        public List<string> GetAbioNutritionRequirement()
         {
             return _context.AbioVoedingsbehoefte.Select(s => s.Voedingsbehoefte).ToList();
         }
@@ -695,7 +695,7 @@ namespace PlantenApplicatie.Data
         }
 
         //Liam
-        public List<string> GetAbioAntagonischeOmgeving()
+        public List<string> GetAbioAntagonianEnvironments()
         {
             return _context.AbioReactieAntagonischeOmg.Select(s => s.Antagonie).ToList();
         }
@@ -811,7 +811,7 @@ namespace PlantenApplicatie.Data
         }
 
 
-        public void CreateLogin(Gebruiker gebruiker)
+        public void CreateLogin(User gebruiker)
         {
             _context.Gebruiker.Add(gebruiker);
             _context.SaveChanges();
@@ -844,7 +844,7 @@ namespace PlantenApplicatie.Data
         }
       
 
-        public Gebruiker GetGebruiker(string emailadres)
+        public User GetGebruiker(string emailadres)
         {
             return _context.Gebruiker.SingleOrDefault(g => g.Emailadres.Equals(emailadres));
 

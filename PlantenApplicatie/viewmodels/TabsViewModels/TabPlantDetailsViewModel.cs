@@ -25,14 +25,14 @@ namespace PlantenApplicatie.viewmodels
         private string _textInputMax;
 
         // private variabelen (Davy)
-        private Gebruiker _selectedGebruiker;
+        private User _selectedGebruiker;
         private bool _IsManager;
 
         //button command (Jim)
         public ICommand SaveCommand { get; set; }
 
         // Constructor Lily
-        public TabPlantDetailsViewModel(Plant selectedPlant,Gebruiker gebruiker)
+        public TabPlantDetailsViewModel(Plant selectedPlant,User gebruiker)
         {
             SelectedGebruiker = gebruiker;
             _selectedPlant = selectedPlant;
@@ -81,7 +81,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public Gebruiker SelectedGebruiker
+        public User SelectedGebruiker
         {
             private get => _selectedGebruiker;
             set

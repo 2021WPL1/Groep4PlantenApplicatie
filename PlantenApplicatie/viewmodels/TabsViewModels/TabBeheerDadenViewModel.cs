@@ -42,11 +42,11 @@ namespace PlantenApplicatie.viewmodels
         private bool _isCheckedNovember;
         private bool _isCheckedDecember;
 
-        private Gebruiker _selectedGebruiker;
+        private User _selectedGebruiker;
         private bool _IsManager;
 
         // constructor (Davy)
-        public TabBeheerDadenViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabBeheerDadenViewModel(Plant selectedPlant, User gebruiker)
         {
             SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
@@ -88,7 +88,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
-        public Gebruiker SelectedGebruiker
+        public User SelectedGebruiker
         {
             private get => _selectedGebruiker;
             set

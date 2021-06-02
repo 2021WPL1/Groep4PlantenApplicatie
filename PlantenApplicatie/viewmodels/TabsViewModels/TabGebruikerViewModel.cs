@@ -15,10 +15,10 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         public ICommand EditPasswordCommand { get; set; }
 
         // private variabelen (Davy)
-        private Gebruiker _selectedGebruiker;
+        private User _selectedGebruiker;
         private bool _IsManager;
 
-        public TabGebruikerViewModel(Gebruiker gebruiker)
+        public TabGebruikerViewModel(User gebruiker)
         {
             SelectedGebruiker = gebruiker;
             AddUserCommand = new DelegateCommand(AddUser);
@@ -53,7 +53,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
                     break;
             }
         }
-        public Gebruiker SelectedGebruiker
+        public User SelectedGebruiker
         {
             private get => _selectedGebruiker;
             set

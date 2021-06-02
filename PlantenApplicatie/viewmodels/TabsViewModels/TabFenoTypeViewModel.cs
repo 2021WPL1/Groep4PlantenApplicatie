@@ -28,7 +28,7 @@ namespace PlantenApplicatie.viewmodels
         private FenotypeMulti _selectedPlantFenoTypeMulti;
 
         // private variabelen (Davy)
-        private Gebruiker _selectedGebruiker;
+        private User _selectedGebruiker;
         private bool _IsManager;
 
 
@@ -56,7 +56,7 @@ namespace PlantenApplicatie.viewmodels
         public ICommand DeleteFenotypeMultiPlantCommand { get; set; }
 
         // Constructor Davy
-        public TabFenoTypeViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabFenoTypeViewModel(Plant selectedPlant, User gebruiker)
         {
             SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
@@ -134,7 +134,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
-        public Gebruiker SelectedGebruiker
+        public User SelectedGebruiker
         {
             private get => _selectedGebruiker;
             set

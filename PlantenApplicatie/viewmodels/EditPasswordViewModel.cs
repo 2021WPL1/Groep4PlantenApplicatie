@@ -22,10 +22,10 @@ namespace PlantenApplicatie.viewmodels
         private string _textInputPasswordConfirm;
 
         // private variabelen (Davy)
-        private Gebruiker _selectedGebruiker;
+        private User _selectedGebruiker;
         private Window _editPasswordWindow;
 
-        public EditPasswordViewModel(Window window, Gebruiker gebruiker)
+        public EditPasswordViewModel(Window window, User gebruiker)
         {
             SelectedGebruiker = gebruiker;
             _editPasswordWindow = window;
@@ -36,7 +36,7 @@ namespace PlantenApplicatie.viewmodels
             _dao = PlantenDao.Instance;
         }
 
-        public Gebruiker SelectedGebruiker
+        public User SelectedGebruiker
         {
             private get => _selectedGebruiker;
             set

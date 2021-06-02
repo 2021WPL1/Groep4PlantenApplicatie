@@ -11,7 +11,7 @@ namespace PlantenApplicatie.viewmodels
     {
         ObservableCollection<object> _children;
 
-        public TabsBeheerViewModel(Gebruiker gebruiker)
+        public TabsBeheerViewModel(User gebruiker)
         {
             _children = new ObservableCollection<object>();
             _children.Add(new TabBeheerPlantenViewModel(gebruiker));
