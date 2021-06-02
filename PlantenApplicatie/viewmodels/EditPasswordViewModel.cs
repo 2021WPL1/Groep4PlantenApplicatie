@@ -1,10 +1,8 @@
 ﻿using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
 using Prism.Commands;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
@@ -14,13 +12,13 @@ namespace PlantenApplicatie.viewmodels
     {
         private readonly PlantenDao _dao;
 
+        private string _passwordErrorMessage;
+
         // button commands
-        public ICommand EditCommand { get; set; }
+        public ICommand EditCommand { get; }
 
-        public ICommand CloseCommand { get; set; }
+        public ICommand CloseCommand { get; }
 
-        private string _textInputPassword;
-        private string _textInputPasswordConfirm;
 
         //private variables (Davy)
         private Gebruiker _selectedUser;
@@ -32,7 +30,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedUser = user;
             _editPasswordWindow = window;
 
-            EditCommand = new DelegateCommand(Edit);
+            EditCommand = new DelegateCommand<PasswordBox>(Edit);
             CloseCommand = new DelegateCommand(Close);
 
             _dao = PlantenDao.Instance;
@@ -48,37 +46,28 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-        public string TextInputPassword
-        {
-            get => _textInputPassword;
-
-            set
-            {
-                _textInputPassword = value;
-                OnPropertyChanged(_textInputPassword);
-            }
-        }
-        public string TextInputPasswordConfirm
-        {
-            get => _textInputPasswordConfirm;
-
-            set
-            {
-                _textInputPasswordConfirm = value;
-                OnPropertyChanged(_textInputPasswordConfirm);
-            }
-        }
         
-        //edit the password of the user and updates it in the database
-        private void Edit()
+        public string PasswordErrorMessage
         {
-            if (TextInputPassword == TextInputPasswordConfirm)
+            get => _passwordErrorMessage;
+            private set
             {
-                string message = _dao.UpdateUser(SelectedUser, TextInputPassword);
-
-                MessageBox.Show(message);
+                _passwordErrorMessage = value;
+                OnPropertyChanged();
             }
+        }
+
+        public void PasswordChecker(string password, string passwordConfirm)
+        {
+            PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
+        }
+        //edit the password of the user and updates it in the database
+
+        private void Edit(PasswordBox passwordBox)
+        {
+            string message = _dao.UpdateUser(SelectedGebruiker.Emailadres, passwordBox.Password);
+
+            MessageBox.Show(message);
         }
 
         private void Close()

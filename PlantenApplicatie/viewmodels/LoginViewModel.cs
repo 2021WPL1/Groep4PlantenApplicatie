@@ -1,9 +1,8 @@
 ﻿using PlantenApplicatie.Data;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
@@ -18,7 +17,6 @@ namespace PlantenApplicatie.viewmodels
         public ICommand CancelCommand { get; set; }
 
         private string _textInputLogin;
-        private string _textInputPassword;
 
         private Window _loginWindow;
 
@@ -26,7 +24,7 @@ namespace PlantenApplicatie.viewmodels
         public LoginViewModel(Window window)
         {
             _loginWindow = window;
-            LoginCommand = new DelegateCommand(Login);
+            LoginCommand = new DelegateCommand<PasswordBox>(Login);
             CancelCommand = new DelegateCommand(Cancel);
 
             _dao = PlantenDao.Instance;
@@ -35,7 +33,6 @@ namespace PlantenApplicatie.viewmodels
         public string TextInputLogin
         {
             get => _textInputLogin;
-
             set
             {
                 _textInputLogin = value;
@@ -43,36 +40,21 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string TextInputPassword
+        public void Login(PasswordBox passwordBox)
         {
-            get => _textInputPassword;
+            var isLoginSuccessfull = _dao.CheckLogin(TextInputLogin, passwordBox.Password, 
+                out string message);
 
-            set
-            {
-                _textInputPassword = value;
-                OnPropertyChanged(_textInputPassword);
-            }
-        }
+            MessageBox.Show(message);
 
-        //Login function to check if the given values match a value in the database
-        public void Login()
-        {
-            string message = String.Empty;
+            if (!isLoginSuccessfull) return;
 
-            bool myBool = _dao.CheckLogin(TextInputLogin, TextInputPassword, out message);
-
-            if (myBool == true)
-            {
-                var user =_dao.GetUser(TextInputLogin);
-                MessageBox.Show(message);
-                BeheerPlanten beheerPlanten = new BeheerPlanten(user);
-                beheerPlanten.Show();
-                _loginWindow.Close();
+            var gebruiker =_dao.GetGebruiker(TextInputLogin);
                 
-            } else
-            {
-                MessageBox.Show(message);
-            }
+            _loginWindow.Hide();
+                
+            var beheerPlanten = new BeheerPlanten(gebruiker);
+            beheerPlanten.Show(); 
         }
 
         //close the window when it gets cancelled

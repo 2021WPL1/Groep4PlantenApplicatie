@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using PlantenApplicatie.Data;
+﻿using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -17,14 +16,12 @@ namespace PlantenApplicatie.viewmodels
 
         //private variables for the GUI
         private string _SelectedRole;
-        private string _TextInputVoornaam;
-        private string _TextInputAchternaam;
-        private string _TextInputEmail;
-        private string _TextInputPaswoord;
-        private string _TextInputPaswoordCheck;
-        private string _Check;
-        private Gebruiker _user;
+        private string? _TextInputVoornaam;
+        private string? _TextInputAchternaam;
+        private string? _TextInputEmail;
+        private string _passwordErrorMessage;
         //observable collection for the combobox
+
         public ObservableCollection<string> Roles { get; set; }
 
         //buttoncommand to save an user in the database
@@ -43,7 +40,7 @@ namespace PlantenApplicatie.viewmodels
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 
-            AddUserCommand = new DelegateCommand(AddUser);
+            AddUserCommand = new DelegateCommand<PasswordBox>(AddUser);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
         }
@@ -59,12 +56,8 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        
-
         //getters setters (Jim)
-
-        public string TextInputVoornaam
+        public string? TextInputVoornaam
         {
             get => _TextInputVoornaam;
             set
@@ -73,7 +66,8 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        public string TextInputAchternaam
+        
+        public string? TextInputAchternaam
         {
             get => _TextInputAchternaam;
             set
@@ -83,33 +77,13 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string TextInputEmail
+        public string? TextInputEmail
         {
             get => _TextInputEmail;
             set
             {
                 _TextInputEmail = value;
                 OnPropertyChanged();
-            }
-        }
-
-        public string TextInputPaswoord
-        {
-            get => _TextInputPaswoord;
-            set
-            {
-                _TextInputPaswoord = value;
-                OnPropertyChanged();
-            }
-        }
-        public string TextInputPaswoordCheck
-        {
-            get => _TextInputPaswoordCheck;
-            set
-            {
-                _TextInputPaswoordCheck = value;
-                OnPropertyChanged();
-                PasswordChecker();
             }
         }
 
@@ -123,15 +97,14 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string Check
+        public string PasswordErrorMessage
         {
-            get => _Check;
-            set
+            get => _passwordErrorMessage;
+            private set
             {
-                _Check = value;
+                _passwordErrorMessage = value;
                 OnPropertyChanged();
             }
-
         }
         //load in the roles, for now database is empty so the roles are hardcoded to access the program (Jim)
         public void LoadRoles()
@@ -153,60 +126,37 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public void PasswordChecker()
+        public void PasswordChecker(string password, string passwordConfirm)
         {
-            if(TextInputPaswoord != TextInputPaswoordCheck)
-            {
-                Check = "Paswoorden zijn niet gelijk";
-                ChangeColor = Brushes.Red;
-            }
-            else
-            {
-                Check = "Paswoorden zijn gelijk";
-                ChangeColor = Brushes.Green;
-            }
-
+            PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
         }
 
-        public void AddUser()
+        private void AddUser(PasswordBox passwordBox)
         {
-            string message;
-
-            if (SelectedRole == null || TextInputVoornaam == null || _TextInputAchternaam == null ||
-                TextInputEmail == null || TextInputPaswoord == null || TextInputPaswoordCheck == null)
+            if (TextInputVoornaam is null || TextInputAchternaam is null || TextInputEmail is null)
             {
                 MessageBox.Show("Niet alle velden zijn ingevuld");
+                return;
             }
-            else
+
+            if (!(TextInputEmail.EndsWith("@vives.be") || TextInputEmail.EndsWith("@student.vives.be")))
             {
-                if (TextInputEmail.Contains("@vives.be") || TextInputEmail.Contains("@student.vives.be"))
-                {
-                    if (TextInputPaswoord == TextInputPaswoordCheck)
-                    {
-                        var gebruiker = new Gebruiker
-                        {
-                            Voornaam = TextInputVoornaam,
-                            Achternaam = TextInputAchternaam,
-                            Rol = SelectedRole,
-                            Emailadres = TextInputEmail,
-                            HashPaswoord = Encryptor.GenerateMD5Hash(TextInputPaswoord)
-                        };
-                        _dao.CreateLogin(gebruiker, out message);
-                        MessageBox.Show(message);
-
-                        // herladen Users door nieuw venster BeheerPlanten op te starten
-                        BeheerPlanten beheerPlanten = new BeheerPlanten(_user);
-                        beheerPlanten.Show();
-
-                        _addGebruikerWindow.Close();
-                    }
-
-                }
-                else
-                {
-                    MessageBox.Show("Email mag alleen van het Vives domein zijn.");
-                }
+                MessageBox.Show("Email mag alleen van het Vives domein zijn");
+                return;
             }
+            
+            var gebruiker = new Gebruiker
+            {
+                Voornaam = TextInputVoornaam,
+                Achternaam = TextInputAchternaam,
+                Rol = SelectedRole,
+                Emailadres = TextInputEmail,
+                HashPaswoord = Encryptor.GenerateMD5Hash(passwordBox.Password)
+            };
+            
+            _dao.CreateLogin(gebruiker, out string message);
+            
+            MessageBox.Show(message);
         }
 
         private void CloseWindow()
@@ -217,6 +167,5 @@ namespace PlantenApplicatie.viewmodels
 
             _addGebruikerWindow.Close();
         }
-
     }
 }

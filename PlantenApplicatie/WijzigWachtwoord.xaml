@@ -10,12 +10,15 @@
     <Grid>
         <Canvas>
             <Label Content="Nieuw wachtwoord :" Canvas.Left="34" Canvas.Top="68"/>
-            <TextBox Canvas.Left="214" Canvas.Top="72" Text="{Binding TextInputPassword, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" Width="292"/>
-            <Button Content="Sluit venster" Command="{Binding Path=CloseCommand}" Canvas.Left="286" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="163"/>
-            <Button Content="Wijzigen wachtwoord" Command="{Binding Path=EditCommand}" Canvas.Left="110" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="158"/>
+            <PasswordBox Name="pwbNewPassword" Canvas.Left="214" Canvas.Top="72" Width="292" KeyUp="PasswordChanged"/>
+            <Button Content="Sluit venster" Command="{Binding Path=CloseCommand}" Canvas.Left="287" Canvas.Top="182" RenderTransformOrigin="0.395,0.703" Width="163"/>
+            <Button Content="Wijzigen wachtwoord" 
+                    Command="{Binding Path=EditCommand}"
+                    CommandParameter="{Binding ElementName=pwbNewPassword}" Canvas.Left="111" Canvas.Top="182" RenderTransformOrigin="0.395,0.703" Width="158"/>
             <Label Content="Wachtwoord bevestigen:" Canvas.Left="34" Canvas.Top="99"/>
-            <TextBox Canvas.Left="214" Canvas.Top="103" Text="{Binding TextInputPasswordConfirm, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" Width="292"/>
-
+            <PasswordBox Name="pwbNewPasswordConfirm" Canvas.Left="214" Canvas.Top="103" Width="292" KeyUp="PasswordChanged"/>
+            <Label 
+                Content="{Binding PasswordErrorMessage}" Canvas.Left="214" Canvas.Top="137" Foreground="#FFE00000"/>
         </Canvas>
     </Grid>
 </Window>

@@ -1,16 +1,7 @@
 ﻿using PlantenApplicatie.Domain;
 using PlantenApplicatie.viewmodels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PlantenApplicatie
 {
@@ -19,11 +10,19 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class AddGebruiker : Window
     {
-        public AddGebruiker(Gebruiker gebruiker)
+        public AddGebruiker()
         {
             InitializeComponent();
-            DataContext = new AddGebruikerViewModel(this, gebruiker);
+            DataContext = new AddGebruikerViewModel(this);
+        }
 
+        private void PasswordChanged(object sender, KeyEventArgs e)
+        {
+            if (DataContext is null) return;
+
+            var dynamicDataContext = ((dynamic)DataContext);
+
+            dynamicDataContext.PasswordChecker(pwbPassword.Password, pwbPasswordConfirm.Password);
         }
     }
 }
