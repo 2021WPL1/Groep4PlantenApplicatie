@@ -326,10 +326,17 @@ namespace PlantenApplicatie.viewmodels
         //edit the selected fenotype multi (Jim)
         private void EditPhenotypeMulti()
         {
-            _plantenDao.ChangeMultiPhenotype(SelectedPlantPhenoTypeMulti, SelectedPhenotypeProperties, 
-                SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
-            
-            LoadPhenoTypesMultiPlant();
+            if (SelectedPlantPhenoTypeMulti is not null) {
+                _plantenDao.ChangeMultiPhenotype(SelectedPlantPhenoTypeMulti, SelectedPhenotypeProperties,
+                    SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
+
+                LoadPhenoTypesMultiPlant();
+            }
+            else
+            {
+                MessageBox.Show("Gelieve eerst een eigenschap te selecteren!",
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         //laad de geselecteerde waardes van een Fenotype multi in (Jim)
