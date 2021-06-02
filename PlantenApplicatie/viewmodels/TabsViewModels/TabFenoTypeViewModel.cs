@@ -14,7 +14,7 @@ namespace PlantenApplicatie.viewmodels
     public class TabFenoTypeViewModel : ViewModelBase
     {
         // private variabelen Davy & Jim
-        private readonly PlantenDao _dao;
+        private readonly PlantenDao _plantenDao;
         
         private Plant _selectedPlant;
         
@@ -38,9 +38,9 @@ namespace PlantenApplicatie.viewmodels
         // Constructor Davy
         public TabFenoTypeViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
+            _plantenDao = PlantenDao.Instance;
             SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
-            _dao = PlantenDao.Instance;
             //variabelen (Davy &Jim)
             FenoBladgroottes = new ObservableCollection<int>();
 
@@ -55,11 +55,11 @@ namespace PlantenApplicatie.viewmodels
 
             PlantFenoTypesMulti = new ObservableCollection<FenotypeMulti>();
 
-
             EditFenoTypeCommand = new DelegateCommand(EditFenoType);
             AddFenotypeMultiCommand = new DelegateCommand(AddFenotypeMulti);
             EditFenotypeMultiCommand = new DelegateCommand(EditFenotypeMulti);
             DeleteFenotypeMultiPlantCommand = new DelegateCommand(DeleteFenotypeMultiPlant);
+            
             // methoden om comboboxen Fenotype in te laden (Davy & Jim)
             LoadFenoBladgrootte();
             LoadFenoBladvorm();
@@ -72,6 +72,7 @@ namespace PlantenApplicatie.viewmodels
             LoadFenoMultiMaanden();
             LoadKleur();
             LoadSelectedValues();
+            
             UserRole();
         }
         
@@ -235,7 +236,7 @@ namespace PlantenApplicatie.viewmodels
         //laad de verschillende gegevens in de comboboxes (Davy & Jim)
         private void LoadFenoBladgrootte()
         {
-            var bladgroottes = _dao.GetFenoBladGrootte();
+            var bladgroottes = _plantenDao.GetFenoBladGrootte();
 
             FenoBladgroottes.Clear();
 
@@ -247,7 +248,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadFenoBladvorm()
         {
-            var bladvormen = _dao.GetFenoBladVorm();
+            var bladvormen = _plantenDao.GetFenoBladVorm();
 
             FenoBladvormen.Clear();
 
@@ -259,7 +260,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadFenoBloeiwijze()
         {
-            var bloeiwijzes = _dao.GetFenoBloeiWijze();
+            var bloeiwijzes = _plantenDao.GetFenoBloeiWijze();
 
             FenoBloeiwijzes.Clear();
 
@@ -271,7 +272,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadFenoHabitus()
         {
-            var habitussen = _dao.GetFenoHabitus();
+            var habitussen = _plantenDao.GetFenoHabitus();
 
             FenoHabitussen.Clear();
 
@@ -282,7 +283,7 @@ namespace PlantenApplicatie.viewmodels
         }
         private void LoadFenoLevensVorm()
         {
-            var levensvormen = _dao.GetFenoLevensVorm();
+            var levensvormen = _plantenDao.GetFenoLevensVorm();
 
             FenoLevensvormen.Clear();
 
@@ -293,7 +294,7 @@ namespace PlantenApplicatie.viewmodels
         }
         private void LoadFenoSpruitFenologie()
         {
-            var fenologieen = _dao.GetFenoFenologie();
+            var fenologieen = _plantenDao.GetFenoFenologie();
 
             FenoSpruitFenologieen.Clear();
 
@@ -305,7 +306,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadFenoTypesMultiPlant()
         {
-            var fenotypesMulti = _dao.GetFenoMultis(SelectedPlant);
+            var fenotypesMulti = _plantenDao.GetFenoMultis(SelectedPlant);
 
             PlantFenoTypesMulti.Clear();
 
@@ -327,7 +328,8 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadKleur()
         {
-            var kleuren = _dao.GetFenoKleur();
+            var kleuren = _plantenDao.GetFenoKleur();
+            
             FenoTypesMulti.Clear();
 
             foreach (var kleur in kleuren)
@@ -353,6 +355,7 @@ namespace PlantenApplicatie.viewmodels
         private void LoadFenoMultiMaanden()
         {
             FenoMultiMaand.Clear();
+            
             FenoMultiMaand.Add("Jan");
             FenoMultiMaand.Add("Feb");
             FenoMultiMaand.Add("Mar");
@@ -385,16 +388,16 @@ namespace PlantenApplicatie.viewmodels
         //wijzig de fenotype van de plant. Als een plant nog geen fenotype heeft word er eentje aangemaakt met de geselecteerde waardes (Jim)
         private void EditFenoType()
         {
-            var fenotype = _dao.GetFenotypeFromPlant(SelectedPlant);
+            var fenotype = _plantenDao.GetFenotypeFromPlant(SelectedPlant);
 
             if (fenotype is null)
             {
-                _dao.AddFenotype(SelectedPlant, (int)SelectedBladgrootte!, SelectedBladvorm, null, 
+                _plantenDao.AddFenotype(SelectedPlant, (int)SelectedBladgrootte!, SelectedBladvorm, null, 
                     SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm, SelectedSpruitFenologie);
             }
             else
             {
-                _dao.ChangeFenotype(SelectedPlant, SelectedBladgrootte, SelectedBladvorm, null, 
+                _plantenDao.ChangeFenotype(SelectedPlant, SelectedBladgrootte, SelectedBladvorm, null, 
                     SelectedBloeiwijze, SelectedHabitus, SelectedLevensvorm, SelectedSpruitFenologie);
             }
         }
@@ -402,8 +405,9 @@ namespace PlantenApplicatie.viewmodels
         //voeg de FenotypeMulti toe aan de plant met de geselecteerde waardes (Jim)
         private void AddFenotypeMulti()
         {
-            _dao.AddMultiFenotype(SelectedPlant, SelectedFenotypeEigenschappen, SelectedFenoMultiMaand, 
+            _plantenDao.AddMultiFenotype(SelectedPlant, SelectedFenotypeEigenschappen, SelectedFenoMultiMaand, 
                 SelectedFenoTypesMulti);
+            
             LoadFenoTypesMultiPlant();
         }
 
@@ -411,12 +415,14 @@ namespace PlantenApplicatie.viewmodels
 
         private void EditFenotypeMulti()
         {
-            _dao.ChangeMultiFenotype(SelectedPlantFenoTypeMulti, SelectedFenotypeEigenschappen, 
+            _plantenDao.ChangeMultiFenotype(SelectedPlantFenoTypeMulti, SelectedFenotypeEigenschappen, 
                 SelectedFenoMultiMaand, SelectedFenoTypesMulti);
+            
             LoadFenoTypesMultiPlant();
         }
 
         //laad de geselecteerde waardes van een Fenotype multi in (Jim)
+        // TODO: fix this 
         private void LoadSelectedValuesMulti()
         {
             SelectedFenotypeEigenschappen = SelectedPlantFenoTypeMulti.Eigenschap;
@@ -450,7 +456,7 @@ namespace PlantenApplicatie.viewmodels
             if (SelectedPlantFenoTypeMulti is not null)
             {
 
-                _dao.RemoveMultiFenotype(SelectedPlantFenoTypeMulti);
+                _plantenDao.RemoveMultiFenotype(SelectedPlantFenoTypeMulti);
             }
             else
             {
