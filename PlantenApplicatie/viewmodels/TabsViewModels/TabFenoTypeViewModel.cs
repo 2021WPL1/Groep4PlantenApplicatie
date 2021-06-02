@@ -178,8 +178,8 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedFenotypeEigenschappen = value;
-                ChangeEigenschappen();
                 OnPropertyChanged();
+                ChangeEigenschappen();
             }
         }
 
@@ -212,16 +212,6 @@ namespace PlantenApplicatie.viewmodels
         private void SetAuthorizedActionsByRole(Gebruiker gebruiker)
         {
             IsManager = gebruiker.Rol.ToLower() == "manager";
-        }
-
-        private static void RefreshObservableCollection<T>(ICollection<T> collection, IEnumerable<T> data) 
-        {
-            collection.Clear();
-
-            foreach (var elem in data)
-            {
-                collection.Add(elem);
-            }
         }
 
         //laad de verschillende gegevens in de comboboxes (Davy & Jim)
@@ -303,6 +293,16 @@ namespace PlantenApplicatie.viewmodels
             FenoMultiMaand.Add("Okt");
             FenoMultiMaand.Add("Nov");
             FenoMultiMaand.Add("Dec");
+        }
+        
+        private static void RefreshObservableCollection<T>(ICollection<T> collection, IEnumerable<T> data) 
+        {
+            collection.Clear();
+
+            foreach (var elem in data)
+            {
+                collection.Add(elem);
+            }
         }
 
         private void LoadSelectedValues()
