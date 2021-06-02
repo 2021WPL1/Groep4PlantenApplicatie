@@ -16,7 +16,7 @@ using Prism.Commands;
 namespace PlantenApplicatie.viewmodels
 {
     // klasse (Davy, Lily)
-    public class TabFotoViewModel : ViewModelBase
+    public class TabPhotoViewModel : ViewModelBase
     {
         private readonly PlantenDao _plantenDao;
         private readonly Plant _selectedPlant;
@@ -27,15 +27,15 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedEigenschap;
         private string? _selectedUrl;
 
-        public TabFotoViewModel(Plant selectedplant,User gebruiker)
+        public TabPhotoViewModel(Plant selectedplant,User gebruiker)
         {
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedplant;
 
             Eigenschappen = _plantenDao.GetFotoEigenschappen();
 
-            ChangeFotoCommand = new DelegateCommand(ChangeFoto);
-            DeleteFotoCommand = new DelegateCommand(DeleteFoto);
+            ChangeFotoCommand = new DelegateCommand(ChangePhoto);
+            DeleteFotoCommand = new DelegateCommand(DeletePhoto);
         }
         
         public ICommand ChangeFotoCommand { get; }
@@ -56,14 +56,14 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string? SelectedEigenschap
+        public string? SelectedProperty
         {
             get => _selectedEigenschap; 
             set
             {
                 _selectedEigenschap = value;
                 _selectedFoto = _selectedPlant.Foto
-                    .SingleOrDefault(f => f.Eigenschap == SelectedEigenschap);
+                    .SingleOrDefault(f => f.Eigenschap == SelectedProperty);
                 SelectedUrl = _selectedFoto?.UrlLocatie;
                 SelectedImage = GenerateBitmapImageFromByteArray(_selectedFoto?.Tumbnail);
                 OnPropertyChanged();
@@ -80,7 +80,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        private void ChangeFoto()
+        private void ChangePhoto()
         {
             var imageBytes = DownloadImage(SelectedUrl);
 
@@ -91,20 +91,20 @@ namespace PlantenApplicatie.viewmodels
 
             if (_selectedFoto is null)
             {
-                _plantenDao.AddFoto(SelectedEigenschap, _selectedPlant, SelectedUrl, imageBytes);
+                _plantenDao.AddFoto(SelectedProperty, _selectedPlant, SelectedUrl, imageBytes);
             }
             else {
-                _plantenDao.ChangeFoto(_selectedFoto,  SelectedEigenschap, SelectedUrl, imageBytes);
+                _plantenDao.ChangeFoto(_selectedFoto,  SelectedProperty, SelectedUrl, imageBytes);
             }
             
             SelectedImage = GenerateBitmapImageFromByteArray(imageBytes);
         }
 
-        private void DeleteFoto()
+        private void DeletePhoto()
         {
             _plantenDao.DeleteFoto(_selectedFoto);
 
-            SelectedEigenschap = SelectedUrl = null;
+            SelectedProperty = SelectedUrl = null;
             SelectedImage = null;
         }
 

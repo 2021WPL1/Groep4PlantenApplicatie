@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels.TabsViewModels
 {
-    public class TabGebruikerViewModel : ViewModelBase
+    public class TabUserViewModel : ViewModelBase
     {
 
         public ICommand AddUserCommand { get; set; }
@@ -18,9 +18,9 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         private User _selectedGebruiker;
         private bool _IsManager;
 
-        public TabGebruikerViewModel(User gebruiker)
+        public TabUserViewModel(User gebruiker)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = gebruiker;
             AddUserCommand = new DelegateCommand(AddUser);
             EditPasswordCommand = new DelegateCommand(EditPassword);
 
@@ -40,7 +40,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         //controleer welke rol de gebruiker heeft
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
+            switch (SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;
@@ -53,7 +53,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
                     break;
             }
         }
-        public User SelectedGebruiker
+        public User SelectedUser
         {
             private get => _selectedGebruiker;
             set
@@ -71,7 +71,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
 
         private void EditPassword()
         {
-            WijzigWachtwoord wijzigWachtwoord = new WijzigWachtwoord(SelectedGebruiker);
+            WijzigWachtwoord wijzigWachtwoord = new WijzigWachtwoord(SelectedUser);
             wijzigWachtwoord.Show();
         }
     }

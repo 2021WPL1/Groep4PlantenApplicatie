@@ -34,7 +34,7 @@ namespace PlantenApplicatie.viewmodels
         // Constructor Lily
         public TabPlantDetailsViewModel(Plant selectedPlant,User gebruiker)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = gebruiker;
             _selectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             // onderstaande variabelen voor tabblad details plant
@@ -67,7 +67,7 @@ namespace PlantenApplicatie.viewmodels
         //controleer welke rol de gebruiker heeft
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
+            switch (SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;
@@ -81,7 +81,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public User SelectedGebruiker
+        public User SelectedUser
         {
             private get => _selectedGebruiker;
             set

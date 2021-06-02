@@ -32,7 +32,7 @@ namespace PlantenApplicatie.viewmodels
         //constructor(Lily)
         public TabAbioticViewModel(Plant selectedPlant, User user)
         {
-            SelectedGebruiker = user;
+            SelectedUser = user;
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedPlant;
 
@@ -47,7 +47,7 @@ namespace PlantenApplicatie.viewmodels
                 _plantenDao.GetAbioHabitatNames(_selectedPlant));
             PlantHabitats = new ObservableCollection<string>(_plantenDao.GetAbioHabitatNames());
             //Commands voor de buttons
-            EditAbiotiekCommand = new DelegateCommand(EditAbiotiek);
+            EditAbiotiekCommand = new DelegateCommand(EditAbiotic);
             RemoveHabitatCommand = new DelegateCommand(RemoveHabitat);
             AddHabitatCommand = new DelegateCommand(AddHabitat);
 
@@ -70,7 +70,7 @@ namespace PlantenApplicatie.viewmodels
         //controleer welke rol de gebruiker heeft
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
+            switch (SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;
@@ -83,7 +83,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
-        public User SelectedGebruiker
+        public User SelectedUser
         {
             private get => _selectedUser;
             set
@@ -177,7 +177,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //wijzig de abiotiek van een plant, als er geen is word er eerst een nieuwe abiotiek aangemaakt met de geselecteerde waardes (Lily)
-        private void EditAbiotiek()
+        private void EditAbiotic()
         {
             var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
 
@@ -185,13 +185,13 @@ namespace PlantenApplicatie.viewmodels
 
             if (abiotiek is null)
             {
-                _plantenDao.AddAbiotiek(_selectedPlant, SelectedInsolation, SelectedSoilType,
+                _plantenDao.AddAbiotic(_selectedPlant, SelectedInsolation, SelectedSoilType,
                     SelectedMoistureRequirement, SelectedNutritionRequirement,
                     SelectedAntagonianEnvironment);
             }
             else
             {
-                _plantenDao.ChangeAbiotiek(abiotiek, SelectedInsolation, SelectedSoilType,
+                _plantenDao.ChangeAbiotic(abiotiek, SelectedInsolation, SelectedSoilType,
                     SelectedMoistureRequirement, SelectedNutritionRequirement,
                     SelectedAntagonianEnvironment);
             }
@@ -205,7 +205,7 @@ namespace PlantenApplicatie.viewmodels
             var abiothiekMulti = _plantenDao.GetAbioMulti(_selectedPlant)
                 .Single(am => am.Eigenschap == Property && am.Waarde == habitatAbbreviation);
 
-            _plantenDao.DeleteAbiotiekMulti(abiothiekMulti);
+            _plantenDao.DeleteAbioticMulti(abiothiekMulti);
 
             SelectedPlantHabitats.Remove(SelectedAbioPlantHabitat);
         }
@@ -218,7 +218,7 @@ namespace PlantenApplicatie.viewmodels
 
             var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioHabitat);
 
-            _plantenDao.AddAbiotiekMulti(_selectedPlant, Property, habitatAbbreviation);
+            _plantenDao.AddAbioticMulti(_selectedPlant, Property, habitatAbbreviation);
 
             SelectedPlantHabitats.Add(SelectedAbioHabitat);
         }

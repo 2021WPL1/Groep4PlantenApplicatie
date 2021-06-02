@@ -73,7 +73,7 @@ namespace PlantenApplicatie.Data
             }
         }
 
-        public List<ExtraEigenschap> getExtraEigenschappen(Plant selectedPlant)
+        public List<ExtraEigenschap> getExtraProperties(Plant selectedPlant)
         {
             return _context.ExtraEigenschap.Where(p => p.PlantId == selectedPlant.PlantId).ToList();
         }
@@ -109,7 +109,7 @@ namespace PlantenApplicatie.Data
                 .ToList();
         }
 
-        public string CreateExtraEigenschap(ExtraEigenschap extraEigenschap)
+        public string CreateExtraProperty(ExtraEigenschap extraEigenschap)
         {
             string message = "";
             var item = _context.ExtraEigenschap.Where(b => b.PlantId == extraEigenschap.PlantId);
@@ -213,7 +213,7 @@ namespace PlantenApplicatie.Data
                 .GeslachtId;
         }
 
-        public void EditExtraEigenschap(ExtraEigenschap extraEigenschap)
+        public void EditExtraProperty(ExtraEigenschap extraEigenschap)
         {
             _context.ExtraEigenschap.Update(extraEigenschap);
             _context.SaveChanges();
@@ -237,7 +237,7 @@ namespace PlantenApplicatie.Data
                 .VariantId;
         }
 
-        public void RemoveExtraEigenschap(ExtraEigenschap extraEigenschap)
+        public void RemoveExtraProperty(ExtraEigenschap extraEigenschap)
         {
             _context.ExtraEigenschap.Remove(extraEigenschap);
             _context.SaveChanges();
@@ -346,7 +346,7 @@ namespace PlantenApplicatie.Data
         }
 
         //Voeg een fenotype toe aan de geselecteerde plant (Jim)
-        public void AddFenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
+        public void AddPhenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
         string habitus, string levensvorm,string spruitfenologie)
         {
             var fenotypePlant = new Fenotype
@@ -367,7 +367,7 @@ namespace PlantenApplicatie.Data
         }
 
         //verander een fenotype van de geselecteerde plant (Jim)
-        public Fenotype ChangeFenotype(Plant plant, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
+        public Fenotype ChangePhenotype(Plant plant, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
             string habitus, string levensvorm,string spruitfenologie)
         {
             var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.PlantId == plant.PlantId);
@@ -393,7 +393,7 @@ namespace PlantenApplicatie.Data
         }
         //voeg een multifenotype toe (Jim)
 
-        public void AddMultiFenotype(Plant plant, string eigenschap, string maand, string waarde)
+        public void AddMultiPhenotype(Plant plant, string eigenschap, string maand, string waarde)
         {
             var fenotypeMultiPlant = new FenotypeMulti
             {
@@ -433,7 +433,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
         //verwijder een multifenotype van de geselecteerde plant (Jim)
-        public void RemoveMultiFenotype(FenotypeMulti fenotypeMulti)
+        public void RemoveMultiPhenotype(FenotypeMulti fenotypeMulti)
         {
             var selectedFenotypeMulti = _context.FenotypeMulti.FirstOrDefault(i => i.Id == fenotypeMulti.Id);
             _context.Remove(fenotypeMulti);
@@ -486,7 +486,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
         //Toevoegen, veranderen en verwijderen van abiotiek (Liam)
-        public void AddAbiotiek(Plant plant, string? bezonning, string? grondsoort, string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
+        public void AddAbiotic(Plant plant, string? bezonning, string? grondsoort, string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
         {
             //Habitat ontbreekt
             Abiotiek abiotiek = new Abiotiek
@@ -506,7 +506,7 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeAbiotiek(Abiotiek abiotiek, string? bezonning, string? grondsoort,
+        public void ChangeAbiotic(Abiotiek abiotiek, string? bezonning, string? grondsoort,
             string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
         {
 
@@ -535,7 +535,7 @@ namespace PlantenApplicatie.Data
 
         //Toevoegen, veranderen en verwijderen van commensalisme (Liam)
 
-        public void AddCommensalisme(Plant plant, string ontwikkelingssnelheid, string strategie)
+        public void AddCommensalism(Plant plant, string ontwikkelingssnelheid, string strategie)
         {
             //sociabiliteit ontbreekt
             Commensalisme commensalisme = new Commensalisme
@@ -552,7 +552,7 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public Commensalisme ChangeCommensalisme(Plant plant, string ontwikkelingssnelheid, string strategie)
+        public Commensalisme ChangeCommensalism(Plant plant, string ontwikkelingssnelheid, string strategie)
         {
             var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
@@ -572,7 +572,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void AddAbiotiekMulti(Plant plant, string eigenschap, string waarde)
+        public void AddAbioticMulti(Plant plant, string eigenschap, string waarde)
         {
 
             AbiotiekMulti abiotiekMulti = new AbiotiekMulti
@@ -599,7 +599,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void DeleteAbiotiekMulti(AbiotiekMulti abiotiekMulti)
+        public void DeleteAbioticMulti(AbiotiekMulti abiotiekMulti)
         {
             var selectedAbiotiekMulti = _context.AbiotiekMulti.FirstOrDefault(s => s.Id == abiotiekMulti.Id);
 
@@ -608,7 +608,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void AddCommensalismeMulti(Plant plant, string eigenschap, string waarde)
+        public void AddCommensalismMulti(Plant plant, string eigenschap, string waarde)
         {
 
             CommensalismeMulti commensalismeMulti = new CommensalismeMulti
@@ -625,7 +625,7 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeCommensalismeMulti(CommensalismeMulti commensalismeMulti, string eigenschap, string waarde)
+        public void ChangeCommensalismMulti(CommensalismeMulti commensalismeMulti, string eigenschap, string waarde)
         {
             var selectedCommensalismeMulti = _context.CommensalismeMulti.FirstOrDefault(s => s.Id == commensalismeMulti.Id);
 
@@ -635,7 +635,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void DeleteCommensalismeMulti(CommensalismeMulti commensalismeMulti)
+        public void DeleteCommensalismMulti(CommensalismeMulti commensalismeMulti)
         {
             var selectedCommensalismeMulti = _context.CommensalismeMulti.FirstOrDefault(s => s.Id == commensalismeMulti.Id);
 
@@ -700,22 +700,22 @@ namespace PlantenApplicatie.Data
             return _context.AbioReactieAntagonischeOmg.Select(s => s.Antagonie).ToList();
         }
         //Liam
-        public List<CommLevensvorm> GetCommLevensvorm()
+        public List<CommLevensvorm> GetCommLifeform()
         {
             return _context.CommLevensvorm.ToList();
         }
         //Liam
-        public List<string> GetCommStrategie()
+        public List<string> GetCommStrategy()
         {
             return _context.CommStrategie.Select(s => s.Strategie).ToList();
         }
 
-        public List<string> GetCommOntwikkelsnelheid()
+        public List<string> GetCommDevelopmentSpeed()
         {
             return _context.CommOntwikkelsnelheid.Select(s => s.Snelheid).ToList();
         }
         //Liam
-        public List<CommSocialbiliteit> GetCommSociabiliteit()
+        public List<CommSocialbiliteit> GetCommSociability()
         {
             return _context.CommSocialbiliteit.ToList();
         }
@@ -728,51 +728,51 @@ namespace PlantenApplicatie.Data
 
         }
         //Liam
-        public List<CommensalismeMulti> GetCommensalismeMulti(Plant plant)
+        public List<CommensalismeMulti> GetCommensalismMulti(Plant plant)
         {
             return _context.CommensalismeMulti.Where(s => s.PlantId == plant.PlantId).ToList();
         }
 
         //Haal alle waardes op in een lijst voor gebruik (Jim)
-        public List<string> GetExtraNectarwaarde()
+        public List<string> GetExtraNectarValue()
         {
             return _context.ExtraNectarwaarde.Select(s => s.Waarde).ToList();
         }
-        public List<string> GetExtraPollenwaarde()
+        public List<string> GetExtraPollenValue()
         {
             return _context.ExtraPollenwaarde.Select(s => s.Waarde).ToList();
         }
 
-        public List<string> GetFenoBladGrootte()
+        public List<string> GetPhenoLeafSize()
         {
             return _context.FenoBladgrootte.Select(s => s.Bladgrootte).ToList();
         }
 
-        public List<string> GetFenoBladVorm()
+        public List<string> GetPhenoLeafShape()
         {
             return _context.FenoBladvorm.Select(s => s.Vorm).ToList();
         }
-        public List<string> GetFenoBloeiWijze()
+        public List<string> GetPhenoInflorescence()
         {
             return _context.FenoBloeiwijze.Select(s => s.Naam).ToList();
         }
-        public List<string> GetFenoHabitus()
+        public List<string> GetPhenoHabitat()
         {
             return _context.FenoHabitus.Select(s => s.Naam).ToList();
         }
-        public List<FenoKleur> GetFenoKleur()
+        public List<FenoKleur> GetPhenoColour()
         {
             return _context.FenoKleur.ToList();
         }
-        public List<string> GetFenoLevensVorm()
+        public List<string> GetPhenoLifeform()
         {
             return _context.FenoLevensvorm.Select(s => s.Levensvorm).ToList();
         }
-        public List<string> GetFenoFenologie()
+        public List<string> GetPhenoSproutPhenology()
         {
             return _context.FenoSpruitfenologie.Select(s => s.Fenologie).ToList();
         }
-        public List<FenotypeMulti> GetFenoMultis(Plant plant)
+        public List<FenotypeMulti> GetPhenoMultis(Plant plant)
         {
             return _context.FenotypeMulti.Where(f => f.PlantId == plant.PlantId).ToList();
         }
@@ -850,11 +850,11 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public Fenotype GetFenotypeFromPlant(Plant plant)
+        public Fenotype GetPhenotypeFromPlant(Plant plant)
         {
             return _context.Fenotype.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
         }
-        public Commensalisme GetCommensialisme(Plant plant)
+        public Commensalisme GetCommensialism(Plant plant)
         {
             return _context.Commensalisme.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
         }

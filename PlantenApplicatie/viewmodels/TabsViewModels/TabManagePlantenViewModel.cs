@@ -10,7 +10,7 @@ using System.Windows.Input;
 namespace PlantenApplicatie.viewmodels
 {
     // MVVM Toepassing (Davy, Lily) 
-    class TabBeheerPlantenViewModel : ViewModelBase
+    class TabManagePlantenViewModel : ViewModelBase
     {
         private readonly PlantenDao _plantenDao;
 
@@ -40,9 +40,9 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Species { get; private set; }
         public ObservableCollection<string> Variants { get; private set; }
         
-        public TabBeheerPlantenViewModel(User gebruiker)
+        public TabManagePlantenViewModel(User gebruiker)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = gebruiker;
             _plantenDao = PlantenDao.Instance;
 
             ShowDetailsCommand = new DelegateCommand(ShowDetails);
@@ -61,7 +61,7 @@ namespace PlantenApplicatie.viewmodels
             UserRole();
             FilterComboBoxes();
         }
-        public User SelectedGebruiker
+        public User SelectedUser
         {
             private get => _selectedGebruiker;
             set
@@ -252,7 +252,7 @@ namespace PlantenApplicatie.viewmodels
         {
             if (SelectedPlant is not null)
             {
-                new PlantDetails(SelectedPlant, SelectedGebruiker).Show();
+                new PlantDetails(SelectedPlant, SelectedUser).Show();
             } else { 
                 MessageBox.Show("Gelieve een plant te selecteren uit de listview", 
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -292,7 +292,7 @@ namespace PlantenApplicatie.viewmodels
         //controleer welke rol de gebruiker heeft
         private void UserRole()
         {
-            switch(SelectedGebruiker.Rol.ToLower())
+            switch(SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;

@@ -11,7 +11,7 @@ using System.Windows.Input;
 namespace PlantenApplicatie.viewmodels
 {
     // klasse (Davy)
-    public class TabExtraEigenschappenViewModel : ViewModelBase
+    public class TabExtraPropertiesViewModel : ViewModelBase
     {
         //private variabels (Davy)
         private Plant _selectedPlant;
@@ -43,11 +43,11 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Nectars { get; set; }
         public ObservableCollection<string> Pollen { get; set; }
 
-        public TabExtraEigenschappenViewModel(Plant selectedPlant, User gebruiker)
+        public TabExtraPropertiesViewModel(Plant selectedPlant, User gebruiker)
         {
             SelectedPlant = selectedPlant;
             _plantenDao = PlantenDao.Instance;
-            SelectedGebruiker = gebruiker;
+            SelectedUser = gebruiker;
 
             BeheerExtraEigenschappen = new ObservableCollection<ExtraEigenschap>();
             Nectars = new ObservableCollection<string>();
@@ -58,7 +58,7 @@ namespace PlantenApplicatie.viewmodels
             RemoveExtraCommand = new DelegateCommand(RemoveExtra);
 
             //laad de gegevens in (Davy)
-            LoadBeheerExtraEigenschappen();
+            LoadManagerExtraProperties();
             LoadNectars();
             LoadPollen();
 
@@ -80,7 +80,7 @@ namespace PlantenApplicatie.viewmodels
         //controleer welke rol de gebruiker heeft
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
+            switch (SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;
@@ -93,7 +93,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
-        public User SelectedGebruiker
+        public User SelectedUser
         {
             private get => _selectedGebruiker;
             set
@@ -113,7 +113,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        public ExtraEigenschap SelectedExtraEigenschap
+        public ExtraEigenschap SelectedExtraProperty
         {
             private get => _selectedExtraEigenschap;
             set
@@ -228,9 +228,9 @@ namespace PlantenApplicatie.viewmodels
 
         //laad de gegevens in de comboboxes (Davy)
 
-        private void LoadBeheerExtraEigenschappen()
+        private void LoadManagerExtraProperties()
         {
-            var eigenschappen = _plantenDao.getExtraEigenschappen(SelectedPlant);
+            var eigenschappen = _plantenDao.getExtraProperties(SelectedPlant);
 
             BeheerExtraEigenschappen.Clear();
 
@@ -242,7 +242,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadNectars()
         {
-            var nectars = _plantenDao.GetExtraNectarwaarde();
+            var nectars = _plantenDao.GetExtraNectarValue();
 
             Nectars.Clear();
 
@@ -254,7 +254,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadPollen()
         {
-            var pollen = _plantenDao.GetExtraPollenwaarde();
+            var pollen = _plantenDao.GetExtraPollenValue();
 
             Pollen.Clear();
 
@@ -279,7 +279,7 @@ namespace PlantenApplicatie.viewmodels
             extraEigenschap.Geurend = IsCheckedFragrant;
             extraEigenschap.Vorstgevoelig = IsCheckedFrostSensitive;
 
-            string message = _plantenDao.CreateExtraEigenschap(extraEigenschap);
+            string message = _plantenDao.CreateExtraProperty(extraEigenschap);
 
             if (message != String.Empty)
             {
@@ -288,12 +288,12 @@ namespace PlantenApplicatie.viewmodels
 
 
             // weergeef de aangepaste lijst
-            LoadBeheerExtraEigenschappen();
+            LoadManagerExtraProperties();
         }
         //wijzig de extra eigenschap van een plant (Davy)
         public void EditExtra()
         {
-            ExtraEigenschap extraEigenschap = SelectedExtraEigenschap;
+            ExtraEigenschap extraEigenschap = SelectedExtraProperty;
 
             if (extraEigenschap != null)
             {
@@ -306,7 +306,7 @@ namespace PlantenApplicatie.viewmodels
                 extraEigenschap.Geurend = IsCheckedFragrant;
                 extraEigenschap.Vorstgevoelig = IsCheckedFrostSensitive;
 
-                _plantenDao.EditExtraEigenschap(extraEigenschap);
+                _plantenDao.EditExtraProperty(extraEigenschap);
             }
             else
             {
@@ -314,19 +314,19 @@ namespace PlantenApplicatie.viewmodels
             }
 
 
-            LoadBeheerExtraEigenschappen();
+            LoadManagerExtraProperties();
 
         }
         //verwijder de extra eigenschap van een plant (Davy)
         public void RemoveExtra()
         {
             // toewijzen object ExtraEigenschap aan geselecteerd object ExtraEigenschap uit listview
-            ExtraEigenschap extraEigenschap = SelectedExtraEigenschap;
+            ExtraEigenschap extraEigenschap = SelectedExtraProperty;
 
             // ken een string waarde toe uit methode verwijder BeheerMaand uit database            
-            if (SelectedExtraEigenschap != null)
+            if (SelectedExtraProperty != null)
             {
-                _plantenDao.RemoveExtraEigenschap(extraEigenschap);
+                _plantenDao.RemoveExtraProperty(extraEigenschap);
             }
             else
             {
@@ -334,7 +334,7 @@ namespace PlantenApplicatie.viewmodels
             }
 
             // toon opnieuw de listview met lijst ExtraEigenschappen
-            LoadBeheerExtraEigenschappen();
+            LoadManagerExtraProperties();
         }
 
       

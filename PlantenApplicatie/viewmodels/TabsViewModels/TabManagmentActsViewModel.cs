@@ -11,7 +11,7 @@ using System.Windows.Input;
 namespace PlantenApplicatie.viewmodels
 {
     // klasse BeheerDadenViewModel (Davy)
-    public class TabBeheerDadenViewModel : ViewModelBase
+    public class TabManagmentActsViewModel : ViewModelBase
     {
         // knop commando's (Davy)
         public ICommand AddManagementActCommand { get; set; }
@@ -46,9 +46,9 @@ namespace PlantenApplicatie.viewmodels
         private bool _IsManager;
 
         // constructor (Davy)
-        public TabBeheerDadenViewModel(Plant selectedPlant, User gebruiker)
+        public TabManagmentActsViewModel(Plant selectedPlant, User gebruiker)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = gebruiker;
             SelectedPlant = selectedPlant;
             _plantenDao = PlantenDao.Instance;
 
@@ -58,7 +58,7 @@ namespace PlantenApplicatie.viewmodels
 
             BeheerMaanden = new ObservableCollection<BeheerMaand>();
 
-            LoadBeheerMaanden();
+            LoadManagmentMonths();
             UserRole();
         }
         public bool IsManager
@@ -75,7 +75,7 @@ namespace PlantenApplicatie.viewmodels
         //controleer welke rol de gebruiker heeft
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
+            switch (SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;
@@ -88,7 +88,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
-        public User SelectedGebruiker
+        public User SelectedUser
         {
             private get => _selectedGebruiker;
             set
@@ -109,7 +109,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }   
 
-        public BeheerMaand SelectedBeheerMaand
+        public BeheerMaand SelectedManagementMonth
         {
             private get => _selectedBeheerMaand;
             set
@@ -120,7 +120,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string TextInputBeheerdaad
+        public string TextInputManagementAct
         {
             get { return _textInputBeheerdaad; }
             set
@@ -321,7 +321,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         // geef de BeheerMaanden weer in de listview (Davy)
-        public void LoadBeheerMaanden()
+        public void LoadManagmentMonths()
         {
             var beheermaanden = _plantenDao.GetBeheerMaanden(SelectedPlant);
 
@@ -338,7 +338,7 @@ namespace PlantenApplicatie.viewmodels
         {
             BeheerMaand beheerMaand = new BeheerMaand();
             beheerMaand.PlantId = SelectedPlant.PlantId;
-            beheerMaand.Beheerdaad = TextInputBeheerdaad;
+            beheerMaand.Beheerdaad = TextInputManagementAct;
             beheerMaand.Omschrijving = TextInputDescription;
             beheerMaand.Jan = IsCheckedJanuary;
             beheerMaand.Feb = IsCheckedFebruary;
@@ -359,18 +359,18 @@ namespace PlantenApplicatie.viewmodels
 
 
             // geef de aangepaste lijst terug weer 
-            LoadBeheerMaanden();
+            LoadManagmentMonths();
         }
 
         // wijzig een beheerdaad (Davy)
         private void EditManagementAct()
         {
-            BeheerMaand beheerMaand = SelectedBeheerMaand; 
+            BeheerMaand beheerMaand = SelectedManagementMonth; 
 
             if (beheerMaand != null)
             {
-                beheerMaand.PlantId = SelectedBeheerMaand.PlantId;
-                beheerMaand.Beheerdaad = TextInputBeheerdaad;
+                beheerMaand.PlantId = SelectedManagementMonth.PlantId;
+                beheerMaand.Beheerdaad = TextInputManagementAct;
                 beheerMaand.Omschrijving = TextInputDescription;
                 beheerMaand.Jan = IsCheckedJanuary;
                 beheerMaand.Feb = IsCheckedFebruary;
@@ -392,15 +392,15 @@ namespace PlantenApplicatie.viewmodels
             }
 
 
-            LoadBeheerMaanden();
+            LoadManagmentMonths();
         }
 
         //Wanneer er een beheersdaad geselecteerd word, dan verandert de waardes naar de geselecteerde waardes (Jim)
         private void LoadSelectedValues()
         {
-            var beheerMaand = SelectedBeheerMaand;
+            var beheerMaand = SelectedManagementMonth;
 
-            TextInputBeheerdaad = beheerMaand.Beheerdaad;
+            TextInputManagementAct = beheerMaand.Beheerdaad;
             TextInputDescription = beheerMaand.Omschrijving;
             IsCheckedJanuary = beheerMaand.Jan ?? false;
             IsCheckedFebruary = beheerMaand.Feb ?? false;
@@ -421,10 +421,10 @@ namespace PlantenApplicatie.viewmodels
         private void RemoveManagementAct()
         {
             // toewijzen object BeheerMaand aan geselecteerd object BeheerMaand uit listview
-            BeheerMaand beheerMaand = SelectedBeheerMaand;
+            BeheerMaand beheerMaand = SelectedManagementMonth;
 
             // ken een string waarde toe uit methode verwijder BeheerMaand uit database            
-            if (SelectedBeheerMaand != null)
+            if (SelectedManagementMonth != null)
             {
                 _plantenDao.RemoveBeheerMaand(beheerMaand);
             } else
@@ -433,7 +433,7 @@ namespace PlantenApplicatie.viewmodels
             }
 
             // toon opnieuw de listview met lijst BeheerMaanden
-            LoadBeheerMaanden();
+            LoadManagmentMonths();
         }
     }
 }
