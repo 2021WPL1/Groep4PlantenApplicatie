@@ -118,7 +118,7 @@ namespace PlantenApplicatie.Data
                 .OrderBy(p => p.Fgsv)
                 .ToList();
         }
-        public void RemoveGebruiker(Gebruiker user)
+        public void RemoveUser(Gebruiker user)
         {
             _context.Gebruiker.Remove(user);
             _context.SaveChanges();

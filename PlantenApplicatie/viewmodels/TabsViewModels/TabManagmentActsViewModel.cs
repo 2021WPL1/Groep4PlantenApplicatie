@@ -80,7 +80,7 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            IsManager = SelectedGebruiker.Rol.ToLower() == "manager";
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
         }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
 
@@ -403,22 +403,22 @@ namespace PlantenApplicatie.viewmodels
         //When a management act gets selected the current values changes to the selected values (Jim)
         private void LoadSelectedValues()
         {
-            var beheerMaand = SelectedManagementMonth;
+            var managementAct = SelectedManagementMonth;
 
-            TextInputBeheerdaad = beheerMaand.Beheerdaad ?? String.Empty;
-            TextInputDescription = beheerMaand.Omschrijving ?? String.Empty;
-            IsCheckedJanuary = beheerMaand.Jan ?? false;
-            IsCheckedFebruary = beheerMaand.Feb ?? false;
-            IsCheckedMarch = beheerMaand.Mrt ?? false;
-            IsCheckedApril = beheerMaand.Apr ?? false;
-            IsCheckedMay = beheerMaand.Mei ?? false;
-            IsCheckedJune = beheerMaand.Jun ?? false;
-            IsCheckedJuly = beheerMaand.Jul ?? false;
-            IsCheckedAugust = beheerMaand.Aug ?? false;
-            IsCheckedSeptember = beheerMaand.Sept ?? false;
-            IsCheckedOctober = beheerMaand.Okt ?? false;
-            IsCheckedNovember = beheerMaand.Nov ?? false;
-            IsCheckedDecember = beheerMaand.Dec ?? false;
+            TextInputManagementAct = managementAct.Beheerdaad ?? String.Empty;
+            TextInputDescription = managementAct.Omschrijving ?? String.Empty;
+            IsCheckedJanuary = managementAct.Jan ?? false;
+            IsCheckedFebruary = managementAct.Feb ?? false;
+            IsCheckedMarch = managementAct.Mrt ?? false;
+            IsCheckedApril = managementAct.Apr ?? false;
+            IsCheckedMay = managementAct.Mei ?? false;
+            IsCheckedJune = managementAct.Jun ?? false;
+            IsCheckedJuly = managementAct.Jul ?? false;
+            IsCheckedAugust = managementAct.Aug ?? false;
+            IsCheckedSeptember = managementAct.Sept ?? false;
+            IsCheckedOctober = managementAct.Okt ?? false;
+            IsCheckedNovember = managementAct.Nov ?? false;
+            IsCheckedDecember = managementAct.Dec ?? false;
         }
 
 

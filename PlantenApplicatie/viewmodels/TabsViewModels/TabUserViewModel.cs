@@ -32,13 +32,13 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         private Window _tabUserWindow;
 
         //constructor given with user as parameter
-        public TabUserViewModel(Gebruiker user)
+        public TabUserViewModel(Gebruiker user,Window window)
         {
             _tabUserWindow = window;
             SelectedUser = user;
             // original owner gets the value to change the user's own password 
             // instead of a random selected user
-            OrigineleGebruiker = user;
+            OriginalUser = user;
             _dao = PlantenDao.Instance;
             AddUserCommand = new DelegateCommand(AddUser);
             EditUserCommand = new DelegateCommand(EditUser);
@@ -105,16 +105,16 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         //make a new window to add a user
         private void AddUser()
         {
-            AddGebruiker addGebruiker = new AddGebruiker(SelectedGebruiker);
+            AddGebruiker addGebruiker = new AddGebruiker(SelectedUser);
             addGebruiker.Show();
-            _tabGebruikerWindow.Close();
+            _tabUserWindow.Close();
         }
 
         private void EditUser()
         {
-            EditGebruiker editGebruiker = new EditGebruiker(SelectedGebruiker);
+            EditGebruiker editGebruiker = new EditGebruiker(SelectedUser);
             editGebruiker.Show();
-            _tabGebruikerWindow.Close();
+            _tabUserWindow.Close();
         }
         //edit the current password the user has
         private void EditPassword()
