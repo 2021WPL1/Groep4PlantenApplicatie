@@ -323,7 +323,7 @@ namespace PlantenApplicatie.viewmodels
         // geef de BeheerMaanden weer in de listview (Davy)
         public void LoadManagmentMonths()
         {
-            var beheermaanden = _plantenDao.GetBeheerMaanden(SelectedPlant);
+            var beheermaanden = _plantenDao.GetManagementActs(SelectedPlant);
 
             BeheerMaanden.Clear();
 
@@ -353,7 +353,7 @@ namespace PlantenApplicatie.viewmodels
             beheerMaand.Nov = IsCheckedNovember;
             beheerMaand.Dec = IsCheckedDecember;
 
-            _plantenDao.CreateBeheerMaand(beheerMaand);
+            _plantenDao.CreateManagementAct(beheerMaand);
 
             
 
@@ -385,7 +385,7 @@ namespace PlantenApplicatie.viewmodels
                 beheerMaand.Nov = IsCheckedNovember;
                 beheerMaand.Dec = IsCheckedDecember;
 
-                _plantenDao.EditBeheerMaand(beheerMaand);
+                _plantenDao.EditManagementAct(beheerMaand);
             } else
             {
                 MessageBox.Show("Gelieve eerst een beheersdaad te selecteren.");
@@ -426,7 +426,7 @@ namespace PlantenApplicatie.viewmodels
             // ken een string waarde toe uit methode verwijder BeheerMaand uit database            
             if (SelectedManagementMonth != null)
             {
-                _plantenDao.RemoveBeheerMaand(beheerMaand);
+                _plantenDao.RemoveManagementAct(beheerMaand);
             } else
             {
                 MessageBox.Show("Gelieve eerst een beheersdaad te selecteren uit de lijst.");

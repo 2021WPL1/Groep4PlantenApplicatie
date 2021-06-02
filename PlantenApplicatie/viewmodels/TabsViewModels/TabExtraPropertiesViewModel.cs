@@ -230,7 +230,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadManagerExtraProperties()
         {
-            var eigenschappen = _plantenDao.getExtraProperties(SelectedPlant);
+            var eigenschappen = _plantenDao.GetExtraProperties(SelectedPlant);
 
             BeheerExtraEigenschappen.Clear();
 

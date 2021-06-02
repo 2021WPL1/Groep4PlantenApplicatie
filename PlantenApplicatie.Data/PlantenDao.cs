@@ -26,7 +26,7 @@ namespace PlantenApplicatie.Data
         public static PlantenDao Instance { get; }
 
         // Geef alle planten terug met al hun properties van de andere tabellen (Lily & davy)
-        public List<Plant> GetPlanten()
+        public List<Plant> GetPlants()
         {
             return _context.Plant
                 .Include(p => p.Abiotiek)
@@ -73,7 +73,7 @@ namespace PlantenApplicatie.Data
             }
         }
 
-        public List<ExtraEigenschap> getExtraProperties(Plant selectedPlant)
+        public List<ExtraEigenschap> GetExtraProperties(Plant selectedPlant)
         {
             return _context.ExtraEigenschap.Where(p => p.PlantId == selectedPlant.PlantId).ToList();
         }
@@ -109,18 +109,18 @@ namespace PlantenApplicatie.Data
                 .ToList();
         }
 
-        public string CreateExtraProperty(ExtraEigenschap extraEigenschap)
+        public string CreateExtraProperty(ExtraEigenschap extraProperty)
         {
             string message = "";
-            var item = _context.ExtraEigenschap.Where(b => b.PlantId == extraEigenschap.PlantId);
+            var item = _context.ExtraEigenschap.Where(b => b.PlantId == extraProperty.PlantId);
 
             if (item.Count() == 1)
             {
-                message = "Je kan maar 1 extra eigenschap toevoegen.";
+                message = "You can only add 1 extra property.";
             }
             else
             {
-                _context.ExtraEigenschap.Add(extraEigenschap);
+                _context.ExtraEigenschap.Add(extraProperty);
                 _context.SaveChanges();
             }
 
@@ -213,9 +213,9 @@ namespace PlantenApplicatie.Data
                 .GeslachtId;
         }
 
-        public void EditExtraProperty(ExtraEigenschap extraEigenschap)
+        public void EditExtraProperty(ExtraEigenschap extraProperty)
         {
-            _context.ExtraEigenschap.Update(extraEigenschap);
+            _context.ExtraEigenschap.Update(extraProperty);
             _context.SaveChanges();
         }
 
@@ -237,9 +237,9 @@ namespace PlantenApplicatie.Data
                 .VariantId;
         }
 
-        public void RemoveExtraProperty(ExtraEigenschap extraEigenschap)
+        public void DeleteExtraProperty(ExtraEigenschap extraProperty)
         {
-            _context.ExtraEigenschap.Remove(extraEigenschap);
+            _context.ExtraEigenschap.Remove(extraProperty);
             _context.SaveChanges();
         }
 
@@ -346,19 +346,19 @@ namespace PlantenApplicatie.Data
         }
 
         //Voeg een fenotype toe aan de geselecteerde plant (Jim)
-        public void AddPhenotype(Plant plant,int bladgrootte,string bladvorm,string ratioBloeiBlad,string bloeiwijze,
-        string habitus, string levensvorm,string spruitfenologie)
+        public void AddFenotype(Plant plant,int leafSize,string leafShape,string ratioBloomLeaf,string Bloom,
+        string habitus, string lifeForm,string sprout)
         {
             var fenotypePlant = new Fenotype
             {
                 PlantId = plant.PlantId,
-                Bladgrootte = bladgrootte,
-                Bladvorm = bladvorm,
-                RatioBloeiBlad = ratioBloeiBlad,
-                Bloeiwijze = bloeiwijze,
+                Bladgrootte = leafSize,
+                Bladvorm = leafShape,
+                RatioBloeiBlad = ratioBloomLeaf,
+                Bloeiwijze = Bloom,
                 Habitus = habitus,
-                Levensvorm = levensvorm,
-                Spruitfenologie = spruitfenologie
+                Levensvorm = lifeForm,
+                Spruitfenologie = sprout
             };
 
 
@@ -367,18 +367,18 @@ namespace PlantenApplicatie.Data
         }
 
         //verander een fenotype van de geselecteerde plant (Jim)
-        public Fenotype ChangePhenotype(Plant plant, int? bladgrootte, string bladvorm, string ratioBloeiBlad, string bloeiwijze,
-            string habitus, string levensvorm,string spruitfenologie)
+        public Fenotype ChangeFenotype(Plant plant, int? leafSize, string leafShape, string ratioBloomLeaf, string Bloom,
+            string habitus, string lifeForm,string sprout)
         {
             var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
-            selectedfenotype.Bladgrootte = bladgrootte ?? selectedfenotype.Bladgrootte;
-            selectedfenotype.Bladvorm = bladvorm ?? selectedfenotype.Bladvorm;
-            selectedfenotype.RatioBloeiBlad = ratioBloeiBlad ?? selectedfenotype.RatioBloeiBlad;
-            selectedfenotype.Bloeiwijze = bloeiwijze ?? selectedfenotype.Bloeiwijze;
+            selectedfenotype.Bladgrootte = leafSize ?? selectedfenotype.Bladgrootte;
+            selectedfenotype.Bladvorm = leafShape ?? selectedfenotype.Bladvorm;
+            selectedfenotype.RatioBloeiBlad = ratioBloomLeaf ?? selectedfenotype.RatioBloeiBlad;
+            selectedfenotype.Bloeiwijze = Bloom ?? selectedfenotype.Bloeiwijze;
             selectedfenotype.Habitus = habitus ?? selectedfenotype.Habitus;
-            selectedfenotype.Levensvorm = levensvorm ?? selectedfenotype.Levensvorm;
-            selectedfenotype.Spruitfenologie = spruitfenologie ?? selectedfenotype.Spruitfenologie;
+            selectedfenotype.Levensvorm = lifeForm ?? selectedfenotype.Levensvorm;
+            selectedfenotype.Spruitfenologie = sprout ?? selectedfenotype.Spruitfenologie;
             _context.SaveChanges();
 
             return selectedfenotype;
@@ -393,15 +393,15 @@ namespace PlantenApplicatie.Data
         }
         //voeg een multifenotype toe (Jim)
 
-        public void AddMultiPhenotype(Plant plant, string eigenschap, string maand, string waarde)
+        public void AddMultiFenotype(Plant plant, string property, string month, string value)
         {
             var fenotypeMultiPlant = new FenotypeMulti
             {
                 Id = GetLastFenoMultiId(),
                 PlantId = plant.PlantId,
-                Eigenschap = eigenschap,
-                Maand = maand,
-                Waarde = waarde
+                Eigenschap = property,
+                Maand = month,
+                Waarde = value
             };
             _context.FenotypeMulti.Add(fenotypeMultiPlant);
             _context.SaveChanges();
@@ -422,13 +422,13 @@ namespace PlantenApplicatie.Data
 
         //verander een multifenotype van de geselecteerde plant (Jim)
 
-        public void ChangeMultiFenotype(FenotypeMulti fenotypeMulti, string eigenschap, string maand, string waarde)
+        public void ChangeMultiFenotype(FenotypeMulti fenotypeMulti, string property, string month, string value)
         {
             var selectedFenotypeMulti = _context.FenotypeMulti.FirstOrDefault(i => i.Id == fenotypeMulti.Id);
 
-            selectedFenotypeMulti.Eigenschap = eigenschap ?? selectedFenotypeMulti.Eigenschap;
-            selectedFenotypeMulti.Maand = maand ?? selectedFenotypeMulti.Maand;
-            selectedFenotypeMulti.Waarde = waarde ?? selectedFenotypeMulti.Waarde;
+            selectedFenotypeMulti.Eigenschap = property ?? selectedFenotypeMulti.Eigenschap;
+            selectedFenotypeMulti.Maand = month ?? selectedFenotypeMulti.Maand;
+            selectedFenotypeMulti.Waarde = value ?? selectedFenotypeMulti.Waarde;
 
             _context.SaveChanges();
         }
@@ -440,63 +440,57 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
         //voeg een extra eigenschap aan de geselecteerde plant (Jim)
-        public void AddExtraEigenschap(Plant plant, string nectaWaarde, string pollenWaarde, bool bij, bool vlinder,
-            bool eetbaar, bool kruid, bool geur, bool vorst)
+        public void AddExtraProperty(Plant plant, string nectarValue, string pollenValue, bool bee, bool butterfly,
+            bool edible, bool herb, bool odor, bool frost)
         {
-            var extraEigenschap = new ExtraEigenschap
+            var extraProperty = new ExtraEigenschap
             {
                 PlantId = plant.PlantId,
-                Nectarwaarde = nectaWaarde,
-                Pollenwaarde = pollenWaarde,
-                Bijvriendelijke = bij,
-                Vlindervriendelijk = vlinder,
-                Eetbaar = eetbaar,
-                Kruidgebruik = kruid,
-                Geurend = geur,
-                Vorstgevoelig = vorst
+                Nectarwaarde = nectarValue,
+                Pollenwaarde = pollenValue,
+                Bijvriendelijke = bee,
+                Vlindervriendelijk = butterfly,
+                Eetbaar = edible,
+                Kruidgebruik = herb,
+                Geurend = odor,
+                Vorstgevoelig = frost
             };
 
-            _context.ExtraEigenschap.Add(extraEigenschap);
+            _context.ExtraEigenschap.Add(extraProperty);
             _context.SaveChanges();
         }
         //verander de extra eigenschap aan de geselecteerde plant (Jim)
 
-        public void ChangeExtraEigenschap(ExtraEigenschap extraEigenschap, string nectaWaarde, string pollenWaarde, bool bij, bool vlinder,
-         bool eetbaar, bool kruid, bool geur, bool vorst)
+        public void EditExtraProperty(ExtraEigenschap extraProperty, string nectarValue, string pollenValue, bool bee, bool butterfly,
+         bool edible, bool herb, bool odor, bool frost)
         {
-            var selectedExtraEigenschap = _context.ExtraEigenschap.FirstOrDefault(i => i.Id == extraEigenschap.Id);
+            var selectedExtraProperty = _context.ExtraEigenschap.FirstOrDefault(i => i.Id == extraProperty.Id);
 
-            selectedExtraEigenschap.Nectarwaarde = nectaWaarde ?? selectedExtraEigenschap.Nectarwaarde;
-            selectedExtraEigenschap.Pollenwaarde = pollenWaarde ?? selectedExtraEigenschap.Pollenwaarde;
-            selectedExtraEigenschap.Bijvriendelijke = bij;
-            selectedExtraEigenschap.Eetbaar = eetbaar;
-            selectedExtraEigenschap.Kruidgebruik = kruid;
-            selectedExtraEigenschap.Geurend = geur;
-            selectedExtraEigenschap.Vorstgevoelig = vorst;
+            selectedExtraProperty.Nectarwaarde = nectarValue ?? selectedExtraProperty.Nectarwaarde;
+            selectedExtraProperty.Pollenwaarde = pollenValue ?? selectedExtraProperty.Pollenwaarde;
+            selectedExtraProperty.Bijvriendelijke = bee;
+            selectedExtraProperty.Vlindervriendelijk = butterfly;
+            selectedExtraProperty.Eetbaar = edible;
+            selectedExtraProperty.Kruidgebruik = herb;
+            selectedExtraProperty.Geurend = odor;
+            selectedExtraProperty.Vorstgevoelig = frost;
 
 
             _context.SaveChanges();
         }
-        //verwijder de extra eigenschap aan de geselecteerde plant (Jim)
-
-        public void DeleteExtraEigenschap(ExtraEigenschap extraEigenschap)
-        {
-            var selectedExtraEigenschap = _context.ExtraEigenschap.FirstOrDefault(i => i.Id == extraEigenschap.Id);
-            _context.ExtraEigenschap.Remove(selectedExtraEigenschap);
-            _context.SaveChanges();
-        }
+      
         //Toevoegen, veranderen en verwijderen van abiotiek (Liam)
-        public void AddAbiotic(Plant plant, string? bezonning, string? grondsoort, string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
+        public void AddAbiotiek(Plant plant, string? insolation, string? soilType, string? moistureRequirement, string? nutritionNeeds, string? antagonisticEnvironment)
         {
             //Habitat ontbreekt
             Abiotiek abiotiek = new Abiotiek
             {
                 PlantId = plant.PlantId,
-                Bezonning = bezonning,
-                Grondsoort = grondsoort,
-                Vochtbehoefte = vochtbehoefte,
-                Voedingsbehoefte = voedingsbehoefte,
-                AntagonischeOmgeving = antagonischeOmgeving
+                Bezonning = insolation,
+                Grondsoort = soilType,
+                Vochtbehoefte = moistureRequirement,
+                Voedingsbehoefte = nutritionNeeds,
+                AntagonischeOmgeving = antagonisticEnvironment
             };
 
             _context.Add(abiotiek);
@@ -506,18 +500,18 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeAbiotic(Abiotiek abiotiek, string? bezonning, string? grondsoort,
-            string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
+        public void ChangeAbiotiek(Abiotiek abiotiek, string? insolation, string? soilType,
+            string? moistureRequirement, string? nutritionNeeds, string? antagonisticEnvironment)
         {
 
 
             var selectedAbiotiek = _context.Abiotiek.FirstOrDefault(s => s.Id == abiotiek.Id);
 
-            selectedAbiotiek.Bezonning = bezonning ?? selectedAbiotiek.Bezonning;
-            selectedAbiotiek.Grondsoort = grondsoort ?? selectedAbiotiek.Grondsoort;
-            selectedAbiotiek.Vochtbehoefte = vochtbehoefte ?? selectedAbiotiek.Vochtbehoefte;
-            selectedAbiotiek.Voedingsbehoefte = voedingsbehoefte ?? selectedAbiotiek.Voedingsbehoefte;
-            selectedAbiotiek.AntagonischeOmgeving = antagonischeOmgeving ?? selectedAbiotiek.AntagonischeOmgeving;
+            selectedAbiotiek.Bezonning = insolation ?? selectedAbiotiek.Bezonning;
+            selectedAbiotiek.Grondsoort = soilType ?? selectedAbiotiek.Grondsoort;
+            selectedAbiotiek.Vochtbehoefte = moistureRequirement ?? selectedAbiotiek.Vochtbehoefte;
+            selectedAbiotiek.Voedingsbehoefte = nutritionNeeds ?? selectedAbiotiek.Voedingsbehoefte;
+            selectedAbiotiek.AntagonischeOmgeving = antagonisticEnvironment ?? selectedAbiotiek.AntagonischeOmgeving;
 
 
 
@@ -535,14 +529,14 @@ namespace PlantenApplicatie.Data
 
         //Toevoegen, veranderen en verwijderen van commensalisme (Liam)
 
-        public void AddCommensalism(Plant plant, string ontwikkelingssnelheid, string strategie)
+        public void AddCommensalisme(Plant plant, string developmentSpeed, string strategy)
         {
             //sociabiliteit ontbreekt
             Commensalisme commensalisme = new Commensalisme
             {
                 PlantId = plant.PlantId,
-                Ontwikkelsnelheid = ontwikkelingssnelheid,
-                Strategie = strategie
+                Ontwikkelsnelheid = developmentSpeed,
+                Strategie = strategy
             };
 
             _context.Add(commensalisme);
@@ -552,12 +546,12 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public Commensalisme ChangeCommensalism(Plant plant, string ontwikkelingssnelheid, string strategie)
+        public Commensalisme ChangeCommensalisme(Plant plant, string developmentSpeed, string strategy)
         {
             var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
-            selectedCommensalisme.Ontwikkelsnelheid = ontwikkelingssnelheid ?? selectedCommensalisme.Ontwikkelsnelheid;
-            selectedCommensalisme.Strategie = strategie ?? selectedCommensalisme.Strategie;
+            selectedCommensalisme.Ontwikkelsnelheid = developmentSpeed ?? selectedCommensalisme.Ontwikkelsnelheid;
+            selectedCommensalisme.Strategie = strategy ?? selectedCommensalisme.Strategie;
 
             _context.SaveChanges();
 
@@ -572,14 +566,14 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void AddAbioticMulti(Plant plant, string eigenschap, string waarde)
+        public void AddAbiotiekMulti(Plant plant, string property, string value)
         {
 
             AbiotiekMulti abiotiekMulti = new AbiotiekMulti
             {
                 PlantId = plant.PlantId,
-                Eigenschap = eigenschap,
-                Waarde = waarde
+                Eigenschap = property,
+                Waarde = value
             };
 
             _context.Add(abiotiekMulti);
@@ -589,12 +583,12 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeAbiotiekMulti(AbiotiekMulti abiotiekMulti, string eigenschap, string waarde)
+        public void ChangeAbiotiekMulti(AbiotiekMulti abiotiekMulti, string property, string value)
         {
             var selectedAbiotiekMulti = _context.AbiotiekMulti.FirstOrDefault(s => s.Id == abiotiekMulti.Id);
 
-            selectedAbiotiekMulti.Eigenschap = eigenschap ?? selectedAbiotiekMulti.Eigenschap;
-            selectedAbiotiekMulti.Waarde = waarde ?? selectedAbiotiekMulti.Waarde;
+            selectedAbiotiekMulti.Eigenschap = property ?? selectedAbiotiekMulti.Eigenschap;
+            selectedAbiotiekMulti.Waarde = value ?? selectedAbiotiekMulti.Waarde;
 
             _context.SaveChanges();
         }
@@ -608,14 +602,14 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void AddCommensalismMulti(Plant plant, string eigenschap, string waarde)
+        public void AddCommensalismeMulti(Plant plant, string property, string value)
         {
 
             CommensalismeMulti commensalismeMulti = new CommensalismeMulti
             {
                 PlantId = plant.PlantId,
-                Eigenschap = eigenschap,
-                Waarde = waarde
+                Eigenschap = property,
+                Waarde = value
             };
 
             _context.Add(commensalismeMulti);
@@ -625,12 +619,12 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeCommensalismMulti(CommensalismeMulti commensalismeMulti, string eigenschap, string waarde)
+        public void ChangeCommensalismeMulti(CommensalismeMulti commensalismeMulti, string property, string value)
         {
             var selectedCommensalismeMulti = _context.CommensalismeMulti.FirstOrDefault(s => s.Id == commensalismeMulti.Id);
 
-            selectedCommensalismeMulti.Eigenschap = eigenschap ?? selectedCommensalismeMulti.Eigenschap;
-            selectedCommensalismeMulti.Waarde = waarde ?? selectedCommensalismeMulti.Waarde;
+            selectedCommensalismeMulti.Eigenschap = property ?? selectedCommensalismeMulti.Eigenschap;
+            selectedCommensalismeMulti.Waarde = value ?? selectedCommensalismeMulti.Waarde;
 
             _context.SaveChanges();
         }
@@ -778,13 +772,13 @@ namespace PlantenApplicatie.Data
         }
 
         // haal beheermaanden per plant (Davy)
-        public List<BeheerMaand> GetBeheerMaanden(Plant plant)
+        public List<BeheerMaand> GetManagementActs(Plant plant)
         {
             return _context.BeheerMaand.Where(b => b.PlantId == plant.PlantId).ToList();
         }
 
         // maak een BeheerMaand aan (Davy, Lily)
-        public string CreateBeheerMaand(BeheerMaand beheerMaand)
+        public string CreateManagementAct(BeheerMaand beheerMaand)
         {
             string message = "";
             var item = _context.BeheerMaand.Where(b => b.PlantId == beheerMaand.PlantId);
@@ -796,14 +790,14 @@ namespace PlantenApplicatie.Data
         }
 
         // wijzig een BeheerMaand (Davy)
-        public void EditBeheerMaand(BeheerMaand beheerMaand)
+        public void EditManagementAct(BeheerMaand beheerMaand)
         {
             _context.BeheerMaand.Update(beheerMaand);
             _context.SaveChanges();
         }
 
         // verwijder een BeheerMaand uit database (Davy)
-        public void RemoveBeheerMaand(BeheerMaand beheerMaand)
+        public void RemoveManagementAct(BeheerMaand beheerMaand)
         {
             _context.BeheerMaand.Remove(beheerMaand);
             _context.SaveChanges();
@@ -844,7 +838,7 @@ namespace PlantenApplicatie.Data
         }
       
 
-        public User GetGebruiker(string emailadres)
+        public User GetUser(string emailadres)
         {
             return _context.Gebruiker.SingleOrDefault(g => g.Emailadres.Equals(emailadres));
 
@@ -859,7 +853,7 @@ namespace PlantenApplicatie.Data
             return _context.Commensalisme.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
         }
 
-        public List<string> GetFotoEigenschappen()
+        public List<string> GetImageProperties()
         {
             return new()
             {
@@ -869,7 +863,7 @@ namespace PlantenApplicatie.Data
             };
         }
 
-        public void AddFoto(string? property, Plant plant, string? url, byte[]? imageBytes)
+        public void AddPhoto(string? property, Plant plant, string? url, byte[]? imageBytes)
         {
             var foto = new Foto
             {
@@ -884,23 +878,23 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void ChangeFoto(Foto foto, string? property, string? url, byte[]? imageBytes)
+        public void ChangePhoto(Foto photo, string? property, string? url, byte[]? imageBytes)
         {
-            foto.Eigenschap = property;
-            foto.UrlLocatie = url;
-            foto.Tumbnail = imageBytes;
+            photo.Eigenschap = property;
+            photo.UrlLocatie = url;
+            photo.Tumbnail = imageBytes;
 
-            _context.Foto.Add(foto);
-            _context.Entry(foto)
+            _context.Foto.Add(photo);
+            _context.Entry(photo)
                 .State = EntityState.Modified;
 
             _context.SaveChanges();
         }
 
-        public void DeleteFoto(Foto foto)
+        public void DeletePhoto(Foto photo)
         {
             _context.Foto
-                .Remove(foto);
+                .Remove(photo);
 
             _context.SaveChanges();
         }
