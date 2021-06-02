@@ -218,8 +218,10 @@ namespace PlantenApplicatie.viewmodels
         //laad de verschillende gegevens in de comboboxes (Davy & Jim)
         private void LoadFenoBladgrootte()
         {
-            RefreshObservableCollection(FenoBladgroottes, _plantenDao.GetFenoBladGrootte()
-                .Select(bg => Convert.ToInt32(bg)));
+            var fenaLeafSize = _plantenDao.GetFenoBladGrootte()
+                .Select(bg => Convert.ToInt32(bg));
+            
+            RefreshObservableCollection(FenoBladgroottes, fenaLeafSize);
         }
 
         private void LoadFenoBladvorm()
@@ -252,29 +254,26 @@ namespace PlantenApplicatie.viewmodels
             RefreshObservableCollection(PlantFenoTypesMulti, _plantenDao.GetFenoMultis(SelectedPlant));
         }
 
-        // TODO: create constant in dao
         private void LoadEigenschappen()
         {
-            FenotypeEigenschappen.Clear();
-
-            FenotypeEigenschappen.Add("bladhoogte");
-            FenotypeEigenschappen.Add("bladkleur");
-            FenotypeEigenschappen.Add("bloeihoogte");
-            FenotypeEigenschappen.Add("bloeikleur");
+            RefreshObservableCollection(FenotypeEigenschappen, _plantenDao.GetFenotypeProperties());
         }
 
         private void LoadKleur()
         {
-            RefreshObservableCollection(FenoTypesMulti, _plantenDao.GetFenoKleur()
-                .Select(fk => fk.NaamKleur));
+            var colorNames = _plantenDao.GetFenoKleur()
+                .Select(fk => fk.NaamKleur);
+            
+            RefreshObservableCollection(FenoTypesMulti, colorNames);
         }
         
         private void LoadHoogte()
         {
-            // TODO: constants please
-            RefreshObservableCollection(FenoTypesMulti, Enumerable.Range(0, 30)
+            var heightPossibilities = Enumerable.Range(0, PlantenDao.MaxLeafSize / 10)
                 .Select(n => (n * 10)
-                    .ToString()));
+                    .ToString());
+            
+            RefreshObservableCollection(FenoTypesMulti, heightPossibilities);
         }
         
         private void LoadFenoMultiMaanden()
@@ -371,6 +370,9 @@ namespace PlantenApplicatie.viewmodels
                 case "bloeikleur":
                     LoadKleur();
                     break;
+                
+                default:
+                    throw new NotImplementedException();
             }
         }
 
@@ -379,15 +381,12 @@ namespace PlantenApplicatie.viewmodels
         {
             if (SelectedPlantFenoTypeMulti is not null)
             {
-
                 _plantenDao.RemoveMultiFenotype(SelectedPlantFenoTypeMulti);
+                return;
             }
-            else
-            {
-                MessageBox.Show("Gelieve een fenotype te selecteren uit de listview",
-                   "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            
+            MessageBox.Show("Gelieve een fenotype te selecteren uit de listview",
+               "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+
             LoadFenoTypesMultiPlant();
         }
     }

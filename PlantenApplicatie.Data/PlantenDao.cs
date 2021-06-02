@@ -25,6 +25,8 @@ namespace PlantenApplicatie.Data
 
         public static PlantenDao Instance { get; }
 
+        public const int MaxLeafSize = 300;
+
         // Geef alle planten terug met al hun properties van de andere tabellen (Lily & davy)
         public List<Plant> GetPlanten()
         {
@@ -917,6 +919,17 @@ namespace PlantenApplicatie.Data
                 .Remove(foto);
 
             _context.SaveChanges();
+        }
+
+        public List<string> GetFenotypeProperties()
+        {
+            return new()
+            {
+                "bladhoogte",
+                "bladkleur",
+                "bloeihoogte",
+                "bloeikleur"
+            };
         }
     }
 }
