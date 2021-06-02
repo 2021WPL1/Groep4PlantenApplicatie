@@ -30,13 +30,11 @@ namespace PlantenApplicatie.viewmodels
         private FenotypeMulti? _selectedPlantFenoTypeMulti;
 
         // private variabelen (Davy)
-        private Gebruiker _selectedGebruiker;
         private bool _isManager;
 
         // Constructor Davy
         public TabFenoTypeViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
-            SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             //variabelen (Davy &Jim)
 
@@ -48,7 +46,7 @@ namespace PlantenApplicatie.viewmodels
             // methoden om comboboxen Fenotype in te laden (Davy & Jim)
             LoadAllProperties();
             
-            SetAuthorizedActionsByRole();
+            SetAuthorizedActionsByRole(gebruiker);
         }
         
         // collecties (lijsten) Davy & Jim
@@ -75,20 +73,10 @@ namespace PlantenApplicatie.viewmodels
         public bool IsManager
         {
             get => _isManager;
-            set
+            private set
             {
                 _isManager = value;
                 OnPropertyChanged("IsManager");
-            }
-        }
-
-        public Gebruiker SelectedGebruiker
-        {
-            private get => _selectedGebruiker;
-            set
-            {
-                _selectedGebruiker = value;
-                OnPropertyChanged();
             }
         }
 
@@ -124,6 +112,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        // TODO: check
         public int? SelectedBladgrootte
         {
             get => _selectedBladgrootte;
@@ -220,9 +209,9 @@ namespace PlantenApplicatie.viewmodels
         }
         
         //controleer welke rol de gebruiker heeft
-        private void SetAuthorizedActionsByRole()
+        private void SetAuthorizedActionsByRole(Gebruiker gebruiker)
         {
-            IsManager = SelectedGebruiker.Rol.ToLower() == "manager";
+            IsManager = gebruiker.Rol.ToLower() == "manager";
         }
 
         //laad de verschillende gegevens in de comboboxes (Davy & Jim)
