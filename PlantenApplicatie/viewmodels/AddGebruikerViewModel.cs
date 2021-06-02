@@ -39,7 +39,7 @@ namespace PlantenApplicatie.viewmodels
         public AddGebruikerViewModel(Window window, Gebruiker user)
         {
             _addGebruikerWindow = window;       // Davy
-            _gebruiker = user;       // Davy
+            _user = user;       // Davy
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 
@@ -195,7 +195,7 @@ namespace PlantenApplicatie.viewmodels
                         MessageBox.Show(message);
 
                         // herladen Users door nieuw venster BeheerPlanten op te starten
-                        BeheerPlanten beheerPlanten = new BeheerPlanten(_gebruiker);
+                        BeheerPlanten beheerPlanten = new BeheerPlanten(_user);
                         beheerPlanten.Show();
 
                         _addGebruikerWindow.Close();
@@ -212,7 +212,7 @@ namespace PlantenApplicatie.viewmodels
         private void CloseWindow()
         {
             // herladen Users door nieuw venster BeheerPlanten op te starten
-            BeheerPlanten beheerPlanten = new BeheerPlanten(_gebruiker);
+            BeheerPlanten beheerPlanten = new BeheerPlanten(_user);
             beheerPlanten.Show();
 
             _addGebruikerWindow.Close();

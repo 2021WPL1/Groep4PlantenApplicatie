@@ -321,7 +321,7 @@ namespace PlantenApplicatie.viewmodels
         private void AddUser()
         {
             // doorgeven SelectedGebruiker omdat je venster sluit zodat de applicatie onthoudt wie er bezig is
-            new AddGebruiker(SelectedGebruiker).Show();
+            new AddGebruiker(SelectedUser).Show();
         }
     }
 }

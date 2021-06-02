@@ -60,17 +60,17 @@ namespace PlantenApplicatie.Data
         }
 
         //update the selected user and its values(Davy)
-        public string UpdateUser(Gebruiker user, string password)
+        public string UpdateUser(Gebruiker selecteduser, string password)
         {
-            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == gebruiker.Emailadres);
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == selecteduser.Emailadres);
 
             if (user != null)
             {
                 user.HashPaswoord = Encryptor.GenerateMD5Hash(password);
-                user.Voornaam = gebruiker.Voornaam;
-                user.Achternaam = gebruiker.Achternaam;
-                user.Rol = gebruiker.Rol;
-                user.Vivesnr = gebruiker.Vivesnr;
+                user.Voornaam = selecteduser.Voornaam;
+                user.Achternaam = selecteduser.Achternaam;
+                user.Rol = selecteduser.Rol;
+                user.Vivesnr = selecteduser.Vivesnr;
 
                 _context.Gebruiker.Update(user);
                 _context.SaveChanges();
@@ -836,12 +836,12 @@ namespace PlantenApplicatie.Data
 
         //create an account for a user(Davy)
 
-        public bool CreateLogin(Gebruiker user, out string message)
+        public bool CreateLogin(Gebruiker gebruiker, out string message)
         {
             var users = _context.Gebruiker.ToList();
             message = "";
 
-            foreach (var user in gebruikers)
+            foreach (var user in users)
             {
                 if (gebruiker.Emailadres == user.Emailadres)
                 {

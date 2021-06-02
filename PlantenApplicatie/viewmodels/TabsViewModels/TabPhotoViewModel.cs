@@ -26,9 +26,22 @@ namespace PlantenApplicatie.viewmodels
         private ImageSource? _selectedImage;
         private string? _selectedProperty;
         private string? _selectedUrl;
+
+
+        //button commands
+        public ICommand ChangePhotoCommand { get; }
+        public ICommand DeletePhotoCommand { get; }
+
+
+        public List<string> Properties { get; }
+        // private variabelen (Davy)
+        private Gebruiker _selectedUser;
+        private bool _IsManager;
         //constructor
         public TabPhotoViewModel(Plant selectedplant,Gebruiker user)
         {
+            SelectedUser = user;
+
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedplant;
 
@@ -36,14 +49,46 @@ namespace PlantenApplicatie.viewmodels
 
             ChangePhotoCommand = new DelegateCommand(ChangePhoto);
             DeletePhotoCommand = new DelegateCommand(DeletePhoto);
+            UserRole();
         }
-        
-        //button commands
-        public ICommand ChangePhotoCommand { get; }
-        public ICommand DeletePhotoCommand { get; }
 
 
-        public List<string> Properties { get; }
+
+        public bool IsManager
+        {
+            get => _IsManager;
+            set
+            {
+                _IsManager = value;
+                OnPropertyChanged("IsManager");
+            }
+        }
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedUser.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
+        public Gebruiker SelectedUser
+        {
+            private get => _selectedUser;
+            set
+            {
+                _selectedUser = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         //getters and setters 
         public ImageSource? SelectedImage

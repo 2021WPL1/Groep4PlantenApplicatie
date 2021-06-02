@@ -15,8 +15,8 @@ namespace PlantenApplicatie.viewmodels
         public TabsBeheerViewModel(Window window, Gebruiker user)
         {
             _children = new ObservableCollection<object>();
-            _children.Add(new TabBeheerPlantenViewModel(user));
-            _children.Add(new TabGebruikerViewModel(user));
+            _children.Add(new TabManagePlantenViewModel(user));
+            _children.Add(new TabUserViewModel(user, window));
         }
 
         public ObservableCollection<object> Children { get { return _children; } }
