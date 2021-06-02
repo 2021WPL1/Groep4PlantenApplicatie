@@ -186,7 +186,7 @@ namespace PlantenApplicatie.viewmodels
                             Emailadres = TextInputEmail,
                             HashPaswoord = Encryptor.GenerateMD5Hash(TextInputPaswoord)
                         };
-                        message = _dao.UpdateUser(gebruiker, TextInputPaswoord);
+                        message = _dao.UpdateUser(gebruiker.Emailadres, TextInputPaswoord);
                         MessageBox.Show(message);
 
                         // herladen Users door nieuw venster BeheerPlanten op te starten

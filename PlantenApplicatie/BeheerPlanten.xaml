@@ -324,7 +324,7 @@
                 <Grid>
                     <Canvas>
                         <Canvas.Background>
-                            <ImageBrush ImageSource="/bloemenachtergrondVmultiRoze.png"/>
+                            <ImageBrush ImageSource="images/bloemenachtergrondVmultiRoze.png"/>
                         </Canvas.Background>
                         <Button Content="Voeg gebruiker toe" Canvas.Left="31" Canvas.Top="436" Width="114" Height="22"
                                 Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}">
