@@ -328,8 +328,8 @@
                         <Canvas.Background>
                             <ImageBrush ImageSource="/bloemenachtergrondVmultiRoze.png"/>
                         </Canvas.Background>
-                        <Button Content="Voeg gebruiker toe" Canvas.Left="10" Canvas.Top="10" Width="114" Height="22"
-                                Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}" >
+                        <Button Content="Voeg gebruiker toe" Canvas.Left="31" Canvas.Top="436" Width="114" Height="22"
+                                Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFE4A6C7"/>
@@ -338,16 +338,45 @@
                             </Button.Background>
                         </Button>
                         <Button Content="Wijzigen wachtwoord" Command="{Binding Path=EditPasswordCommand}"
-                                 IsEnabled="{Binding Path=IsManager}"
-                                Canvas.Left="10" Canvas.Top="49" RenderTransformOrigin="0.395,0.703" Width="158">
+                                Canvas.Left="447" Canvas.Top="437" RenderTransformOrigin="0.395,0.703" Width="158">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFE4A6C7" Offset="0.006"/>
+                                    <GradientStop Color="#FFE4A6C7"/>
                                     <GradientStop Color="#FFE378E5" Offset="1"/>
                                 </LinearGradientBrush>
                             </Button.Background>
                         </Button>
+                        <ListView ItemsSource="{Binding Users}" 
+                                          SelectedItem="{Binding SelectedUser}" Height="380" Width="990" Canvas.Left="31" Canvas.Top="26">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Vivesnr" Width="Auto" DisplayMemberBinding="{Binding Vivesnr}" />
+                                    <GridViewColumn Header="Voornaam" Width="Auto" DisplayMemberBinding="{Binding Voornaam}" />
+                                    <GridViewColumn Header="Familienaam" Width="Auto" DisplayMemberBinding="{Binding Achternaam}" />
+                                    <GridViewColumn Header="Rol" Width="Auto" DisplayMemberBinding="{Binding Rol}" />
+                                    <GridViewColumn Header="E-mail" Width="Auto" DisplayMemberBinding="{Binding Emailadres}" />
 
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Button Content="Wijzig gebruiker" Canvas.Left="165" Canvas.Top="436" Width="114" Height="22"
+                            Command="{Binding EditUserCommand}" IsEnabled="{Binding IsManager}" >
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE4A6C7"/>
+                                    <GradientStop Color="#FFE378E5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                        <Button Content="Verwijder gebruiker" Canvas.Left="297" Canvas.Top="436" Width="129" Height="22"
+                            Command="{Binding DeleteUserCommand}" IsEnabled="{Binding IsManager}" >
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE4A6C7"/>
+                                    <GradientStop Color="#FFE378E5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                     </Canvas>
                 </Grid>
             </TabItem>

@@ -16,7 +16,6 @@ namespace PlantenApplicatie.viewmodels
         // button commands
         public ICommand LoginCommand { get; set; }
         public ICommand CancelCommand { get; set; }
-        public ICommand ForgotPasswordCommand { get; set; }
 
         private string _textInputLogin;
         private string _textInputPassword;
@@ -64,11 +63,11 @@ namespace PlantenApplicatie.viewmodels
 
             if (myBool == true)
             {
-                var gebruiker =_dao.GetUser(TextInputLogin);
+                var user =_dao.GetUser(TextInputLogin);
                 MessageBox.Show(message);
-                _loginWindow.Hide();
-                BeheerPlanten beheerPlanten = new BeheerPlanten(gebruiker);
-                beheerPlanten.Show(); 
+                BeheerPlanten beheerPlanten = new BeheerPlanten(user);
+                beheerPlanten.Show();
+                _loginWindow.Close();
                 
             } else
             {
