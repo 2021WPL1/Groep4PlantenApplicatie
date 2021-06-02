@@ -273,18 +273,18 @@ namespace PlantenApplicatie.viewmodels
         //if there is no extra properties for the plant, one will be made. Plant can only have 1(Davy)
         public void AddExtra()
         {
-            ExtraEigenschap extraEigenschap = new ExtraEigenschap();
-            extraEigenschap.PlantId = SelectedPlant.PlantId;
-            extraEigenschap.Nectarwaarde = SelectedNectarValue;
-            extraEigenschap.Pollenwaarde = SelectedPollenValue;
-            extraEigenschap.Bijvriendelijke = IsCheckedBeeFriendly;
-            extraEigenschap.Vlindervriendelijk = IsCheckedButterflyFriendly;
-            extraEigenschap.Eetbaar = IsCheckedEdible;
-            extraEigenschap.Kruidgebruik = IsCheckedHerbUse;
-            extraEigenschap.Geurend = IsCheckedFragrant;
-            extraEigenschap.Vorstgevoelig = IsCheckedFrostSensitive;
+            ExtraEigenschap extraProperty = new ExtraEigenschap();
+            extraProperty.PlantId = SelectedPlant.PlantId;
+            extraProperty.Nectarwaarde = SelectedNectarValue;
+            extraProperty.Pollenwaarde = SelectedPollenValue;
+            extraProperty.Bijvriendelijke = IsCheckedBeeFriendly;
+            extraProperty.Vlindervriendelijk = IsCheckedButterflyFriendly;
+            extraProperty.Eetbaar = IsCheckedEdible;
+            extraProperty.Kruidgebruik = IsCheckedHerbUse;
+            extraProperty.Geurend = IsCheckedFragrant;
+            extraProperty.Vorstgevoelig = IsCheckedFrostSensitive;
 
-            string message = _plantenDao.CreateExtraProperty(extraEigenschap);
+            string message = _plantenDao.CreateExtraProperty(extraProperty);
 
             if (message != String.Empty)
             {
@@ -298,20 +298,20 @@ namespace PlantenApplicatie.viewmodels
         //edit the extra properties of the plant(Davy)
         public void EditExtra()
         {
-            ExtraEigenschap extraEigenschap = SelectedExtraProperty;
+            ExtraEigenschap extraProperty = SelectedExtraProperty;
 
-            if (extraEigenschap != null)
+            if (extraProperty != null)
             {
-                extraEigenschap.Nectarwaarde = SelectedNectarValue;
-                extraEigenschap.Pollenwaarde = SelectedPollenValue;
-                extraEigenschap.Bijvriendelijke = IsCheckedBeeFriendly;
-                extraEigenschap.Vlindervriendelijk = IsCheckedButterflyFriendly;
-                extraEigenschap.Eetbaar = IsCheckedEdible;
-                extraEigenschap.Kruidgebruik = IsCheckedHerbUse;
-                extraEigenschap.Geurend = IsCheckedFragrant;
-                extraEigenschap.Vorstgevoelig = IsCheckedFrostSensitive;
+                extraProperty.Nectarwaarde = SelectedNectarValue;
+                extraProperty.Pollenwaarde = SelectedPollenValue;
+                extraProperty.Bijvriendelijke = IsCheckedBeeFriendly;
+                extraProperty.Vlindervriendelijk = IsCheckedButterflyFriendly;
+                extraProperty.Eetbaar = IsCheckedEdible;
+                extraProperty.Kruidgebruik = IsCheckedHerbUse;
+                extraProperty.Geurend = IsCheckedFragrant;
+                extraProperty.Vorstgevoelig = IsCheckedFrostSensitive;
 
-                _plantenDao.EditExtraProperty(extraEigenschap);
+                _plantenDao.EditExtraProperty(extraProperty);
             }
             else
             {
@@ -326,12 +326,12 @@ namespace PlantenApplicatie.viewmodels
         public void RemoveExtra()
         {
             //set a variable extra eigenschap to the selected extra properties to delete
-            ExtraEigenschap extraEigenschap = SelectedExtraProperty;
+            ExtraEigenschap extraProperty = SelectedExtraProperty;
 
                     
             if (SelectedExtraProperty != null)
             {
-                _plantenDao.DeleteExtraProperty(extraEigenschap);
+                _plantenDao.DeleteExtraProperty(extraProperty);
             }
             else
             {

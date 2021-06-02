@@ -16,7 +16,7 @@ namespace PlantenApplicatie.viewmodels
         private const string Property = "habitat";
 
         private readonly PlantenDao _plantenDao;
-        private readonly Plant _selectedPlant;
+        private  Plant _selectedPlant;
 
         private string? _selectedInsolation;
         private string? _selectedSoilType;
@@ -109,6 +109,16 @@ namespace PlantenApplicatie.viewmodels
 
 
         //getters en setters (Lily)
+        public Plant SelectedPlant
+        {
+            private get => _selectedPlant;
+            set
+            {
+                _selectedPlant = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string? SelectedInsolation
         {
             private get { return _selectedInsolation; }
@@ -185,11 +195,11 @@ namespace PlantenApplicatie.viewmodels
         //edit the abiotiek of the selected plant, if there is none an abiotiek will be added to the plant with the selected values (Lily)
         private void EditAbiotic()
         {
-            var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
+            var abiotic = _selectedPlant.Abiotiek.SingleOrDefault();
 
             Console.WriteLine(_selectedPlant.Abiotiek.Count);
 
-            if (abiotiek is null)
+            if (abiotic is null)
             {
                 _plantenDao.AddAbiotic(_selectedPlant, SelectedInsolation, SelectedSoilType,
                     SelectedMoistureRequirement, SelectedNutritionRequirement,
@@ -197,7 +207,7 @@ namespace PlantenApplicatie.viewmodels
             }
             else
             {
-                _plantenDao.ChangeAbiotic(abiotiek, SelectedInsolation, SelectedSoilType,
+                _plantenDao.ChangeAbiotic(abiotic, SelectedInsolation, SelectedSoilType,
                     SelectedMoistureRequirement, SelectedNutritionRequirement,
                     SelectedAntagonianEnvironment);
             }

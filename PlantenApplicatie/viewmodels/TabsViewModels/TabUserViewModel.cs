@@ -28,7 +28,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
 
         private Gebruiker _selectedUser;
         private Gebruiker OriginalUser;
-        private bool _IsManager;
+        private bool _isManager;
         private Window _tabUserWindow;
 
         //constructor given with user as parameter
@@ -66,10 +66,10 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
 
         public bool IsManager
         {
-            get => _IsManager;
+            get => _isManager;
             set
             {
-                _IsManager = value;
+                _isManager = value;
                 OnPropertyChanged("IsManager");
             }
         }

@@ -12,9 +12,9 @@
             <ColumnDefinition Width="163*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Voornaam:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="27" Width="70" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,10,0,0" Text="{Binding TextInputVoornaam}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,10,0,0" Text="{Binding TextInputFirstName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
         <Label Content="Achternaam:" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Height="27" Width="84" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,64,0,0" Text="{Binding TextInputAchternaam}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,64,0,0" Text="{Binding TextInputLastName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
         <Label Content="Rol:" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Height="27" Width="42"/>
         <ComboBox  SelectedValue="{Binding SelectedRole}" HorizontalAlignment="Left" Margin="66,125,0,0" VerticalAlignment="Top" Width="185" ItemsSource="{Binding Roles}" Grid.Column="1"/>
 
