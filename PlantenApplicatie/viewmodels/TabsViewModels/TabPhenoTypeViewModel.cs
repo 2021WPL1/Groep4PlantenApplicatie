@@ -19,6 +19,7 @@ namespace PlantenApplicatie.viewmodels
         private Plant _selectedPlant;
 
         private int? _selectedLeafSize;
+        
         private string? _selectedLeafShape;
         private string? _selectedBloom;
         private string? _selectedHabitus;
@@ -29,73 +30,44 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedFenoMultiMonth;
 
         private FenotypeMulti? _selectedPlantFenoTypeMulti;
-
-       
-        private bool _IsManager;
-
-
+        
+        private bool _isManager;
+        
         // Constructor
         public TabPhenoTypeViewModel(Plant selectedPlant, Gebruiker user)
         {
             SelectedPlant = selectedPlant;
-
-            //variables (Jim)
-            FenoLeafSizes = new ObservableCollection<int>();
-            FenoLeafShapes = new ObservableCollection<string>();
-            FenoBlooms = new ObservableCollection<string>();
-            FenoHabitussen = new ObservableCollection<string>();
-            FenoLifeforms = new ObservableCollection<string>();
-            FenoSprouts = new ObservableCollection<string>();
-            FenotypeProperties = new ObservableCollection<string>();
-            FenoTypesMulti = new ObservableCollection<string>();
-            FenoMultiMonths = new ObservableCollection<string>();
-
-            PlantFenoTypesMulti = new ObservableCollection<FenotypeMulti>();
-
-
+            
             EditFenoTypeCommand = new DelegateCommand(EditPhenotype);
             AddFenotypeMultiCommand = new DelegateCommand(AddPhenotypeMulti);
             EditFenotypeMultiCommand = new DelegateCommand(EditPhenotypeMulti);
             DeleteFenotypeMultiPlantCommand = new DelegateCommand(DeletePhenotypeMultiPlant);
 
             LoadAllProperties();
+            
             SetAuthorizedActionsByRole(user);
         }
 
         //observable collections for the different comboboxes and listviews ( Jim)
-        public ObservableCollection<int> FenoLeafSizes { get; set; }
-        public ObservableCollection<string> FenoLeafShapes { get; set; }
-        public ObservableCollection<string> FenoBlooms { get; set; }
-        public ObservableCollection<string> FenoHabitussen { get; set; }
-        public ObservableCollection<string> FenoLifeforms { get; set; }
-        public ObservableCollection<string> FenoSprouts { get; set; }
+        public ObservableCollection<int> FenoLeafSizes { get; } = new();
+        
+        public ObservableCollection<string> FenoLeafShapes { get; } = new();
+        public ObservableCollection<string> FenoBlooms { get; } = new();
+        public ObservableCollection<string> FenoHabitussen { get; } = new();
+        public ObservableCollection<string> FenoLifeforms { get; } = new();
+        public ObservableCollection<string> FenoSprouts { get; } = new();
+        public ObservableCollection<string> FenotypeProperties { get; } = new();
+        public ObservableCollection<string> FenoMultiMonths { get; } = new();
+        
+        public ObservableCollection<FenotypeMulti> PlantFenoTypesMulti { get; } = new();
 
-        public ObservableCollection<string> FenotypeProperties { get; set; }
-
-        public ObservableCollection<string> FenoMultiMonths { get; set; }
-        public ObservableCollection<FenotypeMulti> PlantFenoTypesMulti { get; set; }
-
-        public ObservableCollection<string> FenoTypesMulti { get; set; }
-
-
+        public ObservableCollection<string> FenoTypesMulti { get; } = new();
+        
         //button commands  (Jim)
-        public ICommand EditFenoTypeCommand { get; set; }
-        public ICommand AddFenotypeMultiCommand { get; set; }
-
-        public ICommand EditFenotypeMultiCommand { get; set; }
-
-        public ICommand DeleteFenotypeMultiPlantCommand { get; set; }
-
-        //boolean to check which functions the user can perform on the application (Davy)
-        public bool IsManager
-        {
-            get => _IsManager;
-            set
-            {
-                _IsManager = value;
-                OnPropertyChanged("IsManager");
-            }
-        }
+        public ICommand EditFenoTypeCommand { get; }
+        public ICommand AddFenotypeMultiCommand { get; }
+        public ICommand EditFenotypeMultiCommand { get; }
+        public ICommand DeleteFenotypeMultiPlantCommand { get; }
 
         //methods to load in the different lists in the comboboxes and listviews (Jim)
         public void LoadAllProperties()
@@ -117,8 +89,9 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void SetAuthorizedActionsByRole(Gebruiker user)
         {
-            IsManager = user.Rol.ToLower() == "manager";
+            _isManager = user.Rol.ToLower() == "manager";
         }
+        
         // Getters and setters (Davy & Jim)
         public Plant SelectedPlant
         {
@@ -129,15 +102,13 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-
+        
         public string? SelectedPhenoTypesMulti
         {
             private get => _selectedPhenoTypesMulti;
             set
             {
                 _selectedPhenoTypesMulti = value;
-
                 OnPropertyChanged();
             }
         }
@@ -151,17 +122,17 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-
+        
         public int? SelectedLeafSize
         {
-            get => _selectedLeafSize;
+            private get => _selectedLeafSize;
             set
             {
                 _selectedLeafSize = value;
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedLeafShape
         {
             private get => _selectedLeafShape;
@@ -171,6 +142,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedBloom
         {
             private get => _selectedBloom;
@@ -180,6 +152,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedHabitus
         {
             private get => _selectedHabitus;
@@ -189,6 +162,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedLifeform
         {
             private get => _selectedLifeform;
@@ -198,6 +172,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedSproutPhenology
         {
             private get => _selectedSprout;
@@ -214,8 +189,8 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedFenotypeProperties = value;
-                ChangeProperties();
                 OnPropertyChanged();
+                ChangeProperties();
             }
         }
 
@@ -228,11 +203,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
-
-
-
-
+        
         //load the different values into the comboboxes  (Davy & Jim)
         private void LoadPhenoLeafSize()
         {
@@ -245,48 +216,36 @@ namespace PlantenApplicatie.viewmodels
         private void LoadPhenoLeafShape()
         {
             RefreshObservableCollection(FenoLeafShapes, _plantenDao.GetPhenoLeafShape());
-
         }
 
         private void LoadPhenoInflorescence()
         {
             RefreshObservableCollection(FenoBlooms, _plantenDao.GetPhenoInflorescence());
-
         }
 
         private void LoadPhenoHabitat()
         {
             RefreshObservableCollection(FenoHabitussen, _plantenDao.GetPhenoHabitat());
-
         }
+        
         private void LoadPhenoLifeform()
         {
             RefreshObservableCollection(FenoLifeforms, _plantenDao.GetPhenoLifeform());
-
         }
+        
         private void LoadPhenoSproutPhenology()
         {
             RefreshObservableCollection(FenoSprouts, _plantenDao.GetPhenoSproutPhenology());
-
         }
 
         private void LoadPhenoTypesMultiPlant()
         {
-            var fenotypesMulti = _plantenDao.GetPhenoMultis(SelectedPlant);
-
-            PlantFenoTypesMulti.Clear();
-
-            foreach (var fenotypeMulti in fenotypesMulti)
-            {
-                PlantFenoTypesMulti.Add(fenotypeMulti);
-            }
+            RefreshObservableCollection(PlantFenoTypesMulti, _plantenDao.GetPhenoMultis(SelectedPlant));
         }
 
         private void LoadProperties()
         {
             RefreshObservableCollection(FenotypeProperties, _plantenDao.GetFenotypeProperties());
-
-
         }
 
         private void LoadColour()
@@ -296,6 +255,7 @@ namespace PlantenApplicatie.viewmodels
 
             RefreshObservableCollection(FenoTypesMulti, colorNames);
         }
+        
         private void LoadHeight()
         {
             var heightPossibilities = Enumerable.Range(0, PlantenDao.MaxLeafSize / 10)
@@ -303,14 +263,15 @@ namespace PlantenApplicatie.viewmodels
                     .ToString());
 
             RefreshObservableCollection(FenoTypesMulti, heightPossibilities);
-
         }
+        
         private void LoadPhenoMultiMonths()
         {
             var monthNames = new DateTimeFormatInfo().AbbreviatedMonthNames;
 
             RefreshObservableCollection(FenoMultiMonths, monthNames[0..12]);
         }
+        
         private static void RefreshObservableCollection<T>(ICollection<T> collection, IEnumerable<T> data)
         {
             collection.Clear();
@@ -320,6 +281,7 @@ namespace PlantenApplicatie.viewmodels
                 collection.Add(elem);
             }
         }
+        
         //Load the selected standards in from the selected plant. If there is none the selected values are null (Jim)
         private void LoadSelectedValues()
         {
@@ -335,10 +297,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedHabitus = fenotype.Habitus;
             SelectedLifeform = fenotype.Levensvorm;
         }
-
-
-
-
+        
         //edit the fenotype of the selected plant, if there is none a fenotype will be added to the plant with the selected values  (Jim)
         private void EditPhenotype()
         {
@@ -360,17 +319,17 @@ namespace PlantenApplicatie.viewmodels
         private void AddPhenotypeMulti()
         {
             _plantenDao.AddMultiPhenotype(SelectedPlant, SelectedPhenotypeProperties, SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
+            
             LoadPhenoTypesMultiPlant();
-
         }
 
         //edit the selected fenotype multi (Jim)
-
         private void EditPhenotypeMulti()
         {
-            _plantenDao.ChangeMultiPhenotype(SelectedPlantPhenoTypeMulti, SelectedPhenotypeProperties, SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
+            _plantenDao.ChangeMultiPhenotype(SelectedPlantPhenoTypeMulti, SelectedPhenotypeProperties, 
+                SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
+            
             LoadPhenoTypesMultiPlant();
-
         }
 
         //laad de geselecteerde waardes van een Fenotype multi in (Jim)
@@ -394,22 +353,21 @@ namespace PlantenApplicatie.viewmodels
                     break;
                 case "bloeihoogte":
                     LoadHeight();
-
                     break;
                 case "bloeikleur":
                     LoadColour();
                     break;
-                default:throw new NotImplementedException();
+                
+                default:
+                    throw new NotImplementedException();
             }
         }
 
         //delete the selected fenotype multi from the plant (Jim)
         private void DeletePhenotypeMultiPlant()
         {
-
             if (SelectedPlantPhenoTypeMulti is not null)
             {
-
                 _plantenDao.RemoveMultiPhenotype(SelectedPlantPhenoTypeMulti);
             }
             else
@@ -417,8 +375,8 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Gelieve een fenotype te selecteren uit de listview",
                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            
             LoadPhenoTypesMultiPlant();
-
         }
     }
 }
