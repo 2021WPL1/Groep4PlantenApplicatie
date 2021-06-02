@@ -243,7 +243,7 @@ namespace PlantenApplicatie.viewmodels
         //save the current changes to the selectedplant (Jim)
         public void Save()
         {
-            _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,
+            SelectedPlant = _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,
                 Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
 
         }

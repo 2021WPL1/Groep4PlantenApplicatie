@@ -1,8 +1,11 @@
-﻿using PlantenApplicatie.Domain;
+﻿using PlantenApplicatie.Data;
+using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels.TabsViewModels
@@ -11,25 +14,56 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
     {
         //MVVM + GUI Davy
 
+        public ObservableCollection<Gebruiker> Users { get; set; }
+
+        private PlantenDao _dao;
         //button commands 
         public ICommand AddUserCommand { get; set; }
 
+        public ICommand EditUserCommand { get; set; }
+
         public ICommand EditPasswordCommand { get; set; }
 
-        // private variables 
+        public ICommand DeleteUserCommand { get; set; }
+
         private Gebruiker _selectedUser;
+        private Gebruiker OriginalUser;
         private bool _IsManager;
+        private Window _tabUserWindow;
 
         //constructor given with user as parameter
         public TabUserViewModel(Gebruiker user)
         {
+            _tabUserWindow = window;
             SelectedUser = user;
+            // original owner gets the value to change the user's own password 
+            // instead of a random selected user
+            OrigineleGebruiker = user;
+            _dao = PlantenDao.Instance;
             AddUserCommand = new DelegateCommand(AddUser);
+            EditUserCommand = new DelegateCommand(EditUser);
             EditPasswordCommand = new DelegateCommand(EditPassword);
+            DeleteUserCommand = new DelegateCommand(DeleteUser);
 
+            Users = new ObservableCollection<Gebruiker>();
+
+            LoadUsers();
             UserRole();
         }
+
+        private void LoadUsers()
+        {
+            var users = _dao.GetUsers();
+
+            Users.Clear();
+
+            foreach (var user in users)
+            {
+                Users.Add(user);
+            }
+        }
         //boolean to check which functions the user can perform on the application (Davy)
+
         public bool IsManager
         {
             get => _IsManager;
@@ -71,14 +105,28 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         //make a new window to add a user
         private void AddUser()
         {
-            AddGebruiker addGebruiker = new AddGebruiker();
+            AddGebruiker addGebruiker = new AddGebruiker(SelectedGebruiker);
             addGebruiker.Show();
+            _tabGebruikerWindow.Close();
+        }
+
+        private void EditUser()
+        {
+            EditGebruiker editGebruiker = new EditGebruiker(SelectedGebruiker);
+            editGebruiker.Show();
+            _tabGebruikerWindow.Close();
         }
         //edit the current password the user has
         private void EditPassword()
         {
-            WijzigWachtwoord wijzigWachtwoord = new WijzigWachtwoord(SelectedUser);
+            WijzigWachtwoord wijzigWachtwoord = new WijzigWachtwoord(OriginalUser);
             wijzigWachtwoord.Show();
+        }
+
+        private void DeleteUser()
+        {
+            _dao.RemoveUser(SelectedUser);
+            LoadUsers();
         }
     }
 }

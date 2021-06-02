@@ -26,7 +26,6 @@ namespace PlantenApplicatie.viewmodels
         private ImageSource? _selectedImage;
         private string? _selectedProperty;
         private string? _selectedUrl;
-
         //constructor
         public TabPhotoViewModel(Plant selectedplant,Gebruiker user)
         {

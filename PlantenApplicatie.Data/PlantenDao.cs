@@ -39,6 +39,10 @@ namespace PlantenApplicatie.Data
                 .Include(p => p.Foto)
                 .ToList();
         }
+        public List<Gebruiker> GetUsers()
+        {
+            return _context.Gebruiker.ToList();
+        }
 
         //Get the ID's of TFGSV and call a method to search for its Id and name, 
         //keeps the null values in mind(Lily)
@@ -56,18 +60,22 @@ namespace PlantenApplicatie.Data
         }
 
         //update the selected user and its values(Davy)
-        public string UpdateUser(string email, string password)
+        public string UpdateUser(Gebruiker user, string password)
         {
-            var gebruiker = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == email);
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == gebruiker.Emailadres);
 
-            if (gebruiker != null)
+            if (user != null)
             {
-                gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+                user.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+                user.Voornaam = gebruiker.Voornaam;
+                user.Achternaam = gebruiker.Achternaam;
+                user.Rol = gebruiker.Rol;
+                user.Vivesnr = gebruiker.Vivesnr;
 
-                _context.Gebruiker.Update(gebruiker);
+                _context.Gebruiker.Update(user);
                 _context.SaveChanges();
 
-                return "Wachtwoord aangepast";
+                return "Gebruiker gegevens aangepast";
             } else
             {
                 return "Emailadres werd niet teruggevonden in de database";
@@ -110,6 +118,12 @@ namespace PlantenApplicatie.Data
                 .OrderBy(p => p.Fgsv)
                 .ToList();
         }
+        public void RemoveGebruiker(Gebruiker user)
+        {
+            _context.Gebruiker.Remove(user);
+            _context.SaveChanges();
+        }
+
         //create Extra property for a plant (Davy)
         public string CreateExtraProperty(ExtraEigenschap extraProperty)
         {
@@ -224,7 +238,7 @@ namespace PlantenApplicatie.Data
         private long GetSpeciesId(string species)
         {
             return _context.TfgsvSoort
-                .SingleOrDefault(t => t.Soortnaam == species)
+                .FirstOrDefault(t => t.Soortnaam == species)
                 .Soortid;
         }
         private long? GetVariantId(string variant)
@@ -323,7 +337,7 @@ namespace PlantenApplicatie.Data
         }
 
         //change the plant its values based on the plant that is selected (jim)
-        public void ChangePlant(Plant plant, string? type, string? family, string? genus, string? species, string? variant, short? plantMin, short? plantMax)
+        public Plant ChangePlant(Plant plant, string? type, string? family, string? genus, string? species, string? variant, short? plantMin, short? plantMax)
         {
             //call the different ID's of the plant
             var typeId = (int?)GetTypeId(type);
@@ -350,8 +364,9 @@ namespace PlantenApplicatie.Data
             //If you change a detail to the plant, the name changes with it to keep consistency. (Jim)
             plant.Fgsv = plant.Familie + " " + plant.Geslacht + " " + plant.Soort + " " + plant.Variant;
 
-
             _context.SaveChanges();
+
+            return plant;
         }
 
         //Add a fenotype to the selected plant (Jim)
@@ -818,11 +833,26 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
 
         }
+
         //create an account for a user(Davy)
-        public void CreateLogin(Gebruiker gebruiker)
+
+        public bool CreateLogin(Gebruiker user, out string message)
         {
+            var users = _context.Gebruiker.ToList();
+            message = "";
+
+            foreach (var user in gebruikers)
+            {
+                if (gebruiker.Emailadres == user.Emailadres)
+                {
+                    message = "Email is al in gebruik";
+                    return false;
+                }
+            }
             _context.Gebruiker.Add(gebruiker);
             _context.SaveChanges();
+            message = $"{gebruiker.Rol} {gebruiker.Voornaam} {gebruiker.Achternaam} werd aangemaakt";
+            return true;
         }
         //check the login of the user(Davy)
         public bool CheckLogin(string emailadress, string password, out string message)

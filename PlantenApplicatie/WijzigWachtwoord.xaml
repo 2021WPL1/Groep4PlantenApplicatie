@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlantenApplicatie"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="Login" Height="250" Width="550">
+        Title="Wachtwoord wijzigen" Height="250" Width="550">
     <Grid>
         <Canvas>
             <Label Content="Nieuw wachtwoord :" Canvas.Left="34" Canvas.Top="68"/>

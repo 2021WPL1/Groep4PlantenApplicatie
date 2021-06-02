@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 
 namespace PlantenApplicatie.viewmodels
 {
@@ -11,11 +12,11 @@ namespace PlantenApplicatie.viewmodels
     {
         ObservableCollection<object> _children;
 
-        public TabsBeheerViewModel(Gebruiker user)
+        public TabsBeheerViewModel(Window window, Gebruiker user)
         {
             _children = new ObservableCollection<object>();
-            _children.Add(new TabManagePlantenViewModel(user));
-            _children.Add(new TabUserViewModel(user));
+            _children.Add(new TabBeheerPlantenViewModel(user));
+            _children.Add(new TabGebruikerViewModel(user));
         }
 
         public ObservableCollection<object> Children { get { return _children; } }

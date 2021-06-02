@@ -80,18 +80,7 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch (SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
+            IsManager = SelectedGebruiker.Rol.ToLower() == "manager";
         }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
 
@@ -122,7 +111,6 @@ namespace PlantenApplicatie.viewmodels
             set
             {
                 _selectedManagementAct = value;
-                LoadSelectedValues();
                 OnPropertyChanged();
             }
         }
@@ -334,6 +322,16 @@ namespace PlantenApplicatie.viewmodels
 
             ManagementActs.Clear();
 
+            //if object is not the selectedManagement then delete out of the list.
+            foreach (var managementAct in managementActs)
+            {
+                if (managementAct != SelectedManagementMonth)
+                {
+                    ManagementActs.Remove(managementAct);
+                }
+            }
+
+            // indien object beheermaand niet gelijk is aan SelectedBeheermaand, voeg object toe aan lijst
             foreach (var managementAct in managementActs)
             {
                 ManagementActs.Add(managementAct);
@@ -374,7 +372,7 @@ namespace PlantenApplicatie.viewmodels
         {
             BeheerMaand beheerMaand = SelectedManagementMonth; 
 
-            if (beheerMaand != null)
+            if (beheerMaand is not null)
             {
                 beheerMaand.PlantId = SelectedManagementMonth.PlantId;
                 beheerMaand.Beheerdaad = TextInputManagementAct;
@@ -407,8 +405,8 @@ namespace PlantenApplicatie.viewmodels
         {
             var beheerMaand = SelectedManagementMonth;
 
-            TextInputManagementAct = beheerMaand.Beheerdaad;
-            TextInputDescription = beheerMaand.Omschrijving;
+            TextInputBeheerdaad = beheerMaand.Beheerdaad ?? String.Empty;
+            TextInputDescription = beheerMaand.Omschrijving ?? String.Empty;
             IsCheckedJanuary = beheerMaand.Jan ?? false;
             IsCheckedFebruary = beheerMaand.Feb ?? false;
             IsCheckedMarch = beheerMaand.Mrt ?? false;

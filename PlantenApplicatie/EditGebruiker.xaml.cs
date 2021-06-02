@@ -15,15 +15,14 @@ using System.Windows.Shapes;
 namespace PlantenApplicatie
 {
     /// <summary>
-    /// Interaction logic for AddGebruiker.xaml
+    /// Interaction logic for EditGebruiker.xaml
     /// </summary>
-    public partial class AddGebruiker : Window
+    public partial class EditGebruiker : Window
     {
-        public AddGebruiker(Gebruiker gebruiker)
+        public EditGebruiker(Gebruiker gebruiker)
         {
             InitializeComponent();
-            DataContext = new AddGebruikerViewModel(this, gebruiker);
-
+            this.DataContext = new EditGebruikerViewModel(this, gebruiker);
         }
     }
 }
