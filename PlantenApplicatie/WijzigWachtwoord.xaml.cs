@@ -22,7 +22,17 @@ namespace PlantenApplicatie
         public WijzigWachtwoord(Gebruiker gebruiker)
         {
             InitializeComponent();
-            this.DataContext = new EditPasswordViewModel(this, gebruiker);
+            DataContext = new EditPasswordViewModel(this, gebruiker);
+        }
+
+        private void PasswordChanged(object sender, KeyEventArgs e)
+        {
+            if (DataContext is null) return;
+
+            var dynamicDataContext = (dynamic)DataContext;
+
+            dynamicDataContext.PasswordChecker(pwbNewPassword.Password, 
+                pwbNewPasswordConfirm.Password);
         }
     }
 }

@@ -13,10 +13,11 @@
             <Label Content="Gebruikersnaam (e-mailadres) :" Canvas.Left="23" Canvas.Top="54"/>
             <TextBox Canvas.Left="203" Canvas.Top="58" Text="{Binding TextInputLogin, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" Width="293"/>
             <Label Content="Wachtwoord :" Canvas.Left="23" Canvas.Top="89"/>
-            <TextBox Canvas.Left="203" Canvas.Top="93" Text="{Binding TextInputPassword, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" Width="293"/>
-            <Button Content="Inloggen" Command="{Binding Path=LoginCommand}" Canvas.Left="175" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="80"/>
+            <PasswordBox Name="pwbPassword" Canvas.Left="203" Canvas.Top="93" Width="293"/>
+            <Button Content="Inloggen" 
+                    Command="{Binding Path=LoginCommand}" 
+                    CommandParameter="{Binding ElementName=pwbPassword, Path=Password}" Canvas.Left="175" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="80"/>
             <Button Content="Annuleren" Command="{Binding Path=CancelCommand}" Canvas.Left="275" Canvas.Top="165" RenderTransformOrigin="0.395,0.703" Width="80"/>
-
         </Canvas>
     </Grid>
 </Window>

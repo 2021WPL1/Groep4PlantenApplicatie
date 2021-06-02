@@ -1,8 +1,6 @@
 ﻿using PlantenApplicatie.Data;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -18,14 +16,13 @@ namespace PlantenApplicatie.viewmodels
         public ICommand ForgotPasswordCommand { get; set; }
 
         private string _textInputLogin;
-        private string _textInputPassword;
 
         private Window _loginWindow;
 
         public LoginViewModel(Window window)
         {
             _loginWindow = window;
-            LoginCommand = new DelegateCommand(Login);
+            LoginCommand = new DelegateCommand<string>(Login);
             CancelCommand = new DelegateCommand(Cancel);
 
             _dao = PlantenDao.Instance;
@@ -34,7 +31,6 @@ namespace PlantenApplicatie.viewmodels
         public string TextInputLogin
         {
             get => _textInputLogin;
-
             set
             {
                 _textInputLogin = value;
@@ -42,42 +38,26 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string TextInputPassword
+        public void Login(string password)
         {
-            get => _textInputPassword;
+            bool isLoginSuccessfull = _dao.CheckLogin(TextInputLogin, password, out string message);
 
-            set
-            {
-                _textInputPassword = value;
-                OnPropertyChanged(_textInputPassword);
-            }
-        }
+            MessageBox.Show(message);
 
-        public void Login()
-        {
-            string message = String.Empty;
+            if (!isLoginSuccessfull) return;
 
-            bool myBool = _dao.CheckLogin(TextInputLogin, TextInputPassword, out message);
-
-            if (myBool == true)
-            {
-                var gebruiker =_dao.GetGebruiker(TextInputLogin);
-                MessageBox.Show(message);
-                _loginWindow.Hide();
-                BeheerPlanten beheerPlanten = new BeheerPlanten(gebruiker);
-                beheerPlanten.Show(); 
+            var gebruiker =_dao.GetGebruiker(TextInputLogin);
                 
-            } else
-            {
-                MessageBox.Show(message);
-            }
+            _loginWindow.Hide();
+                
+            var beheerPlanten = new BeheerPlanten(gebruiker);
+            beheerPlanten.Show(); 
         }
 
         // geef de textboxen weer leeg terug
         public void Cancel()
         {
             TextInputLogin = String.Empty;
-            TextInputPassword = String.Empty;
         }
     }
 }

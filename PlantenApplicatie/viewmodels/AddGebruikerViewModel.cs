@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using PlantenApplicatie.Data;
+﻿using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -16,12 +14,10 @@ namespace PlantenApplicatie.viewmodels
         private readonly PlantenDao _dao;
 
         private string _SelectedRole;
-        private string _TextInputVoornaam;
-        private string _TextInputAchternaam;
-        private string _TextInputEmail;
-        private string _TextInputPaswoord;
-        private string _TextInputPaswoordCheck;
-        private string _Check;
+        private string? _TextInputVoornaam;
+        private string? _TextInputAchternaam;
+        private string? _TextInputEmail;
+        private string _passwordErrorMessage;
 
         public ObservableCollection<string> Roles { get; set; }
 
@@ -39,7 +35,7 @@ namespace PlantenApplicatie.viewmodels
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 
-            AddUserCommand = new DelegateCommand(AddUser);
+            AddUserCommand = new DelegateCommand<string>(AddUser);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
         }
@@ -54,12 +50,8 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        
-
         //getters setters (Jim)
-
-        public string TextInputVoornaam
+        public string? TextInputVoornaam
         {
             get => _TextInputVoornaam;
             set
@@ -68,7 +60,8 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        public string TextInputAchternaam
+        
+        public string? TextInputAchternaam
         {
             get => _TextInputAchternaam;
             set
@@ -78,33 +71,13 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string TextInputEmail
+        public string? TextInputEmail
         {
             get => _TextInputEmail;
             set
             {
                 _TextInputEmail = value;
                 OnPropertyChanged();
-            }
-        }
-
-        public string TextInputPaswoord
-        {
-            get => _TextInputPaswoord;
-            set
-            {
-                _TextInputPaswoord = value;
-                OnPropertyChanged();
-            }
-        }
-        public string TextInputPaswoordCheck
-        {
-            get => _TextInputPaswoordCheck;
-            set
-            {
-                _TextInputPaswoordCheck = value;
-                OnPropertyChanged();
-                PasswordChecker();
             }
         }
 
@@ -118,15 +91,14 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string Check
+        public string PasswordErrorMessage
         {
-            get => _Check;
-            set
+            get => _passwordErrorMessage;
+            private set
             {
-                _Check = value;
+                _passwordErrorMessage = value;
                 OnPropertyChanged();
             }
-
         }
 
         public void LoadRoles()
@@ -134,63 +106,44 @@ namespace PlantenApplicatie.viewmodels
             Roles.Add("manager");
             Roles.Add("data-collector");
             Roles.Add("gebruiker");
-
         }
 
-        public void PasswordChecker()
+        public void PasswordChecker(string password, string passwordConfirm)
         {
-            if(TextInputPaswoord != TextInputPaswoordCheck)
-            {
-                Check = "Paswoorden zijn niet gelijk";
-                ChangeColor = Brushes.Red;
-            }
-            else
-            {
-                Check = "Paswoorden zijn gelijk";
-                ChangeColor = Brushes.Green;
-            }
-
+            PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
         }
 
-        public void AddUser()
+        public void AddUser(string password)
         {
-            string message;
-
-            if (SelectedRole == null || TextInputVoornaam == null || _TextInputAchternaam == null ||
-                TextInputEmail == null || TextInputPaswoord == null || TextInputPaswoordCheck == null)
+            if (TextInputVoornaam is null || TextInputAchternaam is null || TextInputEmail is null)
             {
                 MessageBox.Show("Niet alle velden zijn ingevuld");
+                return;
             }
-            else
-            {
-                if (TextInputEmail.Contains("@vives.be") || TextInputEmail.Contains("@student.vives.be"))
-                {
-                    if (TextInputPaswoord == TextInputPaswoordCheck)
-                    {
-                        var gebruiker = new Gebruiker
-                        {
-                            Voornaam = TextInputVoornaam,
-                            Achternaam = TextInputAchternaam,
-                            Rol = SelectedRole,
-                            Emailadres = TextInputEmail,
-                            HashPaswoord = Encryptor.GenerateMD5Hash(TextInputPaswoord)
-                        };
-                        _dao.CreateLogin(gebruiker, out message);
-                        MessageBox.Show(message);
-                    }
 
-                }
-                else
-                {
-                    MessageBox.Show("Email mag alleen van het Vives domein zijn.");
-                }
+            if (!(TextInputEmail.EndsWith("@vives.be") || TextInputEmail.EndsWith("@student.vives.be")))
+            {
+                MessageBox.Show("Email mag alleen van het Vives domein zijn");
+                return;
             }
+            
+            var gebruiker = new Gebruiker
+            {
+                Voornaam = TextInputVoornaam,
+                Achternaam = TextInputAchternaam,
+                Rol = SelectedRole,
+                Emailadres = TextInputEmail,
+                HashPaswoord = Encryptor.GenerateMD5Hash(password)
+            };
+            
+            _dao.CreateLogin(gebruiker, out string message);
+            
+            MessageBox.Show(message);
         }
 
         private void CloseWindow()
         {
             _addGebruikerWindow.Close();
         }
-
     }
 }
