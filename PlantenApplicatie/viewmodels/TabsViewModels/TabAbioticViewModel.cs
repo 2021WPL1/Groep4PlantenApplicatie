@@ -26,11 +26,11 @@ namespace PlantenApplicatie.viewmodels
 
 
         // private variables for user (Davy)
-        private User _selectedUser;
+        private Gebruiker _selectedUser;
         private bool _IsManager;
 
         //constructor(Lily)
-        public TabAbioticViewModel(Plant selectedPlant, User user)
+        public TabAbioticViewModel(Plant selectedPlant, Gebruiker user)
         {
             SelectedUser = user;
             _plantenDao = PlantenDao.Instance;
@@ -47,7 +47,7 @@ namespace PlantenApplicatie.viewmodels
                 _plantenDao.GetAbioHabitatNames(_selectedPlant));
             PlantHabitats = new ObservableCollection<string>(_plantenDao.GetAbioHabitatNames());
             //Commands for the buttons
-            EditAbiotiekCommand = new DelegateCommand(EditAbiotic);
+            EditAbioticCommand = new DelegateCommand(EditAbiotic);
             RemoveHabitatCommand = new DelegateCommand(RemoveHabitat);
             AddHabitatCommand = new DelegateCommand(AddHabitat);
 
@@ -164,7 +164,7 @@ namespace PlantenApplicatie.viewmodels
         public string? SelectedAbioHabitat { get; set; }
 
         //button commands (Lily)
-        public ICommand EditAbiotiekCommand { get; }
+        public ICommand EditAbioticCommand { get; }
         public ICommand RemoveHabitatCommand { get; }
         public ICommand AddHabitatCommand { get; }
 

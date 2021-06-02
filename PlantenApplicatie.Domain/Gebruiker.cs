@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace PlantenApplicatie.Domain
 {
-    public partial class User
+    public partial class Gebruiker
     {
-        public User()
+        public Gebruiker()
         {
             UpdatePlant = new HashSet<UpdatePlant>();
         }

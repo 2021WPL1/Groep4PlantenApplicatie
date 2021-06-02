@@ -23,13 +23,13 @@ namespace PlantenApplicatie.viewmodels
         private string _textInputPasswordConfirm;
 
         //private variables (Davy)
-        private Gebruiker _selectedGebruiker;
+        private Gebruiker _selectedUser;
         private Window _editPasswordWindow;
 
         //constructor
-        public EditPasswordViewModel(Window window, Gebruiker gebruiker)
+        public EditPasswordViewModel(Window window, Gebruiker user)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = user;
             _editPasswordWindow = window;
 
             EditCommand = new DelegateCommand(Edit);
@@ -39,12 +39,12 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //getters and setters
-        public Gebruiker SelectedGebruiker
+        public Gebruiker SelectedUser
         {
-            private get => _selectedGebruiker;
+            private get => _selectedUser;
             set
             {
-                _selectedGebruiker = value;
+                _selectedUser = value;
                 OnPropertyChanged();
             }
         }
@@ -75,7 +75,7 @@ namespace PlantenApplicatie.viewmodels
         {
             if (TextInputPassword == TextInputPasswordConfirm)
             {
-                string message = _dao.UpdateUser(SelectedGebruiker.Emailadres, TextInputPassword);
+                string message = _dao.UpdateUser(SelectedUser.Emailadres, TextInputPassword);
 
                 MessageBox.Show(message);
             }

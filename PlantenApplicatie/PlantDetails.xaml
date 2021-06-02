@@ -115,21 +115,21 @@
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="10" FontSize="25"/>
                     <ComboBox Canvas.Left="178" Canvas.Top="77" Width="548"
                               
-                      ItemsSource="{Binding FenoBladgroottes}" 
-                      SelectedItem="{Binding SelectedBladgrootte, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding FenoLeafSizes}" 
+                      SelectedItem="{Binding SelectedLeafSize, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}"
                               />
                     <Label Content="Bladgrootte :" Canvas.Left="10" Canvas.Top="73"/>
                     <Label Content="Bladvorm :" Canvas.Left="10" Canvas.Top="116"/>
                     <Label Content="Bloeiwijze :" Canvas.Left="10" Canvas.Top="151"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="120" Width="598"                              
-                        ItemsSource="{Binding FenoBladvormen}" 
-                        SelectedItem="{Binding SelectedBladvorm, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding FenoLeafShapes}" 
+                        SelectedItem="{Binding SelectedLeafShape, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}"
                               />
                     <ComboBox Canvas.Left="128" Canvas.Top="155" Width="598"
-                        ItemsSource="{Binding FenoBloeiwijzes}" 
-                        SelectedItem="{Binding SelectedBloeiwijze, UpdateSourceTrigger=PropertyChanged}"   
+                        ItemsSource="{Binding FenoBlooms}" 
+                        SelectedItem="{Binding SelectedBloom, UpdateSourceTrigger=PropertyChanged}"   
                               IsEnabled="{Binding Path=IsManager}"
                               />
                     <Label Content="Habitus :" Canvas.Left="10" Canvas.Top="189" RenderTransformOrigin="0.204,0.541"/>
@@ -139,25 +139,25 @@
                               IsEnabled="{Binding Path=IsManager}"
                               />
                     <ComboBox Canvas.Left="128" Canvas.Top="191" Width="598"
-                        ItemsSource="{Binding FenoKleuren}" 
-                        SelectedItem="{Binding SelectedKleur, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding FenoHabitussen}" 
+                        SelectedItem="{Binding SelectedHabitus, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}"
                              />
                     <Label Content="Levensvorm :" Canvas.Left="10" Canvas.Top="234" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="236" Width="598"
                               IsEnabled="{Binding Path=IsManager}"
-                        ItemsSource="{Binding FenoLevensvormen}" 
-                        SelectedItem="{Binding SelectedLevensvorm, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding FenoLifeforms}" 
+                        SelectedItem="{Binding SelectedLifeform, UpdateSourceTrigger=PropertyChanged}"
                                />
                     <Label Content="SpruitFenologie :" Canvas.Left="10" Canvas.Top="276" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="278" Width="598"
                               IsEnabled="{Binding Path=IsManager}"
-                        ItemsSource="{Binding FenoSpruitFenologieen}" 
-                        SelectedItem="{Binding SelectedSpruitFenologie, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding FenoSprouts}" 
+                        SelectedItem="{Binding SelectedSproutPhenology, UpdateSourceTrigger=PropertyChanged}"
                                />
                     <ListView Height="141" Width="205" Canvas.Left="10" Canvas.Top="413"
                               ItemsSource="{Binding PlantFenoTypesMulti}" 
-                                          SelectedItem="{Binding SelectedPlantFenoTypeMulti, Mode=TwoWay}" >
+                                          SelectedItem="{Binding SelectedPlantPhenoTypeMulti, Mode=TwoWay}" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
@@ -183,8 +183,8 @@
                         </Button.Background>
                     </Button>
                     <ComboBox Canvas.Left="385" Canvas.Top="386" Width="98"
-                        ItemsSource="{Binding FenotypeEigenschappen}" 
-                        SelectedItem="{Binding SelectedFenotypeEigenschappen, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding FenotypeProperties}" 
+                        SelectedItem="{Binding SelectedPhenotypeProperties, UpdateSourceTrigger=PropertyChanged}"
                                />
                     <Button Content="Add to Plant" Canvas.Left="599" Canvas.Top="449" Command="{Binding Path=AddFenotypeMultiCommand}" BorderBrush="Black">
                         <Button.Background>
@@ -195,12 +195,12 @@
                         </Button.Background>
                     </Button>
                     <ComboBox Canvas.Left="506" Canvas.Top="386" Width="54"
-                        ItemsSource="{Binding FenoMultiMaand}" 
-                        SelectedItem="{Binding SelectedFenoMultiMaand, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding FenoMultiMonths}" 
+                        SelectedItem="{Binding SelectedPhenoMultiMonth, UpdateSourceTrigger=PropertyChanged}"
                                />
                     <ComboBox Canvas.Left="587" Canvas.Top="386" Width="82"
                         ItemsSource="{Binding FenoTypesMulti}" 
-                        SelectedItem="{Binding SelectedFenoTypesMulti, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SelectedPhenoTypesMulti, UpdateSourceTrigger=PropertyChanged}"
                                />
                     <Button Content="Edit fenotype" Canvas.Left="599" Canvas.Top="484" Command="{Binding EditFenotypeMultiCommand}" BorderBrush="Black">
                         <Button.Background>
@@ -279,7 +279,7 @@
                         Width="auto" Height="auto"
                         Canvas.Top="255" Canvas.Right="50"
                         Content="Edit" 
-                        Command="{Binding EditAbiotiekCommand}" BorderBrush="Black" Canvas.Left="373">
+                        Command="{Binding EditAbioticCommand}" BorderBrush="Black" Canvas.Left="373">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC6AF90"/>
@@ -320,20 +320,20 @@
                     </Canvas.Background>
                     <ComboBox x:Name="cmbOntwikkelSnelheid" Canvas.Left="178" Canvas.Top="31" Width="548"
                               
-                      ItemsSource="{Binding CommenOntwikkelsnelheden}" 
-                      SelectedItem="{Binding SelectedCommenOntwikkelsnelheid, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding CommenDevelopmentSpeeds}" 
+                      SelectedItem="{Binding SelectedCommenDevelopmentSpeed, UpdateSourceTrigger=PropertyChanged}"
                                IsEnabled="{Binding Path=IsManager}"/>
                     <Label x:Name="lblOntwikkelSnelheid" Content="Ontwikkelingssnelheid :" Canvas.Left="10" Canvas.Top="27"/>
                     <Label x:Name="lblStrategie" Content="Strategie :" Canvas.Left="10" Canvas.Top="66"/>
                     <ComboBox x:Name="cmbStrategie" Canvas.Left="128" Canvas.Top="70" Width="598" 
                               
-                      ItemsSource="{Binding CommenStrategien}"
-                      SelectedItem="{Binding SelectedCommenStrategie, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding CommenStrategies}"
+                      SelectedItem="{Binding SelectedCommenStrategy, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}" >
 
                     </ComboBox>
                     <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
-                              ItemsSource="{Binding CommensalismeMulti}" 
+                              ItemsSource="{Binding CommensalismMulti}" 
                                           SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
                         <ListView.View>
                             <GridView>
@@ -342,7 +342,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismeCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208" BorderBrush="Black">
+                    <Button x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="281" Canvas.Top="120" Width="208" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF90B4C6"/>
@@ -350,7 +350,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnRemove" Command="{Binding RemoveCommensalismeMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447" BorderBrush="Black">
+                    <Button x:Name="btnRemove" Command="{Binding RemoveCommensalismMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF8FB3C5"/>
@@ -360,16 +360,16 @@
                     </Button>
                     <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
                        IsEnabled="{Binding Path=IsManager}"
-                        ItemsSource="{Binding CommenEigenschappen}"
-                      SelectedItem="{Binding SelectedCommenEigenschappen, UpdateSourceTrigger=PropertyChanged}"      
+                        ItemsSource="{Binding CommenProperties}"
+                      SelectedItem="{Binding SelectedCommenProperties, UpdateSourceTrigger=PropertyChanged}"      
                         />
                     <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="392" Canvas.Top="446" Width="298"
                        ItemsSource="{Binding CommenMulti}"
-                      SelectedItem="{Binding SelectedCommensalismeMulti, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedCommensalismMulti, UpdateSourceTrigger=PropertyChanged}"
                               
                               
                               />
-                    <Button x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismeMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46" BorderBrush="Black">
+                    <Button x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF8FB1C5"/>
@@ -405,8 +405,8 @@
                               Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
                     </Canvas>
                     <ListView Height="150" Width="760"
-                                      ItemsSource="{Binding BeheerExtraEigenschappen}" 
-                                          SelectedItem="{Binding SelectedExtraEigenschap, Mode=TwoWay}"  >
+                                      ItemsSource="{Binding ManageExtraProperties}" 
+                                          SelectedItem="{Binding SelectedExtraProperty, Mode=TwoWay}"  >
 
                         <ListView.View>
                             <GridView>
@@ -504,8 +504,8 @@
                               Width="574" Height="25" Canvas.Top="2" Canvas.Left="97" />
                     </Canvas>
                     <ListView Height="150" Width="760"
-                                      ItemsSource="{Binding BeheerMaanden}" 
-                                          SelectedItem="{Binding SelectedBeheerMaand, Mode=TwoWay}"  >
+                                      ItemsSource="{Binding ManagementActs}" 
+                                          SelectedItem="{Binding SelectedManagementMonth, Mode=TwoWay}"  >
 
                         <ListView.View>
                             <GridView>
@@ -530,7 +530,7 @@
 
                         <!-- eerste rij -->
                         <Label Content="Beheersdaad :" Canvas.Top="30" />
-                        <TextBox Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
+                        <TextBox Text="{Binding Path=TextInputManagementAct, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
                         <!-- tweede rij -->
                         <Label Content="Omschrijving :" Canvas.Top="60" />
                         <TextBox Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
@@ -596,13 +596,13 @@
                     </Canvas.Background>
                     <Label Height="25" Content="Eigenschap :" Canvas.Left="10" Canvas.Top="10"/>
                     <ComboBox Canvas.Left="99" Canvas.Top="13" Width="120" 
-                              ItemsSource="{Binding Eigenschappen}"
-                              SelectedValue="{Binding SelectedEigenschap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                              ItemsSource="{Binding Properties}"
+                              SelectedValue="{Binding SelectedProperty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Height="25" Content="Url Locatie :" Canvas.Left="10" Canvas.Top="44"/>
                     <TextBox Canvas.Left="99" Canvas.Top="48" TextWrapping="Wrap" Width="376"
                              Text="{Binding Path=SelectedUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Button Command="{Binding Path=ChangeFotoCommand}" Content="Wijzig foto" Height="28" Canvas.Left="282" Canvas.Top="509" Width="208">
+                    <Button Command="{Binding Path=ChangePhotoCommand}" Content="Wijzig foto" Height="28" Canvas.Left="282" Canvas.Top="509" Width="208">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFA298BB"/>
@@ -610,7 +610,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button Command="{Binding Path=DeleteFotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="509" Width="208">
+                    <Button Command="{Binding Path=DeletePhotoCommand}" Content="Verwijder foto" Height="28" Canvas.Left="511" Canvas.Top="509" Width="208">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFA799BF"/>

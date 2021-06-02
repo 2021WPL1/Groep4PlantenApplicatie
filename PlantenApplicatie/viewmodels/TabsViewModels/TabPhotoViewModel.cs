@@ -24,27 +24,27 @@ namespace PlantenApplicatie.viewmodels
         private Foto? _selectedFoto;
 
         private ImageSource? _selectedImage;
-        private string? _selectedEigenschap;
+        private string? _selectedProperty;
         private string? _selectedUrl;
 
         //constructor
-        public TabPhotoViewModel(Plant selectedplant,Gebruiker gebruiker)
+        public TabPhotoViewModel(Plant selectedplant,Gebruiker user)
         {
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedplant;
 
-            Eigenschappen = _plantenDao.GetImageProperties();
+            Properties = _plantenDao.GetImageProperties();
 
-            ChangeFotoCommand = new DelegateCommand(ChangePhoto);
-            DeleteFotoCommand = new DelegateCommand(DeletePhoto);
+            ChangePhotoCommand = new DelegateCommand(ChangePhoto);
+            DeletePhotoCommand = new DelegateCommand(DeletePhoto);
         }
         
         //button commands
-        public ICommand ChangeFotoCommand { get; }
-        public ICommand DeleteFotoCommand { get; }
+        public ICommand ChangePhotoCommand { get; }
+        public ICommand DeletePhotoCommand { get; }
 
 
-        public List<string> Eigenschappen { get; }
+        public List<string> Properties { get; }
 
         //getters and setters 
         public ImageSource? SelectedImage
@@ -62,10 +62,10 @@ namespace PlantenApplicatie.viewmodels
 
         public string? SelectedProperty
         {
-            get => _selectedEigenschap; 
+            get => _selectedProperty; 
             set
             {
-                _selectedEigenschap = value;
+                _selectedProperty = value;
                 _selectedFoto = _selectedPlant.Foto
                     .SingleOrDefault(f => f.Eigenschap == SelectedProperty);
                 SelectedUrl = _selectedFoto?.UrlLocatie;
@@ -85,7 +85,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //edit the current photo, when a photo gets changed through the url the image will change and be saved depending on the selected property
-        private void ChangeFoto()
+        private void ChangePhoto()
         {
             var imageBytes = DownloadImage(SelectedUrl);
 
@@ -96,10 +96,10 @@ namespace PlantenApplicatie.viewmodels
 
             if (_selectedFoto is null)
             {
-                _plantenDao.AddPhoto(SelectedEigenschap, _selectedPlant, SelectedUrl, imageBytes);
+                _plantenDao.AddPhoto(SelectedProperty, _selectedPlant, SelectedUrl, imageBytes);
             }
             else {
-                _plantenDao.ChangePhoto(_selectedFoto,  SelectedEigenschap, SelectedUrl, imageBytes);
+                _plantenDao.ChangePhoto(_selectedFoto, SelectedProperty, SelectedUrl, imageBytes);
             }
             
             SelectedImage = GenerateBitmapImageFromByteArray(imageBytes);

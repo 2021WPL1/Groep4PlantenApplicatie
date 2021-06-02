@@ -493,7 +493,6 @@ namespace PlantenApplicatie.Data
 
         //add the abiotiek to the selected plant (Liam)
         public void AddAbiotic(Plant plant, string? insolation, string? soilType, string? moistureRequirement, string? nutritionNeeds, string? antagonisticEnvironment)
-        public void AddAbiotiek(Plant plant, string? bezonning, string? grondsoort, string? vochtbehoefte, string? voedingsbehoefte, string? antagonischeOmgeving)
         {
             //Habitat ontbreekt
             Abiotiek abiotiek = new Abiotiek
@@ -617,6 +616,7 @@ namespace PlantenApplicatie.Data
             _context.AbiotiekMulti.Remove(selectedAbiotiekMulti);
 
             _context.SaveChanges();
+        }
             //add a commensalisme multi to the selected plant(Liam)
             public void AddCommensalismMulti(Plant plant, string property, string value)
         {
@@ -644,9 +644,10 @@ namespace PlantenApplicatie.Data
             selectedCommensalismeMulti.Waarde = value ?? selectedCommensalismeMulti.Waarde;
 
             _context.SaveChanges();
+        }
 
                 //delete the selected Commensalisme Multi(Liam)
-        public void DeleteCommensalismeMulti(CommensalismeMulti commensalismeMulti)
+        public void DeleteCommensialismMulti(CommensalismeMulti commensalismeMulti)
         {
             var selectedCommensalismeMulti = _context.CommensalismeMulti.FirstOrDefault(s => s.Id == commensalismeMulti.Id);
 
@@ -711,6 +712,7 @@ namespace PlantenApplicatie.Data
         public List<string> GetAbioAntagonianEnvironments()
         {
             return _context.AbioReactieAntagonischeOmg.Select(s => s.Antagonie).ToList();
+        }
         //get the different values of the Commensalisme property (Liam)
         public List<CommLevensvorm> GetCommLifeform()
                     {
@@ -732,12 +734,12 @@ namespace PlantenApplicatie.Data
             return _context.CommSocialbiliteit.ToList();
         }
 
-       
+
         //get the abio Multis of the selected plant (Liam)
         public List<AbiotiekMulti> GetAbioMulti(Plant plant)
         {
             return _context.AbiotiekMulti.Where(s => s.PlantId == plant.PlantId).ToList();
-
+        }
         //get the commensalisme multis of the selected plant (Liam)
         public List<CommensalismeMulti> GetCommensalismeMulti(Plant plant)
         {
@@ -875,7 +877,7 @@ namespace PlantenApplicatie.Data
                                 };
                             }
         //add an image to the selected plant(Lily)
-        public void AddFoto(string? property, Plant plant, string? url, byte[]? imageBytes)
+        public void AddPhoto(string? property, Plant plant, string? url, byte[]? imageBytes)
         {
             var foto = new Foto
             {
@@ -890,22 +892,22 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
         //edit the current photo(Lily)
-        public void ChangeFoto(Foto foto, string? property, string? url, byte[]? imageBytes)
+        public void ChangePhoto(Foto photo, string? property, string? url, byte[]? imageBytes)
                         {
                             photo.Eigenschap = property;
                             photo.UrlLocatie = url;
                             photo.Tumbnail = imageBytes;
 
-                            _context.Foto.Add(foto);
+                            _context.Foto.Add(photo);
                             //Entry is to check if there is already an image in the database, if there is none it gets added
                             //if there is one it gets edited instead of adding one. (Lily)
-                            _context.Entry(foto)
+                            _context.Entry(photo)
                                 .State = EntityState.Modified;
 
                             _context.SaveChanges();
                         }
         //delete the selected photo(Lily)
-        public void DeleteFoto(Foto foto)
+        public void DeletePhoto(Foto photo)
         {
             _context.Foto
                 .Remove(photo);

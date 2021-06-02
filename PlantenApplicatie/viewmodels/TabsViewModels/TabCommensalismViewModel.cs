@@ -19,47 +19,47 @@ namespace PlantenApplicatie.viewmodels
         //private selecters and the dao (Liam)
         private Plant _selectedPlant;
         private readonly PlantenDao _dao;
-        private string _selectedOntwikkelingssnelheid;
-        private string _selectedStrategie;
-        private string _selectedCommenEigenschappen;
-        private string _selectedCommensalismeMulti;
+        private string _selectedDevelopmentSpeed;
+        private string _selectedStrategy;
+        private string _selectedCommenProperty;
+        private string _selectedCommensalismMulti;
         private CommensalismeMulti _selectedCommenMulti;
 
         // private variables (Davy)
-        private Gebruiker _selectedGebruiker;
+        private Gebruiker _selectedUser;
         private bool _IsManager;
 
         //observable collections for the list and comboboxes (Liam)
-        public ObservableCollection<string> CommenStrategien { get; set; }
-        public ObservableCollection<string> CommenOntwikkelsnelheden { get; set; }
-        public ObservableCollection<string> CommenEigenschappen { get; set; }
-        public ObservableCollection<CommensalismeMulti> CommensalismeMulti { get; set; }
+        public ObservableCollection<string> CommenStrategies { get; set; }
+        public ObservableCollection<string> CommenDevelopmentSpeeds { get; set; }
+        public ObservableCollection<string> CommenProperties { get; set; }
+        public ObservableCollection<CommensalismeMulti> CommensalismMulti { get; set; }
         public ObservableCollection<string> CommenMulti { get; set; }
 
         //button commands (Liam)
-        public ICommand EditCommensalismeCommand { get; set; }
-        public ICommand AddCommensalismeMultiCommand { get; set; }
-        public ICommand EditCommensalismeMultiCommand { get; set; }
-        public ICommand RemoveCommensalismeMultiCommand { get; set; }
+        public ICommand EditCommensalismCommand { get; set; }
+        public ICommand AddCommensalismMultiCommand { get; set; }
+        public ICommand EditCommensalismMultiCommand { get; set; }
+        public ICommand RemoveCommensalismMultiCommand { get; set; }
 
         //constructor (Liam)
-        public TabCommensalismViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabCommensalismViewModel(Plant selectedPlant, Gebruiker user)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = user;
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
 
-            CommenOntwikkelsnelheden = new ObservableCollection<string>();
-            CommenStrategien = new ObservableCollection<string>();
-            CommenEigenschappen = new ObservableCollection<string>();
+            CommenDevelopmentSpeeds = new ObservableCollection<string>();
+            CommenStrategies = new ObservableCollection<string>();
+            CommenProperties = new ObservableCollection<string>();
             CommenMulti = new ObservableCollection<string>();
-            CommensalismeMulti = new ObservableCollection<CommensalismeMulti>();
+            CommensalismMulti = new ObservableCollection<CommensalismeMulti>();
 
             //the delegate commands for the buttons (Liam)
-            EditCommensalismeCommand = new DelegateCommand(EditCommensalisme);
-            AddCommensalismeMultiCommand = new DelegateCommand(AddCommenMulti);
-            EditCommensalismeMultiCommand = new DelegateCommand(EditCommenMulti);
-            RemoveCommensalismeMultiCommand = new DelegateCommand(RemoveCommenMulti);
+            EditCommensalismCommand = new DelegateCommand(EditCommensalism);
+            AddCommensalismMultiCommand = new DelegateCommand(AddCommenMulti);
+            EditCommensalismMultiCommand = new DelegateCommand(EditCommenMulti);
+            RemoveCommensalismMultiCommand = new DelegateCommand(RemoveCommenMulti);
 
             //load the different lists in for the comboboxes and listview (Liam)
             LoadCommenDevelopmentSpeed();
@@ -88,7 +88,7 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
+            switch (SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;
@@ -103,12 +103,12 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
-        public Gebruiker SelectedGebruiker
+        public Gebruiker SelectedUser
         {
-            private get => _selectedGebruiker;
+            private get => _selectedUser;
             set
             {
-                _selectedGebruiker = value;
+                _selectedUser = value;
                 OnPropertyChanged();
             }
         }
@@ -135,10 +135,10 @@ namespace PlantenApplicatie.viewmodels
 
         public string SelectedCommensalismMulti
         {
-            private get => _selectedCommensalismeMulti;
+            private get => _selectedCommensalismMulti;
             set
             {
-                _selectedCommensalismeMulti = value;
+                _selectedCommensalismMulti = value;
                 OnPropertyChanged();
             }
         }
@@ -155,30 +155,30 @@ namespace PlantenApplicatie.viewmodels
 
         public string SelectedCommenDevelopmentSpeed
         {
-            private get => _selectedOntwikkelingssnelheid;
+            private get => _selectedDevelopmentSpeed;
             set
             {
-                _selectedOntwikkelingssnelheid = value;
+                _selectedDevelopmentSpeed = value;
                 OnPropertyChanged();
             }
         }
 
         public string SelectedCommenStrategy
         {
-            private get => _selectedStrategie;
+            private get => _selectedStrategy;
             set
             {
-                _selectedStrategie = value;
+                _selectedStrategy = value;
                 OnPropertyChanged();
             }
         }
 
         public string SelectedCommenProperties
         {
-            private get => _selectedCommenEigenschappen;
+            private get => _selectedCommenProperty;
             set
             {
-                _selectedCommenEigenschappen = value;
+                _selectedCommenProperty = value;
                 ChangeCommProperties();
                 OnPropertyChanged();
             }
@@ -187,88 +187,88 @@ namespace PlantenApplicatie.viewmodels
         //load the different lists into the comboboxes + listview (Liam)
         private void LoadCommenDevelopmentSpeed()
         {
-            var ontwikkelingssnelheden = _dao.GetCommDevelopmentSpeed();
+            var developmentSpeeds = _dao.GetCommDevelopmentSpeed();
 
-            CommenOntwikkelsnelheden.Clear();
+            CommenDevelopmentSpeeds.Clear();
 
-            foreach (var ontwikkelingssnelheid in ontwikkelingssnelheden)
+            foreach (var developmentspeed in developmentSpeeds)
             {
-                CommenOntwikkelsnelheden.Add(ontwikkelingssnelheid);
+                CommenDevelopmentSpeeds.Add(developmentspeed);
             }
         }
 
         private void LoadCommenStrategy()
         {
-            var strategien = _dao.GetCommStrategy();
+            var strategies = _dao.GetCommStrategy();
 
-            CommenStrategien.Clear();
+            CommenStrategies.Clear();
 
-            foreach (var strategie in strategien)
+            foreach (var strategy in strategies)
             {
-                CommenStrategien.Add(strategie);
+                CommenStrategies.Add(strategy);
             }
         }
 
         private void LoadCommenMulti()
         {
-            var commensalismeMultis = _dao.GetCommensalismMulti(SelectedPlant);
+            var commensalismMultis = _dao.GetCommensalismeMulti(SelectedPlant);
 
-            CommensalismeMulti.Clear();
+            CommensalismMulti.Clear();
 
-            foreach (var commensalismeMulti in commensalismeMultis)
+            foreach (var commensalismMulti in commensalismMultis)
             {
-                CommensalismeMulti.Add(commensalismeMulti);
+                CommensalismMulti.Add(commensalismMulti);
             }
         }
 
         private void LoadCommenProperties()
         {
-            CommenEigenschappen.Clear();
+            CommenProperties.Clear();
 
-            CommenEigenschappen.Add("Sociabiliteit");
-            CommenEigenschappen.Add("Levensvorm");
+            CommenProperties.Add("Sociabiliteit");
+            CommenProperties.Add("Levensvorm");
         }
 
         private void LoadSociability()
         {
-            var sociabiliteiten = _dao.GetCommSociability();
+            var sociabilities = _dao.GetCommSociability();
 
             CommenMulti.Clear();
 
-            foreach (var sociabiliteit in sociabiliteiten)
+            foreach (var sociability in sociabilities)
             {
-                CommenMulti.Add(sociabiliteit.Sociabiliteit);
+                CommenMulti.Add(sociability.Sociabiliteit);
             }
         }
 
         private void LoadLifeform()
         {
-            var levensvormen = _dao.GetCommLifeform();
+            var lifeforms = _dao.GetCommLifeform();
 
             CommenMulti.Clear();
 
-            foreach (var levensvorm in levensvormen)
+            foreach (var lifeform in lifeforms)
             {
-                CommenMulti.Add(levensvorm.Levensvorm);
+                CommenMulti.Add(lifeform.Levensvorm);
             }
         }
 
         //load the selected values into the different lists (Liam)
         private void LoadSelectedValues()
         {
-            var commensalisme = _selectedPlant.Commensalisme.SingleOrDefault();
+            var commensalism = _selectedPlant.Commensalisme.SingleOrDefault();
 
-            if (commensalisme is null) return;
+            if (commensalism is null) return;
 
-            SelectedCommenDevelopmentSpeed = commensalisme.Ontwikkelsnelheid;
-            SelectedCommenStrategy = commensalisme.Strategie;
+            SelectedCommenDevelopmentSpeed = commensalism.Ontwikkelsnelheid;
+            SelectedCommenStrategy = commensalism.Strategie;
 
         }
 
 
 
         //Edit the commensalisme of a plant, if there is none for the current plant a new one will be made with the selected values(Liam)
-        private void EditCommensalisme()
+        private void EditCommensalism()
         {
             var commensalisme = _dao.GetCommensialism(SelectedPlant);
 
@@ -320,7 +320,7 @@ namespace PlantenApplicatie.viewmodels
         {
             if (SelectedCommenMulti is not null)
             {
-                _dao.DeleteCommensalismMulti(SelectedCommenMulti);
+                _dao.DeleteCommensialismMulti(SelectedCommenMulti);
             }
             else
             {

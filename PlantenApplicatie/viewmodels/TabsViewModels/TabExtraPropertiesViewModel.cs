@@ -15,7 +15,7 @@ namespace PlantenApplicatie.viewmodels
     {
         //private variables (Davy)
         private Plant _selectedPlant;
-        private ExtraEigenschap _selectedExtraEigenschap;
+        private ExtraEigenschap _selectedExtraProperties;
 
 
         // button commands (Davy)
@@ -36,23 +36,23 @@ namespace PlantenApplicatie.viewmodels
         private bool _isCheckedFragrant;
         private bool _isCheckedFrostSensitive;
 
-        private Gebruiker _selectedGebruiker;
+        private Gebruiker _selectedUser;
         private bool _IsManager;
 
         //observable collections for the listview/combobox (Davy)
-        public ObservableCollection<ExtraEigenschap> BeheerExtraEigenschappen { get; set; }
+        public ObservableCollection<ExtraEigenschap> ManageExtraProperties { get; set; }
         public ObservableCollection<string> Nectars { get; set; }
         public ObservableCollection<string> Pollen { get; set; }
 
 
         //constructor with the given user and selected plant
-        public TabExtraPropertiesViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabExtraPropertiesViewModel(Plant selectedPlant, Gebruiker user)
         {
             SelectedPlant = selectedPlant;
             _plantenDao = PlantenDao.Instance;
-            SelectedUser = gebruiker;
+            SelectedUser = user;
 
-            BeheerExtraEigenschappen = new ObservableCollection<ExtraEigenschap>();
+            ManageExtraProperties = new ObservableCollection<ExtraEigenschap>();
             Nectars = new ObservableCollection<string>();
             Pollen = new ObservableCollection<string>();
 
@@ -100,10 +100,10 @@ namespace PlantenApplicatie.viewmodels
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedUser
         {
-            private get => _selectedGebruiker;
+            private get => _selectedUser;
             set
             {
-                _selectedGebruiker = value;
+                _selectedUser = value;
                 OnPropertyChanged();
             }
         }
@@ -120,10 +120,10 @@ namespace PlantenApplicatie.viewmodels
         }
         public ExtraEigenschap SelectedExtraProperty
         {
-            private get => _selectedExtraEigenschap;
+            private get => _selectedExtraProperties;
             set
             {
-                _selectedExtraEigenschap = value;
+                _selectedExtraProperties = value;
                 OnPropertyChanged();
             }
         }
@@ -235,13 +235,13 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadManagerExtraProperties()
         {
-            var eigenschappen = _plantenDao.GetExtraProperties(SelectedPlant);
+            var properties = _plantenDao.GetExtraProperties(SelectedPlant);
 
-            BeheerExtraEigenschappen.Clear();
+            ManageExtraProperties.Clear();
 
-            foreach (var eigenschap in eigenschappen)
+            foreach (var property in properties)
             {
-                BeheerExtraEigenschappen.Add(eigenschap);
+                ManageExtraProperties.Add(property);
             }
         }
 
@@ -331,7 +331,7 @@ namespace PlantenApplicatie.viewmodels
                     
             if (SelectedExtraProperty != null)
             {
-                _plantenDao.RemoveExtraProperty(extraEigenschap);
+                _plantenDao.DeleteExtraProperty(extraEigenschap);
             }
             else
             {

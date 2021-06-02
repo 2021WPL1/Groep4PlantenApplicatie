@@ -18,7 +18,7 @@ namespace PlantenApplicatie.viewmodels
         private Plant? _selectedPlant;
 
         private bool _IsManager;
-        private Gebruiker _selectedGebruiker;
+        private Gebruiker _selectedUser;
         private string? _selectedType;
         private string? _selectedFamily;
         private string? _selectedGenus;
@@ -45,9 +45,9 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Variants { get; private set; }
         
         //constructor, user as parameter 
-        public TabManagePlantenViewModel(Gebruiker gebruiker)
+        public TabManagePlantenViewModel(Gebruiker user)
         {
-            SelectedUser = gebruiker;
+            SelectedUser = user;
             _plantenDao = PlantenDao.Instance;
 
             ShowDetailsCommand = new DelegateCommand(ShowDetails);
@@ -66,12 +66,13 @@ namespace PlantenApplicatie.viewmodels
             UserRole();
             FilterComboBoxes();
         }
+        //getters and setters
         public Gebruiker SelectedUser
         {
-            private get => _selectedGebruiker;
+            private get => _selectedUser;
             set
             {
-                _selectedGebruiker = value;
+                _selectedUser = value;
                 OnPropertyChanged();
             }
         }

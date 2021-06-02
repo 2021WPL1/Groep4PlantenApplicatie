@@ -17,13 +17,13 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         public ICommand EditPasswordCommand { get; set; }
 
         // private variables 
-        private Gebruiker _selectedGebruiker;
+        private Gebruiker _selectedUser;
         private bool _IsManager;
 
         //constructor given with user as parameter
-        public TabUserViewModel(Gebruiker gebruiker)
+        public TabUserViewModel(Gebruiker user)
         {
-            SelectedUser = gebruiker;
+            SelectedUser = user;
             AddUserCommand = new DelegateCommand(AddUser);
             EditPasswordCommand = new DelegateCommand(EditPassword);
 
@@ -60,10 +60,10 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedUser
         {
-            private get => _selectedGebruiker;
+            private get => _selectedUser;
             set
             {
-                _selectedGebruiker = value;
+                _selectedUser = value;
                 OnPropertyChanged();
             }
         }

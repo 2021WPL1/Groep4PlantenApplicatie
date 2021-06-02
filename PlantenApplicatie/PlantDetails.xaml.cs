@@ -20,7 +20,7 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class PlantDetails : Window
     {
-        public PlantDetails(Plant selectedPlant, User gebruiker)
+        public PlantDetails(Plant selectedPlant, Gebruiker gebruiker)
         {
             InitializeComponent();
             DataContext = new TabsViewModel(selectedPlant, gebruiker);

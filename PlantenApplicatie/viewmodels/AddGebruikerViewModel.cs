@@ -155,7 +155,7 @@ namespace PlantenApplicatie.viewmodels
             if(TextInputEmail.Contains("@vives.be") || TextInputEmail.Contains("@student.vives.be"))
             {
                 
-                var gebruiker = new User
+                var gebruiker = new Gebruiker
                 {
                     Voornaam = TextInputVoornaam,
                     Achternaam = TextInputAchternaam,

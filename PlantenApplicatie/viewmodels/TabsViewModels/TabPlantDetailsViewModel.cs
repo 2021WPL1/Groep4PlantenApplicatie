@@ -82,7 +82,7 @@ namespace PlantenApplicatie.viewmodels
         }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
 
-        public User SelectedUser
+        public Gebruiker SelectedUser
         {
             private get => _selectedGebruiker;
             set

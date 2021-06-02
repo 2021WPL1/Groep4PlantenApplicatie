@@ -17,33 +17,33 @@ namespace PlantenApplicatie.viewmodels
         // private variables (Jim)
         private Plant _selectedPlant;
         private readonly PlantenDao _dao;
-        private int _selectedBladgrootte;
-        private string _selectedBladvorm;
-        private string _selectedBloeiWijze;
+        private int _selectedLeafSize;
+        private string _selectedLeafShape;
+        private string _selectedBloom;
         private string _selectedHabitus;
-        private string _selectedLevensvorm;
-        private string _selectedSpruitFenologie;
-        private string _selectedFenotypeEigenschappen;
-        private string _selectedFenoTypesMulti;
-        private string _selectedFenoMultiMaand;
+        private string _selectedLifeform;
+        private string _selectedSprout;
+        private string _selectedFenotypeProperties;
+        private string _selectedPhenoTypesMulti;
+        private string _selectedFenoMultiMonth;
         private FenotypeMulti _selectedPlantFenoTypeMulti;
 
        
-        private Gebruiker _selectedGebruiker;
+        private Gebruiker _selectedUser;
         private bool _IsManager;
 
 
         //observable collections for the different comboboxes and listviews ( Jim)
-        public ObservableCollection<int> FenoBladgroottes { get; set; }
-        public ObservableCollection<string> FenoBladvormen { get; set; }
-        public ObservableCollection<string> FenoBloeiwijzes { get; set; }
+        public ObservableCollection<int> FenoLeafSizes { get; set; }
+        public ObservableCollection<string> FenoLeafShapes { get; set; }
+        public ObservableCollection<string> FenoBlooms { get; set; }
         public ObservableCollection<string> FenoHabitussen { get; set; }
-        public ObservableCollection<string> FenoLevensvormen { get; set; }
-        public ObservableCollection<string> FenoSpruitFenologieen { get; set; }
+        public ObservableCollection<string> FenoLifeforms { get; set; }
+        public ObservableCollection<string> FenoSprouts { get; set; }
 
-        public ObservableCollection<string> FenotypeEigenschappen { get; set; }
+        public ObservableCollection<string> FenotypeProperties { get; set; }
 
-        public ObservableCollection<string> FenoMultiMaand { get; set; }
+        public ObservableCollection<string> FenoMultiMonths { get; set; }
         public ObservableCollection<FenotypeMulti> PlantFenoTypesMulti { get; set; }
 
         public ObservableCollection<string> FenoTypesMulti { get; set; }
@@ -57,21 +57,21 @@ namespace PlantenApplicatie.viewmodels
         public ICommand DeleteFenotypeMultiPlantCommand { get; set; }
 
         // Constructor
-        public TabPhenoTypeViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabPhenoTypeViewModel(Plant selectedPlant, Gebruiker user)
         {
-            SelectedUser = gebruiker;
+            SelectedUser = user;
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
             //variables (Jim)
-            FenoBladgroottes = new ObservableCollection<int>();
-            FenoBladvormen = new ObservableCollection<string>();
-            FenoBloeiwijzes = new ObservableCollection<string>();
+            FenoLeafSizes = new ObservableCollection<int>();
+            FenoLeafShapes = new ObservableCollection<string>();
+            FenoBlooms = new ObservableCollection<string>();
             FenoHabitussen = new ObservableCollection<string>();
-            FenoLevensvormen = new ObservableCollection<string>();
-            FenoSpruitFenologieen = new ObservableCollection<string>();
-            FenotypeEigenschappen = new ObservableCollection<string>();
+            FenoLifeforms = new ObservableCollection<string>();
+            FenoSprouts = new ObservableCollection<string>();
+            FenotypeProperties = new ObservableCollection<string>();
             FenoTypesMulti = new ObservableCollection<string>();
-            FenoMultiMaand = new ObservableCollection<string>();
+            FenoMultiMonths = new ObservableCollection<string>();
 
             PlantFenoTypesMulti = new ObservableCollection<FenotypeMulti>();
 
@@ -137,12 +137,12 @@ namespace PlantenApplicatie.viewmodels
             }
         }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
-        public Gebruiker SelectedGebruiker
+        public Gebruiker SelectedUser
         {
-            private get => _selectedGebruiker;
+            private get => _selectedUser;
             set
             {
-                _selectedGebruiker = value;
+                _selectedUser = value;
                 OnPropertyChanged();
             }
         }
@@ -162,10 +162,10 @@ namespace PlantenApplicatie.viewmodels
 
         public string SelectedPhenoTypesMulti
         {
-            private get => _selectedFenoTypesMulti;
+            private get => _selectedPhenoTypesMulti;
             set
             {
-                _selectedFenoTypesMulti = value;
+                _selectedPhenoTypesMulti = value;
 
                 OnPropertyChanged();
             }
@@ -184,28 +184,28 @@ namespace PlantenApplicatie.viewmodels
 
         public int SelectedLeafSize
         {
-            get => _selectedBladgrootte;
+            get => _selectedLeafSize;
             set
             {
-                _selectedBladgrootte = value;
+                _selectedLeafSize = value;
                 OnPropertyChanged();
             }
         }
         public string SelectedLeafShape
         {
-            private get => _selectedBladvorm;
+            private get => _selectedLeafShape;
             set
             {
-                _selectedBladvorm = value;
+                _selectedLeafShape = value;
                 OnPropertyChanged();
             }
         }
-        public string SelectedInflorescence
+        public string SelectedBloom
         {
-            private get => _selectedBloeiWijze;
+            private get => _selectedBloom;
             set
             {
-                _selectedBloeiWijze = value;
+                _selectedBloom = value;
                 OnPropertyChanged();
             }
         }
@@ -220,29 +220,29 @@ namespace PlantenApplicatie.viewmodels
         }
         public string SelectedLifeform
         {
-            private get => _selectedLevensvorm;
+            private get => _selectedLifeform;
             set
             {
-                _selectedLevensvorm = value;
+                _selectedLifeform = value;
                 OnPropertyChanged();
             }
         }
         public string SelectedSproutPhenology
         {
-            private get => _selectedSpruitFenologie;
+            private get => _selectedSprout;
             set
             {
-                _selectedSpruitFenologie = value;
+                _selectedSprout = value;
                 OnPropertyChanged();
             }
         }
 
         public string SelectedPhenotypeProperties
         {
-            private get => _selectedFenotypeEigenschappen;
+            private get => _selectedFenotypeProperties;
             set
             {
-                _selectedFenotypeEigenschappen = value;
+                _selectedFenotypeProperties = value;
                 ChangeProperties();
                 OnPropertyChanged();
             }
@@ -250,10 +250,10 @@ namespace PlantenApplicatie.viewmodels
 
         public string SelectedPhenoMultiMonth
         {
-            private get => _selectedFenoMultiMaand;
+            private get => _selectedFenoMultiMonth;
             set
             {
-                _selectedFenoMultiMaand = value;
+                _selectedFenoMultiMonth = value;
                 OnPropertyChanged();
             }
         }
@@ -267,11 +267,11 @@ namespace PlantenApplicatie.viewmodels
         {
             var bladgroottes = _dao.GetPhenoLeafSize();
 
-            FenoBladgroottes.Clear();
+            FenoLeafSizes.Clear();
 
             foreach (var bladgrootte in bladgroottes)
             {
-                FenoBladgroottes.Add(Convert.ToInt32(bladgrootte));
+                FenoLeafSizes.Add(Convert.ToInt32(bladgrootte));
             }
         }
 
@@ -279,11 +279,11 @@ namespace PlantenApplicatie.viewmodels
         {
             var bladvormen = _dao.GetPhenoLeafShape();
 
-            FenoBladvormen.Clear();
+            FenoLeafShapes.Clear();
 
             foreach (var bladvorm in bladvormen)
             {
-                FenoBladvormen.Add(bladvorm);
+                FenoLeafShapes.Add(bladvorm);
             }
         }
 
@@ -291,11 +291,11 @@ namespace PlantenApplicatie.viewmodels
         {
             var bloeiwijzes = _dao.GetPhenoInflorescence();
 
-            FenoBloeiwijzes.Clear();
+            FenoBlooms.Clear();
 
             foreach (var bloeiwijze in bloeiwijzes)
             {
-                FenoBloeiwijzes.Add(bloeiwijze);
+                FenoBlooms.Add(bloeiwijze);
             }
         }
 
@@ -314,22 +314,22 @@ namespace PlantenApplicatie.viewmodels
         {
             var levensvormen = _dao.GetPhenoLifeform();
 
-            FenoLevensvormen.Clear();
+            FenoLifeforms.Clear();
 
             foreach (var levensvorm in levensvormen)
             {
-                FenoLevensvormen.Add(levensvorm);
+                FenoLifeforms.Add(levensvorm);
             }
         }
         private void LoadPhenoSproutPhenology()
         {
             var fenologieen = _dao.GetPhenoSproutPhenology();
 
-            FenoSpruitFenologieen.Clear();
+            FenoSprouts.Clear();
 
             foreach (var fenologie in fenologieen)
             {
-                FenoSpruitFenologieen.Add(fenologie);
+                FenoSprouts.Add(fenologie);
             }
         }
 
@@ -347,12 +347,12 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadProperties()
         {
-            FenotypeEigenschappen.Clear();
+            FenotypeProperties.Clear();
 
-            FenotypeEigenschappen.Add("bladhoogte");
-            FenotypeEigenschappen.Add("bladkleur");
-            FenotypeEigenschappen.Add("bloeihoogte");
-            FenotypeEigenschappen.Add("bloeikleur");
+            FenotypeProperties.Add("bladhoogte");
+            FenotypeProperties.Add("bladkleur");
+            FenotypeProperties.Add("bloeihoogte");
+            FenotypeProperties.Add("bloeikleur");
 
         }
 
@@ -382,19 +382,19 @@ namespace PlantenApplicatie.viewmodels
         }
         private void LoadPhenoMultiMonths()
         {
-            FenoMultiMaand.Clear();
-            FenoMultiMaand.Add("Jan");
-            FenoMultiMaand.Add("Feb");
-            FenoMultiMaand.Add("Mar");
-            FenoMultiMaand.Add("Apr");
-            FenoMultiMaand.Add("May");
-            FenoMultiMaand.Add("Jun");
-            FenoMultiMaand.Add("Jul");
-            FenoMultiMaand.Add("Aug");
-            FenoMultiMaand.Add("Sep");
-            FenoMultiMaand.Add("Okt");
-            FenoMultiMaand.Add("Nov");
-            FenoMultiMaand.Add("Dec");
+            FenoMultiMonths.Clear();
+            FenoMultiMonths.Add("Jan");
+            FenoMultiMonths.Add("Feb");
+            FenoMultiMonths.Add("Mar");
+            FenoMultiMonths.Add("Apr");
+            FenoMultiMonths.Add("May");
+            FenoMultiMonths.Add("Jun");
+            FenoMultiMonths.Add("Jul");
+            FenoMultiMonths.Add("Aug");
+            FenoMultiMonths.Add("Sep");
+            FenoMultiMonths.Add("Okt");
+            FenoMultiMonths.Add("Nov");
+            FenoMultiMonths.Add("Dec");
         }
         //Load the selected standards in from the selected plant. If there is none the selected values are null (Jim)
         private void LoadSelectedValues()
@@ -405,7 +405,7 @@ namespace PlantenApplicatie.viewmodels
 
             SelectedLeafSize = (int)fenotype.Bladgrootte;
             SelectedLeafShape = fenotype.Bladvorm;
-            SelectedInflorescence = fenotype.Bloeiwijze;
+            SelectedBloom = fenotype.Bloeiwijze;
             SelectedSproutPhenology = fenotype.Spruitfenologie;
             SelectedHabitus = fenotype.Habitus;
             SelectedLifeform = fenotype.Levensvorm;
@@ -421,12 +421,12 @@ namespace PlantenApplicatie.viewmodels
 
             if (fenotype == null)
             {
-                _dao.AddPhenotype(SelectedPlant, SelectedLeafSize, SelectedLeafShape, null, SelectedInflorescence, SelectedHabitus, SelectedLifeform,
+                _dao.AddPhenotype(SelectedPlant, SelectedLeafSize, SelectedLeafShape, null, SelectedBloom, SelectedHabitus, SelectedLifeform,
                     SelectedSproutPhenology);
             }
             else
             {
-                _dao.ChangePhenotype(SelectedPlant, SelectedLeafSize, SelectedLeafShape, null, SelectedInflorescence, SelectedHabitus, SelectedLifeform,
+                _dao.ChangePhenotype(SelectedPlant, SelectedLeafSize, SelectedLeafShape, null, SelectedBloom, SelectedHabitus, SelectedLifeform,
                     SelectedSproutPhenology);
             }
         }
