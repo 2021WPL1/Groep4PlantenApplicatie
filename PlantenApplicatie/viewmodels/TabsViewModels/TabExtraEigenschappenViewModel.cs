@@ -10,20 +10,20 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // klasse (Davy)
+    //class and GUI (Davy)
     public class TabExtraEigenschappenViewModel : ViewModelBase
     {
-        //private variabels (Davy)
+        //private variables (Davy)
         private Plant _selectedPlant;
         private ExtraEigenschap _selectedExtraEigenschap;
 
 
-        // button commando's
+        // button commands (Davy)
         public ICommand AddExtraCommand { get; set; }
         public ICommand EditExtraCommand { get; set; }
         public ICommand RemoveExtraCommand { get; set; }
 
-        // Hiermee kunnen we de data opvragen aan de databank. (Davy)
+        //DAO to access the methods (Davy)
         private readonly PlantenDao _plantenDao;
 
         private string _selectedNectarValue;
@@ -39,10 +39,13 @@ namespace PlantenApplicatie.viewmodels
         private Gebruiker _selectedGebruiker;
         private bool _IsManager;
 
+        //observable collections for the listview/combobox (Davy)
         public ObservableCollection<ExtraEigenschap> BeheerExtraEigenschappen { get; set; }
         public ObservableCollection<string> Nectars { get; set; }
         public ObservableCollection<string> Pollen { get; set; }
 
+
+        //constructor with the given user and selected plant
         public TabExtraEigenschappenViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
             SelectedPlant = selectedPlant;
@@ -57,7 +60,7 @@ namespace PlantenApplicatie.viewmodels
             EditExtraCommand = new DelegateCommand(EditExtra);
             RemoveExtraCommand = new DelegateCommand(RemoveExtra);
 
-            //laad de gegevens in (Davy)
+            //load the different values into the comboboxes (Davy)
             LoadBeheerExtraEigenschappen();
             LoadNectars();
             LoadPollen();
@@ -65,7 +68,7 @@ namespace PlantenApplicatie.viewmodels
             UserRole();
         }
 
-
+        //boolean to check which functions the user can perform on the application (Davy)
         public bool IsManager
         {
             get => _IsManager;
@@ -77,7 +80,8 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        //controleer welke rol de gebruiker heeft
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
             switch (SelectedGebruiker.Rol.ToLower())
@@ -93,6 +97,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
+        //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedGebruiker
         {
             private get => _selectedGebruiker;
@@ -103,7 +108,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //getters setters (Davy)
+        //getters setters for the plant and different checkboxes (Davy)
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -226,7 +231,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //laad de gegevens in de comboboxes (Davy)
+        //load the different values into the comboboxes (Davy)
 
         private void LoadBeheerExtraEigenschappen()
         {
@@ -265,7 +270,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
       
-        //voeg een extra eigenschap toe aan de plant, plant kan maar 1 hebben (Davy)
+        //if there is no extra properties for the plant, one will be made. Plant can only have 1(Davy)
         public void AddExtra()
         {
             ExtraEigenschap extraEigenschap = new ExtraEigenschap();
@@ -287,10 +292,10 @@ namespace PlantenApplicatie.viewmodels
             }
 
 
-            // weergeef de aangepaste lijst
+            //reload the extra properties
             LoadBeheerExtraEigenschappen();
         }
-        //wijzig de extra eigenschap van een plant (Davy)
+        //edit the extra properties of the plant(Davy)
         public void EditExtra()
         {
             ExtraEigenschap extraEigenschap = SelectedExtraEigenschap;
@@ -317,10 +322,10 @@ namespace PlantenApplicatie.viewmodels
             LoadBeheerExtraEigenschappen();
 
         }
-        //verwijder de extra eigenschap van een plant (Davy)
+        //delete the extra property of the plant (Davy)
         public void RemoveExtra()
         {
-            // toewijzen object ExtraEigenschap aan geselecteerd object ExtraEigenschap uit listview
+            //set a variable extra eigenschap to the selected extra properties to delete
             ExtraEigenschap extraEigenschap = SelectedExtraEigenschap;
 
             // ken een string waarde toe uit methode verwijder BeheerMaand uit database            
@@ -333,7 +338,7 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Gelieve eerst een extra eigenschap te selecteren uit de lijst.");
             }
 
-            // toon opnieuw de listview met lijst ExtraEigenschappen
+            //reload the listview
             LoadBeheerExtraEigenschappen();
         }
 

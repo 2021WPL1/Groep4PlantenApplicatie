@@ -11,9 +11,10 @@ namespace PlantenApplicatie.viewmodels
 {
     class AddGebruikerViewModel : ViewModelBase
     {
-        //(Jim)
+        //ViewModel (Jim)
         private readonly PlantenDao _dao;
 
+        //private variables for the GUI
         private string _SelectedRole;
         private string _TextInputVoornaam;
         private string _TextInputAchternaam;
@@ -22,14 +23,17 @@ namespace PlantenApplicatie.viewmodels
         private string _TextInputPaswoordCheck;
         private string _Check;
 
+        //observable collection for the combobox
         public ObservableCollection<string> Roles { get; set; }
 
+        //buttoncommand to save an user in the database
         public ICommand AddUserCommand { get; set; }
 
-        // variabelen Davy
+        //variables Davy
         public ICommand CloseWindowCommand { get; set; }
         private Window _addGebruikerWindow;
 
+        //constructor
         public AddGebruikerViewModel(Window window)
         {
             _addGebruikerWindow = window;       // Davy
@@ -112,13 +116,24 @@ namespace PlantenApplicatie.viewmodels
             }
 
         }
-
+        //load in the roles, for now database is empty so the roles are hardcoded to access the program (Jim)
         public void LoadRoles()
         {
-            Roles.Add("manager");
-            Roles.Add("data-collector");
-            Roles.Add("gebruiker");
+            var roles = _dao.GetRoles();
 
+            if (roles is null)
+            {
+                Roles.Add("manager");
+                Roles.Add("data-collector");
+                Roles.Add("gebruiker");
+            }
+            else
+            {
+                foreach(var role in roles)
+                {
+                    roles.Add(role);
+                }
+            }
         }
 
         public void PasswordChecker()

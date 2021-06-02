@@ -11,9 +11,10 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
+    //class and GUI (Jim)
     public class TabFenoTypeViewModel : ViewModelBase
     {
-        // private variabelen Davy & Jim
+        // private variables (Jim)
         private Plant _selectedPlant;
         private readonly PlantenDao _dao;
         private int _selectedBladgrootte;
@@ -27,12 +28,12 @@ namespace PlantenApplicatie.viewmodels
         private string _selectedFenoMultiMaand;
         private FenotypeMulti _selectedPlantFenoTypeMulti;
 
-        // private variabelen (Davy)
+       
         private Gebruiker _selectedGebruiker;
         private bool _IsManager;
 
 
-        // collecties (lijsten) Davy & Jim
+        //observable collections for the different comboboxes and listviews ( Jim)
         public ObservableCollection<int> FenoBladgroottes { get; set; }
         public ObservableCollection<string> FenoBladvormen { get; set; }
         public ObservableCollection<string> FenoBloeiwijzes { get; set; }
@@ -47,7 +48,7 @@ namespace PlantenApplicatie.viewmodels
 
         public ObservableCollection<string> FenoTypesMulti { get; set; }
 
-        // knop commando's fenotype Davy
+        //button commands  (Jim)
         public ICommand EditFenoTypeCommand { get; set; }
         public ICommand AddFenotypeMultiCommand { get; set; }
 
@@ -55,15 +56,14 @@ namespace PlantenApplicatie.viewmodels
 
         public ICommand DeleteFenotypeMultiPlantCommand { get; set; }
 
-        // Constructor Davy
+        // Constructor
         public TabFenoTypeViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
             SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
-            //variabelen (Davy &Jim)
+            //variables (Jim)
             FenoBladgroottes = new ObservableCollection<int>();
-
             FenoBladvormen = new ObservableCollection<string>();
             FenoBloeiwijzes = new ObservableCollection<string>();
             FenoHabitussen = new ObservableCollection<string>();
@@ -80,7 +80,8 @@ namespace PlantenApplicatie.viewmodels
             AddFenotypeMultiCommand = new DelegateCommand(AddFenotypeMulti);
             EditFenotypeMultiCommand = new DelegateCommand(EditFenotypeMulti);
             DeleteFenotypeMultiPlantCommand = new DelegateCommand(DeleteFenotypeMultiPlant);
-            // methoden om comboboxen Fenotype in te laden (Davy & Jim)
+
+            //methods to load in the different lists in the comboboxes and listviews (Jim)
             LoadFenoBladgrootte();
             LoadFenoBladvorm();
             LoadFenoBloeiwijze();
@@ -107,6 +108,7 @@ namespace PlantenApplicatie.viewmodels
         //    LoadFenoTypesMultiPlant();
         //}
 
+        //boolean to check which functions the user can perform on the application (Davy)
         public bool IsManager
         {
             get => _IsManager;
@@ -118,7 +120,8 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        //controleer welke rol de gebruiker heeft
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
             switch (SelectedGebruiker.Rol.ToLower())
@@ -134,6 +137,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
+        //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedGebruiker
         {
             private get => _selectedGebruiker;
@@ -145,7 +149,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        // Getters and setters selected waardes (Davy & Jim)
+        // Getters and setters (Davy & Jim)
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -259,7 +263,7 @@ namespace PlantenApplicatie.viewmodels
 
 
 
-        //laad de verschillende gegevens in de comboboxes (Davy & Jim)
+        //load the different values into the comboboxes  (Davy & Jim)
         private void LoadFenoBladgrootte()
         {
             var bladgroottes = _dao.GetFenoBladGrootte();
@@ -393,7 +397,7 @@ namespace PlantenApplicatie.viewmodels
             FenoMultiMaand.Add("Nov");
             FenoMultiMaand.Add("Dec");
         }
-
+        //Load the selected standards in from the selected plant. If there is none the selected values are null (Jim)
         private void LoadSelectedValues()
         {
             var fenotype = _selectedPlant.Fenotype.SingleOrDefault();
@@ -411,7 +415,7 @@ namespace PlantenApplicatie.viewmodels
 
 
 
-        //wijzig de fenotype van de plant. Als een plant nog geen fenotype heeft word er eentje aangemaakt met de geselecteerde waardes (Jim)
+        //edit the fenotype of the selected plant, if there is none a fenotype will be added to the plant with the selected values  (Jim)
         private void EditFenoType()
         {
             var fenotype = _dao.GetFenotypeFromPlant(SelectedPlant);
@@ -428,7 +432,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //voeg de FenotypeMulti toe aan de plant met de geselecteerde waardes (Jim)
+        //add the selected fenotype multi to the current plant (Jim)
         private void AddFenotypeMulti()
         {
             _dao.AddMultiFenotype(SelectedPlant, SelectedFenotypeEigenschappen, SelectedFenoMultiMaand, SelectedFenoTypesMulti);
@@ -436,7 +440,7 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
-        //wijzig de geselecteerde FenotypeMulti (Jim)
+        //edit the selected fenotype multi (Jim)
 
         private void EditFenotypeMulti()
         {
@@ -446,14 +450,14 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //laad de geselecteerde waardes van een Fenotype multi in (Jim)
-        private void LoadSelectedValuesMulti()
-        {
-            SelectedFenotypeEigenschappen = SelectedPlantFenoTypeMulti.Eigenschap;
-            SelectedFenoMultiMaand = SelectedPlantFenoTypeMulti.Maand;
-            SelectedFenoTypesMulti = SelectedPlantFenoTypeMulti.Waarde;
-        }
+        //private void LoadSelectedValuesMulti()
+        //{
+        //    SelectedFenotypeEigenschappen = SelectedPlantFenoTypeMulti.Eigenschap;
+        //    SelectedFenoMultiMaand = SelectedPlantFenoTypeMulti.Maand;
+        //    SelectedFenoTypesMulti = SelectedPlantFenoTypeMulti.Waarde;
+        //}
 
-        //laat de verschillende waardes in op basis van de eigenschap dat geselecteerd is (Jim)
+        //load the different properties in when the head property changes (Jim)
         private void ChangeEigenschappen()
         {
             switch (SelectedFenotypeEigenschappen.ToLower())
@@ -474,7 +478,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //verwijder de geselecteerde fenotypemulti van de listview (Jim)
+        //delete the selected fenotype multi from the plant (Jim)
         private void DeleteFenotypeMultiPlant()
         {
 

@@ -9,11 +9,12 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
+    //ViewModel Made by Davy
     public class EditPasswordViewModel : ViewModelBase
     {
         private readonly PlantenDao _dao;
 
-        // button commando's
+        // button commands
         public ICommand EditCommand { get; set; }
 
         public ICommand CloseCommand { get; set; }
@@ -21,10 +22,11 @@ namespace PlantenApplicatie.viewmodels
         private string _textInputPassword;
         private string _textInputPasswordConfirm;
 
-        // private variabelen (Davy)
+        //private variables (Davy)
         private Gebruiker _selectedGebruiker;
         private Window _editPasswordWindow;
 
+        //constructor
         public EditPasswordViewModel(Window window, Gebruiker gebruiker)
         {
             SelectedGebruiker = gebruiker;
@@ -36,6 +38,7 @@ namespace PlantenApplicatie.viewmodels
             _dao = PlantenDao.Instance;
         }
 
+        //getters and setters
         public Gebruiker SelectedGebruiker
         {
             private get => _selectedGebruiker;
@@ -67,6 +70,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
         
+        //edit the password of the user and updates it in the database
         private void Edit()
         {
             if (TextInputPassword == TextInputPasswordConfirm)

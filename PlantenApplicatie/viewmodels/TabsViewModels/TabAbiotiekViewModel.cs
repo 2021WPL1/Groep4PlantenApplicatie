@@ -8,11 +8,11 @@ using Prism.Commands;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // klasse (Lily)
+    // class and GUI (Lily)
     public class TabAbiotiekViewModel : ViewModelBase
     {
 
-        //variabelen instellen(Lily)
+        //set private variables(Lily)
         private const string Eigenschap = "habitat";
 
         private readonly PlantenDao _plantenDao;
@@ -25,7 +25,7 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedAntagonianEnvironment;
 
 
-        // private variabelen (Davy)
+        // private variables for user (Davy)
         private Gebruiker _selectedGebruiker;
         private bool _IsManager;
 
@@ -36,26 +36,27 @@ namespace PlantenApplicatie.viewmodels
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedPlant;
 
-            //observable collections voor de comboboxes, word opgevuld met de functies in DAO
+            //observable collections for the comboboxes, gets filled by methods inside the DAO
             Insolations = new ObservableCollection<string>(_plantenDao.GetAbioBezonning());
             SoilTypes = new ObservableCollection<string>(_plantenDao.GetAbioGrondsoort());
             MoistureRequirements = new ObservableCollection<string>(_plantenDao.GetAbioVochtbehoefte());
             NutritionRequirements = new ObservableCollection<string>(_plantenDao.GetAbioVoedingsbehoefte());
             AntagonianEnvironments = new ObservableCollection<string>(_plantenDao.GetAbioAntagonischeOmgeving());
-
-            SelectedPlantHabitats = new ObservableCollection<string>(
-                _plantenDao.GetAbioHabitatNames(_selectedPlant));
+            SelectedPlantHabitats = new ObservableCollection<string>(_plantenDao.GetAbioHabitatNames(_selectedPlant));
             PlantHabitats = new ObservableCollection<string>(_plantenDao.GetAbioHabitatNames());
-            //Commands voor de buttons
+
+            //Commands for the buttons
             EditAbiotiekCommand = new DelegateCommand(EditAbiotiek);
             RemoveHabitatCommand = new DelegateCommand(RemoveHabitat);
             AddHabitatCommand = new DelegateCommand(AddHabitat);
 
-            //laad de geselecteerde values in
+            //load the values in of the selected plant
             LoadStandards();
             UserRole();
         }
 
+
+        //boolean to check which functions the user can perform on the application (Davy)
         public bool IsManager
         {
             get => _IsManager;
@@ -67,7 +68,8 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        //controleer welke rol de gebruiker heeft
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
             switch (SelectedGebruiker.Rol.ToLower())
@@ -83,6 +85,8 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
+
+        //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedGebruiker
         {
             private get => _selectedGebruiker;
@@ -93,7 +97,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //observable collections
+        //observable collections (Lily)
         public ObservableCollection<string> Insolations { get; }
         public ObservableCollection<string> SoilTypes { get; }
         public ObservableCollection<string> MoistureRequirements { get; }
@@ -155,14 +159,16 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //public strings for the selected value in the abiomulti listviews.
         public string? SelectedAbioPlantHabitat { get; set; }
         public string? SelectedAbioHabitat { get; set; }
 
+        //button commands (Lily)
         public ICommand EditAbiotiekCommand { get; }
         public ICommand RemoveHabitatCommand { get; }
         public ICommand AddHabitatCommand { get; }
 
-        //geef de geselecteerde waardes weer in de combobox, als er geen gegevens is van de geselecteerde plant geef null terug (Lily)
+        //Load the selected standards in from the selected plant. If there is none the selected values are null (Lily)
         private void LoadStandards()
         {
             var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
@@ -176,7 +182,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedAntagonianEnvironment = abiotiek.AntagonischeOmgeving;
         }
 
-        //wijzig de abiotiek van een plant, als er geen is word er eerst een nieuwe abiotiek aangemaakt met de geselecteerde waardes (Lily)
+        //edit the abiotiek of the selected plant, if there is none an abiotiek will be added to the plant with the selected values (Lily)
         private void EditAbiotiek()
         {
             var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
@@ -197,8 +203,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //verwijder de geselecteerde habitat uit de lijst van de geselecteerde plant (Lily)
-
+        //delete the selected habitat from the plant (Lily)
         private void RemoveHabitat()
         {
             var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioPlantHabitat);
@@ -210,8 +215,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedPlantHabitats.Remove(SelectedAbioPlantHabitat);
         }
 
-        //voeg een habitat toe aan de plant (Lily)
-
+        //add a habitat to the plant (Lily)
         private void AddHabitat()
         {
             if (SelectedPlantHabitats.Contains(SelectedAbioHabitat)) return;

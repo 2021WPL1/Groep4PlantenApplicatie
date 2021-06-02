@@ -8,11 +8,12 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
+    //Viewmodel made by Davy
     public class LoginViewModel : ViewModelBase
     {
         private readonly PlantenDao _dao;
 
-        // button commando's
+        // button commands
         public ICommand LoginCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public ICommand ForgotPasswordCommand { get; set; }
@@ -22,6 +23,7 @@ namespace PlantenApplicatie.viewmodels
 
         private Window _loginWindow;
 
+        //constructor
         public LoginViewModel(Window window)
         {
             _loginWindow = window;
@@ -30,7 +32,7 @@ namespace PlantenApplicatie.viewmodels
 
             _dao = PlantenDao.Instance;
         }
-
+        //getters and setters
         public string TextInputLogin
         {
             get => _textInputLogin;
@@ -53,6 +55,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //Login function to check if the given values match a value in the database
         public void Login()
         {
             string message = String.Empty;
@@ -73,11 +76,10 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // geef de textboxen weer leeg terug
+        //close the window when it gets cancelled
         public void Cancel()
         {
-            TextInputLogin = String.Empty;
-            TextInputPassword = String.Empty;
+            this._loginWindow.Close();
         }
     }
 }

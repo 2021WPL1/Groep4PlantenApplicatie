@@ -5,6 +5,8 @@ using System.Windows.Data;
 
 namespace PlantenApplicatie
 {
+    //boolean converter for the checkboxes and listview to say yes and no instead of true/false
+    //Made by Davy
     public class BooleanToYesNoConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

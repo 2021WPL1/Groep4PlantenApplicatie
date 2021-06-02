@@ -12,7 +12,7 @@ namespace PlantenApplicatie.viewmodels
     // MVVM Detailscherm Lily,Jim  GUI: Jim&Liam
     public class TabPlantDetailsViewModel : ViewModelBase
     {
-        //private variabelen  (Jim & Lily)
+        //private variables  (Jim & Lily)
         private readonly PlantenDao _dao;
         private Plant _selectedPlant;
 
@@ -24,7 +24,7 @@ namespace PlantenApplicatie.viewmodels
         private string _textInputMin;
         private string _textInputMax;
 
-        // private variabelen (Davy)
+        // private variables (Davy)
         private Gebruiker _selectedGebruiker;
         private bool _IsManager;
 
@@ -37,22 +37,21 @@ namespace PlantenApplicatie.viewmodels
             SelectedGebruiker = gebruiker;
             _selectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
-            // onderstaande variabelen voor tabblad details plant
-
+           
+            //set the different values in the combobox as a observable collection (Jim)
             Types = new ObservableCollection<string>();
             Families = new ObservableCollection<string>();
             Genus = new ObservableCollection<string>();
             Species = new ObservableCollection<string>();
             Variants = new ObservableCollection<string>();
 
-
-
             SaveCommand = new DelegateCommand(Save);
-            //laad de gegevens in 
+            //load the different values into the comboboxes
             LoadSubjectPlant();
             LoadSelectedValue();
             UserRole();
         }
+        //boolean to check which functions the user can perform on the application (Davy)
         public bool IsManager
         {
             get => _IsManager;
@@ -64,7 +63,8 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        //controleer welke rol de gebruiker heeft
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
             switch (SelectedGebruiker.Rol.ToLower())
@@ -80,6 +80,7 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
+        //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
 
         public Gebruiker SelectedGebruiker
         {
@@ -91,7 +92,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // Getters and setters selected waardes (Lily & Jim)
+        // Getters and setters selected values (Lily & Jim)
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -170,7 +171,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        // ObservableCollection om de plantdetails te kunnen weergeven (Lily)
+        // ObservableCollections binded to the comboboxes (Jim)
 
 
         public ObservableCollection<string> Types { get; set; }
@@ -186,7 +187,7 @@ namespace PlantenApplicatie.viewmodels
 
 
       
-        //laad de waardes van de plant in (Jim)
+        //load the current values of the plant into the comboboxes (Jim)
         public void LoadSelectedValue()
         {
             var plant = _selectedPlant;
@@ -201,7 +202,7 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
-        //laad de lijsten in de combobox (Jim)
+        //load all the different values into the comboboxes (Jim)
         public void LoadSubjectPlant()
         {
             var types = _dao.GetTypes();
@@ -239,7 +240,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //sla de veranderde plant op (Jim)
+        //save the current changes to the selectedplant (Jim)
         public void Save()
         {
             _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,

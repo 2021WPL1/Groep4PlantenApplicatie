@@ -9,9 +9,10 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // MVVM Toepassing (Davy, Lily) 
+    //Class and GUI (Davy, Lily) 
     class TabBeheerPlantenViewModel : ViewModelBase
     {
+        //private variables
         private readonly PlantenDao _plantenDao;
 
         private Plant? _selectedPlant;
@@ -25,13 +26,16 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedVariant;
 
         // The GUI binds to this variable through a property, therefore it will not be null,
-        // so we tell the compiler it is not null
+        // so we tell the compiler it is not null (Lily)
         private string _plantName = null!; 
         
+
+        //button commands
         public ICommand AddUserCommand { get; }
         public ICommand ShowDetailsCommand { get; }
         public ICommand ResetCommand { get; }
 
+        //observable collections to load in Comboboxes + Listview (Davy,Lily)
         public ObservableCollection<Plant> Plants { get; }
 
         public ObservableCollection<string> Types { get; private set; }
@@ -40,6 +44,7 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Species { get; private set; }
         public ObservableCollection<string> Variants { get; private set; }
         
+        //constructor, user as parameter 
         public TabBeheerPlantenViewModel(Gebruiker gebruiker)
         {
             SelectedGebruiker = gebruiker;
@@ -170,6 +175,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //reload the different comboboxes for the searchfunction (Lily)
         private void FilterComboBoxes()
         {
             SearchPlanten();
@@ -181,6 +187,7 @@ namespace PlantenApplicatie.viewmodels
             LoadVariants();
         }
 
+        //load the different types in
         private void LoadTypes()
         {
             var types = Plants.Select(p => PlantenParser.ParseSearchText(p.Type))
@@ -192,6 +199,7 @@ namespace PlantenApplicatie.viewmodels
 
             OnPropertyChanged(nameof(Types));
         }
+        //load the different families in
 
         private void LoadFamilies()
         {
@@ -204,7 +212,7 @@ namespace PlantenApplicatie.viewmodels
 
             OnPropertyChanged(nameof(Families));
         }
-
+        //load the different genus(geslachten) in
         private void LoadGenus()
         {
             var genus = Plants.Select(p => PlantenParser.ParseSearchText(p.Geslacht))
@@ -216,7 +224,7 @@ namespace PlantenApplicatie.viewmodels
 
             OnPropertyChanged(nameof(Genus));
         }
-
+        //load the different species in
         private void LoadSpecies()
         {
             var species = Plants.Select(p => PlantenParser.ParseSearchText(p.Soort))
@@ -228,7 +236,7 @@ namespace PlantenApplicatie.viewmodels
 
             OnPropertyChanged(nameof(Species));
         }
-
+        //load the different variants in
         private void LoadVariants()
         {
             var variants = Plants.Select(p => PlantenParser.ParseSearchText(p.Variant))
@@ -247,7 +255,7 @@ namespace PlantenApplicatie.viewmodels
 
             OnPropertyChanged(nameof(Variants));
         }
-
+        //if a plant is selected you can click the show details button to show the current properties the plant has (Lily)
         private void ShowDetails()
         {
             if (SelectedPlant is not null)
@@ -259,6 +267,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //search the different plants that correspond to the different selected values(Lily)
         private void SearchPlanten()
         {
             var plants = _plantenDao.SearchPlants(SelectedType, SelectedFamily,
@@ -267,6 +276,7 @@ namespace PlantenApplicatie.viewmodels
             ClearAndAddAll(Plants, plants);
         }
 
+        //reset the different selected values in the comboboxes + textbox
         private void ResetInputs()
         {
             _selectedType = _selectedFamily = _selectedGenus = _selectedSpecies = _selectedVariant = null;
@@ -289,7 +299,8 @@ namespace PlantenApplicatie.viewmodels
                 collection.Add(elem);
             }
         }
-        //controleer welke rol de gebruiker heeft
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
             switch(SelectedGebruiker.Rol.ToLower())
@@ -306,7 +317,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //voeg een gebruiker toe als je een docent bent (Jim)
         private void AddUser()
         {
             new AddGebruiker().Show();

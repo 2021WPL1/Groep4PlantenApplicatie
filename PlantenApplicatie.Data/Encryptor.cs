@@ -5,11 +5,13 @@ using System.Text;
 
 namespace PlantenApplicatie
 {
+    //class made by Davy
     public static class Encryptor
     {
+        //generate a hashcode for the password
         public static byte[] GenerateMD5Hash(string text)
         {
-            // default iets als byte gezet
+            //convert the result to a byte
             byte[] result =  { 0x20 };
 
             try

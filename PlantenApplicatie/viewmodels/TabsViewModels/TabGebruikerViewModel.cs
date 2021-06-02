@@ -9,15 +9,18 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
 {
     public class TabGebruikerViewModel : ViewModelBase
     {
+        //MVVM + GUI Davy
 
+        //button commands 
         public ICommand AddUserCommand { get; set; }
 
         public ICommand EditPasswordCommand { get; set; }
 
-        // private variabelen (Davy)
+        // private variables 
         private Gebruiker _selectedGebruiker;
         private bool _IsManager;
 
+        //constructor given with user as parameter
         public TabGebruikerViewModel(Gebruiker gebruiker)
         {
             SelectedGebruiker = gebruiker;
@@ -26,6 +29,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
 
             UserRole();
         }
+        //boolean to check which functions the user can perform on the application (Davy)
         public bool IsManager
         {
             get => _IsManager;
@@ -36,8 +40,8 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             }
         }
 
-
-        //controleer welke rol de gebruiker heeft
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
             switch (SelectedGebruiker.Rol.ToLower())
@@ -53,6 +57,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
                     break;
             }
         }
+        //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedGebruiker
         {
             private get => _selectedGebruiker;
@@ -63,12 +68,13 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             }
         }
 
+        //make a new window to add a user
         private void AddUser()
         {
             AddGebruiker addGebruiker = new AddGebruiker();
             addGebruiker.Show();
         }
-
+        //edit the current password the user has
         private void EditPassword()
         {
             WijzigWachtwoord wijzigWachtwoord = new WijzigWachtwoord(SelectedGebruiker);

@@ -10,21 +10,21 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // klasse BeheerDadenViewModel (Davy)
+    // class and GUI (Davy)
     public class TabBeheerDadenViewModel : ViewModelBase
     {
-        // knop commando's (Davy)
+        // button  commands (Davy)
         public ICommand AddManagementActCommand { get; set; }
         public ICommand EditManagementActCommand { get; set; }
         public ICommand RemoveManagementActCommand { get; set; }
 
-        // Hiermee kunnen we de data opvragen aan de databank.
+        //private dao to use its methods (Davy)
         private readonly PlantenDao _plantenDao;
 
-        // ObservableCollection om de beheermaanden weer te geven (Davy)
+        // ObservableCollections to show the current plant managements (Davy)
         public ObservableCollection<BeheerMaand> BeheerMaanden { get; set; }
 
-        // private variabelen Davy
+        // private variables (Davy)
         private Plant _selectedPlant;
         private BeheerMaand _selectedBeheerMaand;
         private string _textInputBeheerdaad;
@@ -48,19 +48,24 @@ namespace PlantenApplicatie.viewmodels
         // constructor (Davy)
         public TabBeheerDadenViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
+            
             SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             _plantenDao = PlantenDao.Instance;
 
+            //buttoncommands
             AddManagementActCommand = new DelegateCommand(AddManagementAct);
             EditManagementActCommand = new DelegateCommand(EditManagementAct);
             RemoveManagementActCommand = new DelegateCommand(RemoveManagementAct);
 
             BeheerMaanden = new ObservableCollection<BeheerMaand>();
 
+            //load in the values (Davy)
             LoadBeheerMaanden();
             UserRole();
         }
+
+        //boolean to check which functions the user can perform on the application (Davy)
         public bool IsManager
         {
             get => _IsManager;
@@ -72,7 +77,8 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        //controleer welke rol de gebruiker heeft
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
             switch (SelectedGebruiker.Rol.ToLower())
@@ -88,6 +94,8 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
+
+        //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedGebruiker
         {
             private get => _selectedGebruiker;
@@ -98,7 +106,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // Getters and setters selected waardes (Davy)
+        // Getters and setters selected values (Davy)
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -108,6 +116,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }   
+
 
         public BeheerMaand SelectedBeheerMaand
         {
@@ -320,7 +329,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // geef de BeheerMaanden weer in de listview (Davy)
+        // show the different managements for the selected plants (Davy)
         public void LoadBeheerMaanden()
         {
             var beheermaanden = _plantenDao.GetBeheerMaanden(SelectedPlant);
@@ -333,7 +342,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // maak een beheerdaad aan (Davy)
+        //make a managemant act for the current plant (Davy)
         private void AddManagementAct()
         {
             BeheerMaand beheerMaand = new BeheerMaand();
@@ -358,11 +367,11 @@ namespace PlantenApplicatie.viewmodels
             
 
 
-            // geef de aangepaste lijst terug weer 
+            //reload the listview
             LoadBeheerMaanden();
         }
 
-        // wijzig een beheerdaad (Davy)
+        //Edit a selected management (Davy)
         private void EditManagementAct()
         {
             BeheerMaand beheerMaand = SelectedBeheerMaand; 
@@ -395,7 +404,7 @@ namespace PlantenApplicatie.viewmodels
             LoadBeheerMaanden();
         }
 
-        //Wanneer er een beheersdaad geselecteerd word, dan verandert de waardes naar de geselecteerde waardes (Jim)
+        //When a management act gets selected the current values changes to the selected values (Jim)
         private void LoadSelectedValues()
         {
             var beheerMaand = SelectedBeheerMaand;
@@ -417,13 +426,12 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        // verwijder beheerdaad (Davy)
+        //delete management act (Davy)
         private void RemoveManagementAct()
         {
-            // toewijzen object BeheerMaand aan geselecteerd object BeheerMaand uit listview
             BeheerMaand beheerMaand = SelectedBeheerMaand;
 
-            // ken een string waarde toe uit methode verwijder BeheerMaand uit database            
+            //delete the selected management act otherwise if there is none user gets a notification to select one       
             if (SelectedBeheerMaand != null)
             {
                 _plantenDao.RemoveBeheerMaand(beheerMaand);
@@ -432,7 +440,7 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Gelieve eerst een beheersdaad te selecteren uit de lijst.");
             }
 
-            // toon opnieuw de listview met lijst BeheerMaanden
+            //reload the list
             LoadBeheerMaanden();
         }
     }

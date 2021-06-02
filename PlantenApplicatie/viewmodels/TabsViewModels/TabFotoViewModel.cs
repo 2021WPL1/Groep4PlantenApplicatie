@@ -15,7 +15,7 @@ using Prism.Commands;
 
 namespace PlantenApplicatie.viewmodels
 {
-    // klasse (Davy, Lily)
+    //class and GUI (Lily)
     public class TabFotoViewModel : ViewModelBase
     {
         private readonly PlantenDao _plantenDao;
@@ -27,6 +27,7 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedEigenschap;
         private string? _selectedUrl;
 
+        //constructor
         public TabFotoViewModel(Plant selectedplant,Gebruiker gebruiker)
         {
             _plantenDao = PlantenDao.Instance;
@@ -38,11 +39,14 @@ namespace PlantenApplicatie.viewmodels
             DeleteFotoCommand = new DelegateCommand(DeleteFoto);
         }
         
+        //button commands
         public ICommand ChangeFotoCommand { get; }
         public ICommand DeleteFotoCommand { get; }
 
+
         public List<string> Eigenschappen { get; }
 
+        //getters and setters 
         public ImageSource? SelectedImage
         {
             get
@@ -80,6 +84,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        //edit the current photo, when a photo gets changed through the url the image will change and be saved depending on the selected property
         private void ChangeFoto()
         {
             var imageBytes = DownloadImage(SelectedUrl);
@@ -100,6 +105,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedImage = GenerateBitmapImageFromByteArray(imageBytes);
         }
 
+        //delete the selected photo 
         private void DeleteFoto()
         {
             _plantenDao.DeleteFoto(_selectedFoto);
@@ -133,6 +139,8 @@ namespace PlantenApplicatie.viewmodels
             return bitmapImage;
         }
 
+        
+        //download the image from the online url and set it as the selected detail when you click on edit
         private static byte[]? DownloadImage(string url)
         {
             if (!IsUrlImage(url))
