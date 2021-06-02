@@ -2,6 +2,7 @@
 using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
@@ -26,7 +27,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedGebruiker = gebruiker;
             _editPasswordWindow = window;
 
-            EditCommand = new DelegateCommand<string>(Edit);
+            EditCommand = new DelegateCommand<PasswordBox>(Edit);
             CloseCommand = new DelegateCommand(Close);
 
             _dao = PlantenDao.Instance;
@@ -57,9 +58,9 @@ namespace PlantenApplicatie.viewmodels
             PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
         }
 
-        private void Edit(string password)
+        private void Edit(PasswordBox passwordBox)
         {
-            string message = _dao.UpdateUser(SelectedGebruiker.Emailadres, password);
+            string message = _dao.UpdateUser(SelectedGebruiker.Emailadres, passwordBox.Password);
 
             MessageBox.Show(message);
         }

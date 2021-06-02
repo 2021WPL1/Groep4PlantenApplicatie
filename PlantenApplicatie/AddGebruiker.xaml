@@ -24,7 +24,7 @@
         <Label Content="Paswoord:" HorizontalAlignment="Left" Margin="10,232,0,0" VerticalAlignment="Top" Height="27" Width="70" Grid.ColumnSpan="2"/>
         <Button Content="Gebruiker toevoegen" HorizontalAlignment="Left" Margin="18,383,0,0" VerticalAlignment="Top" Height="26" Width="130"  
                 Command="{Binding Path=AddUserCommand}" 
-                CommandParameter="{Binding ElementName=pwbPassword, Path=Password}"  Grid.ColumnSpan="2"/>
+                CommandParameter="{Binding ElementName=pwbPassword}"  Grid.ColumnSpan="2"/>
         <Label Content="Paswoord bevestigen:" HorizontalAlignment="Left" Margin="10,281,0,0" VerticalAlignment="Top" Height="27" Width="162" Grid.ColumnSpan="2"/>
         <Button Content="Sluit venster" HorizontalAlignment="Left" Margin="210,383,0,0" VerticalAlignment="Top" Height="26" Width="86"  Command="{Binding Path=CloseWindowCommand}" Grid.Column="1"/>
         <Label

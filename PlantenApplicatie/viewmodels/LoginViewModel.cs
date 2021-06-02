@@ -2,6 +2,7 @@
 using Prism.Commands;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels
@@ -13,7 +14,6 @@ namespace PlantenApplicatie.viewmodels
         // button commando's
         public ICommand LoginCommand { get; set; }
         public ICommand CancelCommand { get; set; }
-        public ICommand ForgotPasswordCommand { get; set; }
 
         private string _textInputLogin;
 
@@ -22,7 +22,7 @@ namespace PlantenApplicatie.viewmodels
         public LoginViewModel(Window window)
         {
             _loginWindow = window;
-            LoginCommand = new DelegateCommand<string>(Login);
+            LoginCommand = new DelegateCommand<PasswordBox>(Login);
             CancelCommand = new DelegateCommand(Cancel);
 
             _dao = PlantenDao.Instance;
@@ -38,9 +38,10 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public void Login(string password)
+        public void Login(PasswordBox passwordBox)
         {
-            bool isLoginSuccessfull = _dao.CheckLogin(TextInputLogin, password, out string message);
+            var isLoginSuccessfull = _dao.CheckLogin(TextInputLogin, passwordBox.Password, 
+                out string message);
 
             MessageBox.Show(message);
 

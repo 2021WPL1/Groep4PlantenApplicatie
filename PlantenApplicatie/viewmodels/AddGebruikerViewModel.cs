@@ -3,6 +3,7 @@ using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -35,7 +36,7 @@ namespace PlantenApplicatie.viewmodels
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 
-            AddUserCommand = new DelegateCommand<string>(AddUser);
+            AddUserCommand = new DelegateCommand<PasswordBox>(AddUser);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
         }
@@ -113,7 +114,7 @@ namespace PlantenApplicatie.viewmodels
             PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
         }
 
-        public void AddUser(string password)
+        public void AddUser(PasswordBox passwordBox)
         {
             if (TextInputVoornaam is null || TextInputAchternaam is null || TextInputEmail is null)
             {
@@ -133,7 +134,7 @@ namespace PlantenApplicatie.viewmodels
                 Achternaam = TextInputAchternaam,
                 Rol = SelectedRole,
                 Emailadres = TextInputEmail,
-                HashPaswoord = Encryptor.GenerateMD5Hash(password)
+                HashPaswoord = Encryptor.GenerateMD5Hash(passwordBox.Password)
             };
             
             _dao.CreateLogin(gebruiker, out string message);
