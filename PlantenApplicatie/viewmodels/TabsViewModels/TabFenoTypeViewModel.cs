@@ -340,8 +340,8 @@ namespace PlantenApplicatie.viewmodels
         {
             FenoTypesMulti.Clear();
 
-            int maxHoogte = 300;
-            int hoogte = 0;
+            var maxHoogte = 300;
+            var hoogte = 0;
 
             while (hoogte <= maxHoogte)
             {
@@ -447,7 +447,6 @@ namespace PlantenApplicatie.viewmodels
         //verwijder de geselecteerde fenotypemulti van de listview (Jim)
         private void DeleteFenotypeMultiPlant()
         {
-
             if (SelectedPlantFenoTypeMulti is not null)
             {
 
