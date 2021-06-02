@@ -113,10 +113,9 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        // TODO: check
         public int? SelectedBladgrootte
         {
-            get => _selectedBladgrootte;
+            private get => _selectedBladgrootte;
             set
             {
                 _selectedBladgrootte = value;
