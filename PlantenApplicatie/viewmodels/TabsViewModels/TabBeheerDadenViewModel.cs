@@ -2,9 +2,7 @@
 using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -132,10 +130,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedJanuary; }
             set
             {
-                if (_isCheckedJanuary == value)
-                {
-                    return;
-                }
+                if (_isCheckedJanuary == value) return;
 
                 _isCheckedJanuary = value;
                 OnPropertyChanged();
@@ -148,10 +143,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedFebruary; }
             set
             {
-                if (_isCheckedFebruary == value)
-                {
-                    return;
-                }
+                if (_isCheckedFebruary == value) return;
 
                 _isCheckedFebruary = value;
                 OnPropertyChanged();
@@ -163,10 +155,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedMarch; }
             set
             {
-                if (_isCheckedMarch == value)
-                {
-                    return;
-                }
+                if (_isCheckedMarch == value) return;
 
                 _isCheckedMarch = value;
                 OnPropertyChanged();
@@ -178,10 +167,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedApril; }
             set
             {
-                if (_isCheckedApril == value)
-                {
-                    return;
-                }
+                if (_isCheckedApril == value) return;
 
                 _isCheckedApril = value;
                 OnPropertyChanged();
@@ -193,10 +179,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedMay; }
             set
             {
-                if (_isCheckedMay == value)
-                {
-                    return;
-                }
+                if (_isCheckedMay == value) return;
 
                 _isCheckedMay = value;
                 OnPropertyChanged();
@@ -208,10 +191,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedJune; }
             set
             {
-                if (_isCheckedJune == value)
-                {
-                    return;
-                }
+                if (_isCheckedJune == value) return;
 
                 _isCheckedJune = value;
                 OnPropertyChanged();
@@ -223,10 +203,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedJuly; }
             set
             {
-                if (_isCheckedJuly == value)
-                {
-                    return;
-                }
+                if (_isCheckedJuly == value) return;
 
                 _isCheckedJuly = value;
                 OnPropertyChanged();
@@ -238,10 +215,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedAugust; }
             set
             {
-                if (_isCheckedAugust == value)
-                {
-                    return;
-                }
+                if (_isCheckedAugust == value) return;
 
                 _isCheckedAugust = value;
                 OnPropertyChanged();
@@ -253,10 +227,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedSeptember; }
             set
             {
-                if (_isCheckedSeptember == value)
-                {
-                    return;
-                }
+                if (_isCheckedSeptember == value) return;
 
                 _isCheckedSeptember = value;
                 OnPropertyChanged();
@@ -268,10 +239,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedOctober; }
             set
             {
-                if (_isCheckedOctober == value)
-                {
-                    return;
-                }
+                if (_isCheckedOctober == value) return;
 
                 _isCheckedOctober = value;
                 OnPropertyChanged();
@@ -283,10 +251,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedNovember; }
             set
             {
-                if (_isCheckedNovember == value)
-                {
-                    return;
-                }
+                if (_isCheckedNovember == value) return;
 
                 _isCheckedNovember = value;
                 OnPropertyChanged();
@@ -298,10 +263,7 @@ namespace PlantenApplicatie.viewmodels
             get { return _isCheckedDecember; }
             set
             {
-                if (_isCheckedDecember == value)
-                {
-                    return;
-                }
+                if (_isCheckedDecember == value) return;
 
                 _isCheckedDecember = value;
                 OnPropertyChanged();
