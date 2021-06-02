@@ -49,7 +49,7 @@ namespace PlantenApplicatie.viewmodels
 
             if (!isLoginSuccessfull) return;
 
-            var gebruiker =_dao.GetGebruiker(TextInputLogin);
+            var gebruiker =_dao.GetUser(TextInputLogin);
                 
             _loginWindow.Hide();
                 

@@ -10,10 +10,10 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class AddGebruiker : Window
     {
-        public AddGebruiker()
+        public AddGebruiker(Gebruiker user)
         {
             InitializeComponent();
-            DataContext = new AddGebruikerViewModel(this);
+            DataContext = new AddGebruikerViewModel(this,user);
         }
 
         private void PasswordChanged(object sender, KeyEventArgs e)

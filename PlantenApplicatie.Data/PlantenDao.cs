@@ -62,23 +62,20 @@ namespace PlantenApplicatie.Data
         }
 
         //update the selected user and its values(Davy)
-        public string UpdateUser(Gebruiker selecteduser, string password)
+        public string UpdateUser(string email, string password)
         {
-            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == selecteduser.Emailadres);
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == email);
 
             if (user != null)
             {
                 user.HashPaswoord = Encryptor.GenerateMD5Hash(password);
-                user.Voornaam = selecteduser.Voornaam;
-                user.Achternaam = selecteduser.Achternaam;
-                user.Rol = selecteduser.Rol;
-                user.Vivesnr = selecteduser.Vivesnr;
 
                 _context.Gebruiker.Update(user);
                 _context.SaveChanges();
 
-                return "Gebruiker gegevens aangepast";
-            } else
+                return "Wachtwoord aangepast";
+            }
+            else
             {
                 return "Emailadres werd niet teruggevonden in de database";
             }

@@ -65,7 +65,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void Edit(PasswordBox passwordBox)
         {
-            string message = _dao.UpdateUser(SelectedGebruiker.Emailadres, passwordBox.Password);
+            string message = _dao.UpdateUser(SelectedUser.Emailadres, passwordBox.Password);
 
             MessageBox.Show(message);
         }

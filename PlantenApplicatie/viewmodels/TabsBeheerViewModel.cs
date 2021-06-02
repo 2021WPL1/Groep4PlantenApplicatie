@@ -1,6 +1,7 @@
 ﻿using PlantenApplicatie.Domain;
 using PlantenApplicatie.viewmodels.TabsViewModels;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace PlantenApplicatie.viewmodels
 {

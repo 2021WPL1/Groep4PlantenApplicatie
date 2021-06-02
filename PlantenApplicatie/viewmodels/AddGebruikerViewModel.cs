@@ -22,6 +22,8 @@ namespace PlantenApplicatie.viewmodels
         private string _passwordErrorMessage;
         //observable collection for the combobox
 
+
+        private Gebruiker _user;
         public ObservableCollection<string> Roles { get; set; }
 
         //buttoncommand to save an user in the database
@@ -35,8 +37,8 @@ namespace PlantenApplicatie.viewmodels
 
         public AddGebruikerViewModel(Window window, Gebruiker user)
         {
-            _addGebruikerWindow = window;       // Davy
-            _user = user;       // Davy
+            _addGebruikerWindow = window;       // Davy   
+            _user = user; // Davy
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 

@@ -25,7 +25,6 @@
     <None Remove="bloemenachtergrondVmultiDauw.png" />
     <None Remove="bloemenachtergrondVmultiGroen.png" />
     <None Remove="bloemenachtergrondVmultiOranje.png" />
-    <None Remove="bloemenachtergrondVmultiRoze.png" />
     <None Remove="bloemenachtergrondVmultiSchaduw.png" />
     <None Remove="bloemenachtergrondVmultiZomer.png" />
     <None Remove="bloemenachtergrondVpaars.png" />
@@ -54,7 +53,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="bloemenachtergrondVmultiRoze.png" />
     <Resource Include="Images\bloemenachtergrondMetKlimopBloemen.png" />
     <Resource Include="Images\bloemenachtergrondMetKlimopbutanimeagain.png" />
     <Resource Include="Images\bloemenachtergrondMetKlimopKort.png" />
