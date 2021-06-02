@@ -114,7 +114,7 @@ namespace PlantenApplicatie.viewmodels
             PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
         }
 
-        public void AddUser(PasswordBox passwordBox)
+        private void AddUser(PasswordBox passwordBox)
         {
             if (TextInputVoornaam is null || TextInputAchternaam is null || TextInputEmail is null)
             {
