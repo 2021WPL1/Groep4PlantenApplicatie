@@ -32,7 +32,7 @@ namespace PlantenApplicatie.viewmodels
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedplant;
 
-            Eigenschappen = _plantenDao.GetFotoEigenschappen();
+            Eigenschappen = _plantenDao.GetImageProperties();
 
             ChangeFotoCommand = new DelegateCommand(ChangeFoto);
             DeleteFotoCommand = new DelegateCommand(DeleteFoto);
@@ -91,10 +91,10 @@ namespace PlantenApplicatie.viewmodels
 
             if (_selectedFoto is null)
             {
-                _plantenDao.AddFoto(SelectedEigenschap, _selectedPlant, SelectedUrl, imageBytes);
+                _plantenDao.AddPhoto(SelectedEigenschap, _selectedPlant, SelectedUrl, imageBytes);
             }
             else {
-                _plantenDao.ChangeFoto(_selectedFoto,  SelectedEigenschap, SelectedUrl, imageBytes);
+                _plantenDao.ChangePhoto(_selectedFoto,  SelectedEigenschap, SelectedUrl, imageBytes);
             }
             
             SelectedImage = GenerateBitmapImageFromByteArray(imageBytes);
@@ -102,7 +102,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void DeleteFoto()
         {
-            _plantenDao.DeleteFoto(_selectedFoto);
+            _plantenDao.DeletePhoto(_selectedFoto);
 
             SelectedEigenschap = SelectedUrl = null;
             SelectedImage = null;

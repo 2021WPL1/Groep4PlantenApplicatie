@@ -230,7 +230,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadBeheerExtraEigenschappen()
         {
-            var eigenschappen = _plantenDao.getExtraEigenschappen(SelectedPlant);
+            var eigenschappen = _plantenDao.GetExtraProperties(SelectedPlant);
 
             BeheerExtraEigenschappen.Clear();
 
@@ -242,7 +242,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadNectars()
         {
-            var nectars = _plantenDao.GetExtraNectarwaarde();
+            var nectars = _plantenDao.GetExtraNectarValue();
 
             Nectars.Clear();
 
@@ -254,7 +254,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadPollen()
         {
-            var pollen = _plantenDao.GetExtraPollenwaarde();
+            var pollen = _plantenDao.GetExtraPollenValue();
 
             Pollen.Clear();
 
@@ -279,7 +279,7 @@ namespace PlantenApplicatie.viewmodels
             extraEigenschap.Geurend = IsCheckedFragrant;
             extraEigenschap.Vorstgevoelig = IsCheckedFrostSensitive;
 
-            string message = _plantenDao.CreateExtraEigenschap(extraEigenschap);
+            string message = _plantenDao.CreateExtraProperty(extraEigenschap);
 
             if (message != String.Empty)
             {
@@ -306,7 +306,7 @@ namespace PlantenApplicatie.viewmodels
                 extraEigenschap.Geurend = IsCheckedFragrant;
                 extraEigenschap.Vorstgevoelig = IsCheckedFrostSensitive;
 
-                _plantenDao.EditExtraEigenschap(extraEigenschap);
+                _plantenDao.EditExtraProperty(extraEigenschap);
             }
             else
             {
@@ -326,7 +326,7 @@ namespace PlantenApplicatie.viewmodels
             // ken een string waarde toe uit methode verwijder BeheerMaand uit database            
             if (SelectedExtraEigenschap != null)
             {
-                _plantenDao.RemoveExtraEigenschap(extraEigenschap);
+                _plantenDao.DeleteExtraProperty(extraEigenschap);
             }
             else
             {

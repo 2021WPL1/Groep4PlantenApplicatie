@@ -183,7 +183,7 @@ namespace PlantenApplicatie.viewmodels
         //laad de verschillende lijsten in (Liam)
         private void LoadCommenOntwikkelingssnelheid()
         {
-            var ontwikkelingssnelheden = _dao.GetCommOntwikkelsnelheid();
+            var ontwikkelingssnelheden = _dao.GetCommDevelopmentSpeed();
 
             CommenOntwikkelsnelheden.Clear();
 
@@ -195,7 +195,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadCommenStrategie()
         {
-            var strategien = _dao.GetCommStrategie();
+            var strategien = _dao.GetCommStrategy();
 
             CommenStrategien.Clear();
 
@@ -239,7 +239,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadLevensvorm()
         {
-            var levensvormen = _dao.GetCommLevensvorm();
+            var levensvormen = _dao.GetCommLifeForm();
 
             CommenMulti.Clear();
 

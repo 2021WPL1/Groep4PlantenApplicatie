@@ -262,7 +262,7 @@ namespace PlantenApplicatie.viewmodels
         //laad de verschillende gegevens in de comboboxes (Davy & Jim)
         private void LoadFenoBladgrootte()
         {
-            var bladgroottes = _dao.GetFenoBladGrootte();
+            var bladgroottes = _dao.GetFenoLeafSize();
 
             FenoBladgroottes.Clear();
 
@@ -274,7 +274,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadFenoBladvorm()
         {
-            var bladvormen = _dao.GetFenoBladVorm();
+            var bladvormen = _dao.GetFenoLeafShape();
 
             FenoBladvormen.Clear();
 
@@ -286,7 +286,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadFenoBloeiwijze()
         {
-            var bloeiwijzes = _dao.GetFenoBloeiWijze();
+            var bloeiwijzes = _dao.GetFenoBloom();
 
             FenoBloeiwijzes.Clear();
 
@@ -309,7 +309,7 @@ namespace PlantenApplicatie.viewmodels
         }
         private void LoadFenoLevensVorm()
         {
-            var levensvormen = _dao.GetFenoLevensVorm();
+            var levensvormen = _dao.GetFenoLifeForm();
 
             FenoLevensvormen.Clear();
 
@@ -320,7 +320,7 @@ namespace PlantenApplicatie.viewmodels
         }
         private void LoadFenoSpruitFenologie()
         {
-            var fenologieen = _dao.GetFenoFenologie();
+            var fenologieen = _dao.GetFenoPhenology();
 
             FenoSpruitFenologieen.Clear();
 
@@ -355,7 +355,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadKleur()
         {
-            var kleuren = _dao.GetFenoKleur();
+            var kleuren = _dao.GetFenoColor();
             FenoTypesMulti.Clear();
 
             foreach (var kleur in kleuren)
