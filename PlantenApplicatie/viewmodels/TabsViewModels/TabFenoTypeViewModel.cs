@@ -2,6 +2,7 @@
 using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -214,91 +215,54 @@ namespace PlantenApplicatie.viewmodels
             IsManager = gebruiker.Rol.ToLower() == "manager";
         }
 
+        private static void RefreshObservableCollection<T>(ICollection<T> collection, IEnumerable<T> data) 
+        {
+            collection.Clear();
+
+            foreach (var elem in data)
+            {
+                collection.Add(elem);
+            }
+        }
+
         //laad de verschillende gegevens in de comboboxes (Davy & Jim)
         private void LoadFenoBladgrootte()
         {
-            var bladgroottes = _plantenDao.GetFenoBladGrootte();
-
-            FenoBladgroottes.Clear();
-
-            foreach (var bladgrootte in bladgroottes)
-            {
-                FenoBladgroottes.Add(Convert.ToInt32(bladgrootte));
-            }
+            RefreshObservableCollection(FenoBladgroottes, _plantenDao.GetFenoBladGrootte()
+                .Select(bg => Convert.ToInt32(bg)));
         }
 
         private void LoadFenoBladvorm()
         {
-            var bladvormen = _plantenDao.GetFenoBladVorm();
-
-            FenoBladvormen.Clear();
-
-            foreach (var bladvorm in bladvormen)
-            {
-                FenoBladvormen.Add(bladvorm);
-            }
+            RefreshObservableCollection(FenoBladvormen, _plantenDao.GetFenoBladVorm());
         }
 
         private void LoadFenoBloeiwijze()
         {
-            var bloeiwijzes = _plantenDao.GetFenoBloeiWijze();
-
-            FenoBloeiwijzes.Clear();
-
-            foreach (var bloeiwijze in bloeiwijzes)
-            {
-                FenoBloeiwijzes.Add(bloeiwijze);
-            }
+            RefreshObservableCollection(FenoBloeiwijzes, _plantenDao.GetFenoBloeiWijze());
         }
 
         private void LoadFenoHabitus()
         {
-            var habitussen = _plantenDao.GetFenoHabitus();
-
-            FenoHabitussen.Clear();
-
-            foreach (var habitus in habitussen)
-            {
-                FenoHabitussen.Add(habitus);
-            }
+            RefreshObservableCollection(FenoHabitussen, _plantenDao.GetFenoHabitus());
         }
         
         private void LoadFenoLevensVorm()
         {
-            var levensvormen = _plantenDao.GetFenoLevensVorm();
-
-            FenoLevensvormen.Clear();
-
-            foreach (var levensvorm in levensvormen)
-            {
-                FenoLevensvormen.Add(levensvorm);
-            }
+            RefreshObservableCollection(FenoLevensvormen, _plantenDao.GetFenoLevensVorm());
         }
         
         private void LoadFenoSpruitFenologie()
         {
-            var fenologieen = _plantenDao.GetFenoFenologie();
-
-            FenoSpruitFenologieen.Clear();
-
-            foreach (var fenologie in fenologieen)
-            {
-                FenoSpruitFenologieen.Add(fenologie);
-            }
+            RefreshObservableCollection(FenoSpruitFenologieen, _plantenDao.GetFenoFenologie());
         }
 
         private void LoadFenoTypesMultiPlant()
         {
-            var fenotypesMulti = _plantenDao.GetFenoMultis(SelectedPlant);
-
-            PlantFenoTypesMulti.Clear();
-
-            foreach (var fenotypeMulti in fenotypesMulti)
-            {
-                PlantFenoTypesMulti.Add(fenotypeMulti);
-            }
+            RefreshObservableCollection(PlantFenoTypesMulti, _plantenDao.GetFenoMultis(SelectedPlant));
         }
 
+        // TODO: create constant somewhere for this
         private void LoadEigenschappen()
         {
             FenotypeEigenschappen.Clear();
@@ -311,34 +275,23 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadKleur()
         {
-            var kleuren = _plantenDao.GetFenoKleur();
-            
-            FenoTypesMulti.Clear();
-
-            foreach (var kleur in kleuren)
-            {
-                FenoTypesMulti.Add(kleur.NaamKleur);
-            }
+            RefreshObservableCollection(FenoTypesMulti, _plantenDao.GetFenoKleur()
+                .Select(fk => fk.NaamKleur));
         }
         
         private void LoadHoogte()
         {
-            FenoTypesMulti.Clear();
-
-            var maxHoogte = 300;
-            var hoogte = 0;
-
-            while (hoogte <= maxHoogte)
-            {
-                FenoTypesMulti.Add(hoogte.ToString());
-                hoogte += 10;
-            }
+            // TODO: constants please
+            RefreshObservableCollection(FenoTypesMulti, Enumerable.Range(0, 30)
+                .Select(n => (n * 10)
+                    .ToString()));
         }
         
         private void LoadFenoMultiMaanden()
         {
             FenoMultiMaand.Clear();
             
+            // TODO: this should not be hard coded 
             FenoMultiMaand.Add("Jan");
             FenoMultiMaand.Add("Feb");
             FenoMultiMaand.Add("Mar");
