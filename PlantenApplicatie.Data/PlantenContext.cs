@@ -44,7 +44,7 @@ namespace PlantenApplicatie.Data
         public virtual DbSet<Fenotype> Fenotype { get; set; }
         public virtual DbSet<FenotypeMulti> FenotypeMulti { get; set; }
         public virtual DbSet<Foto> Foto { get; set; }
-        public virtual DbSet<Gebruiker> Gebruiker { get; set; }
+        public virtual DbSet<User> Gebruiker { get; set; }
         public virtual DbSet<Plant> Plant { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<TfgsvFamilie> TfgsvFamilie { get; set; }
@@ -578,7 +578,7 @@ namespace PlantenApplicatie.Data
                     .HasConstraintName("foto_plant_FK");
             });
 
-            modelBuilder.Entity<Gebruiker>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id");
 

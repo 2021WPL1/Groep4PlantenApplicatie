@@ -16,7 +16,7 @@ using Prism.Commands;
 namespace PlantenApplicatie.viewmodels
 {
     //class and GUI (Lily)
-    public class TabFotoViewModel : ViewModelBase
+    public class TabPhotoViewModel : ViewModelBase
     {
         private readonly PlantenDao _plantenDao;
         private readonly Plant _selectedPlant;
@@ -28,15 +28,15 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedUrl;
 
         //constructor
-        public TabFotoViewModel(Plant selectedplant,Gebruiker gebruiker)
+        public TabPhotoViewModel(Plant selectedplant,Gebruiker gebruiker)
         {
             _plantenDao = PlantenDao.Instance;
             _selectedPlant = selectedplant;
 
-            Eigenschappen = _plantenDao.GetFotoEigenschappen();
+            Eigenschappen = _plantenDao.GetImageProperties();
 
-            ChangeFotoCommand = new DelegateCommand(ChangeFoto);
-            DeleteFotoCommand = new DelegateCommand(DeleteFoto);
+            ChangeFotoCommand = new DelegateCommand(ChangePhoto);
+            DeleteFotoCommand = new DelegateCommand(DeletePhoto);
         }
         
         //button commands
@@ -60,14 +60,14 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string? SelectedEigenschap
+        public string? SelectedProperty
         {
             get => _selectedEigenschap; 
             set
             {
                 _selectedEigenschap = value;
                 _selectedFoto = _selectedPlant.Foto
-                    .SingleOrDefault(f => f.Eigenschap == SelectedEigenschap);
+                    .SingleOrDefault(f => f.Eigenschap == SelectedProperty);
                 SelectedUrl = _selectedFoto?.UrlLocatie;
                 SelectedImage = GenerateBitmapImageFromByteArray(_selectedFoto?.Tumbnail);
                 OnPropertyChanged();
@@ -96,21 +96,21 @@ namespace PlantenApplicatie.viewmodels
 
             if (_selectedFoto is null)
             {
-                _plantenDao.AddFoto(SelectedEigenschap, _selectedPlant, SelectedUrl, imageBytes);
+                _plantenDao.AddPhoto(SelectedEigenschap, _selectedPlant, SelectedUrl, imageBytes);
             }
             else {
-                _plantenDao.ChangeFoto(_selectedFoto,  SelectedEigenschap, SelectedUrl, imageBytes);
+                _plantenDao.ChangePhoto(_selectedFoto,  SelectedEigenschap, SelectedUrl, imageBytes);
             }
             
             SelectedImage = GenerateBitmapImageFromByteArray(imageBytes);
         }
 
         //delete the selected photo 
-        private void DeleteFoto()
+        private void DeletePhoto()
         {
-            _plantenDao.DeleteFoto(_selectedFoto);
+            _plantenDao.DeletePhoto(_selectedFoto);
 
-            SelectedEigenschap = SelectedUrl = null;
+            SelectedProperty = SelectedUrl = null;
             SelectedImage = null;
         }
 

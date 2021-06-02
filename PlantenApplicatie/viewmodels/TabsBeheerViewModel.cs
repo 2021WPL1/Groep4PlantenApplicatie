@@ -11,11 +11,11 @@ namespace PlantenApplicatie.viewmodels
     {
         ObservableCollection<object> _children;
 
-        public TabsBeheerViewModel(Gebruiker gebruiker)
+        public TabsBeheerViewModel(User gebruiker)
         {
             _children = new ObservableCollection<object>();
-            _children.Add(new TabBeheerPlantenViewModel(gebruiker));
-            _children.Add(new TabGebruikerViewModel(gebruiker));
+            _children.Add(new TabManagePlantenViewModel(gebruiker));
+            _children.Add(new TabUserViewModel(gebruiker));
         }
 
         public ObservableCollection<object> Children { get { return _children; } }

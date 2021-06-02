@@ -64,7 +64,7 @@ namespace PlantenApplicatie.viewmodels
 
             if (myBool == true)
             {
-                var gebruiker =_dao.GetGebruiker(TextInputLogin);
+                var gebruiker =_dao.GetUser(TextInputLogin);
                 MessageBox.Show(message);
                 _loginWindow.Hide();
                 BeheerPlanten beheerPlanten = new BeheerPlanten(gebruiker);

@@ -11,6 +11,6 @@ namespace PlantenApplicatie.Domain
         public DateTime? Updatedatum { get; set; }
 
         public virtual Plant Plant { get; set; }
-        public virtual Gebruiker User { get; set; }
+        public virtual User User { get; set; }
     }
 }

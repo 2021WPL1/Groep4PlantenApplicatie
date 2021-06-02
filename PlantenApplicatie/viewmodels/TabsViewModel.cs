@@ -11,16 +11,16 @@ namespace PlantenApplicatie.viewmodels
     {
         ObservableCollection<object> _children;
 
-        public TabsViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabsViewModel(Plant selectedPlant, User gebruiker)
         {
             _children = new ObservableCollection<object>();
             _children.Add(new TabPlantDetailsViewModel(selectedPlant, gebruiker));
-            _children.Add(new TabFenoTypeViewModel(selectedPlant, gebruiker));
-            _children.Add(new TabAbiotiekViewModel(selectedPlant, gebruiker));
-            _children.Add(new TabCommensalismeViewModel(selectedPlant, gebruiker));
-            _children.Add(new TabExtraEigenschappenViewModel(selectedPlant, gebruiker));
-            _children.Add(new TabBeheerDadenViewModel(selectedPlant, gebruiker));
-            _children.Add(new TabFotoViewModel(selectedPlant, gebruiker));
+            _children.Add(new TabPhenoTypeViewModel(selectedPlant, gebruiker));
+            _children.Add(new TabAbioticViewModel(selectedPlant, gebruiker));
+            _children.Add(new TabCommensalismViewModel(selectedPlant, gebruiker));
+            _children.Add(new TabExtraPropertiesViewModel(selectedPlant, gebruiker));
+            _children.Add(new TabManagmentActsViewModel(selectedPlant, gebruiker));
+            _children.Add(new TabPhotoViewModel(selectedPlant, gebruiker));
         }
 
         public ObservableCollection<object> Children { get { return _children; } }

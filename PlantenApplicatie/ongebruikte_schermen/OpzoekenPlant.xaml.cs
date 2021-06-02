@@ -35,7 +35,7 @@ namespace PlantenApplicatie
             cmbGeslacht.ItemsSource = plantenDAO.GetUniqueGenusNames();
             cmbSoort.ItemsSource = plantenDAO.GetUniqueSpeciesNames();
             cmbType.ItemsSource = plantenDAO.GetTypes();
-            lvPlanten.ItemsSource = plantenDAO.GetPlanten();
+            lvPlanten.ItemsSource = plantenDAO.GetPlants();
         }
 
         private void ResetInputFields()

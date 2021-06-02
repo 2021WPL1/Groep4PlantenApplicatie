@@ -10,7 +10,7 @@ using System.Windows.Input;
 namespace PlantenApplicatie.viewmodels
 {
     //Class and GUI (Davy, Lily) 
-    class TabBeheerPlantenViewModel : ViewModelBase
+    class TabManagePlantenViewModel : ViewModelBase
     {
         //private variables
         private readonly PlantenDao _plantenDao;
@@ -45,9 +45,9 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Variants { get; private set; }
         
         //constructor, user as parameter 
-        public TabBeheerPlantenViewModel(Gebruiker gebruiker)
+        public TabManagePlantenViewModel(Gebruiker gebruiker)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = gebruiker;
             _plantenDao = PlantenDao.Instance;
 
             ShowDetailsCommand = new DelegateCommand(ShowDetails);
@@ -66,7 +66,7 @@ namespace PlantenApplicatie.viewmodels
             UserRole();
             FilterComboBoxes();
         }
-        public Gebruiker SelectedGebruiker
+        public Gebruiker SelectedUser
         {
             private get => _selectedGebruiker;
             set
@@ -260,7 +260,7 @@ namespace PlantenApplicatie.viewmodels
         {
             if (SelectedPlant is not null)
             {
-                new PlantDetails(SelectedPlant, SelectedGebruiker).Show();
+                new PlantDetails(SelectedPlant, SelectedUser).Show();
             } else { 
                 MessageBox.Show("Gelieve een plant te selecteren uit de listview", 
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -303,7 +303,7 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch(SelectedGebruiker.Rol.ToLower())
+            switch(SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;

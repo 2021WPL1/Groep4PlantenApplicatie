@@ -19,7 +19,7 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class WijzigWachtwoord : Window
     {
-        public WijzigWachtwoord(Gebruiker gebruiker)
+        public WijzigWachtwoord(User gebruiker)
         {
             InitializeComponent();
             this.DataContext = new EditPasswordViewModel(this, gebruiker);

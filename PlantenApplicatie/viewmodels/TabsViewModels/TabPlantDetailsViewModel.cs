@@ -34,7 +34,7 @@ namespace PlantenApplicatie.viewmodels
         // Constructor Lily
         public TabPlantDetailsViewModel(Plant selectedPlant,Gebruiker gebruiker)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = gebruiker;
             _selectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
            
@@ -67,7 +67,7 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
+            switch (SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;
@@ -82,7 +82,7 @@ namespace PlantenApplicatie.viewmodels
         }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
 
-        public Gebruiker SelectedGebruiker
+        public User SelectedUser
         {
             private get => _selectedGebruiker;
             set

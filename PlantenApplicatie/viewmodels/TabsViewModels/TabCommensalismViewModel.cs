@@ -13,7 +13,7 @@ using System.Linq;
 namespace PlantenApplicatie.viewmodels
 {
     //class and GUI Liam
-    public class TabCommensalismeViewModel : ViewModelBase
+    public class TabCommensalismViewModel : ViewModelBase
     {
 
         //private selecters and the dao (Liam)
@@ -43,7 +43,7 @@ namespace PlantenApplicatie.viewmodels
         public ICommand RemoveCommensalismeMultiCommand { get; set; }
 
         //constructor (Liam)
-        public TabCommensalismeViewModel(Plant selectedPlant, Gebruiker gebruiker)
+        public TabCommensalismViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
             SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
@@ -62,12 +62,12 @@ namespace PlantenApplicatie.viewmodels
             RemoveCommensalismeMultiCommand = new DelegateCommand(RemoveCommenMulti);
 
             //load the different lists in for the comboboxes and listview (Liam)
-            LoadCommenOntwikkelingssnelheid();
-            LoadCommenStrategie();
+            LoadCommenDevelopmentSpeed();
+            LoadCommenStrategy();
             LoadCommenMulti();
-            LoadCommenEigenschappen();
-            LoadLevensvorm();
-            LoadSociabiliteit();
+            LoadCommenProperties();
+            LoadLifeform();
+            LoadSociability();
             LoadSelectedValues();
             UserRole();
         }
@@ -116,8 +116,8 @@ namespace PlantenApplicatie.viewmodels
         //reload the comboboxes (Liam)
         public void Reset()
         {
-            LoadCommenStrategie();
-            LoadCommenOntwikkelingssnelheid();
+            LoadCommenStrategy();
+            LoadCommenDevelopmentSpeed();
             LoadCommenMulti();
         }
 
@@ -133,7 +133,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string SelectedCommensalismeMulti
+        public string SelectedCommensalismMulti
         {
             private get => _selectedCommensalismeMulti;
             set
@@ -153,7 +153,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string SelectedCommenOntwikkelsnelheid
+        public string SelectedCommenDevelopmentSpeed
         {
             private get => _selectedOntwikkelingssnelheid;
             set
@@ -163,7 +163,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string SelectedCommenStrategie
+        public string SelectedCommenStrategy
         {
             private get => _selectedStrategie;
             set
@@ -173,21 +173,21 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string SelectedCommenEigenschappen
+        public string SelectedCommenProperties
         {
             private get => _selectedCommenEigenschappen;
             set
             {
                 _selectedCommenEigenschappen = value;
-                ChangeCommEigenschappen();
+                ChangeCommProperties();
                 OnPropertyChanged();
             }
         }
 
         //load the different lists into the comboboxes + listview (Liam)
-        private void LoadCommenOntwikkelingssnelheid()
+        private void LoadCommenDevelopmentSpeed()
         {
-            var ontwikkelingssnelheden = _dao.GetCommOntwikkelsnelheid();
+            var ontwikkelingssnelheden = _dao.GetCommDevelopmentSpeed();
 
             CommenOntwikkelsnelheden.Clear();
 
@@ -197,9 +197,9 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        private void LoadCommenStrategie()
+        private void LoadCommenStrategy()
         {
-            var strategien = _dao.GetCommStrategie();
+            var strategien = _dao.GetCommStrategy();
 
             CommenStrategien.Clear();
 
@@ -211,7 +211,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void LoadCommenMulti()
         {
-            var commensalismeMultis = _dao.GetCommensalismeMulti(SelectedPlant);
+            var commensalismeMultis = _dao.GetCommensalismMulti(SelectedPlant);
 
             CommensalismeMulti.Clear();
 
@@ -221,7 +221,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        private void LoadCommenEigenschappen()
+        private void LoadCommenProperties()
         {
             CommenEigenschappen.Clear();
 
@@ -229,9 +229,9 @@ namespace PlantenApplicatie.viewmodels
             CommenEigenschappen.Add("Levensvorm");
         }
 
-        private void LoadSociabiliteit()
+        private void LoadSociability()
         {
-            var sociabiliteiten = _dao.GetCommSociabiliteit();
+            var sociabiliteiten = _dao.GetCommSociability();
 
             CommenMulti.Clear();
 
@@ -241,9 +241,9 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        private void LoadLevensvorm()
+        private void LoadLifeform()
         {
-            var levensvormen = _dao.GetCommLevensvorm();
+            var levensvormen = _dao.GetCommLifeform();
 
             CommenMulti.Clear();
 
@@ -260,8 +260,8 @@ namespace PlantenApplicatie.viewmodels
 
             if (commensalisme is null) return;
 
-            SelectedCommenOntwikkelsnelheid = commensalisme.Ontwikkelsnelheid;
-            SelectedCommenStrategie = commensalisme.Strategie;
+            SelectedCommenDevelopmentSpeed = commensalisme.Ontwikkelsnelheid;
+            SelectedCommenStrategy = commensalisme.Strategie;
 
         }
 
@@ -270,15 +270,15 @@ namespace PlantenApplicatie.viewmodels
         //Edit the commensalisme of a plant, if there is none for the current plant a new one will be made with the selected values(Liam)
         private void EditCommensalisme()
         {
-            var commensalisme = _dao.GetCommensialisme(SelectedPlant);
+            var commensalisme = _dao.GetCommensialism(SelectedPlant);
 
             if (commensalisme == null)
             {
-                _dao.AddCommensalisme(SelectedPlant, SelectedCommenOntwikkelsnelheid, SelectedCommenStrategie);
+                _dao.AddCommensalism(SelectedPlant, SelectedCommenDevelopmentSpeed, SelectedCommenStrategy);
             }
             else
             {
-                _dao.ChangeCommensalisme(SelectedPlant, SelectedCommenOntwikkelsnelheid, SelectedCommenStrategie);
+                _dao.ChangeCommensalism(SelectedPlant, SelectedCommenDevelopmentSpeed, SelectedCommenStrategy);
             }
         }
 
@@ -286,29 +286,29 @@ namespace PlantenApplicatie.viewmodels
 
         private void AddCommenMulti()
         {
-            _dao.AddCommensalismeMulti(SelectedPlant, SelectedCommenEigenschappen, SelectedCommensalismeMulti);
+            _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
             LoadCommenMulti();
         }
 
         //edit the selected commensalisme multi of the plant (Liam)
         private void EditCommenMulti()
         {
-            _dao.ChangeCommensalismeMulti(SelectedCommenMulti, SelectedCommenEigenschappen, SelectedCommensalismeMulti);
+            _dao.ChangeCommensalismMulti(SelectedCommenMulti, SelectedCommenProperties, SelectedCommensalismMulti);
             LoadCommenMulti();
         }
 
 
 
         //edit the properties of the combobox depending on which head property is selected (Liam)
-        private void ChangeCommEigenschappen()
+        private void ChangeCommProperties()
         {
-            switch (SelectedCommenEigenschappen.ToLower())
+            switch (SelectedCommenProperties.ToLower())
             {
                 case "sociabiliteit":
-                    LoadSociabiliteit();
+                    LoadSociability();
                     break;
                 case "levensvorm":
-                    LoadLevensvorm();
+                    LoadLifeform();
                     break;
                 default:
                     break;
@@ -320,7 +320,7 @@ namespace PlantenApplicatie.viewmodels
         {
             if (SelectedCommenMulti is not null)
             {
-                _dao.DeleteCommensalismeMulti(SelectedCommenMulti);
+                _dao.DeleteCommensalismMulti(SelectedCommenMulti);
             }
             else
             {

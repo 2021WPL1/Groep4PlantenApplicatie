@@ -9,7 +9,7 @@ namespace PlantenApplicatie
     /// </summary>
     public partial class BeheerPlanten : Window
     {
-        public BeheerPlanten(Gebruiker gebruiker)
+        public BeheerPlanten(User gebruiker)
         {
             InitializeComponent();
             DataContext = new TabsBeheerViewModel(gebruiker);

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace PlantenApplicatie.viewmodels.TabsViewModels
 {
-    public class TabGebruikerViewModel : ViewModelBase
+    public class TabUserViewModel : ViewModelBase
     {
         //MVVM + GUI Davy
 
@@ -21,9 +21,9 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         private bool _IsManager;
 
         //constructor given with user as parameter
-        public TabGebruikerViewModel(Gebruiker gebruiker)
+        public TabUserViewModel(Gebruiker gebruiker)
         {
-            SelectedGebruiker = gebruiker;
+            SelectedUser = gebruiker;
             AddUserCommand = new DelegateCommand(AddUser);
             EditPasswordCommand = new DelegateCommand(EditPassword);
 
@@ -44,7 +44,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch (SelectedGebruiker.Rol.ToLower())
+            switch (SelectedUser.Rol.ToLower())
             {
                 case "manager":
                     IsManager = true;
@@ -58,7 +58,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             }
         }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
-        public Gebruiker SelectedGebruiker
+        public Gebruiker SelectedUser
         {
             private get => _selectedGebruiker;
             set
@@ -77,7 +77,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         //edit the current password the user has
         private void EditPassword()
         {
-            WijzigWachtwoord wijzigWachtwoord = new WijzigWachtwoord(SelectedGebruiker);
+            WijzigWachtwoord wijzigWachtwoord = new WijzigWachtwoord(SelectedUser);
             wijzigWachtwoord.Show();
         }
     }
