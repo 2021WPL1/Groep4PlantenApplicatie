@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
@@ -241,8 +242,20 @@ namespace PlantenApplicatie.viewmodels
         //save the current changes to the selectedplant (Jim)
         public void Save()
         {
-            SelectedPlant = _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,
-                Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
+            if (TextInputMin is not null && TextInputMax is not null) {
+                try{SelectedPlant = _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,
+                    Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
+                }
+                catch
+                {
+                    MessageBox.Show("Gelieve een geldige minimum en maximum plantdichtheid te geven",
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else {
+                MessageBox.Show("Gelieve een geldige minimum en maximum plantdichtheid te geven",
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
         }
      
