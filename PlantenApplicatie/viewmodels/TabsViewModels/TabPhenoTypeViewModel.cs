@@ -440,7 +440,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void EditPhenotypeMulti()
         {
-            _dao.ChangeMultiFenotype(SelectedPlantPhenoTypeMulti, SelectedPhenotypeProperties, SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
+            _dao.ChangeMultiPhenotype(SelectedPlantPhenoTypeMulti, SelectedPhenotypeProperties, SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
             LoadPhenoTypesMultiPlant();
 
         }

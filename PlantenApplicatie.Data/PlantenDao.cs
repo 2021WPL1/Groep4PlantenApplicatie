@@ -306,7 +306,7 @@ namespace PlantenApplicatie.Data
         }
 
         // Haal alle sociabiliteiten op via hun waarde (Lily)
-        public List<CommSocialbiliteit> GetCommSociabiliteitByValues(List<string> commensalismeKeys)
+        public List<CommSocialbiliteit> GetCommSociabilityByValues(List<string> commensalismeKeys)
         {
             return _context.CommSocialbiliteit
                 .Where(cm => commensalismeKeys.Contains(cm.Sociabiliteit))
@@ -346,7 +346,7 @@ namespace PlantenApplicatie.Data
         }
 
         //Voeg een fenotype toe aan de geselecteerde plant (Jim)
-        public void AddFenotype(Plant plant,int leafSize,string leafShape,string ratioBloomLeaf,string Bloom,
+        public void AddPhenotype(Plant plant,int leafSize,string leafShape,string ratioBloomLeaf,string Bloom,
         string habitus, string lifeForm,string sprout)
         {
             var fenotypePlant = new Fenotype
@@ -367,7 +367,7 @@ namespace PlantenApplicatie.Data
         }
 
         //verander een fenotype van de geselecteerde plant (Jim)
-        public Fenotype ChangeFenotype(Plant plant, int? leafSize, string leafShape, string ratioBloomLeaf, string Bloom,
+        public Fenotype ChangePhenotype(Plant plant, int? leafSize, string leafShape, string ratioBloomLeaf, string Bloom,
             string habitus, string lifeForm,string sprout)
         {
             var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.PlantId == plant.PlantId);
@@ -384,7 +384,7 @@ namespace PlantenApplicatie.Data
             return selectedfenotype;
         }
         //verwijder de fenotype van de geselecteerde plant (Jim)
-        public void DeleteFenotype(Fenotype fenotype)
+        public void DeletePhenotype(Fenotype fenotype)
         {
             var selectedfenotype = _context.Fenotype.FirstOrDefault(i => i.Id == fenotype.Id);
 
@@ -393,11 +393,11 @@ namespace PlantenApplicatie.Data
         }
         //voeg een multifenotype toe (Jim)
 
-        public void AddMultiFenotype(Plant plant, string property, string month, string value)
+        public void AddMultiPhenotype(Plant plant, string property, string month, string value)
         {
             var fenotypeMultiPlant = new FenotypeMulti
             {
-                Id = GetLastFenoMultiId(),
+                Id = GetLastPhenoMultiId(),
                 PlantId = plant.PlantId,
                 Eigenschap = property,
                 Maand = month,
@@ -408,7 +408,7 @@ namespace PlantenApplicatie.Data
         }
 
         //haal de laatste ID op van fenotype multi
-        public long GetLastFenoMultiId()
+        public long GetLastPhenoMultiId()
         {
             var fenotypeMulti = _context.FenotypeMulti.Count();
             if (fenotypeMulti == null)
@@ -422,7 +422,7 @@ namespace PlantenApplicatie.Data
 
         //verander een multifenotype van de geselecteerde plant (Jim)
 
-        public void ChangeMultiFenotype(FenotypeMulti fenotypeMulti, string property, string month, string value)
+        public void ChangeMultiPhenotype(FenotypeMulti fenotypeMulti, string property, string month, string value)
         {
             var selectedFenotypeMulti = _context.FenotypeMulti.FirstOrDefault(i => i.Id == fenotypeMulti.Id);
 
@@ -480,7 +480,7 @@ namespace PlantenApplicatie.Data
         }
       
         //Toevoegen, veranderen en verwijderen van abiotiek (Liam)
-        public void AddAbiotiek(Plant plant, string? insolation, string? soilType, string? moistureRequirement, string? nutritionNeeds, string? antagonisticEnvironment)
+        public void AddAbiotic(Plant plant, string? insolation, string? soilType, string? moistureRequirement, string? nutritionNeeds, string? antagonisticEnvironment)
         {
             //Habitat ontbreekt
             Abiotiek abiotiek = new Abiotiek
@@ -500,7 +500,7 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeAbiotiek(Abiotiek abiotiek, string? insolation, string? soilType,
+        public void ChangeAbiotic(Abiotiek abiotiek, string? insolation, string? soilType,
             string? moistureRequirement, string? nutritionNeeds, string? antagonisticEnvironment)
         {
 
@@ -518,7 +518,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void DeleteAbiotiek(Abiotiek abiotiek)
+        public void DeleteAbiotic(Abiotiek abiotiek)
         {
             var selectedAbiotiek = _context.Abiotiek.FirstOrDefault(s => s.Id == abiotiek.Id);
 
@@ -529,7 +529,7 @@ namespace PlantenApplicatie.Data
 
         //Toevoegen, veranderen en verwijderen van commensalisme (Liam)
 
-        public void AddCommensalisme(Plant plant, string developmentSpeed, string strategy)
+        public void AddCommensalism(Plant plant, string developmentSpeed, string strategy)
         {
             //sociabiliteit ontbreekt
             Commensalisme commensalisme = new Commensalisme
@@ -546,7 +546,7 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public Commensalisme ChangeCommensalisme(Plant plant, string developmentSpeed, string strategy)
+        public Commensalisme ChangeCommensalism(Plant plant, string developmentSpeed, string strategy)
         {
             var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(i => i.PlantId == plant.PlantId);
 
@@ -557,7 +557,7 @@ namespace PlantenApplicatie.Data
 
             return selectedCommensalisme;
         }
-        public void DeleteCommensalisme(Commensalisme commensalisme)
+        public void DeleteCommensalism(Commensalisme commensalisme)
         {
             var selectedCommensalisme = _context.Commensalisme.FirstOrDefault(s => s.Id == commensalisme.Id);
 
@@ -566,7 +566,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void AddAbiotiekMulti(Plant plant, string property, string value)
+        public void AddAbioticMulti(Plant plant, string property, string value)
         {
 
             AbiotiekMulti abiotiekMulti = new AbiotiekMulti
@@ -583,7 +583,7 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeAbiotiekMulti(AbiotiekMulti abiotiekMulti, string property, string value)
+        public void ChangeAbioticMulti(AbiotiekMulti abiotiekMulti, string property, string value)
         {
             var selectedAbiotiekMulti = _context.AbiotiekMulti.FirstOrDefault(s => s.Id == abiotiekMulti.Id);
 
@@ -602,7 +602,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        public void AddCommensalismeMulti(Plant plant, string property, string value)
+        public void AddCommensalismMulti(Plant plant, string property, string value)
         {
 
             CommensalismeMulti commensalismeMulti = new CommensalismeMulti
@@ -619,7 +619,7 @@ namespace PlantenApplicatie.Data
 
         }
 
-        public void ChangeCommensalismeMulti(CommensalismeMulti commensalismeMulti, string property, string value)
+        public void ChangeCommensalismMulti(CommensalismeMulti commensalismeMulti, string property, string value)
         {
             var selectedCommensalismeMulti = _context.CommensalismeMulti.FirstOrDefault(s => s.Id == commensalismeMulti.Id);
 

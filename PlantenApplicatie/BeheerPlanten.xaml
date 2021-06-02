@@ -317,13 +317,36 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Gebruiker" DataContext="{Binding Children[1]}">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFE4A6C7"/>
+                        <GradientStop Color="#FFE278E5" Offset="0.994"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
                     <Canvas>
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="/bloemenachtergrondVmultiRoze.png"/>
+                        </Canvas.Background>
                         <Button Content="Voeg gebruiker toe" Canvas.Left="10" Canvas.Top="10" Width="114" Height="22"
-                                Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}" />
+                                Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}" >
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE4A6C7"/>
+                                    <GradientStop Color="#FFE378E5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                         <Button Content="Wijzigen wachtwoord" Command="{Binding Path=EditPasswordCommand}"
                                  IsEnabled="{Binding Path=IsManager}"
-                                Canvas.Left="10" Canvas.Top="49" RenderTransformOrigin="0.395,0.703" Width="158"/>
+                                Canvas.Left="10" Canvas.Top="49" RenderTransformOrigin="0.395,0.703" Width="158">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE4A6C7" Offset="0.006"/>
+                                    <GradientStop Color="#FFE378E5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
 
                     </Canvas>
                 </Grid>
