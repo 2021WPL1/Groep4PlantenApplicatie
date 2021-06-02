@@ -103,7 +103,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
         public string? SelectedFenoTypesMulti
         {
             private get => _selectedFenoTypesMulti;
@@ -125,7 +124,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
         public int? SelectedBladgrootte
         {
             get => _selectedBladgrootte;
@@ -144,6 +142,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedBloeiwijze
         {
             private get => _selectedBloeiWijze;
@@ -153,6 +152,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedHabitus
         {
             private get => _selectedHabitus;
@@ -162,6 +162,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedLevensvorm
         {
             private get => _selectedLevensvorm;
@@ -171,6 +172,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+        
         public string? SelectedSpruitFenologie
         {
             private get => _selectedSpruitFenologie;
@@ -271,6 +273,7 @@ namespace PlantenApplicatie.viewmodels
                 FenoHabitussen.Add(habitus);
             }
         }
+        
         private void LoadFenoLevensVorm()
         {
             var levensvormen = _plantenDao.GetFenoLevensVorm();
@@ -282,6 +285,7 @@ namespace PlantenApplicatie.viewmodels
                 FenoLevensvormen.Add(levensvorm);
             }
         }
+        
         private void LoadFenoSpruitFenologie()
         {
             var fenologieen = _plantenDao.GetFenoFenologie();
