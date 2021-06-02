@@ -12,7 +12,7 @@ namespace PlantenApplicatie.viewmodels
     public class TabFenoTypeViewModel : ViewModelBase
     {
         // private variabelen Davy & Jim
-        private readonly PlantenDao _plantenDao;
+        private readonly PlantenDao _plantenDao = PlantenDao.Instance;
         
         private Plant _selectedPlant;
         
@@ -36,22 +36,9 @@ namespace PlantenApplicatie.viewmodels
         // Constructor Davy
         public TabFenoTypeViewModel(Plant selectedPlant, Gebruiker gebruiker)
         {
-            _plantenDao = PlantenDao.Instance;
             SelectedGebruiker = gebruiker;
             SelectedPlant = selectedPlant;
             //variabelen (Davy &Jim)
-            FenoBladgroottes = new ObservableCollection<int>();
-
-            FenoBladvormen = new ObservableCollection<string>();
-            FenoBloeiwijzes = new ObservableCollection<string>();
-            FenoHabitussen = new ObservableCollection<string>();
-            FenoLevensvormen = new ObservableCollection<string>();
-            FenoSpruitFenologieen = new ObservableCollection<string>();
-            FenotypeEigenschappen = new ObservableCollection<string>();
-            FenoTypesMulti = new ObservableCollection<string>();
-            FenoMultiMaand = new ObservableCollection<string>();
-
-            PlantFenoTypesMulti = new ObservableCollection<FenotypeMulti>();
 
             EditFenoTypeCommand = new DelegateCommand(EditFenoType);
             AddFenotypeMultiCommand = new DelegateCommand(AddFenotypeMulti);
@@ -59,35 +46,25 @@ namespace PlantenApplicatie.viewmodels
             DeleteFenotypeMultiPlantCommand = new DelegateCommand(DeleteFenotypeMultiPlant);
             
             // methoden om comboboxen Fenotype in te laden (Davy & Jim)
-            LoadFenoBladgrootte();
-            LoadFenoBladvorm();
-            LoadFenoBloeiwijze();
-            LoadFenoHabitus();
-            LoadFenoLevensVorm();
-            LoadFenoSpruitFenologie();
-            LoadFenoTypesMultiPlant();
-            LoadEigenschappen();
-            LoadFenoMultiMaanden();
-            LoadKleur();
-            LoadSelectedValues();
+            LoadAllProperties();
             
-            UserRole();
+            SetAuthorizedActionsByRole();
         }
         
         // collecties (lijsten) Davy & Jim
-        public ObservableCollection<int> FenoBladgroottes { get; }
+        public ObservableCollection<int> FenoBladgroottes { get; } = new();
         
-        public ObservableCollection<string> FenoBladvormen { get; }
-        public ObservableCollection<string> FenoBloeiwijzes { get; }
-        public ObservableCollection<string> FenoHabitussen { get; }
-        public ObservableCollection<string> FenoLevensvormen { get; }
-        public ObservableCollection<string> FenoSpruitFenologieen { get; }
-        public ObservableCollection<string> FenotypeEigenschappen { get; }
-        public ObservableCollection<string> FenoMultiMaand { get; }
+        public ObservableCollection<string> FenoBladvormen { get; } = new();
+        public ObservableCollection<string> FenoBloeiwijzes { get; } = new();
+        public ObservableCollection<string> FenoHabitussen { get; } = new();
+        public ObservableCollection<string> FenoLevensvormen { get; } = new();
+        public ObservableCollection<string> FenoSpruitFenologieen { get; } = new();
+        public ObservableCollection<string> FenotypeEigenschappen { get; } = new();
+        public ObservableCollection<string> FenoMultiMaand { get; } = new();
         
-        public ObservableCollection<FenotypeMulti> PlantFenoTypesMulti { get; }
+        public ObservableCollection<FenotypeMulti> PlantFenoTypesMulti { get; } = new();
 
-        public ObservableCollection<string> FenoTypesMulti { get; }
+        public ObservableCollection<string> FenoTypesMulti { get; } = new();
 
         // knop commando's fenotype Davy
         public ICommand EditFenoTypeCommand { get; }
@@ -224,9 +201,24 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
+
+        private void LoadAllProperties()
+        {
+            LoadFenoBladgrootte();
+            LoadFenoBladvorm();
+            LoadFenoBloeiwijze();
+            LoadFenoHabitus();
+            LoadFenoLevensVorm();
+            LoadFenoSpruitFenologie();
+            LoadFenoTypesMultiPlant();
+            LoadEigenschappen();
+            LoadFenoMultiMaanden();
+            LoadKleur();
+            LoadSelectedValues();
+        }
         
         //controleer welke rol de gebruiker heeft
-        private void UserRole()
+        private void SetAuthorizedActionsByRole()
         {
             IsManager = SelectedGebruiker.Rol.ToLower() == "manager";
         }
