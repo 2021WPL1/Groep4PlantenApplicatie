@@ -319,11 +319,28 @@
             <TabItem Header="Gebruiker" DataContext="{Binding Children[1]}">
                 <Grid>
                     <Canvas>
-                        <Button Content="Voeg gebruiker toe" Canvas.Left="10" Canvas.Top="10" Width="114" Height="22"
+                        <Button Content="Voeg gebruiker toe" Canvas.Left="31" Canvas.Top="436" Width="114" Height="22"
                                 Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}" />
                         <Button Content="Wijzigen wachtwoord" Command="{Binding Path=EditPasswordCommand}"
-                                 IsEnabled="{Binding Path=IsManager}"
-                                Canvas.Left="10" Canvas.Top="49" RenderTransformOrigin="0.395,0.703" Width="158"/>
+                                
+                                Canvas.Left="447" Canvas.Top="437" RenderTransformOrigin="0.395,0.703" Width="158"/>
+                        <ListView ItemsSource="{Binding Users}" 
+                                          SelectedItem="{Binding SelectedGebruiker}" Height="380" Width="990" Canvas.Left="31" Canvas.Top="26">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Vivesnr" Width="Auto" DisplayMemberBinding="{Binding Vivesnr}" />
+                                    <GridViewColumn Header="Voornaam" Width="Auto" DisplayMemberBinding="{Binding Voornaam}" />
+                                    <GridViewColumn Header="Familienaam" Width="Auto" DisplayMemberBinding="{Binding Achternaam}" />
+                                    <GridViewColumn Header="Rol" Width="Auto" DisplayMemberBinding="{Binding Rol}" />
+                                    <GridViewColumn Header="E-mail" Width="Auto" DisplayMemberBinding="{Binding Emailadres}" />
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Button Content="Wijzig gebruiker" Canvas.Left="165" Canvas.Top="436" Width="114" Height="22"
+                            Command="{Binding EditUserCommand}" IsEnabled="{Binding IsManager}" />
+                        <Button Content="Verwijder gebruiker" Canvas.Left="297" Canvas.Top="436" Width="129" Height="22"
+                            Command="{Binding DeleteUserCommand}" IsEnabled="{Binding IsManager}" />
 
                     </Canvas>
                 </Grid>

@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
-using PlantenApplicatie.Data;
+﻿using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
 using Prism.Commands;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace PlantenApplicatie.viewmodels
 {
-    class AddGebruikerViewModel : ViewModelBase
+    // klasse (Davy)
+    public class EditGebruikerViewModel : ViewModelBase
     {
-        //(Jim)
         private readonly PlantenDao _dao;
 
         private string _SelectedRole;
@@ -27,27 +28,28 @@ namespace PlantenApplicatie.viewmodels
 
         public ObservableCollection<string> Roles { get; set; }
 
-        public ICommand AddUserCommand { get; set; }
+        // button commando's
+        public ICommand EditUserCommand { get; set; }
 
-        // variabelen Davy
         public ICommand CloseWindowCommand { get; set; }
-        private Window _addGebruikerWindow;
+
+        private Window _editGebruikerWindow;
 
         private Brush _color;
 
-        public AddGebruikerViewModel(Window window, Gebruiker gebruiker)
+        public EditGebruikerViewModel(Window window, Gebruiker gebruiker)
         {
-            _addGebruikerWindow = window;       // Davy
-            _gebruiker = gebruiker;       // Davy
+            _gebruiker = gebruiker;
+            _editGebruikerWindow = window;    
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 
-            AddUserCommand = new DelegateCommand(AddUser);
+            EditUserCommand = new DelegateCommand(EditUser);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
+            LoadData();
         }
 
-        // getters setters (Davy)
         public Brush ChangeColor
         {
             get => _color;
@@ -58,10 +60,14 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        
-
-        //getters setters (Jim)
+        // toon geselecteerde gebruiker in textboxen, comboboxen
+        private void LoadData()
+        {
+            TextInputVoornaam = _gebruiker.Voornaam;
+            TextInputAchternaam = _gebruiker.Achternaam;
+            TextInputEmail = _gebruiker.Emailadres;
+            SelectedRole = _gebruiker.Rol;
+        }
 
         public string TextInputVoornaam
         {
@@ -143,7 +149,7 @@ namespace PlantenApplicatie.viewmodels
 
         public void PasswordChecker()
         {
-            if(TextInputPaswoord != TextInputPaswoordCheck)
+            if (TextInputPaswoord != TextInputPaswoordCheck)
             {
                 Check = "Paswoorden zijn niet gelijk";
                 ChangeColor = Brushes.Red;
@@ -156,9 +162,10 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
-        public void AddUser()
+
+        public void EditUser()
         {
-            string message;
+            string message = "";
 
             if (SelectedRole == null || TextInputVoornaam == null || _TextInputAchternaam == null ||
                 TextInputEmail == null || TextInputPaswoord == null || TextInputPaswoordCheck == null)
@@ -179,14 +186,14 @@ namespace PlantenApplicatie.viewmodels
                             Emailadres = TextInputEmail,
                             HashPaswoord = Encryptor.GenerateMD5Hash(TextInputPaswoord)
                         };
-                        _dao.CreateLogin(gebruiker, out message);
+                        message = _dao.UpdateUser(gebruiker, TextInputPaswoord);
                         MessageBox.Show(message);
 
                         // herladen Users door nieuw venster BeheerPlanten op te starten
                         BeheerPlanten beheerPlanten = new BeheerPlanten(_gebruiker);
                         beheerPlanten.Show();
 
-                        _addGebruikerWindow.Close();
+                        _editGebruikerWindow.Close();
                     }
 
                 }
@@ -199,11 +206,11 @@ namespace PlantenApplicatie.viewmodels
 
         private void CloseWindow()
         {
-            // herladen Users door nieuw venster BeheerPlanten op te starten
+            // nieuw venster BeheerPlanten opstarten
             BeheerPlanten beheerPlanten = new BeheerPlanten(_gebruiker);
             beheerPlanten.Show();
 
-            _addGebruikerWindow.Close();
+            _editGebruikerWindow.Close();
         }
 
     }

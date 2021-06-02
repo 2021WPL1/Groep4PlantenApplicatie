@@ -71,7 +71,7 @@ namespace PlantenApplicatie.viewmodels
         {
             if (TextInputPassword == TextInputPasswordConfirm)
             {
-                string message = _dao.UpdateUser(SelectedGebruiker.Emailadres, TextInputPassword);
+                string message = _dao.UpdateUser(SelectedGebruiker, TextInputPassword);
 
                 MessageBox.Show(message);
             }

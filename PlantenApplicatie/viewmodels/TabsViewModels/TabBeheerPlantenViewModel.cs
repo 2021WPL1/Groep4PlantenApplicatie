@@ -309,7 +309,8 @@ namespace PlantenApplicatie.viewmodels
         //voeg een gebruiker toe als je een docent bent (Jim)
         private void AddUser()
         {
-            new AddGebruiker().Show();
+            // doorgeven SelectedGebruiker omdat je venster sluit zodat de applicatie onthoudt wie er bezig is
+            new AddGebruiker(SelectedGebruiker).Show();
         }
     }
 }

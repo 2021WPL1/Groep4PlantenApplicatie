@@ -113,7 +113,7 @@
                     </Canvas.Background>
                     <Label x:Name="lblPlantNaamFenotype" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="10" FontSize="25"/>
-                    <ComboBox Canvas.Left="178" Canvas.Top="77" Width="548"
+                    <ComboBox Canvas.Left="128" Canvas.Top="77" Width="598"
                               
                       ItemsSource="{Binding FenoBladgroottes}" 
                       SelectedItem="{Binding SelectedBladgrootte, UpdateSourceTrigger=PropertyChanged}"
@@ -138,11 +138,6 @@
                         SelectedItem="{Binding SelectedHabitus, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}"
                               />
-                    <ComboBox Canvas.Left="128" Canvas.Top="191" Width="598"
-                        ItemsSource="{Binding FenoKleuren}" 
-                        SelectedItem="{Binding SelectedKleur, UpdateSourceTrigger=PropertyChanged}"
-                              IsEnabled="{Binding Path=IsManager}"
-                             />
                     <Label Content="Levensvorm :" Canvas.Left="10" Canvas.Top="234" RenderTransformOrigin="0.204,0.541"/>
                     <ComboBox Canvas.Left="128" Canvas.Top="236" Width="598"
                               IsEnabled="{Binding Path=IsManager}"
@@ -424,20 +419,20 @@
                     <Canvas Height="200">
 
 
-                            <CheckBox
+                        <CheckBox
                               IsEnabled="{Binding Path=IsManager}"  IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
-                            <CheckBox
+                        <CheckBox
                               IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
-                            <CheckBox
+                        <CheckBox
                               IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
-                            <CheckBox
+                        <CheckBox
                               IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
-                            <CheckBox
+                        <CheckBox
                               IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
-                            <CheckBox
+                        <CheckBox
                               IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
-                            <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
-                            <ComboBox Canvas.Left="114" Canvas.Top="29"
+                        <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
+                        <ComboBox Canvas.Left="114" Canvas.Top="29"
                               IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Nectars}" 
                                      SelectedValue="{Binding SelectedNectarValue, UpdateSourceTrigger=PropertyChanged}" Width="120">
@@ -530,10 +525,10 @@
 
                         <!-- eerste rij -->
                         <Label Content="Beheersdaad :" Canvas.Top="30" />
-                        <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
+                        <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputBeheerdaad, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="580" Canvas.Top="34" Canvas.Left="97"  />
                         <!-- tweede rij -->
                         <Label Content="Omschrijving :" Canvas.Top="60" />
-                        <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="125" Canvas.Top="64" Canvas.Left="97" />
+                        <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="580" Canvas.Top="64" Canvas.Left="97" />
                         <!-- derde rij -->
                         <Label Content="Datum:" Canvas.Left="2" Canvas.Top="112"/>
 

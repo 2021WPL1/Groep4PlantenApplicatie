@@ -40,6 +40,11 @@ namespace PlantenApplicatie.Data
                 .ToList();
         }
 
+        public List<Gebruiker> GetUsers()
+        {
+            return _context.Gebruiker.ToList();
+        }
+
         // Haalt de ID's van TFGSV op en roept een methode op om te zoeken op ID's en Naam, 
         // houd rekening met null (Lily)
         public List<Plant> SearchPlants(string? type, string? family, string? genus,
@@ -55,18 +60,22 @@ namespace PlantenApplicatie.Data
                 typeIds, familyIds, genusIds, speciesIds, variantIds, name is null ? string.Empty : name);
         }
 
-        public string UpdateUser(string email, string password)
+        public string UpdateUser(Gebruiker gebruiker, string password)
         {
-            var gebruiker = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == email);
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == gebruiker.Emailadres);
 
-            if (gebruiker != null)
+            if (user != null)
             {
-                gebruiker.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+                user.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+                user.Voornaam = gebruiker.Voornaam;
+                user.Achternaam = gebruiker.Achternaam;
+                user.Rol = gebruiker.Rol;
+                user.Vivesnr = gebruiker.Vivesnr;
 
-                _context.Gebruiker.Update(gebruiker);
+                _context.Gebruiker.Update(user);
                 _context.SaveChanges();
 
-                return "Wachtwoord aangepast";
+                return "Gebruiker gegevens aangepast";
             } else
             {
                 return "Emailadres werd niet teruggevonden in de database";
@@ -107,6 +116,12 @@ namespace PlantenApplicatie.Data
                 })
                 .OrderBy(p => p.Fgsv)
                 .ToList();
+        }
+
+        public void RemoveGebruiker(Gebruiker gebruiker)
+        {
+            _context.Gebruiker.Remove(gebruiker);
+            _context.SaveChanges();
         }
 
         public string CreateExtraEigenschap(ExtraEigenschap extraEigenschap)
