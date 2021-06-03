@@ -344,7 +344,8 @@
 
                     <ListView Height="229" Width="717" Canvas.Left="10" Canvas.Top="325"
                               ItemsSource="{Binding CommensalismMulti}" 
-                                          SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
+                                          SelectedItem="{Binding SelectedCommenMulti, UpdateSourceTrigger=PropertyChanged}"
+                              >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Eigenschap" Width="Auto" DisplayMemberBinding="{Binding Eigenschap}" />
@@ -355,7 +356,8 @@
                     <ComboBox Canvas.Left="298" Canvas.Top="225" Width="166"
                        IsEnabled="{Binding Path=IsManager}"
                         ItemsSource="{Binding CommenProperties}"
-                      SelectedItem="{Binding SelectedCommenProperties, UpdateSourceTrigger=PropertyChanged}"      
+                      SelectedItem="{Binding SelectedCommenProperties, UpdateSourceTrigger=PropertyChanged}"  
+                              SelectedValue="{Binding SelectedCommenMulti.Eigenschap}"
                         />
                     <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnRemove" Command="{Binding RemoveCommensalismMultiCommand}" Content="Remove" Canvas.Left="162" Canvas.Top="275" BorderBrush="Black">
                         <Button.Background>
@@ -368,8 +370,7 @@
                     <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="232" Canvas.Top="274" Width="298"
                        ItemsSource="{Binding CommenMulti}"
                       SelectedItem="{Binding SelectedCommensalismMulti, UpdateSourceTrigger=PropertyChanged}"
-                              
-                              
+                              SelectedValue="{Binding SelectedCommenMulti.Waarde}"                      
                               />
                     <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismMultiCommand}" Content="Add" Canvas.Left="544" Canvas.Top="274" Width="46" BorderBrush="Black">
                         <Button.Background>
