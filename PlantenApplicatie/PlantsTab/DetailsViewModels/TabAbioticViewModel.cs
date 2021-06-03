@@ -242,5 +242,5 @@ namespace PlantenApplicatie.viewmodels
             IsManager = SelectedUser.Rol.ToLower() == "manager";
         }
     }
-    }
+    
 }

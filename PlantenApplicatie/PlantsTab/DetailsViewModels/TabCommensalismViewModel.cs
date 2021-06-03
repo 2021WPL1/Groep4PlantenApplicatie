@@ -76,13 +76,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        //check which roles the user has. and if the user is an old student(Gebruiker)
-        //He can only observe the selected values of the plant (Davy,Jim)
-        private void UserRole()
-        {
-            IsManager = SelectedUser.Rol.ToLower() == "manager";
 
-        }
 
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedUser
@@ -326,6 +320,13 @@ namespace PlantenApplicatie.viewmodels
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             LoadCommenMulti();
+        }
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
+        private void UserRole()
+        {
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
+
         }
     }
 }
