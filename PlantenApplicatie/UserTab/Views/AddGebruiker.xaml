@@ -28,7 +28,6 @@
                 Command="{Binding Path=AddUserCommand}" 
                 CommandParameter="{Binding ElementName=pwbPassword}"  Grid.ColumnSpan="2"/>
         <Label Content="Paswoord bevestigen:" HorizontalAlignment="Left" Margin="10,364,0,0" VerticalAlignment="Top" Height="26" Width="162" Grid.ColumnSpan="2"/>
-        <Button Content="Sluit venster" HorizontalAlignment="Left" Margin="167,496,0,0" VerticalAlignment="Top" Height="26" Width="86"  Command="{Binding Path=CloseWindowCommand}" Grid.Column="1"/>
         <Label
             Content="{Binding Path=PasswordErrorMessage}" 
             Grid.Column="1" HorizontalAlignment="Left" Margin="66,406,0,0" VerticalAlignment="Top" Width="187" Height="32" Foreground="#FFE00000" />

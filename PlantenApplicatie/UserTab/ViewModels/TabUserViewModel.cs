@@ -98,8 +98,10 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         private void AddUser()
         {
             AddGebruiker addUser = new AddGebruiker(SelectedUser);
-            addUser.Show();
-            _tabUserWindow.Close();
+            _tabUserWindow.Hide();
+            addUser.ShowDialog();
+            _tabUserWindow.Show();
+            
         }
 
         // edit a user (Jim & Davy)
@@ -108,8 +110,9 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             if (SelectedUser is not null)
             {
                 EditGebruiker editUser = new EditGebruiker(SelectedUser);
-                editUser.Show();
-                _tabUserWindow.Close();
+                _tabUserWindow.Hide();
+                editUser.ShowDialog();
+                _tabUserWindow.Show();
             }
             else
             {

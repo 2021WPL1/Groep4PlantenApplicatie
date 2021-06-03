@@ -34,7 +34,6 @@ namespace PlantenApplicatie.viewmodels
         public ICommand AddUserCommand { get; }
 
         //variables Davy
-        public ICommand CloseWindowCommand { get; }
         private readonly Window _addGebruikerWindow;
 
         private Brush _color;
@@ -47,7 +46,6 @@ namespace PlantenApplicatie.viewmodels
             Roles = new ObservableCollection<string>();
 
             AddUserCommand = new DelegateCommand<PasswordBox>(AddUser);
-            CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
         }
 
@@ -181,13 +179,6 @@ namespace PlantenApplicatie.viewmodels
                        email, $@"^({number}|{firstName}\.{lastName})@(vives.be|student.vives.be)$");
         }
 
-        private void CloseWindow()
-        {
-            // reload Users by starting new window BeheerPlanten
-            BeheerPlanten managePlants = new(_user);
-            managePlants.Show();
-
-            _addGebruikerWindow.Close();
-        }
+       
     }
 }
