@@ -11,16 +11,15 @@ namespace PlantenApplicatie.viewmodels
     //ViewModel Made by Davy
     public class EditPasswordViewModel : ViewModelBase
     {
-        private readonly PlantenDao _dao;
-
-        private byte[] _encryptedNewPassword;
-        private string _passwordErrorMessage;
-
         // button commands
         public ICommand EditCommand { get; }
 
         public ICommand CloseCommand { get; }
 
+        private readonly PlantenDao _dao;
+
+        private byte[] _encryptedNewPassword;
+        private string _passwordErrorMessage;
 
         //private variables (Davy)
         private Gebruiker _selectedUser;
@@ -59,14 +58,17 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        // check if passwords are the same (Jim)
         public void PasswordChecker(string password, string passwordConfirm)
         {
             _encryptedNewPassword = Encryptor.GenerateMD5Hash(password);
             
-            PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
+            PasswordErrorMessage = password == passwordConfirm 
+                ? string.Empty 
+                : "Paswoorden zijn niet gelijk";
         }
-        //edit the password of the user and updates it in the database
 
+        //edit the password of the user and update it in the database
         private void Edit(PasswordBox passwordBox)
         {
             if (!Encryptor.GenerateMD5Hash(passwordBox.Password).SequenceEqual(SelectedUser.HashPaswoord))

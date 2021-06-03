@@ -69,24 +69,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        //check which roles the user has. and if the user is an old student(Gebruiker)
-        //He can only observe the selected values of the plant (Davy,Jim)
-        private void UserRole()
-        {
-            switch (SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
-        }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedUser
         {
@@ -182,15 +164,15 @@ namespace PlantenApplicatie.viewmodels
         //Load the selected standards in from the selected plant. If there is none the selected values are null (Lily)
         private void LoadStandards()
         {
-            var abiotiek = _selectedPlant.Abiotiek.SingleOrDefault();
+            var abiotic = _selectedPlant.Abiotiek.SingleOrDefault();
 
-            if (abiotiek is null) return;
+            if (abiotic is null) return;
 
-            SelectedInsolation = abiotiek.Bezonning;
-            SelectedSoilType = abiotiek.Grondsoort;
-            SelectedMoistureRequirement = abiotiek.Vochtbehoefte;
-            SelectedNutritionRequirement = abiotiek.Voedingsbehoefte;
-            SelectedAntagonianEnvironment = abiotiek.AntagonischeOmgeving;
+            SelectedInsolation = abiotic.Bezonning;
+            SelectedSoilType = abiotic.Grondsoort;
+            SelectedMoistureRequirement = abiotic.Vochtbehoefte;
+            SelectedNutritionRequirement = abiotic.Voedingsbehoefte;
+            SelectedAntagonianEnvironment = abiotic.AntagonischeOmgeving;
         }
 
         //edit the abiotiek of the selected plant, if there is none an abiotiek will be added to the plant with the selected values (Lily)
@@ -221,10 +203,10 @@ namespace PlantenApplicatie.viewmodels
             if (SelectedAbioPlantHabitat is not null)
             {
                 var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioPlantHabitat);
-                var abiothiekMulti = _plantenDao.GetAbioMulti(_selectedPlant)
+                var abioticMulti = _plantenDao.GetAbioMulti(_selectedPlant)
                     .Single(am => am.Eigenschap == Property && am.Waarde == habitatAbbreviation);
 
-                _plantenDao.DeleteAbioticMulti(abiothiekMulti);
+                _plantenDao.DeleteAbioticMulti(abioticMulti);
 
                 SelectedPlantHabitats.Remove(SelectedAbioPlantHabitat);
             }
@@ -251,7 +233,14 @@ namespace PlantenApplicatie.viewmodels
             {
                 MessageBox.Show("Selecteer een habitat om toe te voegen", "Abiotiek");
             }
+        }
 
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
+        private void UserRole()
+        {
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
         }
     }
+    
 }

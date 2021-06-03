@@ -16,7 +16,6 @@ namespace PlantenApplicatie.viewmodels
     //class and GUI Liam
     public class TabCommensalismViewModel : ViewModelBase
     {
-
         //private selecters and the dao (Liam)
         private Plant _selectedPlant;
         private readonly PlantenDao _dao;
@@ -77,23 +76,7 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        //check which roles the user has. and if the user is an old student(Gebruiker)
-        //He can only observe the selected values of the plant (Davy,Jim)
-        private void UserRole()
-        {
-            switch (SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
-        }
+
 
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedUser
@@ -109,8 +92,7 @@ namespace PlantenApplicatie.viewmodels
         //reload the comboboxes (Liam)
         public void LoadComm()
         {
-            // load the different lists in for the comboboxes and listview(Liam)
- 
+            // load the different lists in for the comboboxes and listview(Liam) 
              LoadCommenDevelopmentSpeed();
             LoadCommenStrategy();
             LoadCommenMulti();
@@ -122,7 +104,6 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //getters and setters (Liam)
-
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -262,20 +243,16 @@ namespace PlantenApplicatie.viewmodels
 
             SelectedCommenDevelopmentSpeed = commensalism.Ontwikkelsnelheid;
             SelectedCommenStrategy = commensalism.Strategie;
-
         }
-
-
 
         //Edit the commensalisme of a plant, if there is none for the current plant a new one will be made with the selected values(Liam)
         private void EditCommensalism()
         {
-            var commensalisme = _dao.GetCommensialism(SelectedPlant);
-
+            var commensialism = _dao.GetCommensialism(SelectedPlant);
 
             if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Commensalisme", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                if (commensalisme == null)
+                if (commensialism == null)
                 {
                     _dao.AddCommensalism(SelectedPlant, SelectedCommenDevelopmentSpeed, SelectedCommenStrategy);
                 }
@@ -289,30 +266,24 @@ namespace PlantenApplicatie.viewmodels
         //add a commensalisme multi to the plant(Liam)
 
         private void AddCommenMulti()
-        {
-            
-                if (SelectedCommensalismMulti is not null && SelectedCommenProperties is not null)
-                {
-                    _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
-                    LoadCommenMulti();
-                }
-                else
-                {
-                    MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om toe te voegen",
-                       "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            
-
+        {            
+            if (SelectedCommensalismMulti is not null && SelectedCommenProperties is not null)
+            {
+                _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
+                LoadCommenMulti();
+            }
+            else
+            {
+                MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om toe te voegen",
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+            } 
         }
 
         //edit the selected commensalisme multi of the plant (Liam)
         private void EditCommenMulti()
         {
-            
-            
-                _dao.ChangeCommensalismMulti(SelectedCommenMulti, SelectedCommenProperties, SelectedCommensalismMulti);
-                LoadCommenMulti(); 
-            
+            _dao.ChangeCommensalismMulti(SelectedCommenMulti, SelectedCommenProperties, SelectedCommensalismMulti);
+            LoadCommenMulti(); 
         }
 
 
@@ -320,16 +291,19 @@ namespace PlantenApplicatie.viewmodels
         //edit the properties of the combobox depending on which head property is selected (Liam)
         private void ChangeCommProperties()
         {
-            switch (SelectedCommenProperties.ToLower())
+            if (SelectedCommenProperties is not null)
             {
-                case "sociabiliteit":
-                    LoadSociability();
-                    break;
-                case "levensvorm":
-                    LoadLifeform();
-                    break;
-                default:
-                    break;
+                switch (SelectedCommenProperties.ToLower())
+                {
+                    case "sociabiliteit":
+                        LoadSociability();
+                        break;
+                    case "levensvorm":
+                        LoadLifeform();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -345,9 +319,14 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om te verwijderen uit de listview",
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-
             LoadCommenMulti();
         }
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
+        private void UserRole()
+        {
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
 
+        }
     }
 }

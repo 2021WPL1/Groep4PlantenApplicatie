@@ -2,6 +2,7 @@
 using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,39 +12,40 @@ namespace PlantenApplicatie.viewmodels
 {
     class AddGebruikerViewModel : ViewModelBase
     {
+        //observable collection for the combobox (Jim)
+
+
         //ViewModel (Jim)
         private readonly PlantenDao _dao;
 
         //private variables for the GUI
-        private string _SelectedRole;
-        private string? _TextInputFirstName;
-        private string? _TextInputLastName;
-        private string? _TextInputEmail;
+        private string? _selectedRole;
+        private string? _textInputNumber;
+        private string? _textInputFirstName;
+        private string? _textInputLastName;
+        private string? _textInputEmail;
         private string _passwordErrorMessage;
         //observable collection for the combobox
 
-
-        private Gebruiker _user;
-        public ObservableCollection<string> Roles { get; set; }
+        private readonly Gebruiker _user;
+        public ObservableCollection<string> Roles { get; }
 
         //buttoncommand to save an user in the database
-        public ICommand AddUserCommand { get; set; }
+        public ICommand AddUserCommand { get; }
 
         //variables Davy
-        public ICommand CloseWindowCommand { get; set; }
-        private Window _addGebruikerWindow;
+        private readonly Window _addGebruikerWindow;
 
         private Brush _color;
 
         public AddGebruikerViewModel(Window window, Gebruiker user)
         {
-            _addGebruikerWindow = window;       // Davy   
+            _addGebruikerWindow = window; // Davy   
             _user = user; // Davy
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 
             AddUserCommand = new DelegateCommand<PasswordBox>(AddUser);
-            CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
         }
 
@@ -58,43 +60,53 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        public string? TextInputNumber
+        {
+            get => _textInputNumber;
+            set
+            {
+                _textInputNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
         //getters setters (Jim)
         public string? TextInputFirstName
         {
-            get => _TextInputFirstName;
+            get => _textInputFirstName;
             set
             {
-                _TextInputFirstName = value;
+                _textInputFirstName = value;
                 OnPropertyChanged();
             }
         }
         
         public string? TextInputLastName
         {
-            get => _TextInputLastName;
+            get => _textInputLastName;
             set
             {
-                _TextInputLastName = value;
+                _textInputLastName = value;
                 OnPropertyChanged();
             }
         }
 
         public string? TextInputEmail
         {
-            get => _TextInputEmail;
+            get => _textInputEmail;
             set
             {
-                _TextInputEmail = value;
+                _textInputEmail = value;
                 OnPropertyChanged();
             }
         }
 
-        public string SelectedRole
+        public string? SelectedRole
         {
-            get => _SelectedRole;
+            get => _selectedRole;
             set
             {
-                _SelectedRole = value;
+                _selectedRole = value;
                 OnPropertyChanged();
             }
         }
@@ -108,37 +120,46 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-        //load in the roles, for now database is empty so the roles are hardcoded to access the program (Jim)
-        public void LoadRoles()
-        {
-            
-                Roles.Add("manager");
-                Roles.Add("data-collector");
-                Roles.Add("gebruiker");
-           
-        }
+        
         //check the passwords on if they are equal
         public void PasswordChecker(string password, string passwordConfirm)
         {
-            PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
+            PasswordErrorMessage = password == passwordConfirm 
+                ? string.Empty 
+                : "Paswoorden zijn niet gelijk";
+        }
+        
+        //load in the roles, for now database is empty so the roles are hardcoded to access the program (Jim)
+        private void LoadRoles()
+        {
+            Roles.Add("manager");
+            Roles.Add("data-collector");
+            Roles.Add("gebruiker");
         }
 
+        // add a user to the database
         private void AddUser(PasswordBox passwordBox)
         {
-            if (TextInputFirstName is null || TextInputLastName is null || TextInputEmail is null)
+            if (TextInputNumber is null || TextInputFirstName is null || TextInputLastName is null 
+                || SelectedRole is null || TextInputEmail is null)
             {
                 MessageBox.Show("Niet alle velden zijn ingevuld");
                 return;
             }
-
             if (!(TextInputEmail.EndsWith("@vives.be") || TextInputEmail.EndsWith("@student.vives.be")))
             {
                 MessageBox.Show("Email mag alleen van het Vives domein zijn");
                 return;
             }
-            
-            var gebruiker = new Gebruiker
+            if (!IsEmailAddressValid(TextInputNumber, TextInputFirstName, TextInputLastName, TextInputEmail))
             {
+                MessageBox.Show("Email is ongeldig, moet bestaan uit nummer of voornaam.achternaam");
+                return;
+            }
+            
+            var user = new Gebruiker
+            {
+                Vivesnr = TextInputNumber,
                 Voornaam = TextInputFirstName,
                 Achternaam = TextInputLastName,
                 Rol = SelectedRole,
@@ -146,18 +167,18 @@ namespace PlantenApplicatie.viewmodels
                 HashPaswoord = Encryptor.GenerateMD5Hash(passwordBox.Password)
             };
             
-            _dao.CreateLogin(gebruiker, out string message);
+            _dao.CreateLogin(user, out string message);
             
             MessageBox.Show(message);
         }
 
-        private void CloseWindow()
+        private static bool IsEmailAddressValid(string? number, string? firstName, string? lastName, string? email)
         {
-            // herladen Users door nieuw venster BeheerPlanten op te starten
-            BeheerPlanten ManagePlants = new BeheerPlanten(_user);
-            ManagePlants.Show();
-
-            _addGebruikerWindow.Close();
+            return email is not null 
+                   && Regex.IsMatch(
+                       email, $@"^({number}|{firstName}\.{lastName})@(vives.be|student.vives.be)$");
         }
+
+       
     }
 }
