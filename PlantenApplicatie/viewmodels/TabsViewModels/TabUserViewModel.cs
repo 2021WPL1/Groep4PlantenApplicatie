@@ -26,6 +26,8 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
 
         public ICommand DeleteUserCommand { get; set; }
 
+        public ICommand LogOutCommand { get; set; }
+
         private Gebruiker _selectedUser;
         private Gebruiker OriginalUser;
         private bool _isManager;
@@ -44,6 +46,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             EditUserCommand = new DelegateCommand(EditUser);
             EditPasswordCommand = new DelegateCommand(EditPassword);
             DeleteUserCommand = new DelegateCommand(DeleteUser);
+            LogOutCommand = new DelegateCommand(LogOut);
 
             Users = new ObservableCollection<Gebruiker>();
 
@@ -127,6 +130,14 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         {
             _dao.RemoveUser(SelectedUser);
             LoadUsers();
+        }
+        private void LogOut()
+        {
+            if (MessageBox.Show("Weet u zeker dat u wilt uitloggen?", "Logout", MessageBoxButton.YesNo) == MessageBoxResult.No) return;
+
+            this._tabUserWindow.Close();
+            Inlogscherm inlogscherm = new Inlogscherm();
+            inlogscherm.Show();
         }
     }
 }
