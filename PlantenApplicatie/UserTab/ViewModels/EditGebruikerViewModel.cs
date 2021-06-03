@@ -17,12 +17,7 @@ namespace PlantenApplicatie.viewmodels
     // klasse (Davy)
     public class EditGebruikerViewModel : ViewModelBase
     {
-        public ObservableCollection<string> Roles { get; set; }
 
-        // button commando's
-        public ICommand EditUserCommand { get; set; }
-
-        public ICommand CloseWindowCommand { get; set; }
         private readonly PlantenDao _dao;
 
         private string? _selectedRole;
@@ -39,7 +34,7 @@ namespace PlantenApplicatie.viewmodels
 
         public ObservableCollection<string> Roles { get; }
 
-        // button commando's
+        // button commands
         public ICommand EditUserCommand { get; }
 
         private Window _editGebruikerWindow;

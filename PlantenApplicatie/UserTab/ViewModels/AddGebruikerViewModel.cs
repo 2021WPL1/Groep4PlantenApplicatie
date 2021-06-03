@@ -13,13 +13,7 @@ namespace PlantenApplicatie.viewmodels
     class AddGebruikerViewModel : ViewModelBase
     {
         //observable collection for the combobox (Jim)
-        public ObservableCollection<string> Roles { get; set; }
 
-        //buttoncommand to save an user in the database
-        public ICommand AddUserCommand { get; set; }
-
-        //variables Davy
-        public ICommand CloseWindowCommand { get; set; }
 
         //ViewModel (Jim)
         private readonly PlantenDao _dao;
