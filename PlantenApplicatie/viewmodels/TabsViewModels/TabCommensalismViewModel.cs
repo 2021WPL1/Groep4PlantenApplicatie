@@ -61,15 +61,7 @@ namespace PlantenApplicatie.viewmodels
             EditCommensalismMultiCommand = new DelegateCommand(EditCommenMulti);
             RemoveCommensalismMultiCommand = new DelegateCommand(RemoveCommenMulti);
 
-            //load the different lists in for the comboboxes and listview (Liam)
-            LoadCommenDevelopmentSpeed();
-            LoadCommenStrategy();
-            LoadCommenMulti();
-            LoadCommenProperties();
-            LoadLifeform();
-            LoadSociability();
-            LoadSelectedValues();
-            UserRole();
+            LoadComm();
         }
 
         //boolean to check which functions the user can perform on the application (Davy)
@@ -114,11 +106,18 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //reload the comboboxes (Liam)
-        public void Reset()
+        public void LoadComm()
         {
+            // load the different lists in for the comboboxes and listview(Liam)
+ 
+             LoadCommenDevelopmentSpeed();
             LoadCommenStrategy();
-            LoadCommenDevelopmentSpeed();
             LoadCommenMulti();
+            LoadCommenProperties();
+            LoadLifeform();
+            LoadSociability();
+            LoadSelectedValues();
+            UserRole();
         }
 
         //getters and setters (Liam)

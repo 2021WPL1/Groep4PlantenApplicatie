@@ -18,7 +18,7 @@ namespace PlantenApplicatie.viewmodels
     public class TabPhotoViewModel : ViewModelBase
     {
         private readonly PlantenDao _plantenDao;
-        private readonly Plant _selectedPlant;
+        private  Plant _selectedPlant;
 
         private Foto? _selectedFoto;
 
@@ -78,6 +78,16 @@ namespace PlantenApplicatie.viewmodels
                     break;
             }
         }
+        public Plant SelectedPlant
+        {
+            private get => _selectedPlant;
+            set
+            {
+                _selectedPlant = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Gebruiker SelectedUser
         {
             private get => _selectedUser;

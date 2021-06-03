@@ -16,8 +16,8 @@ namespace PlantenApplicatie.viewmodels
 
         //private variables for the GUI
         private string _SelectedRole;
-        private string? _TextInputVoornaam;
-        private string? _TextInputAchternaam;
+        private string? _TextInputFirstName;
+        private string? _TextInputLastName;
         private string? _TextInputEmail;
         private string _passwordErrorMessage;
         //observable collection for the combobox
@@ -59,22 +59,22 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //getters setters (Jim)
-        public string? TextInputVoornaam
+        public string? TextInputFirstName
         {
-            get => _TextInputVoornaam;
+            get => _TextInputFirstName;
             set
             {
-                _TextInputVoornaam = value;
+                _TextInputFirstName = value;
                 OnPropertyChanged();
             }
         }
         
-        public string? TextInputAchternaam
+        public string? TextInputLastName
         {
-            get => _TextInputAchternaam;
+            get => _TextInputLastName;
             set
             {
-                _TextInputAchternaam = value;
+                _TextInputLastName = value;
                 OnPropertyChanged();
             }
         }
@@ -117,7 +117,7 @@ namespace PlantenApplicatie.viewmodels
                 Roles.Add("gebruiker");
            
         }
-
+        //check the passwords on if they are equal
         public void PasswordChecker(string password, string passwordConfirm)
         {
             PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
@@ -125,7 +125,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void AddUser(PasswordBox passwordBox)
         {
-            if (TextInputVoornaam is null || TextInputAchternaam is null || TextInputEmail is null)
+            if (TextInputFirstName is null || TextInputLastName is null || TextInputEmail is null)
             {
                 MessageBox.Show("Niet alle velden zijn ingevuld");
                 return;
@@ -139,8 +139,8 @@ namespace PlantenApplicatie.viewmodels
             
             var gebruiker = new Gebruiker
             {
-                Voornaam = TextInputVoornaam,
-                Achternaam = TextInputAchternaam,
+                Voornaam = TextInputFirstName,
+                Achternaam = TextInputLastName,
                 Rol = SelectedRole,
                 Emailadres = TextInputEmail,
                 HashPaswoord = Encryptor.GenerateMD5Hash(passwordBox.Password)
@@ -154,8 +154,8 @@ namespace PlantenApplicatie.viewmodels
         private void CloseWindow()
         {
             // herladen Users door nieuw venster BeheerPlanten op te starten
-            BeheerPlanten beheerPlanten = new BeheerPlanten(_user);
-            beheerPlanten.Show();
+            BeheerPlanten ManagePlants = new BeheerPlanten(_user);
+            ManagePlants.Show();
 
             _addGebruikerWindow.Close();
         }

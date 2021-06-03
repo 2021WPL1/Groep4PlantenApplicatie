@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
@@ -23,16 +24,16 @@ namespace PlantenApplicatie.viewmodels
         private string _textInputMax;
 
         // private variables (Davy)
-        private Gebruiker _selectedGebruiker;
-        private bool _IsManager;
+        private Gebruiker _selectedUser;
+        private bool _isManager;
 
         //button command (Jim)
         public ICommand SaveCommand { get; set; }
 
         // Constructor Lily
-        public TabPlantDetailsViewModel(Plant selectedPlant,Gebruiker gebruiker)
+        public TabPlantDetailsViewModel(Plant selectedPlant,Gebruiker user)
         {
-            SelectedUser = gebruiker;
+            SelectedUser = user;
             _selectedPlant = selectedPlant;
             _dao = PlantenDao.Instance;
            
@@ -52,10 +53,10 @@ namespace PlantenApplicatie.viewmodels
         //boolean to check which functions the user can perform on the application (Davy)
         public bool IsManager
         {
-            get => _IsManager;
+            get => _isManager;
             set
             {
-                _IsManager = value;
+                _isManager = value;
                 OnPropertyChanged("IsManager");
             }
         }
@@ -82,10 +83,10 @@ namespace PlantenApplicatie.viewmodels
 
         public Gebruiker SelectedUser
         {
-            private get => _selectedGebruiker;
+            private get => _selectedUser;
             set
             {
-                _selectedGebruiker = value;
+                _selectedUser = value;
                 OnPropertyChanged();
             }
         }
@@ -241,8 +242,20 @@ namespace PlantenApplicatie.viewmodels
         //save the current changes to the selectedplant (Jim)
         public void Save()
         {
-            SelectedPlant = _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,
-                Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
+            if (TextInputMin is not null && TextInputMax is not null) {
+                try{SelectedPlant = _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,
+                    Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
+                }
+                catch
+                {
+                    MessageBox.Show("Gelieve een geldige minimum en maximum plantdichtheid te geven",
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else {
+                MessageBox.Show("Gelieve een geldige minimum en maximum plantdichtheid te geven",
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
         }
      
