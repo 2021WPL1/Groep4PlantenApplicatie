@@ -434,6 +434,13 @@ namespace PlantenApplicatie.Data
         //add a multi fenotype to the selected plant (Jim)
         public void AddMultiPhenotype(Plant plant, string property, string month, string value)
         {
+            if (_context.FenotypeMulti
+                    .FirstOrDefault(fm => fm.Eigenschap == property
+                                          && fm.Maand == month
+                                          && fm.Waarde == value
+                                          && fm.PlantId == plant.PlantId)
+                is not null) return;
+            
             var fenotypeMultiPlant = new FenotypeMulti
             {
                 Id = GetLastPhenoMultiId(),
@@ -646,21 +653,24 @@ namespace PlantenApplicatie.Data
         }
             //add a commensalisme multi to the selected plant(Liam)
             public void AddCommensalismMulti(Plant plant, string property, string value)
-        {
-
-            CommensalismeMulti commensalismeMulti = new CommensalismeMulti
             {
-                PlantId = plant.PlantId,
-                Eigenschap = property,
-                Waarde = value
-            };
+                if (_context.CommensalismeMulti
+                        .FirstOrDefault(cm => cm.Eigenschap == property 
+                                              && cm.Waarde == value
+                                              && cm.Plant == plant)
+                    is not null) return;
+            
+                CommensalismeMulti commensalismeMulti = new CommensalismeMulti
+                {
+                    PlantId = plant.PlantId,
+                    Eigenschap = property,
+                    Waarde = value
+                };
 
-            _context.Add(commensalismeMulti);
+                _context.Add(commensalismeMulti);
 
-            _context.SaveChanges();
-
-
-        }
+                _context.SaveChanges();
+            }
         //edit the selected commensalisme multi of the selected plant(Liam)
 
         public void ChangeCommensalismMulti(CommensalismeMulti commensalismeMulti, string property, string value)

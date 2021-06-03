@@ -314,8 +314,11 @@ namespace PlantenApplicatie.viewmodels
         //add the selected fenotype multi to the current plant (Jim)
         private void AddPhenotypeMulti()
         {
-            if (SelectedPhenotypeProperties is not null && SelectedPhenoMultiMonth is not null && SelectedPhenoTypesMulti is not null) {
-                _plantenDao.AddMultiPhenotype(SelectedPlant, SelectedPhenotypeProperties, SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
+            if (SelectedPhenotypeProperties is not null && SelectedPhenoMultiMonth is not null 
+                                                        && SelectedPhenoTypesMulti is not null) 
+            {
+                _plantenDao.AddMultiPhenotype(SelectedPlant, SelectedPhenotypeProperties, 
+                    SelectedPhenoMultiMonth, SelectedPhenoTypesMulti);
 
                 LoadPhenoTypesMultiPlant();
             }
