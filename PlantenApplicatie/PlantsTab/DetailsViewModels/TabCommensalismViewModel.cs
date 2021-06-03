@@ -16,7 +16,6 @@ namespace PlantenApplicatie.viewmodels
     //class and GUI Liam
     public class TabCommensalismViewModel : ViewModelBase
     {
-
         //private selecters and the dao (Liam)
         private Plant _selectedPlant;
         private readonly PlantenDao _dao;
@@ -99,8 +98,7 @@ namespace PlantenApplicatie.viewmodels
         //reload the comboboxes (Liam)
         public void LoadComm()
         {
-            // load the different lists in for the comboboxes and listview(Liam)
- 
+            // load the different lists in for the comboboxes and listview(Liam) 
              LoadCommenDevelopmentSpeed();
             LoadCommenStrategy();
             LoadCommenMulti();
@@ -112,7 +110,6 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //getters and setters (Liam)
-
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -252,16 +249,12 @@ namespace PlantenApplicatie.viewmodels
 
             SelectedCommenDevelopmentSpeed = commensalism.Ontwikkelsnelheid;
             SelectedCommenStrategy = commensalism.Strategie;
-
         }
-
-
 
         //Edit the commensalisme of a plant, if there is none for the current plant a new one will be made with the selected values(Liam)
         private void EditCommensalism()
         {
             var commensialism = _dao.GetCommensialism(SelectedPlant);
-
 
             if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Commensalisme", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
@@ -279,30 +272,24 @@ namespace PlantenApplicatie.viewmodels
         //add a commensalisme multi to the plant(Liam)
 
         private void AddCommenMulti()
-        {
-            
-                if (SelectedCommensalismMulti is not null && SelectedCommenProperties is not null)
-                {
-                    _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
-                    LoadCommenMulti();
-                }
-                else
-                {
-                    MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om toe te voegen",
-                       "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            
-
+        {            
+            if (SelectedCommensalismMulti is not null && SelectedCommenProperties is not null)
+            {
+                _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
+                LoadCommenMulti();
+            }
+            else
+            {
+                MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om toe te voegen",
+                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+            } 
         }
 
         //edit the selected commensalisme multi of the plant (Liam)
         private void EditCommenMulti()
         {
-            
-            
-                _dao.ChangeCommensalismMulti(SelectedCommenMulti, SelectedCommenProperties, SelectedCommensalismMulti);
-                LoadCommenMulti(); 
-            
+            _dao.ChangeCommensalismMulti(SelectedCommenMulti, SelectedCommenProperties, SelectedCommensalismMulti);
+            LoadCommenMulti(); 
         }
 
 
@@ -338,9 +325,7 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om te verwijderen uit de listview",
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-
             LoadCommenMulti();
         }
-
     }
 }

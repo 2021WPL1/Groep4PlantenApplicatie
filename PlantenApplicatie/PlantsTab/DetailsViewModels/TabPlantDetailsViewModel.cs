@@ -11,6 +11,16 @@ namespace PlantenApplicatie.viewmodels
     // MVVM Detailscherm Lily,Jim  GUI: Jim&Liam
     public class TabPlantDetailsViewModel : ViewModelBase
     {
+        //button command (Jim)
+        public ICommand SaveCommand { get; set; }
+
+        // ObservableCollections binded to the comboboxes (Jim)
+        public ObservableCollection<string> Types { get; set; }
+        public ObservableCollection<string> Families { get; set; }
+        public ObservableCollection<string> Genus { get; set; }
+        public ObservableCollection<string> Species { get; set; }
+        public ObservableCollection<string> Variants { get; set; }
+
         //private variables  (Jim & Lily)
         private readonly PlantenDao _dao;
         private Plant _selectedPlant;
@@ -26,9 +36,6 @@ namespace PlantenApplicatie.viewmodels
         // private variables (Davy)
         private Gebruiker _selectedUser;
         private bool _isManager;
-
-        //button command (Jim)
-        public ICommand SaveCommand { get; set; }
 
         // Constructor Lily
         public TabPlantDetailsViewModel(Plant selectedPlant,Gebruiker user)
@@ -61,16 +68,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        //check which roles the user has. and if the user is an old student(Gebruiker)
-        //He can only observe the selected values of the plant (Davy,Jim)
-        private void UserRole()
-        {
-            IsManager = SelectedUser.Rol.ToLower() == "manager";
-
-        }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
-
         public Gebruiker SelectedUser
         {
             private get => _selectedUser;
@@ -91,7 +89,6 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
 
         public string SelectedType
         {
@@ -159,23 +156,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        // ObservableCollections binded to the comboboxes (Jim)
-
-
-        public ObservableCollection<string> Types { get; set; }
-
-        public ObservableCollection<string> Families { get; set; }
-
-        public ObservableCollection<string> Genus { get; set; }
-
-        public ObservableCollection<string> Species { get; set; }
-        public ObservableCollection<string> Variants { get; set; }
-
-
-
-
-      
         //load the current values of the plant into the comboboxes (Jim)
         public void LoadSelectedValue()
         {
@@ -188,7 +168,6 @@ namespace PlantenApplicatie.viewmodels
             SelectedVariant = plant.Variant;
             TextInputMin = plant.PlantdichtheidMin.ToString();
             TextInputMax = plant.PlantdichtheidMax.ToString();
-
         }
 
         //load all the different values into the comboboxes (Jim)
@@ -199,7 +178,6 @@ namespace PlantenApplicatie.viewmodels
             var genus = _dao.GetUniqueGenusNames();
             var species = _dao.GetUniqueSpeciesNames();
             var variants = _dao.GetUniqueVariantNames();
-
 
             Types.Clear();
             Families.Clear();
@@ -244,5 +222,13 @@ namespace PlantenApplicatie.viewmodels
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
+        private void UserRole()
+        {
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
+        }
+    
     }
 }

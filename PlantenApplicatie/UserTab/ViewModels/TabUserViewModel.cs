@@ -17,13 +17,9 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
 
         //button commands 
         public ICommand AddUserCommand { get; set; }
-
         public ICommand EditUserCommand { get; set; }
-
         public ICommand EditPasswordCommand { get; set; }
-
         public ICommand DeleteUserCommand { get; set; }
-
         public ICommand LogOutCommand { get; set; }
 
         private PlantenDao _dao;

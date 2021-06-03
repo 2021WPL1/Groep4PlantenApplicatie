@@ -73,15 +73,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        //check which roles the user has. and if the user is an old student(Gebruiker)
-        //He can only observe the selected values of the plant (Davy,Jim)
-        private void UserRole()
-        {
-            IsManager = SelectedUser.Rol.ToLower() == "manager";
-        }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
-
         public Gebruiker SelectedUser
         { 
             private get => _selectedUser;
@@ -105,7 +97,7 @@ namespace PlantenApplicatie.viewmodels
 
         public BeheerMaand SelectedManagementMonth
         {
-        private get => _selectedManagementAct;
+            private get => _selectedManagementAct;
             set
             {
                 _selectedManagementAct = value;
@@ -322,11 +314,8 @@ namespace PlantenApplicatie.viewmodels
 
             _plantenDao.CreateManagementAct(managementMonth);
 
-
-
-
-    //reload the listview
-    LoadManagmentMonths();
+            //reload the listview
+            LoadManagmentMonths();
         }
 
         //Edit a selected management (Davy)
@@ -357,8 +346,6 @@ namespace PlantenApplicatie.viewmodels
             {
                 MessageBox.Show("Gelieve eerst een beheersdaad te selecteren.");
             }
-
-
             LoadManagmentMonths();
         }
 
@@ -367,7 +354,7 @@ namespace PlantenApplicatie.viewmodels
         {
             BeheerMaand managementAct = SelectedManagementMonth;
 
-    //delete the selected management act otherwise if there is none user gets a notification to select one       
+            //delete the selected management act otherwise if there is none user gets a notification to select one       
              if (SelectedManagementMonth != null)
             {
                 _plantenDao.RemoveManagementAct(managementAct);
@@ -375,9 +362,15 @@ namespace PlantenApplicatie.viewmodels
             {
                 MessageBox.Show("Gelieve eerst een beheersdaad te selecteren uit de lijst.");
             }
-    //reload the list
+            //reload the list
+            LoadManagmentMonths(); 
+        }
 
-    LoadManagmentMonths(); 
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
+        private void UserRole()
+        {
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
         }
     }
 }

@@ -62,12 +62,16 @@ namespace PlantenApplicatie.Data
         }
 
         //update the selected user and its values(Davy)
-        public string UpdateUser(string email, string password)
+        public string UpdateUser(Gebruiker gebruiker, int id, string password)
         {
-            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == email);
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Id == id);
 
             if (user != null)
             {
+                user.Voornaam = gebruiker.Voornaam;
+                user.Achternaam = gebruiker.Achternaam;
+                user.Emailadres = gebruiker.Emailadres;
+                user.Rol = gebruiker.Rol;
                 user.HashPaswoord = Encryptor.GenerateMD5Hash(password);
 
                 _context.Gebruiker.Update(user);
@@ -453,16 +457,17 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        //get the last FenoMultiId to increment manually. (Jim)
+        //get the last FenoMultiId to increment manually. (Jim & Davy changes Count into Max)
         public long GetLastPhenoMultiId()
         {
-            var phenotypeMulti = _context.FenotypeMulti.Count();
-            if (phenotypeMulti == null)
-            {
-                return 0;
-            }
+            var fenotypeMulti = _context.FenotypeMulti.Max(f => f.Id);
 
-            return phenotypeMulti;
+            //if (fenotypeMulti == null)
+            //{
+            //    return 0;
+            //}
+
+            return fenotypeMulti + 1;
         }
 
 

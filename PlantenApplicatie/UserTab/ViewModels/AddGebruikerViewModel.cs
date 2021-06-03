@@ -11,7 +11,6 @@ namespace PlantenApplicatie.viewmodels
 {
     class AddGebruikerViewModel : ViewModelBase
     {
-
         //observable collection for the combobox (Jim)
         public ObservableCollection<string> Roles { get; set; }
 
