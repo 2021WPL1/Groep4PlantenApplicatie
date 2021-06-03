@@ -17,6 +17,7 @@ namespace PlantenApplicatie.viewmodels
         private readonly PlantenDao _dao;
 
         private string _SelectedRole;
+        private string _textInputNumber;
         private string _TextInputVoornaam;
         private string _TextInputAchternaam;
         private string _TextInputEmail;
@@ -67,6 +68,14 @@ namespace PlantenApplicatie.viewmodels
             TextInputAchternaam = _gebruiker.Achternaam;
             TextInputEmail = _gebruiker.Emailadres;
             SelectedRole = _gebruiker.Rol;
+        }
+        public string TextInputNumber
+        {
+            get => _textInputNumber;
+            set
+            {
+                _textInputNumber = value;
+            }
         }
 
         public string TextInputVoornaam
