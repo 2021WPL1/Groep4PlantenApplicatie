@@ -296,6 +296,9 @@ namespace PlantenApplicatie.viewmodels
         {
             var fenotype = _plantenDao.GetPhenotypeFromPlant(SelectedPlant);
 
+            if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Fenotype",
+                MessageBoxButton.YesNo) == MessageBoxResult.No) return;
+
             if (fenotype is null)
             {
                 _plantenDao.AddPhenotype(SelectedPlant, (int)SelectedLeafSize!, SelectedLeafShape, null,

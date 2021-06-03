@@ -160,7 +160,7 @@ namespace PlantenApplicatie.viewmodels
         //delete the selected photo 
         private void DeletePhoto()
         {
-            if (SelectedProperty is null) return;
+            if (SelectedProperty is null || SelectedImage is null) return;
             
             _plantenDao.DeletePhoto(_selectedFoto);
 
