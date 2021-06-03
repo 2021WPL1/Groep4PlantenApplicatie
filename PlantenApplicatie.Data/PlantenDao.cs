@@ -81,6 +81,19 @@ namespace PlantenApplicatie.Data
             }
         }
 
+        public string UpdateUser(string email, byte[] encryptedPassword)
+        {
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == email);
+
+            if (user is null) return "Emailadres werd niet teruggevonden in de database";
+
+            user.HashPaswoord = encryptedPassword;
+
+            _context.SaveChanges();
+
+            return "Wachtwoord aangepast";
+        }
+
         //get the Extra properties of the current plant(Davy)
         public List<ExtraEigenschap> GetExtraProperties(Plant selectedPlant)
         {
