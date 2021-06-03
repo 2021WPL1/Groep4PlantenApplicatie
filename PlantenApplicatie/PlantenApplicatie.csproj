@@ -31,8 +31,6 @@
     <None Remove="bloemenachtergrondVrood.png" />
     <None Remove="bloemenachtergrondVroos.png" />
     <None Remove="Images\bloemenachtergrondVmultiRoze.png" />
-    <None Remove="klimopachtergrond.png" />
-    <None Remove="plantjes.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,8 +74,6 @@
     <Resource Include="Images\bloemenachtergrondVpaars.png" />
     <Resource Include="Images\bloemenachtergrondVrood.png" />
     <Resource Include="Images\bloemenachtergrondVroos.png" />
-    <Resource Include="klimopachtergrond.png" />
-    <Resource Include="plantjes.png" />
   </ItemGroup>
 
 </Project>
