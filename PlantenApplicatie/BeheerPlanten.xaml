@@ -375,6 +375,15 @@
                                 </LinearGradientBrush>
                             </Button.Background>
                         </Button>
+                        <Button Content="Log out" Canvas.Left="907" Canvas.Top="436" Width="114" Height="22"
+                                Command="{Binding Path=LogOutCommand}">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE4A6C7"/>
+                                    <GradientStop Color="#FFE378E5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                     </Canvas>
                 </Grid>
             </TabItem>

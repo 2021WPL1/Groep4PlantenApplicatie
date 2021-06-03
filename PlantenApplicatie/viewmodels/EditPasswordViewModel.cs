@@ -1,4 +1,5 @@
-﻿using PlantenApplicatie.Data;
+﻿using System.Linq;
+using PlantenApplicatie.Data;
 using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System.Windows;
@@ -12,6 +13,7 @@ namespace PlantenApplicatie.viewmodels
     {
         private readonly PlantenDao _dao;
 
+        private byte[] _encryptedNewPassword;
         private string _passwordErrorMessage;
 
         // button commands
@@ -59,13 +61,21 @@ namespace PlantenApplicatie.viewmodels
 
         public void PasswordChecker(string password, string passwordConfirm)
         {
+            _encryptedNewPassword = Encryptor.GenerateMD5Hash(password);
+            
             PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
         }
         //edit the password of the user and updates it in the database
 
         private void Edit(PasswordBox passwordBox)
         {
-            string message = _dao.UpdateUser(SelectedUser.Emailadres, passwordBox.Password);
+            if (!Encryptor.GenerateMD5Hash(passwordBox.Password).SequenceEqual(SelectedUser.HashPaswoord))
+            {
+                MessageBox.Show("Oud wachtwoord is niet correct");
+                return;
+            }
+            
+            string message = _dao.UpdateUser(SelectedUser.Emailadres, _encryptedNewPassword);
 
             MessageBox.Show(message);
         }

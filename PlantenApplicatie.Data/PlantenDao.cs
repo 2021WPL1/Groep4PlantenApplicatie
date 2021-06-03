@@ -81,6 +81,19 @@ namespace PlantenApplicatie.Data
             }
         }
 
+        public string UpdateUser(string email, byte[] encryptedPassword)
+        {
+            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == email);
+
+            if (user is null) return "Emailadres werd niet teruggevonden in de database";
+
+            user.HashPaswoord = encryptedPassword;
+
+            _context.SaveChanges();
+
+            return "Wachtwoord aangepast";
+        }
+
         //get the Extra properties of the current plant(Davy)
         public List<ExtraEigenschap> GetExtraProperties(Plant selectedPlant)
         {
@@ -904,7 +917,7 @@ namespace PlantenApplicatie.Data
             };
         }
         //add an image to the selected plant(Lily)
-        public void AddPhoto(string? property, Plant plant, string? url, byte[]? imageBytes)
+        public Foto AddPhoto(string? property, Plant plant, string? url, byte[]? imageBytes)
         {
             var foto = new Foto
             {
@@ -917,22 +930,26 @@ namespace PlantenApplicatie.Data
             _context.Foto.Add(foto);
 
             _context.SaveChanges();
+
+            return foto;
         }
         //edit the current photo(Lily)
-        public void ChangePhoto(Foto photo, string? property, string? url, byte[]? imageBytes)
-                        {
-                            photo.Eigenschap = property;
-                            photo.UrlLocatie = url;
-                            photo.Tumbnail = imageBytes;
+        public Foto ChangePhoto(Foto photo, string? property, string? url, byte[]? imageBytes)
+        {
+            photo.Eigenschap = property;
+            photo.UrlLocatie = url;
+            photo.Tumbnail = imageBytes;
 
-                            _context.Foto.Add(photo);
-                            //Entry is to check if there is already an image in the database, if there is none it gets added
-                            //if there is one it gets edited instead of adding one. (Lily)
-                            _context.Entry(photo)
-                                .State = EntityState.Modified;
+            _context.Foto.Add(photo);
+            //Entry is to check if there is already an image in the database, if there is none it gets added
+            //if there is one it gets edited instead of adding one. (Lily)
+            _context.Entry(photo)
+                .State = EntityState.Modified;
 
-                            _context.SaveChanges();
-                        }
+            _context.SaveChanges();
+
+            return photo;
+        }
         //delete the selected photo(Lily)
         public void DeletePhoto(Foto photo)
         {
