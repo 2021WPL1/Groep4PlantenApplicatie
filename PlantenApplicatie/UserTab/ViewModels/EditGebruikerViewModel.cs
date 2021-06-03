@@ -49,6 +49,7 @@ namespace PlantenApplicatie.viewmodels
 
             EditUserCommand = new DelegateCommand<PasswordBox>(EditUser);
             LoadRoles();
+
             LoadData();
         }
 
