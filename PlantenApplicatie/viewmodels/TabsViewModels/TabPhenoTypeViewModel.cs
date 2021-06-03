@@ -31,8 +31,6 @@ namespace PlantenApplicatie.viewmodels
 
         private FenotypeMulti? _selectedPlantFenoTypeMulti;
         
-        private readonly bool _isManager;
-        
         // Constructor
         public TabPhenoTypeViewModel(Plant selectedPlant, Gebruiker user)
         {
@@ -45,7 +43,7 @@ namespace PlantenApplicatie.viewmodels
 
             LoadAllProperties();
             
-            _isManager = user.Rol.ToLower() == "manager";
+            IsManager = user.Rol.ToLower() == "manager";
         }
 
         //observable collections for the different comboboxes and listviews ( Jim)
@@ -68,6 +66,8 @@ namespace PlantenApplicatie.viewmodels
         public ICommand AddFenotypeMultiCommand { get; }
         public ICommand EditFenotypeMultiCommand { get; }
         public ICommand DeleteFenotypeMultiPlantCommand { get; }
+        
+        public bool IsManager { get; }
 
         //methods to load in the different lists in the comboboxes and listviews (Jim)
         public void LoadAllProperties()
@@ -296,20 +296,19 @@ namespace PlantenApplicatie.viewmodels
         {
             var fenotype = _plantenDao.GetPhenotypeFromPlant(SelectedPlant);
 
-            if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Fenotype", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Fenotype",
+                MessageBoxButton.YesNo) == MessageBoxResult.No) return;
+
+            if (fenotype is null)
             {
-                if (fenotype is null)
-                {
-                    _plantenDao.AddPhenotype(SelectedPlant, (int)SelectedLeafSize!, SelectedLeafShape, null,
-                        SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
-                }
-                else
-                {
-                    _plantenDao.ChangePhenotype(SelectedPlant, SelectedLeafSize, SelectedLeafShape, null,
-                        SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
-                }
+                _plantenDao.AddPhenotype(SelectedPlant, (int)SelectedLeafSize!, SelectedLeafShape, null,
+                    SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
             }
-                
+            else
+            {
+                _plantenDao.ChangePhenotype(SelectedPlant, SelectedLeafSize, SelectedLeafShape, null,
+                    SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
+            }
         }
 
         //add the selected fenotype multi to the current plant (Jim)

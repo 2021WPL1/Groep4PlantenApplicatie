@@ -140,6 +140,8 @@ namespace PlantenApplicatie.viewmodels
         //edit the current photo, when a photo gets changed through the url the image will change and be saved depending on the selected property
         private void ChangePhoto()
         {
+            if (SelectedProperty is null) return;
+            
             var imageBytes = DownloadImage(SelectedUrl);
 
             if (imageBytes is null) return;
@@ -158,6 +160,8 @@ namespace PlantenApplicatie.viewmodels
         //delete the selected photo 
         private void DeletePhoto()
         {
+            if (SelectedProperty is null || SelectedImage is null) return;
+            
             _plantenDao.DeletePhoto(_selectedFoto);
 
             SelectedProperty = SelectedUrl = null;
