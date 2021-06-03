@@ -546,7 +546,7 @@
                         <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedOctober, UpdateSourceTrigger=PropertyChanged}" Content="Oktober" Canvas.Left="389" Canvas.Top="152"/>
                         <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedNovember, UpdateSourceTrigger=PropertyChanged}" Content="November" Canvas.Left="486" Canvas.Top="152"/>
                         <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedDecember, UpdateSourceTrigger=PropertyChanged}" Content="December" Canvas.Left="597" Canvas.Top="152"/>
-                        <Button Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan plant" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208" BorderBrush="Black">
+                        <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=AddManagementActCommand}" Content="Voeg Beheerdaad toe aan plant" Height="28" Canvas.Left="9" Canvas.Top="182" Width="208" BorderBrush="Black">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FF94C8AD"/>
@@ -554,7 +554,7 @@
                                 </LinearGradientBrush>
                             </Button.Background>
                         </Button>
-                        <Button Command="{Binding Path=EditManagementActCommand}" Content="Wijzig Beheerdaad van plant" Height="28" Canvas.Left="245" Canvas.Top="182" Width="208" BorderBrush="Black">
+                        <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=EditManagementActCommand}" Content="Wijzig Beheerdaad van plant" Height="28" Canvas.Left="245" Canvas.Top="182" Width="208" BorderBrush="Black">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FF91C9AD"/>
@@ -562,7 +562,7 @@
                                 </LinearGradientBrush>
                             </Button.Background>
                         </Button>
-                        <Button Command="{Binding Path=RemoveManagementActCommand}" Content="Verwijder Beheerdaad" Height="28" Canvas.Left="474" Canvas.Top="182" Width="208" BorderBrush="Black">
+                        <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=RemoveManagementActCommand}" Content="Verwijder Beheerdaad" Height="28" Canvas.Left="474" Canvas.Top="182" Width="208" BorderBrush="Black">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FF94C8AC" Offset="0.006"/>
