@@ -168,10 +168,8 @@ namespace PlantenApplicatie.viewmodels
                 Check = "Paswoorden zijn gelijk";
                 ChangeColor = Brushes.Green;
             }
-
         }
-
-
+        
         public void EditUser()
         {
             string message = "";
@@ -180,6 +178,11 @@ namespace PlantenApplicatie.viewmodels
                 TextInputEmail == null || TextInputPaswoord == null || TextInputPaswoordCheck == null)
             {
                 MessageBox.Show("Niet alle velden zijn ingevuld");
+            }
+            else if (!IsEmailValid(TextInputNumber, TextInputVoornaam, TextInputAchternaam, 
+                TextInputEmail))
+            {
+                MessageBox.Show("Email is ongeldig, moet bestaan uit nummer of voornaam.achternaam");
             }
             else
             {
@@ -211,6 +214,16 @@ namespace PlantenApplicatie.viewmodels
                     MessageBox.Show("Email mag alleen van het Vives domein zijn.");
                 }
             }
+        }
+        
+        private static bool IsEmailValid(string? number, string? firstName, string? lastName, string? email)
+        {
+            if (email is null) return false;
+            
+            email = email.Split("@")[0].ToLower();
+
+            return number is not null && email == number || firstName is not null && lastName is not null 
+                && email == $"{firstName.ToLower()}.{lastName.ToLower()}";
         }
 
         private void CloseWindow()

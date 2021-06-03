@@ -147,7 +147,7 @@ namespace PlantenApplicatie.viewmodels
                 return;
             }
 
-            if (!IsUserValid(TextInputNumber, TextInputFirstName, TextInputLastName, TextInputEmail))
+            if (!IsEmailValid(TextInputNumber, TextInputFirstName, TextInputLastName, TextInputEmail))
             {
                 MessageBox.Show("Email is ongeldig, moet bestaan uit nummer of voornaam.achternaam");
                 return;
@@ -167,11 +167,14 @@ namespace PlantenApplicatie.viewmodels
             MessageBox.Show(message);
         }
 
-        private static bool IsUserValid(string number, string firstName, string lastName, string email)
+        private static bool IsEmailValid(string? number, string? firstName, string? lastName, string? email)
         {
-            email = email.Split("@")[0].ToLower();
+            if (email is null) return false;
             
-            return email == number.ToLower() || email == $"{firstName.ToLower()}.{lastName.ToLower()}";
+            email = email.Split("@")[0].ToLower();
+
+            return number is not null && email == number || firstName is not null && lastName is not null 
+                && email == $"{firstName.ToLower()}.{lastName.ToLower()}";
         }
 
         private void CloseWindow()

@@ -75,10 +75,8 @@ namespace PlantenApplicatie.Data
 
                 return "Wachtwoord aangepast";
             }
-            else
-            {
-                return "Emailadres werd niet teruggevonden in de database";
-            }
+
+            return "Emailadres werd niet teruggevonden in de database";
         }
 
         public string UpdateUser(string email, byte[] encryptedPassword)
