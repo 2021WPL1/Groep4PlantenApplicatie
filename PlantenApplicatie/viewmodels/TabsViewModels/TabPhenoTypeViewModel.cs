@@ -296,16 +296,20 @@ namespace PlantenApplicatie.viewmodels
         {
             var fenotype = _plantenDao.GetPhenotypeFromPlant(SelectedPlant);
 
-            if (fenotype is null)
+            if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Fenotype", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                _plantenDao.AddPhenotype(SelectedPlant, (int)SelectedLeafSize!, SelectedLeafShape, null,
-                    SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
+                if (fenotype is null)
+                {
+                    _plantenDao.AddPhenotype(SelectedPlant, (int)SelectedLeafSize!, SelectedLeafShape, null,
+                        SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
+                }
+                else
+                {
+                    _plantenDao.ChangePhenotype(SelectedPlant, SelectedLeafSize, SelectedLeafShape, null,
+                        SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
+                }
             }
-            else
-            {
-                _plantenDao.ChangePhenotype(SelectedPlant, SelectedLeafSize, SelectedLeafShape, null,
-                    SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
-            }
+                
         }
 
         //add the selected fenotype multi to the current plant (Jim)

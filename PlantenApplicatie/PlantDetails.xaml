@@ -529,7 +529,7 @@
 
                         <!-- eerste rij -->
                         <Label Content="Beheersdaad :" Canvas.Top="30" />
-                        <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputManagementAct, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="125" Canvas.Top="34" Canvas.Left="97"  />
+                        <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputManagementAct, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditBeheerDaad" Width="580" Canvas.Top="34" Canvas.Left="97"  />
                         <!-- tweede rij -->
                         <Label Content="Omschrijving :" Canvas.Top="60" />
                         <TextBox IsEnabled="{Binding Path=IsManager}" Text="{Binding Path=TextInputDescription, UpdateSourceTrigger=PropertyChanged}" x:Name="txtEditOmschrijving" Width="580" Canvas.Top="64" Canvas.Left="97" />
