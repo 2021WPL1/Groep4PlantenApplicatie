@@ -16,6 +16,7 @@ namespace PlantenApplicatie.viewmodels
 
         //private variables for the GUI
         private string _SelectedRole;
+        private string? _textInputNumber;
         private string? _TextInputFirstName;
         private string? _TextInputLastName;
         private string? _TextInputEmail;
@@ -59,6 +60,15 @@ namespace PlantenApplicatie.viewmodels
         }
 
         //getters setters (Jim)
+        public string? TextInputNumber
+        {
+            get => _textInputNumber;
+            set
+            {
+                _textInputNumber = value;
+            }
+        }
+
         public string? TextInputFirstName
         {
             get => _TextInputFirstName;
