@@ -31,7 +31,7 @@ namespace PlantenApplicatie.viewmodels
 
         private FenotypeMulti? _selectedPlantFenoTypeMulti;
         
-        private bool _isManager;
+        private readonly bool _isManager;
         
         // Constructor
         public TabPhenoTypeViewModel(Plant selectedPlant, Gebruiker user)
@@ -45,7 +45,7 @@ namespace PlantenApplicatie.viewmodels
 
             LoadAllProperties();
             
-            SetAuthorizedActionsByRole(user);
+            _isManager = user.Rol.ToLower() == "manager";
         }
 
         //observable collections for the different comboboxes and listviews ( Jim)
@@ -83,13 +83,6 @@ namespace PlantenApplicatie.viewmodels
             LoadPhenoMultiMonths();
             LoadColour();
             LoadSelectedValues();
-        }
-
-        //check which roles the user has. and if the user is an old student(Gebruiker)
-        //He can only observe the selected values of the plant (Davy,Jim)
-        private void SetAuthorizedActionsByRole(Gebruiker user)
-        {
-            _isManager = user.Rol.ToLower() == "manager";
         }
         
         // Getters and setters (Davy & Jim)

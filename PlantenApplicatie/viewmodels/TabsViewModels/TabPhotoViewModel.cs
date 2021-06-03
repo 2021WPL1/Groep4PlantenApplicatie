@@ -178,7 +178,6 @@ namespace PlantenApplicatie.viewmodels
 
             return bitmapImage;
         }
-
         
         //download the image from the online url and set it as the selected detail when you click on edit
         private static byte[]? DownloadImage(string url)
