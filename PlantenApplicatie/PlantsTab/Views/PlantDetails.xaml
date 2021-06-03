@@ -600,7 +600,7 @@
                     <Label x:Name="lblPlantNaamFoto" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="10" FontSize="25"/>
                     <Label Height="25" Content="Eigenschap :" Canvas.Left="10" Canvas.Top="50"/>
-                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="99" Canvas.Top="53" Width="120" 
+                    <ComboBox Canvas.Left="99" Canvas.Top="53" Width="120" 
                               ItemsSource="{Binding Properties}"
                               SelectedValue="{Binding SelectedProperty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Height="25" Content="Url Locatie :" Canvas.Left="10" Canvas.Top="92"/>
