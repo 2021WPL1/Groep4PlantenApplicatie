@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
 
+
 namespace PlantenApplicatie.viewmodels
 {
     //class and GUI Liam
@@ -285,8 +286,16 @@ namespace PlantenApplicatie.viewmodels
 
         private void AddCommenMulti()
         {
-            _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
-            LoadCommenMulti();
+            if (SelectedCommensalismMulti is not null && SelectedCommenProperties is not null) 
+            {
+                _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
+                LoadCommenMulti(); }
+            else
+            {
+                MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om toe te voegen",
+                   "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
         }
 
         //edit the selected commensalisme multi of the plant (Liam)
