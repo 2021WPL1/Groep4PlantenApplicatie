@@ -11,6 +11,16 @@ namespace PlantenApplicatie.viewmodels
 {
     class AddGebruikerViewModel : ViewModelBase
     {
+
+        //observable collection for the combobox (Jim)
+        public ObservableCollection<string> Roles { get; set; }
+
+        //buttoncommand to save an user in the database
+        public ICommand AddUserCommand { get; set; }
+
+        //variables Davy
+        public ICommand CloseWindowCommand { get; set; }
+
         //ViewModel (Jim)
         private readonly PlantenDao _dao;
 
@@ -20,17 +30,7 @@ namespace PlantenApplicatie.viewmodels
         private string? _TextInputLastName;
         private string? _TextInputEmail;
         private string _passwordErrorMessage;
-        //observable collection for the combobox
-
-
         private Gebruiker _user;
-        public ObservableCollection<string> Roles { get; set; }
-
-        //buttoncommand to save an user in the database
-        public ICommand AddUserCommand { get; set; }
-
-        //variables Davy
-        public ICommand CloseWindowCommand { get; set; }
         private Window _addGebruikerWindow;
 
         private Brush _color;
@@ -123,6 +123,7 @@ namespace PlantenApplicatie.viewmodels
             PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
         }
 
+        // add a user to the database
         private void AddUser(PasswordBox passwordBox)
         {
             if (TextInputFirstName is null || TextInputLastName is null || TextInputEmail is null)
@@ -153,7 +154,7 @@ namespace PlantenApplicatie.viewmodels
 
         private void CloseWindow()
         {
-            // herladen Users door nieuw venster BeheerPlanten op te starten
+            // reload Users by starting new window BeheerPlanten
             BeheerPlanten ManagePlants = new BeheerPlanten(_user);
             ManagePlants.Show();
 

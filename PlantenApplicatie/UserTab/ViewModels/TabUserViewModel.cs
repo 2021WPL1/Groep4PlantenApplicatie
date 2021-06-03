@@ -13,10 +13,8 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
     public class TabUserViewModel : ViewModelBase
     {
         //MVVM + GUI Davy
-
         public ObservableCollection<Gebruiker> Users { get; set; }
 
-        private PlantenDao _dao;
         //button commands 
         public ICommand AddUserCommand { get; set; }
 
@@ -27,6 +25,8 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         public ICommand DeleteUserCommand { get; set; }
 
         public ICommand LogOutCommand { get; set; }
+
+        private PlantenDao _dao;
 
         private Gebruiker _selectedUser;
         private Gebruiker OriginalUser;
@@ -54,19 +54,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             UserRole();
         }
 
-        private void LoadUsers()
-        {
-            var users = _dao.GetUsers();
-
-            Users.Clear();
-
-            foreach (var user in users)
-            {
-                Users.Add(user);
-            }
-        }
         //boolean to check which functions the user can perform on the application (Davy)
-
         public bool IsManager
         {
             get => _isManager;
@@ -77,6 +65,18 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             }
         }
 
+        
+        //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
+        public Gebruiker SelectedUser
+        {
+            private get => _selectedUser;
+            set
+            {
+                _selectedUser = value;
+                OnPropertyChanged();
+            }
+        }
+        
         //check which roles the user has. and if the user is an old student(Gebruiker)
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
@@ -94,14 +94,17 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
                     break;
             }
         }
-        //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
-        public Gebruiker SelectedUser
+
+        // show all the users in listview
+        private void LoadUsers()
         {
-            private get => _selectedUser;
-            set
+            var users = _dao.GetUsers();
+
+            Users.Clear();
+
+            foreach (var user in users)
             {
-                _selectedUser = value;
-                OnPropertyChanged();
+                Users.Add(user);
             }
         }
 
@@ -113,12 +116,14 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             _tabUserWindow.Close();
         }
 
+        // edit a user
         private void EditUser()
         {
             EditGebruiker editGebruiker = new EditGebruiker(SelectedUser);
             editGebruiker.Show();
             _tabUserWindow.Close();
         }
+
         //edit the current password the user has
         private void EditPassword()
         {
@@ -126,11 +131,14 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             wijzigWachtwoord.Show();
         }
 
+        // delete a user
         private void DeleteUser()
         {
             _dao.RemoveUser(SelectedUser);
             LoadUsers();
         }
+
+        // log out of the application
         private void LogOut()
         {
             if (MessageBox.Show("Weet u zeker dat u wilt uitloggen?", "Logout", MessageBoxButton.YesNo) == MessageBoxResult.No) return;

@@ -14,6 +14,12 @@ namespace PlantenApplicatie.viewmodels
     // klasse (Davy)
     public class EditGebruikerViewModel : ViewModelBase
     {
+        public ObservableCollection<string> Roles { get; set; }
+
+        // button commando's
+        public ICommand EditUserCommand { get; set; }
+
+        public ICommand CloseWindowCommand { get; set; }
         private readonly PlantenDao _dao;
 
         private string _SelectedRole;
@@ -26,17 +32,11 @@ namespace PlantenApplicatie.viewmodels
 
         private Gebruiker _gebruiker;
 
-        public ObservableCollection<string> Roles { get; set; }
-
-        // button commando's
-        public ICommand EditUserCommand { get; set; }
-
-        public ICommand CloseWindowCommand { get; set; }
-
         private Window _editGebruikerWindow;
 
         private Brush _color;
 
+        // edit a user
         public EditGebruikerViewModel(Window window, Gebruiker gebruiker)
         {
             _gebruiker = gebruiker;
@@ -58,15 +58,6 @@ namespace PlantenApplicatie.viewmodels
                 _color = value;
                 OnPropertyChanged();
             }
-        }
-
-        // toon geselecteerde gebruiker in textboxen, comboboxen
-        private void LoadData()
-        {
-            TextInputVoornaam = _gebruiker.Voornaam;
-            TextInputAchternaam = _gebruiker.Achternaam;
-            TextInputEmail = _gebruiker.Emailadres;
-            SelectedRole = _gebruiker.Rol;
         }
 
         public string TextInputVoornaam
@@ -147,6 +138,7 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
+        // check if passwords are the same (Jim)
         public void PasswordChecker()
         {
             if (TextInputPaswoord != TextInputPaswoordCheck)
@@ -162,7 +154,7 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
-
+        // edit a user (Jim)
         public void EditUser()
         {
             string message = "";
@@ -195,7 +187,6 @@ namespace PlantenApplicatie.viewmodels
 
                         _editGebruikerWindow.Close();
                     }
-
                 }
                 else
                 {
@@ -204,9 +195,18 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        // show selected user in textboxes, comboboxes
+        private void LoadData()
+        {
+            TextInputVoornaam = _gebruiker.Voornaam;
+            TextInputAchternaam = _gebruiker.Achternaam;
+            TextInputEmail = _gebruiker.Emailadres;
+            SelectedRole = _gebruiker.Rol;
+        }
+
         private void CloseWindow()
         {
-            // nieuw venster BeheerPlanten opstarten
+            // start new window BeheerPlanten
             BeheerPlanten beheerPlanten = new BeheerPlanten(_gebruiker);
             beheerPlanten.Show();
 

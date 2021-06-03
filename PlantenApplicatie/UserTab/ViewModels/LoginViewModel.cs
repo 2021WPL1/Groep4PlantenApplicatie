@@ -10,11 +10,11 @@ namespace PlantenApplicatie.viewmodels
     //Viewmodel made by Davy
     public class LoginViewModel : ViewModelBase
     {
-        private readonly PlantenDao _dao;
-
         // button commands
         public ICommand LoginCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+
+        private readonly PlantenDao _dao;
 
         private string _textInputLogin;
 
@@ -29,6 +29,7 @@ namespace PlantenApplicatie.viewmodels
 
             _dao = PlantenDao.Instance;
         }
+
         //getters and setters
         public string TextInputLogin
         {
@@ -40,6 +41,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
+        // a user can login into the application
         public void Login(PasswordBox passwordBox)
         {
             var isLoginSuccessfull = _dao.CheckLogin(TextInputLogin, passwordBox.Password, 
