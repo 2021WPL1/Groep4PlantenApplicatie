@@ -12,6 +12,20 @@ namespace PlantenApplicatie.viewmodels
     //Class and GUI (Davy, Lily) 
     class TabManagePlantenViewModel : ViewModelBase
     {
+        //button commands
+        public ICommand AddUserCommand { get; }
+        public ICommand ShowDetailsCommand { get; }
+        public ICommand ResetCommand { get; }
+
+        //observable collections to load in Comboboxes + Listview (Davy,Lily)
+        public ObservableCollection<Plant> Plants { get; }
+
+        public ObservableCollection<string> Types { get; private set; }
+        public ObservableCollection<string> Families { get; private set; }
+        public ObservableCollection<string> Genus { get; private set; }
+        public ObservableCollection<string> Species { get; private set; }
+        public ObservableCollection<string> Variants { get; private set; }
+
         //private variables
         private readonly PlantenDao _plantenDao;
 
@@ -27,22 +41,7 @@ namespace PlantenApplicatie.viewmodels
 
         // The GUI binds to this variable through a property, therefore it will not be null,
         // so we tell the compiler it is not null (Lily)
-        private string _plantName = null!; 
-        
-
-        //button commands
-        public ICommand AddUserCommand { get; }
-        public ICommand ShowDetailsCommand { get; }
-        public ICommand ResetCommand { get; }
-
-        //observable collections to load in Comboboxes + Listview (Davy,Lily)
-        public ObservableCollection<Plant> Plants { get; }
-
-        public ObservableCollection<string> Types { get; private set; }
-        public ObservableCollection<string> Families { get; private set; }
-        public ObservableCollection<string> Genus { get; private set; }
-        public ObservableCollection<string> Species { get; private set; }
-        public ObservableCollection<string> Variants { get; private set; }
+        private string _plantName = null!;    
         
         //constructor, user as parameter 
         public TabManagePlantenViewModel(Gebruiker user)
@@ -96,7 +95,6 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged("IsManager");
             }
         }
-
 
         public string PlantName
         {
@@ -256,6 +254,7 @@ namespace PlantenApplicatie.viewmodels
 
             OnPropertyChanged(nameof(Variants));
         }
+
         //if a plant is selected you can click the show details button to show the current properties the plant has (Lily)
         private void ShowDetails()
         {
@@ -304,18 +303,8 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch(SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
+
         }
 
         private void AddUser()

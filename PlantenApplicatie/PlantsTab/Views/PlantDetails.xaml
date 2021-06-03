@@ -180,16 +180,16 @@
                     <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="385" Canvas.Top="386" Width="98"
                         ItemsSource="{Binding FenotypeProperties}" 
                         SelectedItem="{Binding SelectedPhenotypeProperties, UpdateSourceTrigger=PropertyChanged}"
-                               />
+                        SelectedValue="{Binding SelectedPlantPhenoTypeMulti.Eigenschap}"       />
 
                     <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="506" Canvas.Top="386" Width="54"
                         ItemsSource="{Binding FenoMultiMonths}" 
                         SelectedItem="{Binding SelectedPhenoMultiMonth, UpdateSourceTrigger=PropertyChanged}"
-                               />
+                        SelectedValue="{Binding SelectedPlantPhenoTypeMulti.Maand}"       />
                     <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="587" Canvas.Top="386" Width="82"
                         ItemsSource="{Binding FenoTypesMulti}" 
                         SelectedItem="{Binding SelectedPhenoTypesMulti, UpdateSourceTrigger=PropertyChanged}"
-                               />
+                        SelectedValue="{Binding SelectedPlantPhenoTypeMulti.Waarde}"       />
                     <Button IsEnabled="{Binding Path=IsManager}" Content="Add to Plant" Canvas.Left="599" Canvas.Top="449" Command="{Binding Path=AddFenotypeMultiCommand}" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -542,7 +542,7 @@
                         <Label Content="Datum:" Canvas.Left="2" Canvas.Top="112"/>
 
 
-                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedJanuary, UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
+                        <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedJanuary,UpdateSourceTrigger=PropertyChanged}" Content="Januari" Canvas.Left="84" Canvas.Top="117"/>
                         <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFebruary, UpdateSourceTrigger=PropertyChanged}" Content="Februari" Canvas.Left="187" Canvas.Top="117"/>
                         <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedMarch, UpdateSourceTrigger=PropertyChanged}" Content="Maart" Canvas.Left="291" Canvas.Top="117"/>
                         <CheckBox IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedApril, UpdateSourceTrigger=PropertyChanged}" Content="April" Canvas.Left="389" Canvas.Top="117"/>
@@ -601,7 +601,7 @@
                     <Label x:Name="lblPlantNaamFoto" 
                    Content="{Binding SelectedPlant.Fgsv, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="10" Canvas.Left="10" FontSize="25"/>
                     <Label Height="25" Content="Eigenschap :" Canvas.Left="10" Canvas.Top="50"/>
-                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="99" Canvas.Top="53" Width="120" 
+                    <ComboBox Canvas.Left="99" Canvas.Top="53" Width="120" 
                               ItemsSource="{Binding Properties}"
                               SelectedValue="{Binding SelectedProperty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Height="25" Content="Url Locatie :" Canvas.Left="10" Canvas.Top="92"/>

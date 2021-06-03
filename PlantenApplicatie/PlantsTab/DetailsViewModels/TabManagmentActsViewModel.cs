@@ -73,15 +73,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        //check which roles the user has. and if the user is an old student(Gebruiker)
-        //He can only observe the selected values of the plant (Davy,Jim)
-        private void UserRole()
-        {
-            IsManager = SelectedUser.Rol.ToLower() == "manager";
-        }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
-
         public Gebruiker SelectedUser
         { 
             private get => _selectedUser;
@@ -105,7 +97,7 @@ namespace PlantenApplicatie.viewmodels
 
         public BeheerMaand SelectedManagementMonth
         {
-        private get => _selectedManagementAct;
+            private get => _selectedManagementAct;
             set
             {
                 _selectedManagementAct = value;
@@ -303,93 +295,66 @@ namespace PlantenApplicatie.viewmodels
         //make a managemant act for the current plant (Davy)
         private void AddManagementAct()
         {
-            BeheerMaand beheerMaand = new BeheerMaand();
-            beheerMaand.PlantId = SelectedPlant.PlantId;
-            beheerMaand.Beheerdaad = TextInputManagementAct;
-            beheerMaand.Omschrijving = TextInputDescription;
-            beheerMaand.Jan = IsCheckedJanuary;
-            beheerMaand.Feb = IsCheckedFebruary;
-            beheerMaand.Mrt = IsCheckedMarch;
-            beheerMaand.Apr = IsCheckedApril;
-            beheerMaand.Mei = IsCheckedMay;
-            beheerMaand.Jun = IsCheckedJune;
-            beheerMaand.Jul = IsCheckedJuly;
-            beheerMaand.Aug = IsCheckedAugust;
-            beheerMaand.Sept = IsCheckedSeptember;
-            beheerMaand.Okt = IsCheckedOctober;
-            beheerMaand.Nov = IsCheckedNovember;
-            beheerMaand.Dec = IsCheckedDecember;
+            BeheerMaand managementMonth = new BeheerMaand();
+            managementMonth.PlantId = SelectedPlant.PlantId;
+            managementMonth.Beheerdaad = TextInputManagementAct;
+            managementMonth.Omschrijving = TextInputDescription;
+            managementMonth.Jan = IsCheckedJanuary;
+            managementMonth.Feb = IsCheckedFebruary;
+            managementMonth.Mrt = IsCheckedMarch;
+            managementMonth.Apr = IsCheckedApril;
+            managementMonth.Mei = IsCheckedMay;
+            managementMonth.Jun = IsCheckedJune;
+            managementMonth.Jul = IsCheckedJuly;
+            managementMonth.Aug = IsCheckedAugust;
+            managementMonth.Sept = IsCheckedSeptember;
+            managementMonth.Okt = IsCheckedOctober;
+            managementMonth.Nov = IsCheckedNovember;
+            managementMonth.Dec = IsCheckedDecember;
 
-            _plantenDao.CreateManagementAct(beheerMaand);
+            _plantenDao.CreateManagementAct(managementMonth);
 
-
-
-
-    //reload the listview
-    LoadManagmentMonths();
+            //reload the listview
+            LoadManagmentMonths();
         }
 
         //Edit a selected management (Davy)
         private void EditManagementAct()
         {
-            BeheerMaand beheerMaand = SelectedManagementMonth; 
+            BeheerMaand managementMonth = SelectedManagementMonth; 
 
-            if (beheerMaand is not null)
+            if (managementMonth is not null)
             {
-                beheerMaand.PlantId = SelectedManagementMonth.PlantId;
-                beheerMaand.Beheerdaad = TextInputManagementAct;
-                beheerMaand.Omschrijving = TextInputDescription;
-                beheerMaand.Jan = IsCheckedJanuary;
-                beheerMaand.Feb = IsCheckedFebruary;
-                beheerMaand.Mrt = IsCheckedMarch;
-                beheerMaand.Apr = IsCheckedApril;
-                beheerMaand.Mei = IsCheckedMay;
-                beheerMaand.Jun = IsCheckedJune;
-                beheerMaand.Jul = IsCheckedJuly;
-                beheerMaand.Aug = IsCheckedAugust;
-                beheerMaand.Sept = IsCheckedSeptember;
-                beheerMaand.Okt = IsCheckedOctober;
-                beheerMaand.Nov = IsCheckedNovember;
-                beheerMaand.Dec = IsCheckedDecember;
+                managementMonth.PlantId = SelectedManagementMonth.PlantId;
+                managementMonth.Beheerdaad = TextInputManagementAct;
+                managementMonth.Omschrijving = TextInputDescription;
+                managementMonth.Jan = IsCheckedJanuary;
+                managementMonth.Feb = IsCheckedFebruary;
+                managementMonth.Mrt = IsCheckedMarch;
+                managementMonth.Apr = IsCheckedApril;
+                managementMonth.Mei = IsCheckedMay;
+                managementMonth.Jun = IsCheckedJune;
+                managementMonth.Jul = IsCheckedJuly;
+                managementMonth.Aug = IsCheckedAugust;
+                managementMonth.Sept = IsCheckedSeptember;
+                managementMonth.Okt = IsCheckedOctober;
+                managementMonth.Nov = IsCheckedNovember;
+                managementMonth.Dec = IsCheckedDecember;
 
-                _plantenDao.EditManagementAct(beheerMaand);
+                _plantenDao.EditManagementAct(managementMonth);
             } else
             {
                 MessageBox.Show("Gelieve eerst een beheersdaad te selecteren.");
             }
-
-
             LoadManagmentMonths();
         }
-
-        //When a management act gets selected the current values changes to the selected values (Jim)
-        private void LoadSelectedValues()
-        {
-            var managementAct = SelectedManagementMonth;
-
-            TextInputManagementAct = managementAct.Beheerdaad ?? String.Empty;
-            TextInputDescription = managementAct.Omschrijving ?? String.Empty;
-            IsCheckedJanuary = managementAct.Jan ?? false;
-            IsCheckedFebruary = managementAct.Feb ?? false;
-            IsCheckedMarch = managementAct.Mrt ?? false;
-            IsCheckedApril = managementAct.Apr ?? false;
-            IsCheckedMay = managementAct.Mei ?? false;
-            IsCheckedJune = managementAct.Jun ?? false;
-            IsCheckedJuly = managementAct.Jul ?? false;
-            IsCheckedAugust = managementAct.Aug ?? false;
-            IsCheckedSeptember = managementAct.Sept ?? false;
-            IsCheckedOctober = managementAct.Okt ?? false;
-            IsCheckedNovember = managementAct.Nov ?? false;
-            IsCheckedDecember = managementAct.Dec ?? false;
-        }
-
 
         //delete management act (Davy)
         private void RemoveManagementAct()
         {
             BeheerMaand managementAct = SelectedManagementMonth;
 
-    //delete the selected management act otherwise if there is none user gets a notification to select one       
+            //delete the selected management act otherwise if there is none user gets a notification to select one       
              if (SelectedManagementMonth != null)
             {
                 _plantenDao.RemoveManagementAct(managementAct);
@@ -397,9 +362,15 @@ namespace PlantenApplicatie.viewmodels
             {
                 MessageBox.Show("Gelieve eerst een beheersdaad te selecteren uit de lijst.");
             }
-    //reload the list
+            //reload the list
+            LoadManagmentMonths(); 
+        }
 
-    LoadManagmentMonths(); 
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
+        private void UserRole()
+        {
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
         }
     }
 }

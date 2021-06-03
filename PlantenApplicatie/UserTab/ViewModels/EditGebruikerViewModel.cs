@@ -170,6 +170,7 @@ namespace PlantenApplicatie.viewmodels
                 {
                     if (TextInputPaswoord == TextInputPaswoordCheck)
                     {
+                        string oud_emailadres = _gebruiker.Emailadres; // necessary to compare user with old email address
                         var gebruiker = new Gebruiker
                         {
                             Voornaam = TextInputVoornaam,
@@ -178,7 +179,7 @@ namespace PlantenApplicatie.viewmodels
                             Emailadres = TextInputEmail,
                             HashPaswoord = Encryptor.GenerateMD5Hash(TextInputPaswoord)
                         };
-                        message = _dao.UpdateUser(gebruiker.Emailadres, TextInputPaswoord);
+                        message = _dao.UpdateUser(gebruiker, _gebruiker.Id, TextInputPaswoord);
                         MessageBox.Show(message);
 
                         // herladen Users door nieuw venster BeheerPlanten op te starten
@@ -212,6 +213,5 @@ namespace PlantenApplicatie.viewmodels
 
             _editGebruikerWindow.Close();
         }
-
     }
 }

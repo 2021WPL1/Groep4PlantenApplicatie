@@ -11,7 +11,6 @@ namespace PlantenApplicatie.viewmodels
 {
     class AddGebruikerViewModel : ViewModelBase
     {
-
         //observable collection for the combobox (Jim)
         public ObservableCollection<string> Roles { get; set; }
 
@@ -138,7 +137,7 @@ namespace PlantenApplicatie.viewmodels
                 return;
             }
             
-            var gebruiker = new Gebruiker
+            var user = new Gebruiker
             {
                 Voornaam = TextInputFirstName,
                 Achternaam = TextInputLastName,
@@ -147,7 +146,7 @@ namespace PlantenApplicatie.viewmodels
                 HashPaswoord = Encryptor.GenerateMD5Hash(passwordBox.Password)
             };
             
-            _dao.CreateLogin(gebruiker, out string message);
+            _dao.CreateLogin(user, out string message);
             
             MessageBox.Show(message);
         }
