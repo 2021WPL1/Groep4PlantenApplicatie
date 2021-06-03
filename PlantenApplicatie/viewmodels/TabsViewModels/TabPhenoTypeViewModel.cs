@@ -279,7 +279,7 @@ namespace PlantenApplicatie.viewmodels
         private void LoadSelectedValues()
         {
             var fenotype = _selectedPlant.Fenotype
-                 .SingleOrDefault();
+                 .FirstOrDefault();
 
             if (fenotype?.Bladgrootte is null) return;
 
