@@ -52,10 +52,10 @@ namespace PlantenApplicatie.viewmodels
                 return;
             }
 
-            var gebruiker =_dao.GetUser(TextInputLogin);
-
             var loginSuccessfulMessageBox = new LoginSuccessfulMessageBox();
             loginSuccessfulMessageBox.Show();
+            
+            var gebruiker =_dao.GetUser(TextInputLogin);
 
             var beheerPlanten = new BeheerPlanten(gebruiker);
             beheerPlanten.Show(); 
