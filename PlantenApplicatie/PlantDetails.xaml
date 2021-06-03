@@ -324,14 +324,14 @@
                                IsEnabled="{Binding Path=IsManager}"/>
                     <Label x:Name="lblOntwikkelSnelheid" Content="Ontwikkelingssnelheid :" Canvas.Left="10" Canvas.Top="74"/>
                     <Label x:Name="lblStrategie" Content="Strategie :" Canvas.Left="10" Canvas.Top="121"/>
-                    <ComboBox x:Name="cmbStrategie" Canvas.Left="129" Canvas.Top="123" Width="598" 
+                    <ComboBox x:Name="cmbStrategie" Canvas.Left="179" Canvas.Top="123" Width="548" 
                               
                       ItemsSource="{Binding CommenStrategies}"
                       SelectedItem="{Binding SelectedCommenStrategy, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}" >
 
                     </ComboBox>
-                    <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
+                    <ListView Height="229" Width="717" Canvas.Left="10" Canvas.Top="325"
                               ItemsSource="{Binding CommensalismMulti}" 
                                           SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
                         <ListView.View>
@@ -349,7 +349,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnRemove" Command="{Binding RemoveCommensalismMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnRemove" Command="{Binding RemoveCommensalismMultiCommand}" Content="Remove" Canvas.Left="162" Canvas.Top="275" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF8FB3C5"/>
@@ -357,18 +357,18 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
+                    <ComboBox Canvas.Left="298" Canvas.Top="225" Width="166"
                        IsEnabled="{Binding Path=IsManager}"
                         ItemsSource="{Binding CommenProperties}"
                       SelectedItem="{Binding SelectedCommenProperties, UpdateSourceTrigger=PropertyChanged}"      
                         />
-                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="392" Canvas.Top="446" Width="298"
+                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="232" Canvas.Top="274" Width="298"
                        ItemsSource="{Binding CommenMulti}"
                       SelectedItem="{Binding SelectedCommensalismMulti, UpdateSourceTrigger=PropertyChanged}"
                               
                               
                               />
-                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46" BorderBrush="Black">
+                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismMultiCommand}" Content="Add" Canvas.Left="544" Canvas.Top="274" Width="46" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF8FB1C5"/>
