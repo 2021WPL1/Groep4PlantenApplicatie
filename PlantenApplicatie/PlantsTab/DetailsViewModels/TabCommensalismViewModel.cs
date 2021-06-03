@@ -320,16 +320,19 @@ namespace PlantenApplicatie.viewmodels
         //edit the properties of the combobox depending on which head property is selected (Liam)
         private void ChangeCommProperties()
         {
-            switch (SelectedCommenProperties.ToLower())
+            if (SelectedCommenProperties is not null)
             {
-                case "sociabiliteit":
-                    LoadSociability();
-                    break;
-                case "levensvorm":
-                    LoadLifeform();
-                    break;
-                default:
-                    break;
+                switch (SelectedCommenProperties.ToLower())
+                {
+                    case "sociabiliteit":
+                        LoadSociability();
+                        break;
+                    case "levensvorm":
+                        LoadLifeform();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
