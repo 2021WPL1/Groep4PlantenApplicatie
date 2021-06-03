@@ -893,6 +893,14 @@ namespace PlantenApplicatie.Data
             if (user != null)
             {
                 message = "U bent geverifieerd, even geduld ...";
+                
+                user.LastLogin = DateTime.Now;
+                
+                _context.Gebruiker.Add(user);
+                _context.Entry(user).State = EntityState.Modified;
+
+                _context.SaveChanges();
+                
                 return true;
             }
 

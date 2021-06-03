@@ -136,6 +136,12 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Email mag alleen van het Vives domein zijn");
                 return;
             }
+
+            if (!IsUserValid(TextInputNumber, TextInputFirstName, TextInputLastName, TextInputEmail))
+            {
+                MessageBox.Show("Email is ongeldig, moet bestaan uit nummer of voornaam.achternaam");
+                return;
+            }
             
             var gebruiker = new Gebruiker
             {
@@ -151,11 +157,18 @@ namespace PlantenApplicatie.viewmodels
             MessageBox.Show(message);
         }
 
+        private bool IsUserValid(string number, string firstName, string lastName, string email)
+        {
+            email = email.Split("@")[0].ToLower();
+            
+            return email == number.ToLower() || email == $"{firstName.ToLower()}.{lastName.ToLower()}";
+        }
+
         private void CloseWindow()
         {
             // herladen Users door nieuw venster BeheerPlanten op te starten
-            BeheerPlanten ManagePlants = new BeheerPlanten(_user);
-            ManagePlants.Show();
+            BeheerPlanten managePlants = new BeheerPlanten(_user);
+            managePlants.Show();
 
             _addGebruikerWindow.Close();
         }
