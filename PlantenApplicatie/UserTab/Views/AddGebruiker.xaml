@@ -5,32 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlantenApplicatie"
         mc:Ignorable="d"
-        Title="Gebruiker toevoegen" Height="450" Width="400">
+        Title="Gebruiker toevoegen" Height="600" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="37*"/>
             <ColumnDefinition Width="163*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Voornaam:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="27" Width="70" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,10,0,0" Text="{Binding TextInputFirstName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
-        <Label Content="Achternaam:" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Height="27" Width="84" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,64,0,0" Text="{Binding TextInputLastName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
-        <Label Content="Rol:" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Height="27" Width="42"/>
-        <ComboBox  SelectedValue="{Binding SelectedRole}" HorizontalAlignment="Left" Margin="66,125,0,0" VerticalAlignment="Top" Width="185" ItemsSource="{Binding Roles}" Grid.Column="1"/>
+        <Label Content="Nummer:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Height="27" Width="70" Grid.ColumnSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="68,36,0,0" Text="{Binding TextInputNumber}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
+        <Label Content="Voornaam:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Height="27" Width="70" Grid.ColumnSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,84,0,0" Text="{Binding TextInputFirstName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
+        <Label Content="Achternaam:" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top" Height="27" Width="84" Grid.ColumnSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,143,0,0" Text="{Binding TextInputLastName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
+        <Label Content="Rol:" HorizontalAlignment="Left" Margin="10,199,0,0" VerticalAlignment="Top" Height="27" Width="42"/>
+        <ComboBox  SelectedValue="{Binding SelectedRole}" HorizontalAlignment="Left" Margin="66,199,0,0" VerticalAlignment="Top" Width="185" ItemsSource="{Binding Roles}" Grid.Column="1"/>
 
 
-        <Label Content="Email:" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" Height="27" Width="70" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="66,169,0,0" Text="{Binding TextInputEmail}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
-        <Label Content="Paswoord:" HorizontalAlignment="Left" Margin="10,232,0,0" VerticalAlignment="Top" Height="27" Width="70" Grid.ColumnSpan="2"/>
-        <Button Content="Gebruiker toevoegen" HorizontalAlignment="Left" Margin="18,383,0,0" VerticalAlignment="Top" Height="26" Width="130"  
+        <Label Content="Email:" HorizontalAlignment="Left" Margin="10,252,0,0" VerticalAlignment="Top" Height="26" Width="70" Grid.ColumnSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="68,251,0,0" Text="{Binding TextInputEmail}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Grid.Column="1"/>
+        <Label Content="Paswoord:" HorizontalAlignment="Left" Margin="10,310,0,0" VerticalAlignment="Top" Height="27" Width="70" Grid.ColumnSpan="2"/>
+        <Button Content="Gebruiker toevoegen" HorizontalAlignment="Left" Margin="26,496,0,0" VerticalAlignment="Top" Height="26" Width="130"  
                 Command="{Binding Path=AddUserCommand}" 
                 CommandParameter="{Binding ElementName=pwbPassword}"  Grid.ColumnSpan="2"/>
-        <Label Content="Paswoord bevestigen:" HorizontalAlignment="Left" Margin="10,281,0,0" VerticalAlignment="Top" Height="27" Width="162" Grid.ColumnSpan="2"/>
-        <Button Content="Sluit venster" HorizontalAlignment="Left" Margin="210,383,0,0" VerticalAlignment="Top" Height="26" Width="86"  Command="{Binding Path=CloseWindowCommand}" Grid.Column="1"/>
+        <Label Content="Paswoord bevestigen:" HorizontalAlignment="Left" Margin="10,364,0,0" VerticalAlignment="Top" Height="26" Width="162" Grid.ColumnSpan="2"/>
+        <Button Content="Sluit venster" HorizontalAlignment="Left" Margin="167,496,0,0" VerticalAlignment="Top" Height="26" Width="86"  Command="{Binding Path=CloseWindowCommand}" Grid.Column="1"/>
         <Label
             Content="{Binding Path=PasswordErrorMessage}" 
-            Grid.Column="1" HorizontalAlignment="Left" Margin="66,328,0,0" VerticalAlignment="Top" Width="187" Height="32" Foreground="#FFE00000" />
-        <PasswordBox Name="pwbPassword" Grid.Column="1" HorizontalAlignment="Left" Margin="66,237,0,0" VerticalAlignment="Top" Width="187" Height="22" KeyUp="PasswordChanged"/>
-        <PasswordBox Name="pwbPasswordConfirm" Grid.Column="1" HorizontalAlignment="Left" Margin="66,286,0,0" VerticalAlignment="Top" Width="187" Height="22" KeyUp="PasswordChanged"/>
+            Grid.Column="1" HorizontalAlignment="Left" Margin="66,406,0,0" VerticalAlignment="Top" Width="187" Height="32" Foreground="#FFE00000" />
+        <PasswordBox Name="pwbPassword" Grid.Column="1" HorizontalAlignment="Left" Margin="66,310,0,0" VerticalAlignment="Top" Width="187" Height="22" KeyUp="PasswordChanged"/>
+        <PasswordBox Name="pwbPasswordConfirm" Grid.Column="1" HorizontalAlignment="Left" Margin="66,366,0,0" VerticalAlignment="Top" Width="187" Height="22" KeyUp="PasswordChanged"/>
     </Grid>
 </Window>

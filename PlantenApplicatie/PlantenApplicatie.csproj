@@ -31,6 +31,7 @@
     <None Remove="bloemenachtergrondVrood.png" />
     <None Remove="bloemenachtergrondVroos.png" />
     <None Remove="Images\bloemenachtergrondVmultiRoze.png" />
+    <None Remove="Images\loading.gif" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
     <PackageReference Include="Prism.Core" Version="8.0.0.1909" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,6 +76,7 @@
     <Resource Include="Images\bloemenachtergrondVpaars.png" />
     <Resource Include="Images\bloemenachtergrondVrood.png" />
     <Resource Include="Images\bloemenachtergrondVroos.png" />
+    <Resource Include="Images\loading.gif" />
   </ItemGroup>
 
 </Project>

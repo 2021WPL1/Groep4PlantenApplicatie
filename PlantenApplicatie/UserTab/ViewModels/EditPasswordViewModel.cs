@@ -63,7 +63,9 @@ namespace PlantenApplicatie.viewmodels
         {
             _encryptedNewPassword = Encryptor.GenerateMD5Hash(password);
             
-            PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
+            PasswordErrorMessage = password == passwordConfirm 
+                ? string.Empty 
+                : "Paswoorden zijn niet gelijk";
         }
 
         //edit the password of the user and update it in the database
