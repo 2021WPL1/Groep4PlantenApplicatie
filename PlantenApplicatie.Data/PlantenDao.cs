@@ -132,8 +132,11 @@ namespace PlantenApplicatie.Data
         }
         public void RemoveUser(Gebruiker user)
         {
-            _context.Gebruiker.Remove(user);
-            _context.SaveChanges();
+            if (user is not null)
+            {
+                _context.Gebruiker.Remove(user);
+                _context.SaveChanges();
+            }
         }
 
         //create Extra property for a plant (Davy)
