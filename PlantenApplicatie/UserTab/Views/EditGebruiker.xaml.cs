@@ -1,4 +1,4 @@
-﻿using PlantenApplicatie.Data;
+﻿using PlantenApplicatie.Domain;
 using PlantenApplicatie.viewmodels;
 using System;
 using System.Collections.Generic;
@@ -15,15 +15,14 @@ using System.Windows.Shapes;
 namespace PlantenApplicatie
 {
     /// <summary>
-    /// Interaction logic for BeheerPlanten.xaml
+    /// Interaction logic for EditGebruiker.xaml
     /// </summary>
-    public partial class BeheerPlanten : Window
+    public partial class EditGebruiker : Window
     {
-        // initialize de scherm (Davy)
-        public BeheerPlanten()
+        public EditGebruiker(Gebruiker gebruiker)
         {
             InitializeComponent();
-            DataContext = new BeheerPlantenViewModel();
+            this.DataContext = new EditGebruikerViewModel(this, gebruiker);
         }
     }
 }

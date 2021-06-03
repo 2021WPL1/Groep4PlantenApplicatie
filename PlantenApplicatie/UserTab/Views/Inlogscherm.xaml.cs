@@ -1,6 +1,4 @@
-﻿using PlantenApplicatie.Data;
-using PlantenApplicatie.Domain;
-using PlantenApplicatie.viewmodels;
+﻿using PlantenApplicatie.viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,15 +14,14 @@ using System.Windows.Shapes;
 namespace PlantenApplicatie
 {
     /// <summary>
-    /// Interaction logic for PlantDetails.xaml
+    /// Interaction logic for Inlogscherm.xaml
     /// </summary>
-    public partial class PlantDetails : Window
+    public partial class Inlogscherm : Window
     {
-        public PlantDetails(Plant selectedPlant)
+        public Inlogscherm()
         {
             InitializeComponent();
-            DataContext = new PlantDetailsViewModel(selectedPlant);
+            this.DataContext = new LoginViewModel(this);
         }
     }
 }
-

@@ -38,8 +38,8 @@ namespace PlantenApplicatie
 
         private void menu_item_beheer_plant_Click(object sender, RoutedEventArgs e)
         {
-            BeheerPlanten beheerPlanten = new BeheerPlanten();
-            beheerPlanten.Show();
+            //BeheerPlanten beheerPlanten = new BeheerPlanten();
+            //beheerPlanten.Show();
         }
     }
 }
