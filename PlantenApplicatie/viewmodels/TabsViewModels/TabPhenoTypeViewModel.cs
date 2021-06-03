@@ -31,8 +31,6 @@ namespace PlantenApplicatie.viewmodels
 
         private FenotypeMulti? _selectedPlantFenoTypeMulti;
         
-        private readonly bool _isManager;
-        
         // Constructor
         public TabPhenoTypeViewModel(Plant selectedPlant, Gebruiker user)
         {
@@ -45,7 +43,7 @@ namespace PlantenApplicatie.viewmodels
 
             LoadAllProperties();
             
-            _isManager = user.Rol.ToLower() == "manager";
+            IsManager = user.Rol.ToLower() == "manager";
         }
 
         //observable collections for the different comboboxes and listviews ( Jim)
@@ -68,6 +66,8 @@ namespace PlantenApplicatie.viewmodels
         public ICommand AddFenotypeMultiCommand { get; }
         public ICommand EditFenotypeMultiCommand { get; }
         public ICommand DeleteFenotypeMultiPlantCommand { get; }
+        
+        public bool IsManager { get; }
 
         //methods to load in the different lists in the comboboxes and listviews (Jim)
         public void LoadAllProperties()
