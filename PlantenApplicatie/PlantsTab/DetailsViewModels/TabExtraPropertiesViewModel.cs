@@ -13,15 +13,19 @@ namespace PlantenApplicatie.viewmodels
     //class and GUI (Davy)
     public class TabExtraPropertiesViewModel : ViewModelBase
     {
-        //private variables (Davy)
-        private Plant _selectedPlant;
-        private ExtraEigenschap _selectedExtraProperties;
-
-
         // button commands (Davy)
         public ICommand AddExtraCommand { get; set; }
         public ICommand EditExtraCommand { get; set; }
         public ICommand RemoveExtraCommand { get; set; }
+
+        //observable collections for the listview/combobox (Davy)
+        public ObservableCollection<ExtraEigenschap> ManageExtraProperties { get; set; }
+        public ObservableCollection<string> Nectars { get; set; }
+        public ObservableCollection<string> Pollen { get; set; }
+
+        //private variables (Davy)
+        private Plant _selectedPlant;
+        private ExtraEigenschap _selectedExtraProperties;
 
         //DAO to access the methods (Davy)
         private readonly PlantenDao _plantenDao;
@@ -38,12 +42,6 @@ namespace PlantenApplicatie.viewmodels
 
         private Gebruiker _selectedUser;
         private bool _IsManager;
-
-        //observable collections for the listview/combobox (Davy)
-        public ObservableCollection<ExtraEigenschap> ManageExtraProperties { get; set; }
-        public ObservableCollection<string> Nectars { get; set; }
-        public ObservableCollection<string> Pollen { get; set; }
-
 
         //constructor with the given user and selected plant
         public TabExtraPropertiesViewModel(Plant selectedPlant, Gebruiker user)
@@ -79,24 +77,6 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-
-        //check which roles the user has. and if the user is an old student(Gebruiker)
-        //He can only observe the selected values of the plant (Davy,Jim)
-        private void UserRole()
-        {
-            switch (SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
-        }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedUser
         {
@@ -317,17 +297,14 @@ namespace PlantenApplicatie.viewmodels
             {
                 MessageBox.Show("Gelieve eerst een extra eigenschap te selecteren.");
             }
-
-
             LoadManagerExtraProperties();
-
         }
+
         //delete the extra property of the plant (Davy)
         public void RemoveExtra()
         {
             //set a variable extra eigenschap to the selected extra properties to delete
             ExtraEigenschap extraProperty = SelectedExtraProperty;
-
                     
             if (SelectedExtraProperty != null)
             {
@@ -342,6 +319,22 @@ namespace PlantenApplicatie.viewmodels
             LoadManagerExtraProperties();
         }
 
-
+        //check which roles the user has. and if the user is an old student(Gebruiker)
+        //He can only observe the selected values of the plant (Davy,Jim)
+        private void UserRole()
+        {
+            switch (SelectedUser.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
+            }
+        }
     }
 }

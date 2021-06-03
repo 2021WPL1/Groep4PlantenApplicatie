@@ -17,26 +17,20 @@ namespace PlantenApplicatie.viewmodels
     //class and GUI (Lily)
     public class TabPhotoViewModel : ViewModelBase
     {
-        private readonly PlantenDao _plantenDao;
-        private  Plant _selectedPlant;
-
-        private Foto? _selectedFoto;
-
-        private ImageSource? _selectedImage;
-        private string? _selectedProperty;
-        private string? _selectedUrl;
-
-
         //button commands
         public ICommand ChangePhotoCommand { get; }
         public ICommand DeletePhotoCommand { get; }
-
-
         public List<string> Properties { get; }
         
         // private variabelen (Davy)
         private Gebruiker _selectedUser;
         private bool _IsManager;
+        private readonly PlantenDao _plantenDao;
+        private  Plant _selectedPlant;
+        private Foto? _selectedFoto;
+        private ImageSource? _selectedImage;
+        private string? _selectedProperty;
+        private string? _selectedUrl;
         
         //constructor
         public TabPhotoViewModel(Plant selectedplant,Gebruiker user)
@@ -62,22 +56,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged("IsManager");
             }
         }
-        //controleer welke rol de gebruiker heeft
-        private void UserRole()
-        {
-            switch (SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
-        }
+
         public Plant SelectedPlant
         {
             private get => _selectedPlant;
@@ -238,6 +217,23 @@ namespace PlantenApplicatie.viewmodels
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        //controleer welke rol de gebruiker heeft
+        private void UserRole()
+        {
+            switch (SelectedUser.Rol.ToLower())
+            {
+                case "manager":
+                    IsManager = true;
+                    break;
+                case "data-collector":
+                    IsManager = false;
+                    break;
+                case "gebruiker":
+                    IsManager = false;
+                    break;
             }
         }
     }

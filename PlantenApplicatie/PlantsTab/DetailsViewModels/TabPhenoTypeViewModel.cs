@@ -14,6 +14,28 @@ namespace PlantenApplicatie.viewmodels
     //class and GUI (Jim)
     public class TabPhenoTypeViewModel : ViewModelBase
     {
+        //observable collections for the different comboboxes and listviews ( Jim)
+        public ObservableCollection<int> FenoLeafSizes { get; } = new();        
+        public ObservableCollection<string> FenoLeafShapes { get; } = new();
+        public ObservableCollection<string> FenoBlooms { get; } = new();
+        public ObservableCollection<string> FenoHabitussen { get; } = new();
+        public ObservableCollection<string> FenoLifeforms { get; } = new();
+        public ObservableCollection<string> FenoSprouts { get; } = new();
+        public ObservableCollection<string> FenotypeProperties { get; } = new();
+        public ObservableCollection<string> FenoMultiMonths { get; } = new();
+        
+        public ObservableCollection<FenotypeMulti> PlantFenoTypesMulti { get; } = new();
+
+        public ObservableCollection<string> FenoTypesMulti { get; } = new();
+        
+        //button commands  (Jim)
+        public ICommand EditFenoTypeCommand { get; }
+        public ICommand AddFenotypeMultiCommand { get; }
+        public ICommand EditFenotypeMultiCommand { get; }
+        public ICommand DeleteFenotypeMultiPlantCommand { get; }
+        
+        public bool IsManager { get; }
+
         // private variables (Jim)
         private readonly PlantenDao _plantenDao = PlantenDao.Instance;
         private Plant _selectedPlant;
@@ -45,29 +67,6 @@ namespace PlantenApplicatie.viewmodels
             
             IsManager = user.Rol.ToLower() == "manager";
         }
-
-        //observable collections for the different comboboxes and listviews ( Jim)
-        public ObservableCollection<int> FenoLeafSizes { get; } = new();
-        
-        public ObservableCollection<string> FenoLeafShapes { get; } = new();
-        public ObservableCollection<string> FenoBlooms { get; } = new();
-        public ObservableCollection<string> FenoHabitussen { get; } = new();
-        public ObservableCollection<string> FenoLifeforms { get; } = new();
-        public ObservableCollection<string> FenoSprouts { get; } = new();
-        public ObservableCollection<string> FenotypeProperties { get; } = new();
-        public ObservableCollection<string> FenoMultiMonths { get; } = new();
-        
-        public ObservableCollection<FenotypeMulti> PlantFenoTypesMulti { get; } = new();
-
-        public ObservableCollection<string> FenoTypesMulti { get; } = new();
-        
-        //button commands  (Jim)
-        public ICommand EditFenoTypeCommand { get; }
-        public ICommand AddFenotypeMultiCommand { get; }
-        public ICommand EditFenotypeMultiCommand { get; }
-        public ICommand DeleteFenotypeMultiPlantCommand { get; }
-        
-        public bool IsManager { get; }
 
         //methods to load in the different lists in the comboboxes and listviews (Jim)
         public void LoadAllProperties()
