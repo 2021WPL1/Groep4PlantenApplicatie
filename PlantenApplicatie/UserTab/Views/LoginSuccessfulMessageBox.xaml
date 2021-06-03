@@ -9,7 +9,7 @@
         Title="LoginSuccessfulMessageBox" Height="130" Width="248"
         WindowStyle="None">
     <Grid Margin="0,0,0,-6">
-        <Label Content="U bent geverifieerd, even geduld..." HorizontalAlignment="Left" Margin="33,24,0,0" VerticalAlignment="Top"/>
-        <Image HorizontalAlignment="Center" Height="25" Margin="0,65,0,0" VerticalAlignment="Top" Width="25" gif:ImageBehavior.AnimatedSource="/Images/loading.gif"/>
+        <Label Content="U bent geverifieerd, even geduld..." HorizontalAlignment="Center" Margin="0,24,0,0" VerticalAlignment="Top"/>
+        <Image HorizontalAlignment="Left" Height="25" Margin="111,65,0,0" VerticalAlignment="Top" Width="26" gif:ImageBehavior.AnimatedSource="/Images/loading.gif"/>
     </Grid>
 </Window>

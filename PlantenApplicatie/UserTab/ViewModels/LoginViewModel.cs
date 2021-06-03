@@ -41,7 +41,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public void Login(PasswordBox passwordBox)
+        private void Login(PasswordBox passwordBox)
         {
             var isLoginSuccessfull = _dao.CheckLogin(TextInputLogin, passwordBox.Password, 
                 out string message);
@@ -52,10 +52,12 @@ namespace PlantenApplicatie.viewmodels
                 return;
             }
 
-            var gebruiker =_dao.GetUser(TextInputLogin);
+            _loginWindow.Hide();
 
             var loginSuccessfulMessageBox = new LoginSuccessfulMessageBox();
             loginSuccessfulMessageBox.Show();
+            
+            var gebruiker =_dao.GetUser(TextInputLogin);
 
             var beheerPlanten = new BeheerPlanten(gebruiker);
             beheerPlanten.Show(); 
@@ -67,7 +69,7 @@ namespace PlantenApplicatie.viewmodels
         //close the window when it gets cancelled
         public void Cancel()
         {
-            this._loginWindow.Close();
+            _loginWindow.Close();
         }
     }
 }
