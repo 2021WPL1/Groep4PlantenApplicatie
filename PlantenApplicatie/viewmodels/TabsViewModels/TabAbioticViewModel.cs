@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Input;
 using PlantenApplicatie.Data;
 using Prism.Commands;
+using System.Windows;
 
 namespace PlantenApplicatie.viewmodels
 {
@@ -197,44 +198,60 @@ namespace PlantenApplicatie.viewmodels
         {
             var abiotic = _selectedPlant.Abiotiek.SingleOrDefault();
 
-            Console.WriteLine(_selectedPlant.Abiotiek.Count);
-
-            if (abiotic is null)
+            if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Abiotiek", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                _plantenDao.AddAbiotic(_selectedPlant, SelectedInsolation, SelectedSoilType,
-                    SelectedMoistureRequirement, SelectedNutritionRequirement,
-                    SelectedAntagonianEnvironment);
-            }
-            else
-            {
-                _plantenDao.ChangeAbiotic(abiotic, SelectedInsolation, SelectedSoilType,
-                    SelectedMoistureRequirement, SelectedNutritionRequirement,
-                    SelectedAntagonianEnvironment);
+                if (abiotic is null)
+                {
+                    _plantenDao.AddAbiotic(_selectedPlant, SelectedInsolation, SelectedSoilType,
+                        SelectedMoistureRequirement, SelectedNutritionRequirement,
+                        SelectedAntagonianEnvironment);
+                }
+                else
+                {
+                    _plantenDao.ChangeAbiotic(abiotic, SelectedInsolation, SelectedSoilType,
+                        SelectedMoistureRequirement, SelectedNutritionRequirement,
+                        SelectedAntagonianEnvironment);
+                }
             }
         }
 
         //delete the selected habitat from the plant (Lily)
         private void RemoveHabitat()
         {
-            var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioPlantHabitat);
-            var abiothiekMulti = _plantenDao.GetAbioMulti(_selectedPlant)
-                .Single(am => am.Eigenschap == Property && am.Waarde == habitatAbbreviation);
+            if (SelectedAbioPlantHabitat is not null)
+            {
+                var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioPlantHabitat);
+                var abiothiekMulti = _plantenDao.GetAbioMulti(_selectedPlant)
+                    .Single(am => am.Eigenschap == Property && am.Waarde == habitatAbbreviation);
 
-            _plantenDao.DeleteAbioticMulti(abiothiekMulti);
+                _plantenDao.DeleteAbioticMulti(abiothiekMulti);
 
-            SelectedPlantHabitats.Remove(SelectedAbioPlantHabitat);
+                SelectedPlantHabitats.Remove(SelectedAbioPlantHabitat);
+            }
+            else
+            {
+                MessageBox.Show("Selecteer eerst een habitat voor te verwijderen","Abiotiek");
+            }
         }
 
         //add a habitat to the plant (Lily)
         private void AddHabitat()
         {
-            if (SelectedPlantHabitats.Contains(SelectedAbioHabitat)) return;
+            if (SelectedAbioHabitat is not null)
+            {
+                if (SelectedPlantHabitats.Contains(SelectedAbioHabitat)) return;
 
-            var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioHabitat);
+                var habitatAbbreviation = _plantenDao.GetAbioHabitatAbbreviation(SelectedAbioHabitat);
 
-            _plantenDao.AddAbioticMulti(_selectedPlant, Property, habitatAbbreviation);
+                _plantenDao.AddAbioticMulti(_selectedPlant, Property, habitatAbbreviation);
 
-            SelectedPlantHabitats.Add(SelectedAbioHabitat);
+                SelectedPlantHabitats.Add(SelectedAbioHabitat);
+            }
+            else
+            {
+                MessageBox.Show("Selecteer een habitat om toe te voegen", "Abiotiek");
+            }
+
         }
     }
 }
