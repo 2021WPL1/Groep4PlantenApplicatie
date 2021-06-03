@@ -132,9 +132,16 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         // delete a user
         private void DeleteUser()
         {
-            _dao.RemoveUser(SelectedUser);
+            if (SelectedUser is not null)
+            {
+                _dao.RemoveUser(SelectedUser);
             LoadUsers();
         }
+            else
+            {
+                MessageBox.Show("Gelieve een gebruiker te selecteren", "Gebruiker", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+}
 
         // log out of the application
         private void LogOut()
