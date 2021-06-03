@@ -304,18 +304,8 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch(SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
+
         }
 
         private void AddUser()

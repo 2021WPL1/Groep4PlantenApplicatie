@@ -294,12 +294,12 @@ namespace PlantenApplicatie.viewmodels
         //edit the fenotype of the selected plant, if there is none a fenotype will be added to the plant with the selected values  (Jim)
         private void EditPhenotype()
         {
-            var fenotype = _plantenDao.GetPhenotypeFromPlant(SelectedPlant);
+            var phenotype = _plantenDao.GetPhenotypeFromPlant(SelectedPlant);
 
             if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Fenotype",
                 MessageBoxButton.YesNo) == MessageBoxResult.No) return;
 
-            if (fenotype is null)
+            if (phenotype is null)
             {
                 _plantenDao.AddPhenotype(SelectedPlant, (int)SelectedLeafSize!, SelectedLeafShape, null,
                     SelectedBloom, SelectedHabitus, SelectedLifeform, SelectedSproutPhenology);
@@ -343,14 +343,6 @@ namespace PlantenApplicatie.viewmodels
                 MessageBox.Show("Gelieve eerst een eigenschap te selecteren!",
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-        }
-
-        //laad de geselecteerde waardes van een Fenotype multi in (Jim)
-        private void LoadSelectedValuesMulti()
-        {
-            SelectedPhenotypeProperties = SelectedPlantPhenoTypeMulti.Eigenschap;
-            SelectedPhenoMultiMonth = SelectedPlantPhenoTypeMulti.Maand;
-            SelectedPhenoTypesMulti = SelectedPlantPhenoTypeMulti.Waarde;
         }
 
         //load the different properties in when the head property changes (Jim)

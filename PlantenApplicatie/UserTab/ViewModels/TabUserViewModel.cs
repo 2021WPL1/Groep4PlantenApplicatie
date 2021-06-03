@@ -81,18 +81,8 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch (SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
+
         }
 
         // show all the users in listview
@@ -111,24 +101,24 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         //make a new window to add a user
         private void AddUser()
         {
-            AddGebruiker addGebruiker = new AddGebruiker(SelectedUser);
-            addGebruiker.Show();
+            AddGebruiker addUser = new AddGebruiker(SelectedUser);
+            addUser.Show();
             _tabUserWindow.Close();
         }
 
         // edit a user
         private void EditUser()
         {
-            EditGebruiker editGebruiker = new EditGebruiker(SelectedUser);
-            editGebruiker.Show();
+            EditGebruiker editUser = new EditGebruiker(SelectedUser);
+            editUser.Show();
             _tabUserWindow.Close();
         }
 
         //edit the current password the user has
         private void EditPassword()
         {
-            WijzigWachtwoord wijzigWachtwoord = new WijzigWachtwoord(OriginalUser);
-            wijzigWachtwoord.Show();
+            WijzigWachtwoord editPassword = new WijzigWachtwoord(OriginalUser);
+            editPassword.Show();
         }
 
         // delete a user
@@ -144,8 +134,8 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             if (MessageBox.Show("Weet u zeker dat u wilt uitloggen?", "Logout", MessageBoxButton.YesNo) == MessageBoxResult.No) return;
 
             this._tabUserWindow.Close();
-            Inlogscherm inlogscherm = new Inlogscherm();
-            inlogscherm.Show();
+            Inlogscherm loginScreen = new Inlogscherm();
+            loginScreen.Show();
         }
     }
 }

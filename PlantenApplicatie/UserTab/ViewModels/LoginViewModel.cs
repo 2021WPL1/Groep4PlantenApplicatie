@@ -51,12 +51,12 @@ namespace PlantenApplicatie.viewmodels
 
             if (!isLoginSuccessfull) return;
 
-            var gebruiker =_dao.GetUser(TextInputLogin);
+            var user =_dao.GetUser(TextInputLogin);
                 
             _loginWindow.Hide();
                 
-            var beheerPlanten = new BeheerPlanten(gebruiker);
-            beheerPlanten.Show(); 
+            var managePlants = new BeheerPlanten(user);
+            managePlants.Show(); 
         }
 
         //close the window when it gets cancelled

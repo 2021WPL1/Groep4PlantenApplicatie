@@ -81,18 +81,8 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch (SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
+
         }
 
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
@@ -270,12 +260,12 @@ namespace PlantenApplicatie.viewmodels
         //Edit the commensalisme of a plant, if there is none for the current plant a new one will be made with the selected values(Liam)
         private void EditCommensalism()
         {
-            var commensalisme = _dao.GetCommensialism(SelectedPlant);
+            var commensialism = _dao.GetCommensialism(SelectedPlant);
 
 
             if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Commensalisme", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                if (commensalisme == null)
+                if (commensialism == null)
                 {
                     _dao.AddCommensalism(SelectedPlant, SelectedCommenDevelopmentSpeed, SelectedCommenStrategy);
                 }

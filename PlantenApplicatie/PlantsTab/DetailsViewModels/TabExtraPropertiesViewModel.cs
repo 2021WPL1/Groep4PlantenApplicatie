@@ -84,18 +84,8 @@ namespace PlantenApplicatie.viewmodels
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()
         {
-            switch (SelectedUser.Rol.ToLower())
-            {
-                case "manager":
-                    IsManager = true;
-                    break;
-                case "data-collector":
-                    IsManager = false;
-                    break;
-                case "gebruiker":
-                    IsManager = false;
-                    break;
-            }
+            IsManager = SelectedUser.Rol.ToLower() == "manager";
+
         }
         //the selected user is the account with which you login. This getter setter is given at the start and passes to all other viewmodels (Davy)
         public Gebruiker SelectedUser
