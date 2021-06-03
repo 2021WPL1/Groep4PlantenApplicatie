@@ -1,4 +1,5 @@
 ﻿using PlantenApplicatie.Data;
+using PlantenApplicatie.UserTab.Views;
 using Prism.Commands;
 using System;
 using System.Windows;
@@ -45,16 +46,22 @@ namespace PlantenApplicatie.viewmodels
             var isLoginSuccessfull = _dao.CheckLogin(TextInputLogin, passwordBox.Password, 
                 out string message);
 
-            MessageBox.Show(message);
-
-            if (!isLoginSuccessfull) return;
+            if (!isLoginSuccessfull)
+            {
+                MessageBox.Show(message);
+                return;
+            }
 
             var gebruiker =_dao.GetUser(TextInputLogin);
-                
-            _loginWindow.Hide();
-                
+
+            var loginSuccessfulMessageBox = new LoginSuccessfulMessageBox();
+            loginSuccessfulMessageBox.Show();
+
             var beheerPlanten = new BeheerPlanten(gebruiker);
             beheerPlanten.Show(); 
+            
+            loginSuccessfulMessageBox.Close();
+            _loginWindow.Close();
         }
 
         //close the window when it gets cancelled
