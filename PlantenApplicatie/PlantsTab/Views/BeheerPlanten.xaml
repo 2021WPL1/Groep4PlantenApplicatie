@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="BeheerPlanten" Height="550" Width="1200" BorderBrush="Black">
     <Window.Background>
-        <ImageBrush ImageSource="Images/bloemenachtergrondMetKlimopBloemen.png"/>
+        <ImageBrush ImageSource="/Images/bloemenachtergrondMetKlimopBloemen.png"/>
     </Window.Background>
     <Grid>
         <TabControl TabStripPlacement="Left">
             <TabControl.Background>
-                <ImageBrush ImageSource="images/bloemenachtergrondVmulti.png" Stretch="Fill"/>
+                <ImageBrush ImageSource="/Images/bloemenachtergrondVmulti.png" Stretch="Fill"/>
             </TabControl.Background>
             <TabItem Header="Opzoeken"  DataContext="{Binding Children[0]}">
                 <TabItem.Background>
@@ -24,7 +24,7 @@
                 <Grid>
                     <StackPanel Orientation="Vertical">
                         <StackPanel.Background>
-                            <ImageBrush ImageSource="images/bloemenachtergrondVmultiGroen.png"/>
+                            <ImageBrush ImageSource="/Images/bloemenachtergrondVmultiGroen.png"/>
                         </StackPanel.Background>
                         <GroupBox Header="Kenmerken" Height="170">
                             <Canvas Margin="10" OpacityMask="#FF663F3F">
@@ -103,7 +103,7 @@
                 </TabItem.Background>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="images/bloemenachtergrondVmultiZomer.png"/>
+                        <ImageBrush ImageSource="/Images/bloemenachtergrondVmultiZomer.png"/>
                     </Grid.Background>
                     <GroupBox Header="Naam en toebehoren" Margin="0,0,0,284">
                         <Canvas Margin="10,0,10,0" Height="112">
@@ -187,7 +187,7 @@
                         <RowDefinition Height="459*"/>
                     </Grid.RowDefinitions>
                     <Grid.Background>
-                        <ImageBrush ImageSource="images/bloemenachtergrondVmultiOranje.png"/>
+                        <ImageBrush ImageSource="/Images/bloemenachtergrondVmultiOranje.png"/>
                     </Grid.Background>
                     <ListView x:Name="lvPlanten_wijzigen_verwijderen" Margin="10,64,40,253" Grid.RowSpan="2">
                         <ListView.View>
@@ -221,7 +221,7 @@
                 </TabItem.Background>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="images/bloemenachtergrondVmulti.png"/>
+                        <ImageBrush ImageSource="/Images/bloemenachtergrondVmulti.png"/>
                     </Grid.Background>
                     <Label Content="Kies bestand :" HorizontalAlignment="Left" Margin="35,31,0,0" VerticalAlignment="Top"/>
                     <Button Content="Bestand ..." HorizontalAlignment="Left" Margin="141,34,0,0" VerticalAlignment="Top" Width="109">
@@ -261,7 +261,7 @@
                 <Grid>
                     <Canvas>
                         <Canvas.Background>
-                            <ImageBrush ImageSource="images/bloemenachtergrondVmultiDauw.png"/>
+                            <ImageBrush ImageSource="/Images/bloemenachtergrondVmultiDauw.png"/>
                         </Canvas.Background>
                         <Label Content="Kies planten om te exporteren :" Canvas.Left="348" FontSize="24" />
 
@@ -310,7 +310,7 @@
                 </TabItem.Background>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="images/bloemenachtergrondVmultiSchaduw.png"/>
+                        <ImageBrush ImageSource="/Images/bloemenachtergrondVmultiSchaduw.png"/>
                     </Grid.Background>
                 </Grid>
             </TabItem>
@@ -324,7 +324,7 @@
                 <Grid>
                     <Canvas>
                         <Canvas.Background>
-                            <ImageBrush ImageSource="images/bloemenachtergrondVmultiRoze.png"/>
+                            <ImageBrush ImageSource="/Images/bloemenachtergrondVmultiRoze.png"/>
                         </Canvas.Background>
                         <Button Content="Voeg gebruiker toe" Canvas.Left="31" Canvas.Top="436" Width="114" Height="22"
                                 Command="{Binding Path=AddUserCommand}" IsEnabled="{Binding Path=IsManager}">
