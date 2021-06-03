@@ -2,6 +2,7 @@
 using PlantenApplicatie.Domain;
 using Prism.Commands;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,7 +16,7 @@ namespace PlantenApplicatie.viewmodels
         private readonly PlantenDao _dao;
 
         //private variables for the GUI
-        private string _selectedRole;
+        private string? _selectedRole;
         private string? _textInputNumber;
         private string? _textInputFirstName;
         private string? _textInputLastName;
@@ -99,7 +100,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        public string SelectedRole
+        public string? SelectedRole
         {
             get => _selectedRole;
             set
@@ -122,7 +123,9 @@ namespace PlantenApplicatie.viewmodels
         //check the passwords on if they are equal
         public void PasswordChecker(string password, string passwordConfirm)
         {
-            PasswordErrorMessage = password == passwordConfirm ? string.Empty : "Paswoorden zijn niet gelijk";
+            PasswordErrorMessage = password == passwordConfirm 
+                ? string.Empty 
+                : "Paswoorden zijn niet gelijk";
         }
         
         //load in the roles, for now database is empty so the roles are hardcoded to access the program (Jim)
@@ -135,19 +138,18 @@ namespace PlantenApplicatie.viewmodels
 
         private void AddUser(PasswordBox passwordBox)
         {
-            if (TextInputFirstName is null || TextInputLastName is null || TextInputEmail is null)
+            if (TextInputNumber is null || TextInputFirstName is null || TextInputLastName is null 
+                || SelectedRole is null || TextInputEmail is null)
             {
                 MessageBox.Show("Niet alle velden zijn ingevuld");
                 return;
             }
-
             if (!(TextInputEmail.EndsWith("@vives.be") || TextInputEmail.EndsWith("@student.vives.be")))
             {
                 MessageBox.Show("Email mag alleen van het Vives domein zijn");
                 return;
             }
-
-            if (!IsEmailValid(TextInputNumber, TextInputFirstName, TextInputLastName, TextInputEmail))
+            if (!IsEmailAddressValid(TextInputNumber, TextInputFirstName, TextInputLastName, TextInputEmail))
             {
                 MessageBox.Show("Email is ongeldig, moet bestaan uit nummer of voornaam.achternaam");
                 return;
@@ -155,6 +157,7 @@ namespace PlantenApplicatie.viewmodels
             
             var gebruiker = new Gebruiker
             {
+                Vivesnr = TextInputNumber,
                 Voornaam = TextInputFirstName,
                 Achternaam = TextInputLastName,
                 Rol = SelectedRole,
@@ -167,14 +170,11 @@ namespace PlantenApplicatie.viewmodels
             MessageBox.Show(message);
         }
 
-        private static bool IsEmailValid(string? number, string? firstName, string? lastName, string? email)
+        private static bool IsEmailAddressValid(string? number, string? firstName, string? lastName, string? email)
         {
-            if (email is null) return false;
-            
-            email = email.Split("@")[0].ToLower();
-
-            return number is not null && email == number || firstName is not null && lastName is not null 
-                && email == $"{firstName.ToLower()}.{lastName.ToLower()}";
+            return email is not null 
+                   && Regex.IsMatch(
+                       email, $@"^({number}|{firstName}\.{lastName})@(vives.be|student.vives.be)$");
         }
 
         private void CloseWindow()

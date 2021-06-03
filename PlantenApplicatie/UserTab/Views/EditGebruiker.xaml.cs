@@ -24,5 +24,14 @@ namespace PlantenApplicatie
             InitializeComponent();
             this.DataContext = new EditGebruikerViewModel(this, gebruiker);
         }
+
+        private void PasswordChanged(object sender, KeyEventArgs e)
+        {
+            if (DataContext is null) return;
+
+            var dynamicDataContext = ((dynamic)DataContext);
+
+            dynamicDataContext.PasswordChecker(pwbPassword.Password, pwbPasswordConfirm.Password);
+        }
     }
 }

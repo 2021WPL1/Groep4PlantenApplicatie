@@ -4,8 +4,11 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -16,27 +19,24 @@ namespace PlantenApplicatie.viewmodels
     {
         private readonly PlantenDao _dao;
 
-        private string _SelectedRole;
-        private string _textInputNumber;
-        private string _TextInputVoornaam;
-        private string _TextInputAchternaam;
-        private string _TextInputEmail;
-        private string _TextInputPaswoord;
-        private string _TextInputPaswoordCheck;
-        private string _Check;
+        private string? _selectedRole;
+        private string? _textInputNumber;
+        private string? _textInputVoornaam;
+        private string? _textInputAchternaam;
+        private string? _textInputEmail;
 
-        private Gebruiker _gebruiker;
+        private string _passwordErrorMessage;
 
-        public ObservableCollection<string> Roles { get; set; }
+        private readonly Gebruiker _gebruiker;
+
+        private bool _passwordsMatch = true;
+
+        public ObservableCollection<string> Roles { get; }
 
         // button commando's
-        public ICommand EditUserCommand { get; set; }
-
-        public ICommand CloseWindowCommand { get; set; }
+        public ICommand EditUserCommand { get; }
 
         private Window _editGebruikerWindow;
-
-        private Brush _color;
 
         public EditGebruikerViewModel(Window window, Gebruiker gebruiker)
         {
@@ -45,107 +45,88 @@ namespace PlantenApplicatie.viewmodels
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
 
-            EditUserCommand = new DelegateCommand(EditUser);
-            CloseWindowCommand = new DelegateCommand(CloseWindow);
+            EditUserCommand = new DelegateCommand<PasswordBox>(EditUser);
             LoadRoles();
             LoadData();
-        }
-
-        public Brush ChangeColor
-        {
-            get => _color;
-            set
-            {
-                _color = value;
-                OnPropertyChanged();
-            }
         }
 
         // toon geselecteerde gebruiker in textboxen, comboboxen
         private void LoadData()
         {
+            TextInputNumber = _gebruiker.Vivesnr;
             TextInputVoornaam = _gebruiker.Voornaam;
             TextInputAchternaam = _gebruiker.Achternaam;
             TextInputEmail = _gebruiker.Emailadres;
             SelectedRole = _gebruiker.Rol;
         }
-        public string TextInputNumber
+        
+        public string? TextInputNumber
         {
             get => _textInputNumber;
             set
             {
                 _textInputNumber = value;
-            }
-        }
-
-        public string TextInputVoornaam
-        {
-            get => _TextInputVoornaam;
-            set
-            {
-                _TextInputVoornaam = value;
-                OnPropertyChanged();
-            }
-        }
-        public string TextInputAchternaam
-        {
-            get => _TextInputAchternaam;
-            set
-            {
-                _TextInputAchternaam = value;
                 OnPropertyChanged();
             }
         }
 
-        public string TextInputEmail
+        public string? TextInputVoornaam
         {
-            get => _TextInputEmail;
+            get => _textInputVoornaam;
             set
             {
-                _TextInputEmail = value;
+                _textInputVoornaam = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public string? TextInputAchternaam
+        {
+            get => _textInputAchternaam;
+            set
+            {
+                _textInputAchternaam = value;
                 OnPropertyChanged();
             }
         }
 
-        public string TextInputPaswoord
+        public string? TextInputEmail
         {
-            get => _TextInputPaswoord;
+            get => _textInputEmail;
             set
             {
-                _TextInputPaswoord = value;
-                OnPropertyChanged();
-            }
-        }
-        public string TextInputPaswoordCheck
-        {
-            get => _TextInputPaswoordCheck;
-            set
-            {
-                _TextInputPaswoordCheck = value;
-                OnPropertyChanged();
-                PasswordChecker();
-            }
-        }
-
-        public string SelectedRole
-        {
-            get => _SelectedRole;
-            set
-            {
-                _SelectedRole = value;
+                _textInputEmail = value;
                 OnPropertyChanged();
             }
         }
 
-        public string Check
+        public string? SelectedRole
         {
-            get => _Check;
+            get => _selectedRole;
             set
             {
-                _Check = value;
+                _selectedRole = value;
                 OnPropertyChanged();
             }
+        }
 
+        public string PasswordErrorMessage
+        {
+            get => _passwordErrorMessage;
+            private set
+            {
+                _passwordErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void PasswordChecker(string password, string passwordConfirm)
+        {
+            _passwordsMatch = password == passwordConfirm;
+            
+            PasswordErrorMessage = _passwordsMatch
+                ? string.Empty 
+                : "Paswoorden zijn niet gelijk";
         }
 
         public void LoadRoles()
@@ -153,87 +134,48 @@ namespace PlantenApplicatie.viewmodels
             Roles.Add("manager");
             Roles.Add("data-collector");
             Roles.Add("gebruiker");
-
         }
 
-        public void PasswordChecker()
+        public void EditUser(PasswordBox passwordBox)
         {
-            if (TextInputPaswoord != TextInputPaswoordCheck)
-            {
-                Check = "Paswoorden zijn niet gelijk";
-                ChangeColor = Brushes.Red;
-            }
-            else
-            {
-                Check = "Paswoorden zijn gelijk";
-                ChangeColor = Brushes.Green;
-            }
-        }
-        
-        public void EditUser()
-        {
-            string message = "";
-
-            if (SelectedRole == null || TextInputVoornaam == null || _TextInputAchternaam == null ||
-                TextInputEmail == null || TextInputPaswoord == null || TextInputPaswoordCheck == null)
+            if (TextInputNumber is null || TextInputVoornaam is null || TextInputAchternaam is null 
+                || SelectedRole is null || TextInputEmail is null)
             {
                 MessageBox.Show("Niet alle velden zijn ingevuld");
+                return;
             }
-            else if (!IsEmailValid(TextInputNumber, TextInputVoornaam, TextInputAchternaam, 
+            if (!IsEmailAddressValid(TextInputNumber, TextInputVoornaam, TextInputAchternaam, 
                 TextInputEmail))
             {
-                MessageBox.Show("Email is ongeldig, moet bestaan uit nummer of voornaam.achternaam");
+                MessageBox.Show("Email is ongeldig");
+                return;
             }
-            else
+            if (!_passwordsMatch)
             {
-                if (TextInputEmail.Contains("@vives.be") || TextInputEmail.Contains("@student.vives.be"))
-                {
-                    if (TextInputPaswoord == TextInputPaswoordCheck)
-                    {
-                        var gebruiker = new Gebruiker
-                        {
-                            Voornaam = TextInputVoornaam,
-                            Achternaam = TextInputAchternaam,
-                            Rol = SelectedRole,
-                            Emailadres = TextInputEmail,
-                            HashPaswoord = Encryptor.GenerateMD5Hash(TextInputPaswoord)
-                        };
-                        message = _dao.UpdateUser(gebruiker.Emailadres, TextInputPaswoord);
-                        MessageBox.Show(message);
-
-                        // herladen Users door nieuw venster BeheerPlanten op te starten
-                        BeheerPlanten beheerPlanten = new BeheerPlanten(_gebruiker);
-                        beheerPlanten.Show();
-
-                        _editGebruikerWindow.Close();
-                    }
-
-                }
-                else
-                {
-                    MessageBox.Show("Email mag alleen van het Vives domein zijn.");
-                }
+                MessageBox.Show("Wachtwoorden zijn niet gelijk");
+                return;
             }
+
+            var gebruiker = new Gebruiker
+            {
+                Vivesnr = TextInputNumber,
+                Voornaam = TextInputVoornaam,
+                Achternaam = TextInputAchternaam,
+                Rol = SelectedRole,
+                Emailadres = TextInputEmail,
+                HashPaswoord = Encryptor.GenerateMD5Hash(passwordBox.Password)
+            };
+                
+            _dao.UpdateUser(_gebruiker, gebruiker);
+                
+            MessageBox.Show("Gebruiker bewerkt");
         }
         
-        private static bool IsEmailValid(string? number, string? firstName, string? lastName, string? email)
+        private static bool IsEmailAddressValid(string? number, string? firstName, string? lastName, string? email)
         {
-            if (email is null) return false;
-            
-            email = email.Split("@")[0].ToLower();
-
-            return number is not null && email == number || firstName is not null && lastName is not null 
-                && email == $"{firstName.ToLower()}.{lastName.ToLower()}";
+            return email is not null 
+                   && Regex.IsMatch(
+                       email, $@"^({number}|{firstName}\.{lastName})@(vives.be|student.vives.be)$");
         }
-
-        private void CloseWindow()
-        {
-            // nieuw venster BeheerPlanten opstarten
-            BeheerPlanten beheerPlanten = new BeheerPlanten(_gebruiker);
-            beheerPlanten.Show();
-
-            _editGebruikerWindow.Close();
-        }
-
     }
 }

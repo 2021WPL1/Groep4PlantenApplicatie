@@ -62,21 +62,19 @@ namespace PlantenApplicatie.Data
         }
 
         //update the selected user and its values(Davy)
-        public string UpdateUser(string email, string password)
+        public void UpdateUser(Gebruiker originalUser, Gebruiker newUser)
         {
-            var user = _context.Gebruiker.SingleOrDefault(g => g.Emailadres == email);
+            originalUser.Vivesnr = newUser.Vivesnr;
+            originalUser.Voornaam = newUser.Voornaam;
+            originalUser.Achternaam = newUser.Achternaam;
+            originalUser.Rol = newUser.Rol;
+            originalUser.Emailadres = newUser.Emailadres;
+            originalUser.HashPaswoord = newUser.HashPaswoord;
 
-            if (user != null)
-            {
-                user.HashPaswoord = Encryptor.GenerateMD5Hash(password);
+            _context.Gebruiker.Add(originalUser);
+            _context.Entry(originalUser).State = EntityState.Modified;
 
-                _context.Gebruiker.Update(user);
-                _context.SaveChanges();
-
-                return "Wachtwoord aangepast";
-            }
-
-            return "Emailadres werd niet teruggevonden in de database";
+            _context.SaveChanges();
         }
 
         public string UpdateUser(string email, byte[] encryptedPassword)
