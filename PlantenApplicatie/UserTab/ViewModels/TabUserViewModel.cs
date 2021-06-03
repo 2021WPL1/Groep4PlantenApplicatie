@@ -100,6 +100,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             AddGebruiker addUser = new AddGebruiker(SelectedUser);
             _tabUserWindow.Hide();
             addUser.ShowDialog();
+            LoadUsers();
             _tabUserWindow.Show();
             
         }
@@ -112,6 +113,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
                 EditGebruiker editUser = new EditGebruiker(SelectedUser);
                 _tabUserWindow.Hide();
                 editUser.ShowDialog();
+                LoadUsers();
                 _tabUserWindow.Show();
             }
             else
