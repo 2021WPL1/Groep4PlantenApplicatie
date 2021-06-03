@@ -102,12 +102,19 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             _tabUserWindow.Close();
         }
 
-        // edit a user
+        // edit a user (Jim & Davy)
         private void EditUser()
         {
-            EditGebruiker editUser = new EditGebruiker(SelectedUser);
-            editUser.Show();
-            _tabUserWindow.Close();
+            if (SelectedUser is not null)
+            {
+                EditGebruiker editUser = new EditGebruiker(SelectedUser);
+                editUser.Show();
+                _tabUserWindow.Close();
+            }
+            else
+            {
+                MessageBox.Show("Gelieve een gebruiker te selecteren", "Gebruiker", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         //edit the current password the user has

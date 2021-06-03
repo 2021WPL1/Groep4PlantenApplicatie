@@ -47,6 +47,7 @@ namespace PlantenApplicatie.viewmodels
             EditUserCommand = new DelegateCommand(EditUser);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
             LoadRoles();
+
             LoadData();
         }
 
