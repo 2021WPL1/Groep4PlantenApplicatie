@@ -213,6 +213,5 @@ namespace PlantenApplicatie.viewmodels
 
             _editGebruikerWindow.Close();
         }
-
     }
 }

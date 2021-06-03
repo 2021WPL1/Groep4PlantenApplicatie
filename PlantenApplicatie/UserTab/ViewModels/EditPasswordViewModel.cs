@@ -11,7 +11,6 @@ namespace PlantenApplicatie.viewmodels
     //ViewModel Made by Davy
     public class EditPasswordViewModel : ViewModelBase
     {
-
         // button commands
         public ICommand EditCommand { get; }
 
