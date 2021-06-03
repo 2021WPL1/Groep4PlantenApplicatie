@@ -272,13 +272,17 @@ namespace PlantenApplicatie.viewmodels
         {
             var commensalisme = _dao.GetCommensialism(SelectedPlant);
 
-            if (commensalisme == null)
+
+            if (MessageBox.Show("Wilt u de veranderingen opslaan?", "Commensalisme", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                _dao.AddCommensalism(SelectedPlant, SelectedCommenDevelopmentSpeed, SelectedCommenStrategy);
-            }
-            else
-            {
-                _dao.ChangeCommensalism(SelectedPlant, SelectedCommenDevelopmentSpeed, SelectedCommenStrategy);
+                if (commensalisme == null)
+                {
+                    _dao.AddCommensalism(SelectedPlant, SelectedCommenDevelopmentSpeed, SelectedCommenStrategy);
+                }
+                else
+                {
+                    _dao.ChangeCommensalism(SelectedPlant, SelectedCommenDevelopmentSpeed, SelectedCommenStrategy);
+                }
             }
         }
 
@@ -286,23 +290,29 @@ namespace PlantenApplicatie.viewmodels
 
         private void AddCommenMulti()
         {
-            if (SelectedCommensalismMulti is not null && SelectedCommenProperties is not null) 
-            {
-                _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
-                LoadCommenMulti(); }
-            else
-            {
-                MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om toe te voegen",
-                   "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            
+                if (SelectedCommensalismMulti is not null && SelectedCommenProperties is not null)
+                {
+                    _dao.AddCommensalismMulti(SelectedPlant, SelectedCommenProperties, SelectedCommensalismMulti);
+                    LoadCommenMulti();
+                }
+                else
+                {
+                    MessageBox.Show("Gelieve eerst een Eigenschap te selecteren om toe te voegen",
+                       "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            
 
         }
 
         //edit the selected commensalisme multi of the plant (Liam)
         private void EditCommenMulti()
         {
-            _dao.ChangeCommensalismMulti(SelectedCommenMulti, SelectedCommenProperties, SelectedCommensalismMulti);
-            LoadCommenMulti();
+            
+            
+                _dao.ChangeCommensalismMulti(SelectedCommenMulti, SelectedCommenProperties, SelectedCommensalismMulti);
+                LoadCommenMulti(); 
+            
         }
 
 
