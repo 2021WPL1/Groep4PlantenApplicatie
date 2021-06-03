@@ -242,23 +242,17 @@ namespace PlantenApplicatie.viewmodels
         //save the current changes to the selectedplant (Jim)
         public void Save()
         {
-            if (TextInputMin is not null && TextInputMax is not null) {
-                try{SelectedPlant = _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus, SelectedSpecies, SelectedVariant,
-                    Convert.ToInt16(TextInputMin), Convert.ToInt16(TextInputMax));
-                }
-                catch
-                {
-                    MessageBox.Show("Gelieve een geldige minimum en maximum plantdichtheid te geven",
-                    "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
+            if (short.TryParse(TextInputMin, out var min) && short.TryParse(TextInputMax, out var max) 
+                    && min >= 0 && min < max)
+            {
+                SelectedPlant = _dao.ChangePlant(SelectedPlant, SelectedType, SelectedFamily, SelectedGenus,
+                    SelectedSpecies, SelectedVariant, min, max);
             }
-            else {
+            else
+            {
                 MessageBox.Show("Gelieve een geldige minimum en maximum plantdichtheid te geven",
                     "Fout", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-
         }
-     
-
     }
 }
