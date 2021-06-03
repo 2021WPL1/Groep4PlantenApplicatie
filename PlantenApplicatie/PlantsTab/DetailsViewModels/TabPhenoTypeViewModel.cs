@@ -356,23 +356,26 @@ namespace PlantenApplicatie.viewmodels
         //load the different properties in when the head property changes (Jim)
         private void ChangeProperties()
         {
-            switch (SelectedPhenotypeProperties.ToLower())
+            if (SelectedPhenotypeProperties is not null)
             {
-                case "bladhoogte":
-                    LoadHeight();
-                    break;
-                case "bladkleur":
-                    LoadColour();
-                    break;
-                case "bloeihoogte":
-                    LoadHeight();
-                    break;
-                case "bloeikleur":
-                    LoadColour();
-                    break;
+                switch (SelectedPhenotypeProperties.ToLower())
+                {
+                    case "bladhoogte":
+                        LoadHeight();
+                        break;
+                    case "bladkleur":
+                        LoadColour();
+                        break;
+                    case "bloeihoogte":
+                        LoadHeight();
+                        break;
+                    case "bloeikleur":
+                        LoadColour();
+                        break;
                 
-                default:
-                    throw new NotImplementedException();
+                    default:
+                        throw new NotImplementedException();
+                }
             }
         }
 

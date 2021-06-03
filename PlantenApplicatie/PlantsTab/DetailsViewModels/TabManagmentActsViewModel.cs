@@ -105,7 +105,7 @@ namespace PlantenApplicatie.viewmodels
 
         public BeheerMaand SelectedManagementMonth
         {
-        private get => _selectedManagementAct;
+            private get => _selectedManagementAct;
             set
             {
                 _selectedManagementAct = value;
