@@ -33,9 +33,11 @@ namespace PlantenApplicatie.viewmodels
 
 
         public List<string> Properties { get; }
+        
         // private variabelen (Davy)
         private Gebruiker _selectedUser;
         private bool _IsManager;
+        
         //constructor
         public TabPhotoViewModel(Plant selectedplant,Gebruiker user)
         {
@@ -50,8 +52,6 @@ namespace PlantenApplicatie.viewmodels
             DeletePhotoCommand = new DelegateCommand(DeletePhoto);
             UserRole();
         }
-
-
 
         public bool IsManager
         {
@@ -148,10 +148,10 @@ namespace PlantenApplicatie.viewmodels
 
             if (_selectedFoto is null)
             {
-                _plantenDao.AddPhoto(SelectedProperty, _selectedPlant, SelectedUrl, imageBytes);
+                _selectedFoto = _plantenDao.AddPhoto(SelectedProperty, _selectedPlant, SelectedUrl, imageBytes);
             }
             else {
-                _plantenDao.ChangePhoto(_selectedFoto, SelectedProperty, SelectedUrl, imageBytes);
+                _selectedFoto = _plantenDao.ChangePhoto(_selectedFoto, SelectedProperty, SelectedUrl, imageBytes);
             }
             
             SelectedImage = GenerateBitmapImageFromByteArray(imageBytes);
@@ -166,6 +166,7 @@ namespace PlantenApplicatie.viewmodels
 
             SelectedProperty = SelectedUrl = null;
             SelectedImage = null;
+            _selectedFoto = null;
         }
 
         private static BitmapImage? GenerateBitmapImageFromByteArray(byte[]? imageBytes)

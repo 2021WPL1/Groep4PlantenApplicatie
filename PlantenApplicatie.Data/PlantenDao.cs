@@ -742,8 +742,8 @@ namespace PlantenApplicatie.Data
         }
         //get the different values of the Commensalisme property (Liam)
         public List<CommLevensvorm> GetCommLifeform()
-                    {
-                        return _context.CommLevensvorm.ToList();
+        {
+            return _context.CommLevensvorm.ToList();
         }
         //Liam
         public List<string> GetCommStrategy()
@@ -774,8 +774,8 @@ namespace PlantenApplicatie.Data
         }
         //get the different values in the tables (Jim)
         public List<string> GetExtraNectarValue()
-                        {
-                            return _context.ExtraNectarwaarde.Select(s => s.Waarde).ToList();
+        {
+            return _context.ExtraNectarwaarde.Select(s => s.Waarde).ToList();
         }
         public List<string> GetExtraPollenValue()
         {
@@ -817,13 +817,13 @@ namespace PlantenApplicatie.Data
         }
         //get all management acts of the current plant (Davy)
         public List<BeheerMaand> GetManagementActs(Plant plant)
-                        {
-                            return _context.BeheerMaand.Where(b => b.PlantId == plant.PlantId).ToList();
+        {
+            return _context.BeheerMaand.Where(b => b.PlantId == plant.PlantId).ToList();
         }
-                        //create a management act (Davy, Lily)
-                        public string CreateManagementAct(BeheerMaand beheerMaand)
-                        {
-                            string message = "";
+        //create a management act (Davy, Lily)
+        public string CreateManagementAct(BeheerMaand beheerMaand)
+        {
+            string message = "";
             var item = _context.BeheerMaand.Where(b => b.PlantId == beheerMaand.PlantId);
 
             _context.BeheerMaand.Add(beheerMaand);
@@ -833,17 +833,15 @@ namespace PlantenApplicatie.Data
         }
         //edit the selected management act (Davy)
         public void EditManagementAct(BeheerMaand beheerMaand)
-                        {
-                            _context.BeheerMaand.Update(beheerMaand);
+        {
+            _context.BeheerMaand.Update(beheerMaand);
             _context.SaveChanges();
         }
-                        //delete the selected management act (Davy)
-                        public void RemoveManagementAct(BeheerMaand beheerMaand)
-
-                        {
-                            _context.BeheerMaand.Remove(beheerMaand);
+        //delete the selected management act (Davy)
+        public void RemoveManagementAct(BeheerMaand beheerMaand)
+        {
+            _context.BeheerMaand.Remove(beheerMaand);
             _context.SaveChanges();
-
         }
 
         //create an account for a user(Davy)
@@ -904,22 +902,22 @@ namespace PlantenApplicatie.Data
             return _context.Fenotype.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
         }
         public Commensalisme GetCommensialism(Plant plant)
-                        {
-                            return _context.Commensalisme.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
-                        }
-                            //get the values for the foto properties, in excel there are currently 3 different properties asked(Lily)
+        {
+            return _context.Commensalisme.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
+        }
+        //get the values for the foto properties, in excel there are currently 3 different properties asked(Lily)
 
-                            public List<string> GetImageProperties()
-                            {
-                                return new()
-                                {
-                                    "Blad",
-                                    "Bloei",
-                                    "Habitus"
-                                };
-                            }
+        public List<string> GetImageProperties()
+        {
+            return new()
+            {
+                "Blad",
+                "Bloei",
+                "Habitus"
+            };
+        }
         //add an image to the selected plant(Lily)
-        public void AddPhoto(string? property, Plant plant, string? url, byte[]? imageBytes)
+        public Foto AddPhoto(string? property, Plant plant, string? url, byte[]? imageBytes)
         {
             var foto = new Foto
             {
@@ -932,22 +930,26 @@ namespace PlantenApplicatie.Data
             _context.Foto.Add(foto);
 
             _context.SaveChanges();
+
+            return foto;
         }
         //edit the current photo(Lily)
-        public void ChangePhoto(Foto photo, string? property, string? url, byte[]? imageBytes)
-                        {
-                            photo.Eigenschap = property;
-                            photo.UrlLocatie = url;
-                            photo.Tumbnail = imageBytes;
+        public Foto ChangePhoto(Foto photo, string? property, string? url, byte[]? imageBytes)
+        {
+            photo.Eigenschap = property;
+            photo.UrlLocatie = url;
+            photo.Tumbnail = imageBytes;
 
-                            _context.Foto.Add(photo);
-                            //Entry is to check if there is already an image in the database, if there is none it gets added
-                            //if there is one it gets edited instead of adding one. (Lily)
-                            _context.Entry(photo)
-                                .State = EntityState.Modified;
+            _context.Foto.Add(photo);
+            //Entry is to check if there is already an image in the database, if there is none it gets added
+            //if there is one it gets edited instead of adding one. (Lily)
+            _context.Entry(photo)
+                .State = EntityState.Modified;
 
-                            _context.SaveChanges();
-                        }
+            _context.SaveChanges();
+
+            return photo;
+        }
         //delete the selected photo(Lily)
         public void DeletePhoto(Foto photo)
         {
