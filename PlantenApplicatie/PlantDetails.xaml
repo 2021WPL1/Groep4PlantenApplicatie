@@ -181,14 +181,7 @@
                         ItemsSource="{Binding FenotypeProperties}" 
                         SelectedItem="{Binding SelectedPhenotypeProperties, UpdateSourceTrigger=PropertyChanged}"
                                />
-                    <Button IsEnabled="{Binding Path=IsManager}" Content="Add to Plant" Canvas.Left="599" Canvas.Top="449" Command="{Binding Path=AddFenotypeMultiCommand}" BorderBrush="Black">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFC791A1"/>
-                                <GradientStop Color="#FF825055" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
+                   
                     <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="506" Canvas.Top="386" Width="54"
                         ItemsSource="{Binding FenoMultiMonths}" 
                         SelectedItem="{Binding SelectedPhenoMultiMonth, UpdateSourceTrigger=PropertyChanged}"
@@ -197,6 +190,14 @@
                         ItemsSource="{Binding FenoTypesMulti}" 
                         SelectedItem="{Binding SelectedPhenoTypesMulti, UpdateSourceTrigger=PropertyChanged}"
                                />
+                    <Button IsEnabled="{Binding Path=IsManager}" Content="Add to Plant" Canvas.Left="599" Canvas.Top="449" Command="{Binding Path=AddFenotypeMultiCommand}" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC791A1"/>
+                                <GradientStop Color="#FF825055" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                     <Button IsEnabled="{Binding Path=IsManager}" Content="Edit fenotype" Canvas.Left="599" Canvas.Top="484" Command="{Binding EditFenotypeMultiCommand}" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -253,6 +254,21 @@
                         ItemsSource="{Binding AntagonianEnvironments}"
                         SelectedValue="{Binding SelectedAntagonianEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
+                   
+                 
+                    <Button
+                              IsEnabled="{Binding Path=IsManager}"
+                        Width="70" Height="28"
+                        Canvas.Top="261" Canvas.Right="50"
+                        Content="Edit" 
+                        Command="{Binding EditAbioticCommand}" BorderBrush="Black" Canvas.Left="656">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC6AF90"/>
+                                <GradientStop Color="#FF827750" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                     <ListView Height="150" Width="358" Canvas.Left="10" Canvas.Top="320"
                               ItemsSource="{Binding SelectedPlantHabitats}"
                               SelectedValue="{Binding SelectedAbioPlantHabitat}">
@@ -271,19 +287,6 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button
-                              IsEnabled="{Binding Path=IsManager}"
-                        Width="70" Height="28"
-                        Canvas.Top="261" Canvas.Right="50"
-                        Content="Edit" 
-                        Command="{Binding EditAbioticCommand}" BorderBrush="Black" Canvas.Left="656">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFC6AF90"/>
-                                <GradientStop Color="#FF827750" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
                     <Button IsEnabled="{Binding Path=IsManager}" Content="Remove" Canvas.Left="308" Canvas.Top="475"
                             Command="{Binding RemoveHabitatCommand}" BorderBrush="Black" Width="60">
                         <Button.Background>
@@ -331,6 +334,15 @@
                               IsEnabled="{Binding Path=IsManager}" >
 
                     </ComboBox>
+                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="519" Canvas.Top="167" Width="208" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF90B4C6"/>
+                                <GradientStop Color="#FF506782" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+
                     <ListView Height="141" Width="247" Canvas.Left="10" Canvas.Top="413"
                               ItemsSource="{Binding CommensalismMulti}" 
                                           SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
@@ -341,14 +353,14 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="519" Canvas.Top="167" Width="208" BorderBrush="Black">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF90B4C6"/>
-                                <GradientStop Color="#FF506782" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
+                    <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
+                       IsEnabled="{Binding Path=IsManager}"
+                        ItemsSource="{Binding CommenProperties}"
+                      SelectedItem="{Binding SelectedCommenProperties, UpdateSourceTrigger=PropertyChanged}"      
+                        />
+                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="392" Canvas.Top="446" Width="298"
+                       ItemsSource="{Binding CommenMulti}"
+                      SelectedItem="{Binding SelectedCommensalismMulti, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnRemove" Command="{Binding RemoveCommensalismMultiCommand}" Content="Remove" Canvas.Left="322" Canvas.Top="447" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -357,17 +369,6 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <ComboBox Canvas.Left="458" Canvas.Top="397" Width="166"
-                       IsEnabled="{Binding Path=IsManager}"
-                        ItemsSource="{Binding CommenProperties}"
-                      SelectedItem="{Binding SelectedCommenProperties, UpdateSourceTrigger=PropertyChanged}"      
-                        />
-                    <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="392" Canvas.Top="446" Width="298"
-                       ItemsSource="{Binding CommenMulti}"
-                      SelectedItem="{Binding SelectedCommensalismMulti, UpdateSourceTrigger=PropertyChanged}"
-                              
-                              
-                              />
                     <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnAddLevensvorm" Command="{Binding AddCommensalismMultiCommand}" Content="Add" Canvas.Left="704" Canvas.Top="446" Width="46" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -423,19 +424,7 @@
                     <Canvas Height="200">
 
 
-                        <CheckBox
-                              IsEnabled="{Binding Path=IsManager}"  IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
-                        <CheckBox
-                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
-                        <CheckBox
-                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
-                        <CheckBox
-                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
-                        <CheckBox
-                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
-                        <CheckBox
-                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
-                        <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
+                         <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
                         <ComboBox Canvas.Left="114" Canvas.Top="29"
                               IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Nectars}" 
@@ -453,6 +442,19 @@
                               IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Pollen}" 
                                      SelectedValue="{Binding SelectedPollenValue, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                        <CheckBox
+                              IsEnabled="{Binding Path=IsManager}"  IsChecked="{Binding IsCheckedBeeFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Bijvriendelijke" Canvas.Left="20" Canvas.Top="120"/>
+                        <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedButterflyFriendly, UpdateSourceTrigger=PropertyChanged}" Content="Vlindervriendelijk" Canvas.Left="148" Canvas.Top="120"/>
+                        <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedEdible, UpdateSourceTrigger=PropertyChanged}" Content="Eetbaar" Canvas.Left="287" Canvas.Top="120"/>
+                        <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedHerbUse, UpdateSourceTrigger=PropertyChanged}" Content="Kruidgebruik" Canvas.Left="374" Canvas.Top="120"/>
+                        <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFragrant, UpdateSourceTrigger=PropertyChanged}" Content="Geurend" Canvas.Left="487" Canvas.Top="120"/>
+                        <CheckBox
+                              IsEnabled="{Binding Path=IsManager}" IsChecked="{Binding IsCheckedFrostSensitive, UpdateSourceTrigger=PropertyChanged}" Content="Vorstgevoelig" Canvas.Left="578" Canvas.Top="120"/>
+
                         <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=AddExtraCommand}" Content="Voeg extra eigenschap toe aan plant" Height="28" Canvas.Left="22" Canvas.Top="162" Width="208" BorderBrush="Black">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -600,7 +602,7 @@
                               ItemsSource="{Binding Properties}"
                               SelectedValue="{Binding SelectedProperty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Height="25" Content="Url Locatie :" Canvas.Left="10" Canvas.Top="92"/>
-                    <TextBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="99" Canvas.Top="96" TextWrapping="Wrap" Width="376"
+                    <TextBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="99" Canvas.Top="96" TextWrapping="NoWrap" Width="376"
                              Text="{Binding Path=SelectedUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Button IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=ChangePhotoCommand}" Content="Wijzig foto" Height="28" Canvas.Left="282" Canvas.Top="509" Width="208">
