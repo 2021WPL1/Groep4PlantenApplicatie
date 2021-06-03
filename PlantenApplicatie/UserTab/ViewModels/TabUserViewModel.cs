@@ -139,9 +139,9 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         {
             if (MessageBox.Show("Weet u zeker dat u wilt uitloggen?", "Logout", MessageBoxButton.YesNo) == MessageBoxResult.No) return;
 
-            this._tabUserWindow.Close();
             Inlogscherm loginScreen = new Inlogscherm();
             loginScreen.Show();
+            _tabUserWindow.Close();
         }
     }
 }
