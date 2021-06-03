@@ -181,7 +181,7 @@
                         ItemsSource="{Binding FenotypeProperties}" 
                         SelectedItem="{Binding SelectedPhenotypeProperties, UpdateSourceTrigger=PropertyChanged}"
                                />
-                   
+
                     <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="506" Canvas.Top="386" Width="54"
                         ItemsSource="{Binding FenoMultiMonths}" 
                         SelectedItem="{Binding SelectedPhenoMultiMonth, UpdateSourceTrigger=PropertyChanged}"
@@ -254,8 +254,8 @@
                         ItemsSource="{Binding AntagonianEnvironments}"
                         SelectedValue="{Binding SelectedAntagonianEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                   
-                 
+
+
                     <Button
                               IsEnabled="{Binding Path=IsManager}"
                         Width="70" Height="28"
@@ -332,9 +332,16 @@
                       ItemsSource="{Binding CommenStrategies}"
                       SelectedItem="{Binding SelectedCommenStrategy, UpdateSourceTrigger=PropertyChanged}"
                               IsEnabled="{Binding Path=IsManager}" >
-
                     </ComboBox>
-                    
+                    <Button x:Name="btnWijzigCommensalisme" IsEnabled="{Binding Path=IsManager}" Command="{Binding Path=EditCommensalismCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="519" Canvas.Top="166" Width="208" BorderBrush="Black">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF90B4C6"/>
+                                <GradientStop Color="#FF506782" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+
                     <ListView Height="229" Width="717" Canvas.Left="10" Canvas.Top="325"
                               ItemsSource="{Binding CommensalismMulti}" 
                                           SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
@@ -419,7 +426,7 @@
                     <Canvas Height="200">
 
 
-                         <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
+                        <Label Content="Nectarwaarde :" Canvas.Left="20" Canvas.Top="25"/>
                         <ComboBox Canvas.Left="114" Canvas.Top="29"
                               IsEnabled="{Binding Path=IsManager}"
                                     ItemsSource="{Binding Nectars}" 
