@@ -334,6 +334,7 @@
                               IsEnabled="{Binding Path=IsManager}" >
 
                     </ComboBox>
+                    
                     <ListView Height="229" Width="717" Canvas.Left="10" Canvas.Top="325"
                               ItemsSource="{Binding CommensalismMulti}" 
                                           SelectedItem="{Binding SelectedCommenMulti, Mode=TwoWay}" >
@@ -344,14 +345,11 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnWijzigCommensalisme" Command="{Binding Path=EditCommensalismCommand}" Content="Wijzig Commensalisme van plant" Height="28" Canvas.Left="519" Canvas.Top="167" Width="208" BorderBrush="Black">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF90B4C6"/>
-                                <GradientStop Color="#FF506782" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
+                    <ComboBox Canvas.Left="298" Canvas.Top="225" Width="166"
+                       IsEnabled="{Binding Path=IsManager}"
+                        ItemsSource="{Binding CommenProperties}"
+                      SelectedItem="{Binding SelectedCommenProperties, UpdateSourceTrigger=PropertyChanged}"      
+                        />
                     <Button IsEnabled="{Binding Path=IsManager}" x:Name="btnRemove" Command="{Binding RemoveCommensalismMultiCommand}" Content="Remove" Canvas.Left="162" Canvas.Top="275" BorderBrush="Black">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -360,11 +358,6 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <ComboBox Canvas.Left="298" Canvas.Top="225" Width="166"
-                       IsEnabled="{Binding Path=IsManager}"
-                        ItemsSource="{Binding CommenProperties}"
-                      SelectedItem="{Binding SelectedCommenProperties, UpdateSourceTrigger=PropertyChanged}"      
-                        />
                     <ComboBox IsEnabled="{Binding Path=IsManager}" Canvas.Left="232" Canvas.Top="274" Width="298"
                        ItemsSource="{Binding CommenMulti}"
                       SelectedItem="{Binding SelectedCommensalismMulti, UpdateSourceTrigger=PropertyChanged}"
