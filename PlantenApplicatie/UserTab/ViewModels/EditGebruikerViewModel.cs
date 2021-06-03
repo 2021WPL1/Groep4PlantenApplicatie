@@ -40,9 +40,9 @@ namespace PlantenApplicatie.viewmodels
         private Window _editGebruikerWindow;
 
         // edit a user
-        public EditGebruikerViewModel(Window window, Gebruiker gebruiker)
+        public EditGebruikerViewModel(Window window, Gebruiker user)
         {
-            _gebruiker = gebruiker;
+            _gebruiker = user;
             _editGebruikerWindow = window;    
             _dao = PlantenDao.Instance;
             Roles = new ObservableCollection<string>();
@@ -167,7 +167,6 @@ namespace PlantenApplicatie.viewmodels
                 Emailadres = TextInputEmail,
                 HashPaswoord = Encryptor.GenerateMD5Hash(passwordBox.Password)
             };
-                
             _dao.UpdateUser(_gebruiker, gebruiker);
                 
             MessageBox.Show("Gebruiker bewerkt");
