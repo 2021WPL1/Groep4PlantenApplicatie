@@ -224,19 +224,19 @@ namespace PlantenApplicatie.Data
         private long GetTypeId(string type)
         {
             return _context.TfgsvType
-                .SingleOrDefault(t => t.Planttypenaam == type)
+                .FirstOrDefault(t => t.Planttypenaam == type)
                 .Planttypeid;
         }
         private long GetFamilyId(string family)
         {
             return _context.TfgsvFamilie
-                .SingleOrDefault(t => t.Familienaam == family)
+                .FirstOrDefault(t => t.Familienaam == family)
                 .FamileId;
         }
         private long GetGenusId(string genus)
         {
             return _context.TfgsvGeslacht
-                .SingleOrDefault(t => t.Geslachtnaam == genus)
+                .FirstOrDefault(t => t.Geslachtnaam == genus)
                 .GeslachtId;
         }
 
@@ -260,7 +260,7 @@ namespace PlantenApplicatie.Data
             }
 
             return _context.TfgsvVariant
-                .SingleOrDefault(t => t.Variantnaam == variant)
+                .FirstOrDefault(t => t.Variantnaam == variant)
                 .VariantId;
         }
 

@@ -91,6 +91,11 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             foreach (var user in users)
             {
                 Users.Add(user);
+
+                if(user == SelectedUser)
+                {
+                    Users.Remove(user);
+                }
             }
         }
 
