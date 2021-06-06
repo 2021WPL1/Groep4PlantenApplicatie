@@ -68,7 +68,7 @@ namespace PlantenApplicatie.viewmodels
                 : "Paswoorden zijn niet gelijk";
         }
 
-        //edit the password of the user and update it in the database
+        //edit the password of the user and update it in the database (Lily)
         private void Edit(PasswordBox passwordBox)
         {
             if (!Encryptor.GenerateMD5Hash(passwordBox.Password).SequenceEqual(SelectedUser.HashPaswoord))

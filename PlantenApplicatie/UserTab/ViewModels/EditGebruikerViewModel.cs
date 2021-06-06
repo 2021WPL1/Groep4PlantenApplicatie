@@ -34,12 +34,12 @@ namespace PlantenApplicatie.viewmodels
 
         public ObservableCollection<string> Roles { get; }
 
-        // button commands
+        // button commands (Davy)
         public ICommand EditUserCommand { get; }
 
         private Window _editGebruikerWindow;
 
-        // edit a user
+        // edit a user (Davy)
         public EditGebruikerViewModel(Window window, Gebruiker user)
         {
             _gebruiker = user;
@@ -53,7 +53,7 @@ namespace PlantenApplicatie.viewmodels
             LoadData();
         }
 
-        // toon geselecteerde gebruiker in textboxen, comboboxen
+        // toon geselecteerde gebruiker in textboxen, comboboxen (Davy)
         private void LoadData()
         {
             TextInputNumber = _gebruiker.Vivesnr;
@@ -62,7 +62,8 @@ namespace PlantenApplicatie.viewmodels
             TextInputEmail = _gebruiker.Emailadres;
             SelectedRole = _gebruiker.Rol;
         }
-        
+
+        //getters and setters (Davy)
         public string? TextInputNumber
         {
             get => _textInputNumber;
@@ -122,7 +123,7 @@ namespace PlantenApplicatie.viewmodels
                 OnPropertyChanged();
             }
         }
-
+        //check if the password are equal (Lily)
         public void PasswordChecker(string password, string passwordConfirm)
         {
             _passwordsMatch = password == passwordConfirm;
@@ -131,6 +132,7 @@ namespace PlantenApplicatie.viewmodels
                 ? string.Empty 
                 : "Paswoorden zijn niet gelijk";
         }
+        //load in the roles, for now database is empty so the roles are hardcoded to access the program (Jim)
 
         public void LoadRoles()
         {
@@ -138,6 +140,7 @@ namespace PlantenApplicatie.viewmodels
             Roles.Add("data-collector");
             Roles.Add("gebruiker");
         }
+        // add a user to the database, passwordbox as parameter to be able to access the content (Jim)
 
         public void EditUser(PasswordBox passwordBox)
         {
@@ -172,7 +175,8 @@ namespace PlantenApplicatie.viewmodels
                 
             MessageBox.Show("Gebruiker bewerkt");
         }
-        
+        //check if the email is valid with a regex containing the different values in the vives email (Lily)
+
         private static bool IsEmailAddressValid(string? number, string? firstName, string? lastName, string? email)
         {
             return email is not null 

@@ -29,7 +29,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
         private bool _isManager;
         private Window _tabUserWindow;
 
-        //constructor given with user as parameter
+        //constructor given with user as parameter (davy)
         public TabUserViewModel(Gebruiker user,Window window)
         {
             _tabUserWindow = window;
@@ -81,7 +81,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
 
         }
 
-        // show all the users in listview
+        // show all the users in listview except the user that logged in (davy)
         private void LoadUsers()
         {
             var users = _dao.GetUsers();
@@ -99,7 +99,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             }
         }
 
-        //make a new window to add a user
+        //make a new window to add a user (davy)
         private void AddUser()
         {
             AddGebruiker addUser = new AddGebruiker(SelectedUser);
@@ -127,14 +127,14 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             }
         }
 
-        //edit the current password the user has
+        //edit the current password the user has (davy)
         private void EditPassword()
         {
             WijzigWachtwoord editPassword = new WijzigWachtwoord(OriginalUser);
             editPassword.Show();
         }
 
-        // delete a user
+        // delete a user (davy)
         private void DeleteUser()
         {
             if (SelectedUser is not null)
@@ -148,7 +148,7 @@ namespace PlantenApplicatie.viewmodels.TabsViewModels
             }
 }
 
-        // log out of the application
+        // log out of the application 
         private void LogOut()
         {
             if (MessageBox.Show("Weet u zeker dat u wilt uitloggen?", "Logout", MessageBoxButton.YesNo) == MessageBoxResult.No) return;

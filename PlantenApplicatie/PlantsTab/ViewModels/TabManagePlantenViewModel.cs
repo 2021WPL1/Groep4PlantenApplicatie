@@ -12,7 +12,7 @@ namespace PlantenApplicatie.viewmodels
     //Class and GUI (Davy, Lily) 
     class TabManagePlantenViewModel : ViewModelBase
     {
-        //button commands
+        //button commands (davy)
         public ICommand AddUserCommand { get; }
         public ICommand ShowDetailsCommand { get; }
         public ICommand ResetCommand { get; }
@@ -26,7 +26,7 @@ namespace PlantenApplicatie.viewmodels
         public ObservableCollection<string> Species { get; private set; }
         public ObservableCollection<string> Variants { get; private set; }
 
-        //private variables
+        //private variables (davy)
         private readonly PlantenDao _plantenDao;
 
         private Plant? _selectedPlant;
@@ -51,7 +51,6 @@ namespace PlantenApplicatie.viewmodels
 
             ShowDetailsCommand = new DelegateCommand(ShowDetails);
             ResetCommand = new DelegateCommand(ResetInputs);
-            AddUserCommand = new DelegateCommand(AddUser);
 
             Plants = new ObservableCollection<Plant>();
 
@@ -65,7 +64,7 @@ namespace PlantenApplicatie.viewmodels
             UserRole();
             FilterComboBoxes();
         }
-        //getters and setters
+        //getters and setters (Lily)
         public Gebruiker SelectedUser
         {
             private get => _selectedUser;
@@ -276,7 +275,7 @@ namespace PlantenApplicatie.viewmodels
             ClearAndAddAll(Plants, plants);
         }
 
-        //reset the different selected values in the comboboxes + textbox
+        //reset the different selected values in the comboboxes + textbox (Lily)
         private void ResetInputs()
         {
             _selectedType = _selectedFamily = _selectedGenus = _selectedSpecies = _selectedVariant = null;
@@ -307,10 +306,5 @@ namespace PlantenApplicatie.viewmodels
 
         }
 
-        private void AddUser()
-        {
-            // doorgeven SelectedGebruiker omdat je venster sluit zodat de applicatie onthoudt wie er bezig is
-            new AddGebruiker(SelectedUser).Show();
-        }
     }
 }

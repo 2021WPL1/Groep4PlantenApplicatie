@@ -32,7 +32,7 @@ namespace PlantenApplicatie.viewmodels
         private string? _selectedProperty;
         private string? _selectedUrl;
         
-        //constructor
+        //constructor (Lily)
         public TabPhotoViewModel(Plant selectedplant,Gebruiker user)
         {
             SelectedUser = user;
@@ -47,6 +47,7 @@ namespace PlantenApplicatie.viewmodels
             UserRole();
         }
 
+        //getters and setters (Lily)
         public bool IsManager
         {
             get => _IsManager;
@@ -78,7 +79,6 @@ namespace PlantenApplicatie.viewmodels
         }
 
 
-        //getters and setters 
         public ImageSource? SelectedImage
         {
             get
@@ -116,7 +116,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //edit the current photo, when a photo gets changed through the url the image will change and be saved depending on the selected property
+        //edit the current photo, when a photo gets changed through the url the image will change and be saved depending on the selected property (Lily)
         private void ChangePhoto()
         {
             if (SelectedProperty is null) return;
@@ -136,7 +136,7 @@ namespace PlantenApplicatie.viewmodels
             SelectedImage = GenerateBitmapImageFromByteArray(imageBytes);
         }
 
-        //delete the selected photo 
+        //delete the selected photo (Lily)
         private void DeletePhoto()
         {
             if (SelectedProperty is null || SelectedImage is null) return;
@@ -148,6 +148,7 @@ namespace PlantenApplicatie.viewmodels
             _selectedFoto = null;
         }
 
+        //create the image from the byte array in the database (Lily)
         private static BitmapImage? GenerateBitmapImageFromByteArray(byte[]? imageBytes)
         {
             /*
@@ -173,7 +174,7 @@ namespace PlantenApplicatie.viewmodels
             return bitmapImage;
         }
         
-        //download the image from the online url and set it as the selected detail when you click on edit
+        //download the image from the online url and set it as the selected detail when you click on edit (Lily)
         private static byte[]? DownloadImage(string url)
         {
             if (!IsUrlImage(url))
@@ -189,6 +190,7 @@ namespace PlantenApplicatie.viewmodels
             return imageByteData;
         }
 
+        //bool to check if the url leads to an image (Lily)
         private static bool IsUrlImage(string url)
         {
             try
@@ -220,7 +222,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //controleer welke rol de gebruiker heeft
+       
         //check which roles the user has. and if the user is an old student(Gebruiker)
         //He can only observe the selected values of the plant (Davy,Jim)
         private void UserRole()

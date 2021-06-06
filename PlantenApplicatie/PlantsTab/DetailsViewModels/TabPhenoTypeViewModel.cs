@@ -247,7 +247,7 @@ namespace PlantenApplicatie.viewmodels
 
             RefreshObservableCollection(FenoTypesMulti, colorNames);
         }
-        
+        //loads a collection of numbers, numbers range from 0 to 300 in increments of 10 (Lily)
         private void LoadHeight()
         {
             var heightPossibilities = Enumerable.Range(0, PlantenDao.MaxLeafSize / 10)
@@ -256,7 +256,7 @@ namespace PlantenApplicatie.viewmodels
 
             RefreshObservableCollection(FenoTypesMulti, heightPossibilities);
         }
-        
+        //load in the phenotype months, monthNames is loaded in as a list containing the month names (Lily)
         private void LoadPhenoMultiMonths()
         {
             var monthNames = new DateTimeFormatInfo().AbbreviatedMonthNames;
@@ -264,6 +264,7 @@ namespace PlantenApplicatie.viewmodels
             RefreshObservableCollection(FenoMultiMonths, monthNames[0..12]);
         }
         
+        //generic method to clear collection and refresh the data (Lily)
         private static void RefreshObservableCollection<T>(ICollection<T> collection, IEnumerable<T> data)
         {
             collection.Clear();

@@ -787,40 +787,47 @@ namespace PlantenApplicatie.Data
         {
             return _context.ExtraNectarwaarde.Select(s => s.Waarde).ToList();
         }
+        //Jim
         public List<string> GetExtraPollenValue()
         {
             return _context.ExtraPollenwaarde.Select(s => s.Waarde).ToList();
         }
-
+        //Jim
         public List<string> GetPhenoLeafSize()
         {
             return _context.FenoBladgrootte.Select(s => s.Bladgrootte).ToList();
         }
-
+        //Jim
         public List<string> GetPhenoLeafShape()
         {
             return _context.FenoBladvorm.Select(s => s.Vorm).ToList();
         }
+        //Jim
         public List<string> GetPhenoInflorescence()
         {
             return _context.FenoBloeiwijze.Select(s => s.Naam).ToList();
         }
+        //Jim
         public List<string> GetPhenoHabitat()
         {
             return _context.FenoHabitus.Select(s => s.Naam).ToList();
         }
+        //Jim
         public List<FenoKleur> GetPhenoColour()
         {
             return _context.FenoKleur.ToList();
         }
+        //Jim
         public List<string> GetPhenoLifeform()
         {
             return _context.FenoLevensvorm.Select(s => s.Levensvorm).ToList();
         }
+        //Jim
         public List<string> GetPhenoSproutPhenology()
         {
             return _context.FenoSpruitfenologie.Select(s => s.Fenologie).ToList();
         }
+        //Jim
         public List<FenotypeMulti> GetPhenoMultis(Plant plant)
         {
             return _context.FenotypeMulti.Where(f => f.PlantId == plant.PlantId).ToList();
@@ -924,7 +931,6 @@ namespace PlantenApplicatie.Data
             return _context.Commensalisme.Where(i => i.PlantId == plant.PlantId).SingleOrDefault();
         }
         //get the values for the foto properties, in excel there are currently 3 different properties asked(Lily)
-
         public List<string> GetImageProperties()
         {
             return new()
@@ -977,7 +983,7 @@ namespace PlantenApplicatie.Data
             _context.SaveChanges();
         }
 
-        //get the current roles in the database
+        //get the current roles in the database (Jim)
         public List<string> GetRoles()
         {
             return _context.Rol.Select(r => r.Omschrijving).ToList();
@@ -985,6 +991,7 @@ namespace PlantenApplicatie.Data
            
         }
 
+        //load in a list of strings with the different properties (Lily)
         public List<string> GetFenotypeProperties()
         {
             return new()

@@ -285,7 +285,7 @@ namespace PlantenApplicatie.viewmodels
                 }
             }
 
-            // indien object beheermaand niet gelijk is aan SelectedBeheermaand, voeg object toe aan lijst
+            // reload management acts into the list
             foreach (var managementAct in managementActs)
             {
                 ManagementActs.Add(managementAct);

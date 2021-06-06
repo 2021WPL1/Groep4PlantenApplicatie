@@ -43,7 +43,7 @@ namespace PlantenApplicatie.viewmodels
         private Gebruiker _selectedUser;
         private bool _IsManager;
 
-        //constructor with the given user and selected plant
+        //constructor with the given user and selected plant (Davy)
         public TabExtraPropertiesViewModel(Plant selectedPlant, Gebruiker user)
         {
             SelectedPlant = selectedPlant;

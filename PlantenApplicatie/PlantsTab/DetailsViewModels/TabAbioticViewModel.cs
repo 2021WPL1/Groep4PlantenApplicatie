@@ -152,7 +152,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
 
-        //public strings for the selected value in the abiomulti listviews.
+        //public strings for the selected value in the abiomulti listviews. (Lily)
         public string? SelectedAbioPlantHabitat { get; set; }
         public string? SelectedAbioHabitat { get; set; }
 

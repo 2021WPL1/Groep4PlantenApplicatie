@@ -18,7 +18,7 @@ namespace PlantenApplicatie.viewmodels
         //ViewModel (Jim)
         private readonly PlantenDao _dao;
 
-        //private variables for the GUI
+        //private variables for the GUI (Jim)
         private string? _selectedRole;
         private string? _textInputNumber;
         private string? _textInputFirstName;
@@ -30,7 +30,7 @@ namespace PlantenApplicatie.viewmodels
         private readonly Gebruiker _user;
         public ObservableCollection<string> Roles { get; }
 
-        //buttoncommand to save an user in the database
+        //buttoncommand to save an user in the database (Jim)
         public ICommand AddUserCommand { get; }
 
         //variables Davy
@@ -38,6 +38,7 @@ namespace PlantenApplicatie.viewmodels
 
         private Brush _color;
 
+        //constructor (Jim)
         public AddGebruikerViewModel(Window window, Gebruiker user)
         {
             _addGebruikerWindow = window; // Davy   
@@ -121,7 +122,7 @@ namespace PlantenApplicatie.viewmodels
             }
         }
         
-        //check the passwords on if they are equal
+        //check the passwords on if they are equal (Lily)
         public void PasswordChecker(string password, string passwordConfirm)
         {
             PasswordErrorMessage = password == passwordConfirm 
@@ -137,7 +138,7 @@ namespace PlantenApplicatie.viewmodels
             Roles.Add("gebruiker");
         }
 
-        // add a user to the database
+        // add a user to the database, passwordbox as parameter to be able to access the content (Jim)
         private void AddUser(PasswordBox passwordBox)
         {
             if (TextInputNumber is null || TextInputFirstName is null || TextInputLastName is null 
@@ -171,7 +172,7 @@ namespace PlantenApplicatie.viewmodels
             
             MessageBox.Show(message);
         }
-
+        //check if the email is valid with a regex containing the different values in the vives email (Lily)
         private static bool IsEmailAddressValid(string? number, string? firstName, string? lastName, string? email)
         {
             return email is not null 
